@@ -41,7 +41,7 @@ jobs:
       if: runner.os == 'Linux'
       run: |
         sudo apt-get update
-        sudo apt-get install -y libx11-dev libxext-dev libxi-dev libcbf-dev libcneartree-dev libcqrlib-dev libcvector-dev
+        sudo apt-get install -y libx11-dev libxext-dev libxi-dev libcbf-dev libcneartree-dev libcqrlib-dev libcvector-dev libhdf5-dev
 
     - name: Set reusable strings
       id: strings

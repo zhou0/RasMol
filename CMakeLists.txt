@@ -24,6 +24,19 @@ find_path(NEARTREE_INCLUDE_DIR NAMES CNearTree.h PATH_SUFFIXES NearTree neartree
 find_path(CQRLIB_INCLUDE_DIR NAMES cqrlib.h PATH_SUFFIXES cqrlib)
 find_path(CVECTOR_INCLUDE_DIR NAMES CVector.h PATH_SUFFIXES cvector)
 
+# HDF5 is often a dependency of CBFlib
+find_package(HDF5 COMPONENTS C)
+if(HDF5_FOUND)
+    include_directories(${HDF5_INCLUDE_DIRS})
+    list(APPEND EXTERNAL_LIBRARIES ${HDF5_LIBRARIES})
+else()
+    # Fallback for systems where find_package(HDF5) might fail but headers are in standard locations
+    find_path(HDF5_INCLUDE_DIR hdf5.h PATH_SUFFIXES hdf5/serial)
+    if(HDF5_INCLUDE_DIR)
+        include_directories(${HDF5_INCLUDE_DIR})
+    endif()
+endif()
+
 if(CBF_INCLUDE_DIR)
     include_directories(${CBF_INCLUDE_DIR})
 endif()
