@@ -427,8 +427,8 @@ int OpenDisplay( void )
     for( i=0; i<10; i++ )
         DialValue[i] = 0.0;
     
-    XRange = x;   WRange = XRange>>1;
-    YRange = y;   HRange = YRange>>1;
+    XRange = 576;   WRange = XRange>>1;
+    YRange = 576;   HRange = YRange>>1;
     Range = MinFun(XRange,YRange);
     ZRange = 20000;
     
@@ -445,6 +445,11 @@ void AdviseUpdate( int item )
     UnusedArgument(item);
 }
 
+void UpdateLanguage( void ) {
+}
+
+void ReDrawWindow( void ) {
+}
 
 void RefreshScreen( void )
 {
@@ -483,9 +488,8 @@ void RefreshScreen( void )
 	      }
 	    }
     }
-
-    }
 }
+
 
 
 

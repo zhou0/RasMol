@@ -529,13 +529,20 @@ static int DialEvent;
 static int UseDials;
 #endif
 
+static int digittoint(int c) {
+    if (isdigit(c)) return c - '0';
+    if (isxdigit(c)) {
+        if (isupper(c)) return c - 'A' + 10;
+        return c - 'a' + 10;
+    }
+    return 0;
+}
 
 #ifdef MITSHM
 #include <sys/types.h>
 #include <sys/ipc.h>
 #include <sys/shm.h>
 #include <X11/extensions/XShm.h>
-
 XShmSegmentInfo xshminfo;
 int SharedMemOption;
 int SharedMemFlag;
