@@ -60,8 +60,10 @@
 /* #define MSWIN        */
 /* #define APPLEMAC     */
 /* #define X11WIN       */
+#ifndef _WIN32
 #ifndef UNIX
 #define UNIX
+#endif
 #endif
 
 /* #define DIALBOX      */

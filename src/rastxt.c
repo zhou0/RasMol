@@ -107,9 +107,7 @@
 #ifdef IBMPC
 #include <conio.h>
 #endif
-#ifdef UNIX
 #include <signal.h>
-#endif
 
 #ifdef TERMIOS
 #include <sys/types.h>
@@ -679,8 +677,10 @@ int main( int argc, char *argv[] )
     OpenDisplay();
     InitTerminal();
 
-#ifdef UNIX
+#ifdef SIGINT
     signal(SIGINT,RasMolSignalExit);
+#endif
+#ifdef SIGPIPE
     signal(SIGPIPE,SIG_IGN);
 #endif
 
