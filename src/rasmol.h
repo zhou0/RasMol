@@ -88,7 +88,9 @@
 /* #define APPLEMAC     */
 /* #define X11WIN       */    /* X11WIN or GTKWIN defined in Imakefile */
 #ifndef UNIX
+#ifndef UNIX
 #define UNIX
+#endif
 #endif
 #define STDINT
 

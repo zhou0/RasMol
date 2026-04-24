@@ -161,12 +161,17 @@ set(CORE_SOURCES
     src/transfor.c
     src/vector.c
     src/wbrotate.c
+    src/string_case.c
 )
 
 # Common definitions
 add_definitions(-D_USE_RASMOL_H_)
 if(NOT WIN32)
     add_definitions(-DUNIX)
+endif()
+
+if(MSVC)
+    add_definitions(-D_CRT_SECURE_NO_WARNINGS)
 endif()
 
 if(PIXELDEPTH EQUAL 8)

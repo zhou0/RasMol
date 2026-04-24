@@ -243,10 +243,14 @@
 
 /* Ladislav Michnovic, 10 Jan 08 start */
 #include <string.h>
+#include "string_case.h"
+#include "string_case.h"
 /* Ladislav Michnovic, 10 Jan 08 end */
 #include <ctype.h>
 #include <stdio.h>
-/* #include <string.h> */  /* Ladislav Michnovic, 10 Jan 08 */
+/* #include <string.h>
+#include "string_case.h"
+#include "string_case.h" */  /* Ladislav Michnovic, 10 Jan 08 */
 
 #if !defined(IBMPC) && !defined(VMS) && !defined(APPLEMAC)
 #ifndef _WIN32
