@@ -1,5 +1,9 @@
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.11)
 project(RasMol C)
+
+if(POLICY CMP0135)
+  cmake_policy(SET CMP0135 NEW)
+endif()
 
 # Options
 set(PIXELDEPTH "8" CACHE STRING "Pixel depth (8, 16, or 32)")
@@ -23,6 +27,77 @@ find_path(CBF_INCLUDE_DIR NAMES cbf.h PATH_SUFFIXES cbf cbflib)
 find_path(NEARTREE_INCLUDE_DIR NAMES CNearTree.h PATH_SUFFIXES NearTree neartree)
 find_path(CQRLIB_INCLUDE_DIR NAMES cqrlib.h PATH_SUFFIXES cqrlib CQRlib)
 find_path(CVECTOR_INCLUDE_DIR NAMES CVector.h PATH_SUFFIXES cvector)
+
+find_library(CBF_LIBRARY NAMES cbf)
+find_library(NEARTREE_LIBRARY NAMES CNearTree neartree)
+find_library(CQRLIB_LIBRARY NAMES CQRlib cqrlib)
+find_library(CVECTOR_LIBRARY NAMES CVector cvector)
+
+# Fetch missing dependencies
+include(FetchContent)
+
+if(NOT CQRLIB_LIBRARY)
+    message(STATUS "CQRlib not found. Fetching from GitHub...")
+    fetchcontent_declare(
+        cqrlib
+        URL https://github.com/zhou0/cqrlib/archive/refs/tags/1.1.5.tar.gz
+    )
+    fetchcontent_makeavailable(cqrlib)
+    set(CQRLIB_LIBRARY CQRlib)
+    set(CQRLIB_INCLUDE_DIR ${cqrlib_SOURCE_DIR})
+endif()
+
+if(NOT CVECTOR_LIBRARY)
+    message(STATUS "CVector not found. Fetching from GitHub...")
+    fetchcontent_declare(
+        cvector
+        URL https://github.com/zhou0/CVector/archive/refs/heads/master.tar.gz
+    )
+    fetchcontent_makeavailable(cvector)
+    set(CVECTOR_LIBRARY CV_static)
+    set(CVECTOR_INCLUDE_DIR ${cvector_SOURCE_DIR})
+endif()
+
+if(NOT NEARTREE_LIBRARY)
+    message(STATUS "NearTree not found. Fetching from GitHub...")
+    fetchcontent_declare(
+        neartree
+        URL https://github.com/zhou0/NearTree/archive/refs/heads/master.tar.gz
+    )
+    # NearTree needs CVector. Ensure it uses the one we just fetched if applicable.
+    set(CVECTOR_INCLUDE_DIR ${CVECTOR_INCLUDE_DIR} CACHE PATH "" FORCE)
+    set(CVECTOR_LIBRARY ${CVECTOR_LIBRARY} CACHE STRING "" FORCE)
+
+    fetchcontent_makeavailable(neartree)
+    set(NEARTREE_LIBRARY CNearTree)
+    set(NEARTREE_INCLUDE_DIR ${neartree_SOURCE_DIR})
+endif()
+
+if(NOT CBF_LIBRARY)
+    message(STATUS "CBFlib not found. Fetching from GitHub...")
+    fetchcontent_declare(
+        cbflib
+        URL https://github.com/yayahjb/cbflib/archive/refs/heads/master.tar.gz
+    )
+    # Disable components that might cause build failures or are unnecessary
+    set(CBF_ENABLE_FORTRAN OFF CACHE BOOL "" FORCE)
+    set(CBF_ENABLE_JAVA OFF CACHE BOOL "" FORCE)
+    set(CBF_ENABLE_PYTHON OFF CACHE BOOL "" FORCE)
+    set(CBF_ENABLE_DOC OFF CACHE BOOL "" FORCE)
+
+    find_package(BISON)
+    if(BISON_FOUND)
+        fetchcontent_makeavailable(cbflib)
+        set(CBF_LIBRARY cbf)
+        set(CBF_INCLUDE_DIR ${cbflib_SOURCE_DIR}/include)
+    else()
+        message(WARNING "Bison not found. Cannot build external CBFlib fallback. CIF support will use internal code.")
+    endif()
+endif()
+
+if(CBF_LIBRARY)
+    add_definitions(-DUSE_CBFLIB)
+endif()
 
 # HDF5 is often a dependency of CBFlib
 find_package(HDF5 COMPONENTS C)
@@ -49,11 +124,6 @@ endif()
 if(CVECTOR_INCLUDE_DIR)
     include_directories(${CVECTOR_INCLUDE_DIR})
 endif()
-
-find_library(CBF_LIBRARY NAMES cbf)
-find_library(NEARTREE_LIBRARY NAMES CNearTree neartree)
-find_library(CQRLIB_LIBRARY NAMES CQRlib cqrlib)
-find_library(CVECTOR_LIBRARY NAMES CVector cvector)
 
 if(CBF_LIBRARY)
     list(APPEND EXTERNAL_LIBRARIES ${CBF_LIBRARY})
