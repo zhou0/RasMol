@@ -21,7 +21,7 @@ endif()
 # Required libraries - Use find_path with common suffixes to handle various distributions
 find_path(CBF_INCLUDE_DIR NAMES cbf.h PATH_SUFFIXES cbf cbflib)
 find_path(NEARTREE_INCLUDE_DIR NAMES CNearTree.h PATH_SUFFIXES NearTree neartree)
-find_path(CQRLIB_INCLUDE_DIR NAMES cqrlib.h PATH_SUFFIXES cqrlib)
+find_path(CQRLIB_INCLUDE_DIR NAMES cqrlib.h PATH_SUFFIXES cqrlib CQRlib)
 find_path(CVECTOR_INCLUDE_DIR NAMES CVector.h PATH_SUFFIXES cvector)
 
 # HDF5 is often a dependency of CBFlib
@@ -52,7 +52,7 @@ endif()
 
 find_library(CBF_LIBRARY NAMES cbf)
 find_library(NEARTREE_LIBRARY NAMES CNearTree neartree)
-find_library(CQRLIB_LIBRARY NAMES cqrlib)
+find_library(CQRLIB_LIBRARY NAMES CQRlib cqrlib)
 find_library(CVECTOR_LIBRARY NAMES CVector cvector)
 
 if(CBF_LIBRARY)
