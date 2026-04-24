@@ -82,7 +82,9 @@
 #include <stdio.h>
 #include <ctype.h>
 #include <math.h>
+#ifndef _WIN32
 #include <termios.h>
+#endif
 #include <gdk/gdkkeysyms.h>
 #include <vte/vte.h>
 #include <stdlib.h>

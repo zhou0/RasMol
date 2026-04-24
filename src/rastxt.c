@@ -114,12 +114,18 @@
 #ifndef _WIN32
 #include <sys/time.h>
 #endif
+#ifndef _WIN32
 #include <termios.h>
+#endif
 
 #ifdef esv
+#ifndef _WIN32
 #include <sysv/unistd.h>
+#endif
 #else
+#ifndef _WIN32
 #include <unistd.h>
+#endif
 #endif
 #endif /* TERMIOS */
 

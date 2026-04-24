@@ -241,15 +241,21 @@ int initial_ui_elements = UI_MENUS;
 #endif
 
 #ifdef esv
+#ifndef _WIN32
 #include <sysv/unistd.h>
+#endif
 #else
+#ifndef _WIN32
 #include <unistd.h>
+#endif
 #endif
 
 #ifdef PROFILE
 #include <sys/types.h>
 #ifndef TIME
+#ifndef _WIN32
 #include <sys/time.h>
+#endif
 #else
 #include <time.h>
 #endif /* TIME    */
@@ -257,8 +263,12 @@ int initial_ui_elements = UI_MENUS;
 
 #ifdef TERMIOS
 #include <sys/types.h>
+#ifndef _WIN32
 #include <sys/time.h>
+#endif
+#ifndef _WIN32
 #include <termios.h>
+#endif
 
 #if defined(_SEQUENT_) || defined(_AIX)
 #include <sys/select.h>

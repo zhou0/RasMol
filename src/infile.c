@@ -212,12 +212,10 @@
 #endif
 
 #include <string.h>
-#if defined(IBMPC) || defined(VMS) || defined(APPLEMAC)
+#if defined(IBMPC) || defined(VMS) || defined(APPLEMAC) || defined(_WIN32)
 #include "string_case.h"
 #else
-#ifndef _WIN32
 #include <strings.h>
-#endif
 #endif
 #include <ctype.h>
 #include <stdio.h>
