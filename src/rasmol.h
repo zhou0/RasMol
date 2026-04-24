@@ -98,7 +98,9 @@
 #ifndef GTKWIN
 #define SOCKETS
 #endif
+#ifndef _WIN32
 #define TERMIOS
+#endif
 #define PROFILE
 #define MITSHM
 

@@ -240,7 +240,9 @@
 #ifndef VMS
 #include <sys/types.h>
 #endif
+#ifndef _WIN32
 #include <sys/time.h>
+#endif
 #endif
 #include <time.h>
 #endif
