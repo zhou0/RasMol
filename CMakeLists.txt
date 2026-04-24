@@ -8,12 +8,9 @@ endif()
 # Options
 set(PIXELDEPTH "8" CACHE STRING "Pixel depth (8, 16, or 32)")
 option(WITH_X11 "Build with X11 support" ON)
-
 if(NOT PIXELDEPTH MATCHES "^(8|16|32)$")
     message(FATAL_ERROR "PIXELDEPTH must be 8, 16, or 32")
 endif()
-
-# Dependencies
 set(EXTERNAL_LIBRARIES)
 if(NOT MSVC)
     find_library(MATH_LIBRARY m)
@@ -21,13 +18,10 @@ if(NOT MSVC)
         list(APPEND EXTERNAL_LIBRARIES ${MATH_LIBRARY})
     endif()
 endif()
-
-# Required libraries
 find_path(CBF_INCLUDE_DIR NAMES cbf.h PATH_SUFFIXES cbf cbflib)
 find_path(NEARTREE_INCLUDE_DIR NAMES CNearTree.h PATH_SUFFIXES NearTree neartree)
 find_path(CQRLIB_INCLUDE_DIR NAMES cqrlib.h PATH_SUFFIXES cqrlib CQRlib)
 find_path(CVECTOR_INCLUDE_DIR NAMES CVector.h PATH_SUFFIXES cvector)
-
 find_library(CBF_LIBRARY NAMES cbf)
 find_library(NEARTREE_LIBRARY NAMES CNearTree neartree)
 find_library(CQRLIB_LIBRARY NAMES CQRlib cqrlib)
@@ -82,7 +76,6 @@ if(NOT CBF_LIBRARY)
     set(CBF_ENABLE_JAVA OFF CACHE BOOL "" FORCE)
     set(CBF_ENABLE_PYTHON OFF CACHE BOOL "" FORCE)
     set(CBF_ENABLE_DOC OFF CACHE BOOL "" FORCE)
-
     find_package(BISON)
     if(BISON_FOUND)
         fetchcontent_makeavailable(cbflib)
@@ -94,8 +87,6 @@ if(NOT CBF_LIBRARY)
         set(CBF_INCLUDE_DIR "")
     endif()
 endif()
-
-# Common definitions
 add_definitions(-D_USE_RASMOL_H_)
 if(NOT WIN32)
     add_definitions(-DUNIX)
@@ -112,7 +103,6 @@ elseif(PIXELDEPTH EQUAL 16)
 elseif(PIXELDEPTH EQUAL 32)
     add_definitions(-DTHIRTYTWOBIT)
 endif()
-
 if(NOT RASMOLDIR)
     set(RASMOLDIR "${CMAKE_INSTALL_PREFIX}/share/rasmol/")
 endif()
@@ -132,7 +122,6 @@ else()
         include_directories(${HDF5_INCLUDE_DIR})
     endif()
 endif()
-
 if(CBF_INCLUDE_DIR)
     include_directories(${CBF_INCLUDE_DIR})
 endif()
@@ -145,7 +134,6 @@ endif()
 if(CVECTOR_INCLUDE_DIR)
     include_directories(${CVECTOR_INCLUDE_DIR})
 endif()
-
 if(CBF_LIBRARY)
     list(APPEND EXTERNAL_LIBRARIES ${CBF_LIBRARY})
 endif()
