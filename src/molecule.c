@@ -231,8 +231,6 @@
 #endif
 
 #include <string.h>
-#include "string_case.h"
-#include "string_case.h"
 #if defined(IBMPC) || defined(VMS) || defined(APPLEMAC)
 #include "string_case.h"
 #else

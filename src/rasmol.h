@@ -88,11 +88,11 @@
 /* #define APPLEMAC     */
 /* #define X11WIN       */    /* X11WIN or GTKWIN defined in Imakefile */
 #ifndef UNIX
-#ifndef UNIX
 #define UNIX
 #endif
-#endif
+#ifndef STDINT
 #define STDINT
+#endif
 
 /* #define DIALBOX      */
 #ifndef GTKWIN
@@ -330,4 +330,16 @@ void HandleMenu( int hand );
 
 #ifdef APPLEMAC
 #include "rasmac.h"
+#endif
+
+#ifndef __far
+#define __far
+#endif
+
+#ifndef __huge
+#define __huge
+#endif
+
+#ifdef _WIN32
+#include "string_case.h"
 #endif
