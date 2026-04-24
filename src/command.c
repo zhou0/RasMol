@@ -120,7 +120,9 @@
 
 
 #if !defined(IBMPC) && !defined(VMS) && !defined(APPLEMAC)
+#ifndef _WIN32
 #include <pwd.h>
+#endif
 #endif
 
 #define COMMAND
@@ -276,7 +278,7 @@ void CommandError( char *error )
 {
     register char *ptr;
     char buffer[40];
-    
+
     if( TokenPtr )
     {   if( FileDepth > -1 )
         {   InvalidateCmndLine();
@@ -288,7 +290,7 @@ void CommandError( char *error )
             WriteChar(' ');
         WriteString("^\n");
     }
-    
+
     if( FileDepth > -1 )
     {   if( LineStack[FileDepth] )
         {   if( NameStack[FileDepth] )
@@ -328,16 +330,16 @@ void CommandError( char *error )
 char *ProcessFileName( char *name )
 {
     register char *ptr;
-    
+
     while( *name==' ' )
         name++;
-    
+
     ptr = DataFileName;
     while( *name )
     {   *ptr++ = ToUpper(*name);
         name++;
     }
-    
+
     /* Strip trailing spaces! */
     while( (ptr!=DataFileName) && (ptr[-1]==' ') )
         ptr--;
@@ -350,14 +352,14 @@ char *ProcessFileName( char *name )
 char *ProcessFileName( char *name )
 {
     register char *ptr;
-    
+
     while( *name==' ' )
         name++;
-    
+
     ptr = DataFileName;
     while( *name )
         *ptr++ = *name++;
-    
+
     /* Strip trailing spaces! */
     while( (ptr!=DataFileName) && (ptr[-1]==' ') )
         ptr--;
@@ -366,14 +368,14 @@ char *ProcessFileName( char *name )
 }
 #endif
 
-#ifdef VMS 
+#ifdef VMS
 char *ProcessFileName( char *name )
 {
     register char *ptr;
-    
+
     while( *name==' ' )
         name++;
-    
+
     ptr = DataFileName;
     while( *name && (*name!=' ') )
     {   *ptr++ = ToUpper(*name);
@@ -401,11 +403,13 @@ static int IsSecure( int ch )
 
 char *ProcessFileName( char *name )
 {
+    #ifndef _WIN32
     register struct passwd *entry;
+#endif
     register char *temp;
     register char *ptr;
     char username[64];
-    
+
     while( *name==' ' )
         name++;
     
@@ -418,21 +422,25 @@ char *ProcessFileName( char *name )
         
         ptr = DataFileName;
         if( *username )
-        {   if( (entry=getpwnam(username)) )
+        {
+#ifndef _WIN32
+            if( (entry=getpwnam(username)) )
             {   temp = entry->pw_dir;
                 endpwent();
-            } else /* Unknown user! */
+            } else
+#endif
+            /* Unknown user! */
             {   temp = username;
                 *ptr++ = '~';
             }
 
         } else if( !(temp=(char*)getenv("HOME")) )
             temp = ".";
-        
+
         while( *temp )
             *ptr++ = *temp++;
     } else ptr = DataFileName;
-    
+
     /* Strip dubious characters! */
     while( *name && (*name!=' ') )
         if( IsSecure(*name) )
@@ -455,7 +463,7 @@ static FILE *OpenDataFile( char *begin, char *end )
     register char *src, *dst;
     register FILE *fp;
     register int i;
-    
+
     for( i=0; i<MaxFileExt; i++ )
     {   dst = end; src = FileExt[i];
         while( (*dst++ = *src++) );
@@ -473,7 +481,7 @@ static FILE *OpenDataFile( char *begin, char *end )
 static FILE *OpenDataFile( char *begin, char *end )
 {
     register FILE *fp;
-    
+
     fp = fopen(begin,"rb");
     return fp;
 }
@@ -484,7 +492,7 @@ int ProcessFile( int format, int info, FILE *fp )
 {
     register int done;
     char __far *temp;
-    
+
     temp = getenv("RASMOLCIF");
     if (temp) {
         UseCIF = 0;
@@ -510,7 +518,7 @@ int ProcessFile( int format, int info, FILE *fp )
 #endif
         default:              done = False;
     }
-    
+
     if( !done )
     {   return False;
     } else if( !Database )
@@ -527,7 +535,7 @@ int ProcessFile( int format, int info, FILE *fp )
     if( Interactive )
         FetchEvent(False);
 #endif
-    
+
     ReDrawFlag |= RFInitial;
     if( CalcBondsFlag )
     {   if( Info.bondcount < (MainAtomCount+HetaAtomCount)-Info.chaincount )
@@ -537,19 +545,19 @@ int ProcessFile( int format, int info, FILE *fp )
         }
     }
     if( CalcSurfFlag ) CreateSurfaceBonds();
-    
+
     /* Explicit Hydrogen Bonds! */
     if( Info.hbondcount > 0 )
         SetHBondStatus(True,True,0,0);
-    
+
     /* Explicit SSbonds!        */
     if (Info.ssbondcount > 0 ) {
         SetHBondStatus(False,True,0,0);
         SSBondMode = True;
     }
-    
+
     InitialTransform();
-    
+
     VoxelsClean = False;
     ApplyTransform();
     return True;
@@ -566,14 +574,14 @@ static int FetchFileOne( int format, int info, char *name )
     register char *tmp;
     char buffer[128];
 #endif /* APPLEMAC */
-    
+
     register int done = 0;
     register FILE *fp;
-    
+
     DataFileFormat = 0;
     name = ProcessFileName(name);
     fp = OpenDataFile(DataFileName,name);
-    
+
 #ifndef APPLEMAC
     /* Search for directory specification! */
 #ifndef VMS
@@ -586,7 +594,7 @@ static int FetchFileOne( int format, int info, char *name )
 #else
     done = True;
 #endif
-    
+
     /* Try using a default file path! */
     if( !fp && done )
     {   char* datadir;
@@ -606,11 +614,11 @@ static int FetchFileOne( int format, int info, char *name )
             src = (char*)getenv("RASMOLPATH");
             datadir = "Data";
         }
-        if( src && *src ) {    
+        if( src && *src ) {
 #ifdef VMS
             dst = buffer;
             while( *src ) *dst++ = *src++;
-            
+
             tmp = DataFileName;
             while( *dst = *tmp++ ) dst++;
             if( fp = OpenDataFile(buffer,dst) )
@@ -618,11 +626,11 @@ static int FetchFileOne( int format, int info, char *name )
 #else
             while( *src )
             {   dst = buffer;
-                while( *src && (*src!=':') ) 
+                while( *src && (*src!=':') )
                     *dst++ = *src++;
-                if( *src == ':' ) 
+                if( *src == ':' )
                     src++;
-                
+
                 if( dst != buffer )
                 {   if( *(dst-1) != DirChar )
                     *dst++ = DirChar;
@@ -644,15 +652,15 @@ static int FetchFileOne( int format, int info, char *name )
         }
     }
 #endif /* APPLEMAC */
-    
-    
+
+
 #ifdef CEXIOLIB
     if( !fp && (format==FormatCEX) )
     {   if( ProcessFile(format,info,fp) )
         return True;
     }
 #endif
-    
+
     if( !fp )
     {   *name = '\0';
         InvalidateCmndLine();
@@ -662,13 +670,13 @@ static int FetchFileOne( int format, int info, char *name )
         CommandActive=False;
         return False;
     }
-    
+
 #ifdef UNIX
     done = getc(fp);
     if( done == 0x1f )
     {   done = getc(fp);
         fclose(fp);
-        
+
         if( done == 0x9d )
         {   /* Should #include <signal.h> and trap "" SIGPIPE */
             sprintf(buffer,"trap \"\" 13; uncompress -c '%s' 2> /dev/null\n",
@@ -682,7 +690,7 @@ static int FetchFileOne( int format, int info, char *name )
             WriteString(MsgStrs[StrCFmt]);
             return False;
         }
-        
+
         comp = True;
         fp = popen(buffer,"r");
         if( !fp )
@@ -695,9 +703,9 @@ static int FetchFileOne( int format, int info, char *name )
         comp = False;
     }
 #endif
-    
+
     done = ProcessFile(format,info,fp);
-    
+
 #ifdef UNIX
     if( comp )
     {   if( pclose(fp) )
@@ -717,7 +725,7 @@ int FetchFile( int format, int info, char *name )
 {
     int SaveMolecule = MoleculeIndex;
     int result;
-    
+
     if (NumMolecules >= MAX_MOLECULES) {
         return 0;
     }
@@ -766,10 +774,10 @@ int DivertToData( int format, int info )
     register int ch,len,done;
     register long pos;
     FILE *fp;
-    
+
     fp = FileStack[FileDepth];
     pos = ftell(fp);
-    do 
+    do
     {   len = 0;
         ch = getc(fp);
         while( (ch!='\n') && (ch!='\r') &&  (ch!=EOF) )
@@ -777,13 +785,13 @@ int DivertToData( int format, int info )
             CurLine[len++] = ch;
             ch = getc(fp);
         }
-        
+
         if( ch == '\r' )
         {   ch = getc(fp);
             if( ch != '\n' )
                 ungetc(ch,fp);
         }
-        
+
         if( len<MAXBUFFLEN )
         {   CurLine[len] = '\0';
             TokenPtr = CurLine;
@@ -799,7 +807,7 @@ int DivertToData( int format, int info )
                     return False;
                   }
               } else {
-                  if ( CurToken == HeaderTok || CurToken == CIFDataTok ) 
+                  if ( CurToken == HeaderTok || CurToken == CIFDataTok )
                   {
                     Recycle = &CurLine[0];
                     AcceptData[FileDepth] = 'N';
@@ -817,7 +825,7 @@ int DivertToData( int format, int info )
             }
         } else CommandError(MsgStrs[StrSLong]);
     } while( ch!=EOF );
-    
+
 	if( SetNewMolecule() )
 	{	fseek(fp,0,SEEK_SET);
 		AcceptData[FileDepth] = 'N';
@@ -827,7 +835,7 @@ int DivertToData( int format, int info )
 	} else {
 	    CommandError(MsgStrs[ErrBadLoad]);
 	}
-    
+
     return False;
 }
 
@@ -838,7 +846,7 @@ void LoadScriptFile( FILE *fp,  char *name )
     register int ch;
     register size_t len;
     register int stat;
-    
+
     if( fp )
     {   FileDepth++;
         len = strlen(name)+1;
@@ -848,7 +856,7 @@ void LoadScriptFile( FILE *fp,  char *name )
         FileStack[FileDepth] = fp;
         LineStack[FileDepth] = 0;
         AcceptData[FileDepth] = 'Y';
-        
+
         do {
             len = 0;
             ch = getc(fp);
@@ -857,7 +865,7 @@ void LoadScriptFile( FILE *fp,  char *name )
                 CurLine[len++] = ch;
                 ch = getc(fp);
             }
-            
+
             if( ch == '\r' )
             {   ch = getc(fp);
                 if( ch != '\n' )
@@ -880,7 +888,7 @@ void LoadScriptFile( FILE *fp,  char *name )
                         break;
                 } else if( IsPaused )
                     return;
-                
+
             } else CommandError(MsgStrs[StrSLong]);
         } while( ch!=EOF );
         _ffree(NameStack[FileDepth]);
@@ -900,11 +908,11 @@ void LoadScriptFile( FILE *fp,  char *name )
 
 
 static int Define_Symbol(const char __far * string, const char __far * definition) {
-    
+
     int clead, is;
     Symbol __far * symbol;
     Symbol __far * prevsymbol;
-    
+
     clead = string[0];
     clead &= 0xFF;
     symbol = Defer_Symbols[clead];
@@ -918,7 +926,7 @@ static int Define_Symbol(const char __far * string, const char __far * definitio
                 symbol->definition_capacity = symbol->definition_size = strlen(definition)+1;
             }
             strcpy((char *)(symbol->definition),definition);
-            
+
             return 0;
         }
         prevsymbol = symbol;
@@ -963,11 +971,11 @@ static int Define_Symbol(const char __far * string, const char __far * definitio
 
 
 static int Append_Symbol_Definition(const char __far * string, const char __far * definition, int bylines) {
-    
+
     int clead, is, il;
     Symbol __far * symbol;
     Symbol __far * prevsymbol;
-    
+
     size_t xsize;
     il = bylines?1:0;
     clead = string[0];
@@ -989,7 +997,7 @@ static int Append_Symbol_Definition(const char __far * string, const char __far 
             }
             if (bylines) strcat((char *)(symbol->definition),"\n");
             strcat((char *)(symbol->definition),definition);
-            
+
             return 0;
         }
         prevsymbol = symbol;
@@ -1033,11 +1041,11 @@ static int Append_Symbol_Definition(const char __far * string, const char __far 
 }
 
 static int Free_Symbol(const char __far * string) {
-    
+
     int clead;
     Symbol __far * symbol;
     Symbol __far * prevsymbol;
-    
+
     clead = string[0];
     clead &= 0xFF;
     symbol = Defer_Symbols[clead];
@@ -1070,7 +1078,7 @@ static int Find_Symbol_Definition(const char __far * string, const char __far * 
   int clead;
   Symbol __far * symbol;
   Symbol __far * prevsymbol;
-  
+
   clead = string[0];
   clead &= 0xFF;
   symbol = Defer_Symbols[clead];
@@ -1089,7 +1097,7 @@ static int Find_Symbol_Definition(const char __far * string, const char __far * 
 void ExecuteDeferCommand( void ) {
     const char * strptr;
     char ch;
-    
+
     FetchToken();
     if (CurToken == ZapTok) {
         Free_Symbol("");
@@ -1110,7 +1118,7 @@ void ExecuteDeferCommand( void ) {
     CurToken = 0;
     ch = *TokenPtr++;
     while( ch && (ch!='#') ){
-        if( isspace(ch) ){ 
+        if( isspace(ch) ){
             ch = *TokenPtr++;
             continue;
         }
@@ -1159,30 +1167,30 @@ void ExecuteExecuteCommand( void ) {
     double * dialsave_old;
     double * dialsave_new;
     int RDF;
-    
-    
+
+
     FetchToken();
     if( !CurToken ){
         CommandError(MsgStrs[ErrSyntax]);
         return;
     }
-    if (!Find_Symbol_Definition(TokenIdent,&definition)) 
-    {   
+    if (!Find_Symbol_Definition(TokenIdent,&definition))
+    {
         save_Interactive = Interactive;
-        
+
         dialsave_old = (double *)_fmalloc(sizeof(double)*11*NumMolecules);
         if (!dialsave_old) {
             RasMolFatalExit(MsgStrs[StrMalloc]);
         }
         save_molecule = MoleculeIndex;
         save_num_molecules = NumMolecules;
-        
+
         for (im=0; im<NumMolecules; im++) {
             SwitchMolecule(im);
             memmove((char *)(dialsave_old+im*11),(char *)DialValue,11*sizeof(double));
         }
         SwitchMolecule(save_molecule);
-        
+
         Interactive=False;      /* Supress all screen activity while
          executing the commands first time around */
         do {
@@ -1202,7 +1210,7 @@ void ExecuteExecuteCommand( void ) {
             {   CurLine[len] = '\0';
                 stat = ExecuteCommand();
                 if( stat )
-                {   if( stat == QuitTok ) { 
+                {   if( stat == QuitTok ) {
                     Interactive = save_Interactive;
                     RasMolExit();
                 } else /* ExitTok */
@@ -1210,41 +1218,41 @@ void ExecuteExecuteCommand( void ) {
                 }
             } else CommandError(MsgStrs[StrSLong]);
         } while( ch );
-        
+
         dialsave_new = (double *)_fmalloc(sizeof(double)*11*NumMolecules);
         if (!dialsave_new) {
             _ffree(dialsave_old);
             RasMolFatalExit(MsgStrs[StrMalloc]);
         }
         save_molecule = MoleculeIndex;
-        
+
         for (im=0; im<NumMolecules; im++) {
             SwitchMolecule(im);
             memmove((char *)(dialsave_new+im*11),(char *)DialValue,11*sizeof(double));
-            if (im<save_num_molecules) 
+            if (im<save_num_molecules)
             {
                 memmove((char *)DialValue,(char *)(dialsave_old+im*11),11*sizeof(double));
             }
         }
-        
+
         SwitchMolecule(save_molecule);
-        
+
         RDF = ReDrawFlag;
-        
+
         RefreshScreen();
-        
+
         ReDrawFlag |= RDF;
-        
+
         Interactive = save_Interactive;
-        
+
         for (im=0; im<NumMolecules; im++) {
             SwitchMolecule(im);
             memmove((char *)DialValue,(char *)(dialsave_new+im*11),11*sizeof(double));
         }
-        
+
         SwitchMolecule(save_molecule);
-        
-        
+
+
     }
     return;
 }
@@ -1260,25 +1268,25 @@ void ShowRecordCommand( void ) {
 	int millisec;
 	char param[1024];
 	millisec = RecordFrom + 1000.*((double)record_frame[0])/record_fps;
-	if (RecordPause 
+	if (RecordPause
 	    || RecordTemplate[0] == '\0'
-	    || (millisec > RecordMaxMS && RecordMaxMS > 1.) 
-	    || (RecordUntil >= RecordFrom 
+	    || (millisec > RecordMaxMS && RecordMaxMS > 1.)
+	    || (RecordUntil >= RecordFrom
             && millisec > RecordUntil + 1000.*((double)record_frame[0])/record_fps)) {
         WriteString("record off\n");
     } else {
         sprintf(param,"record from %g until %g\n",RecordFrom/1000., RecordUntil/1000.);
         WriteString(param);
         if (record_fps > 0.) {
-        	sprintf(param,"set record.fps %g\n",record_fps);
+		sprintf(param,"set record.fps %g\n",record_fps);
             WriteString(param);
         }
         if (record_aps > 0.) {
-        	sprintf(param,"set record.aps %g\n",record_aps);
+		sprintf(param,"set record.aps %g\n",record_aps);
             WriteString(param);
         }
         if (record_dwell > 0.) {
-        	sprintf(param,"set record.dwell %g\n",record_dwell);
+		sprintf(param,"set record.dwell %g\n",record_dwell);
             WriteString(param);
         }
         if (record_on[0]) WriteString("record motion on\n");
@@ -1292,7 +1300,7 @@ void ShowRecordCommand( void ) {
         }
         WriteString("record on ");
         switch(RecordOption) {
-                
+
             case (0):
 #ifdef EIGHTBIT
                 WriteString("GIF "); break;
@@ -1332,7 +1340,7 @@ void ShowRecordCommand( void ) {
                 WriteString("VECTPS "); break;
             case(Raster3DTok):
                 WriteString("R3D "); break;
-                
+
             case(RasMolTok):
             case(ScriptTok):
                 WriteString("SCRIPT "); break;
@@ -1355,7 +1363,7 @@ void ShowRecordCommand( void ) {
                 if (RecordSubOption == MirrorTok) WriteString("MIRROR ");
                 if (RecordSubOption == RotateTok) WriteString("ROTATE ");
                 break;
-            	
+
         }
         WriteString(param);
         WriteString("\n");
@@ -1367,17 +1375,17 @@ void ShowPlayCommand( void ) {
 	int millisec;
 	char param[1024];
 	millisec = PlayFrom + 1000.*((double)play_frame[0])/play_fps;
-	if (PlayPause 
+	if (PlayPause
 	    || PlayTemplate[0] == '\0'
-	    || (millisec > PlayMaxMS && PlayMaxMS > 1.) 
-	    || (PlayUntil >= PlayFrom 
+	    || (millisec > PlayMaxMS && PlayMaxMS > 1.)
+	    || (PlayUntil >= PlayFrom
             && millisec > PlayUntil + 1000.*((double)play_frame[0])/play_fps)) {
         WriteString("play off\n");
     } else {
         sprintf(param,"play from %g until %g\n",PlayFrom/1000., PlayUntil/1000.);
         WriteString(param);
         if (play_fps > 0.) {
-        	sprintf(param,"set play.fps %g\n",record_fps);
+		sprintf(param,"set play.fps %g\n",record_fps);
             WriteString(param);
         }
         if (PlayMaxMS == 1.) {
@@ -1387,7 +1395,7 @@ void ShowPlayCommand( void ) {
         }
         WriteString("play on ");
         switch(PlayOption) {
-                
+
             case (0):
 #ifdef EIGHTBIT
                 WriteString("GIF "); break;
@@ -1427,7 +1435,7 @@ void ShowPlayCommand( void ) {
                 WriteString("VECTPS "); break;
             case(Raster3DTok):
                 WriteString("R3D "); break;
-                
+
             case(RasMolTok):
             case(ScriptTok):
                 WriteString("SCRIPT "); break;
@@ -1450,7 +1458,7 @@ void ShowPlayCommand( void ) {
                 if (PlaySubOption == MirrorTok) WriteString("MIRROR ");
                 if (PlaySubOption == RotateTok) WriteString("ROTATE ");
                 break;
-            	
+
         }
         WriteString(param);
         WriteString("\n");
@@ -1463,8 +1471,8 @@ void WriteMovieFrame( void ) {
 	char param[1024];
 	millisec = RecordFrom + 1000.*((double)record_frame[0])/record_fps;
 	if (RecordTemplate[0] == '\0'
-	    || (millisec > RecordMaxMS && RecordMaxMS > 1.) 
-	    || (RecordUntil >= RecordFrom 
+	    || (millisec > RecordMaxMS && RecordMaxMS > 1.)
+	    || (RecordUntil >= RecordFrom
         && millisec > RecordUntil)) {
         RecordPause = True;
     } else {
@@ -1489,20 +1497,20 @@ void WriteMovieFrame( void ) {
 }
 
 static int PlayMovieFrame( void ) {
-  	int millisec;
-  	int checkfile;
+	int millisec;
+	int checkfile;
 	char param[1024];
     FILE * moviefp;
 	millisec = PlayFrom + 1000.*((double)play_frame[0])/play_fps;
 	if (PlayTemplate[0] == '\0'
-	    || (millisec > PlayMaxMS && PlayMaxMS > 1.) 
-	    || (PlayUntil >= PlayFrom 
+	    || (millisec > PlayMaxMS && PlayMaxMS > 1.)
+	    || (PlayUntil >= PlayFrom
             && millisec > PlayUntil)) {
         PlayPause = True;
         return 1;
     } else {
         checkfile = False;
-        for (play_frame[1] = 0;play_frame[1]<=millisec; play_frame[1]++) 
+        for (play_frame[1] = 0;play_frame[1]<=millisec; play_frame[1]++)
         {
             if (RecordMaxMS == 1.) {
                 sprintf(param,"%s",PlayTemplate);
@@ -1557,7 +1565,7 @@ static void PlayMovie( void ) {
     if (IsMoleculeToken(PlayOption)) {
         SwitchMolecule(SaveMolecule);
     }
-    
+
     return;
 }
 
@@ -1566,10 +1574,10 @@ static void PlayMovie( void ) {
    The first string of s...s (case insensitive s's or digits) is changed to %.nd where
    n is the number of s's.  An s in the template can be protected
    from this conversion with a backslash.  Each % is converted to %%.
-   
+
    *** Warning:  if the length of param is K, then the size of the
    template must be at least max(1+2*K,3+K)
-   
+
    The result is a conversion string for sprintf */
 
 static int ConvPRTemplate(char * template, const char * param, size_t limit, double *numfiles) {
@@ -1579,7 +1587,7 @@ static int ConvPRTemplate(char * template, const char * param, size_t limit, dou
   int ii;
   int escape;
   char * torig;
-  
+
   torig = template;
   escape = 0;
   *numfiles = 1.;
@@ -1599,7 +1607,7 @@ static int ConvPRTemplate(char * template, const char * param, size_t limit, dou
     break;
   }
   if (c) {
-  	swid = 1;
+	swid = 1;
     *numfiles = 10.;
     while ((c=*param++)) {
       if (c != 's' && c != 'S' && !(isdigit(c))) break;
@@ -1622,11 +1630,11 @@ static int ConvPRTemplate(char * template, const char * param, size_t limit, dou
         }
         cwid++;
       }
-    	
+
     } while (swid);
-  	template += cwid;
-  	*template++ = 'd';
-  	if ( template-torig >= limit ) return -1;
+	template += cwid;
+	*template++ = 'd';
+	if ( template-torig >= limit ) return -1;
 
   }
   escape=0;
@@ -1684,7 +1692,7 @@ static char __far *xfgets( char __far* s, int n,  FILE __far *fp )
     }
     *cs++ = '\n';
     *cs++ = '\0';
-    return s;             
+    return s;
 }
 
 
@@ -1696,12 +1704,12 @@ static HlpEntry __far *EnterHelpInfo( char *text )
     register int res,len,i;
     register char ch;
     char keyword[32];
-    
+
     ptr = (void __far*)0;
     while( *text && (*text!='\n') )
     {   while( *text && (*text!='\n') && (*text==' ') )
         text++;
-        
+
         len = 0;
         while( *text && (*text!='\n') && (*text!=' ') )
             if( len<31 )
@@ -1709,12 +1717,12 @@ static HlpEntry __far *EnterHelpInfo( char *text )
                 keyword[len++] = ToUpper(ch);
             } else text++;
         keyword[len]='\0';
-        
+
         if( ptr )
         {   tmp = &ptr->info;
             ptr = (void __far*)0;
         } else tmp = &HelpInfo;
-        
+
         while( *tmp )
         {   res = _fstrcmp(keyword,(*tmp)->keyword);
             if( res==0 ) /* Exact Match */
@@ -1724,11 +1732,11 @@ static HlpEntry __far *EnterHelpInfo( char *text )
                 break;
             tmp = &(*tmp)->next;
         }
-        
+
         if( !ptr )
         {   if( !FreeInfo )
             {   ptr = (HlpEntry __far*)_fmalloc(HelpPool*sizeof(HlpEntry));
-                if( !ptr ) 
+                if( !ptr )
                     RasMolFatalExit(MsgStrs[StrSMem]);
                 for( i=1; i<HelpPool; i++ )
                 {   ptr->next = FreeInfo;
@@ -1742,7 +1750,7 @@ static HlpEntry __far *EnterHelpInfo( char *text )
             ptr->keyword = (char __far*)_fmalloc(len+1);
             for( i=0; i<=len; i++ )
                 ptr->keyword[i] = keyword[i];
-            
+
             ptr->info = (void __far*)0;
             ptr->next = *tmp;
             ptr->fpos = 0;
@@ -1761,26 +1769,26 @@ void InitHelpFile( void )
     register FILE *fp;
     register long pos;
     char buffer[82];
-    
+
     HelpFileName = "rasmol.hlp";
     fp=fopen(HelpFileName,"rb");
-    
+
     if( !fp )
     {   src = (char*)getenv("RASMOLPATH");
         if( src )
-        {   HelpFileName = dst = HelpFileBuf; 
+        {   HelpFileName = dst = HelpFileBuf;
             while( *src )
                 *dst++ = *src++;
 #ifndef VMS
             if( (dst!=HelpFileBuf) && (*(dst-1)!=DirChar) )
                 *dst++ = DirChar;
 #endif
-            
+
             strcpy(dst,"rasmol.hlp");
             fp = fopen(HelpFileName,"rb");
         }
     }
-    
+
 #ifdef RASMOLDIR
     if( !fp )
     {   src = RASMOLDIR;
@@ -1791,20 +1799,20 @@ void InitHelpFile( void )
         if( (dst!=HelpFileBuf) && (*(dst-1)!=DirChar) )
             *dst++ = DirChar;
 #endif
-        
-        src = "rasmol.hlp"; 
+
+        src = "rasmol.hlp";
         while( (*dst++ = *src++) );
         fp = fopen(HelpFileName,"rb");
     }
 #endif
-    
+
     if( !fp )
     {   InvalidateCmndLine();
         WriteString(MsgStrs[StrHFil]);
         HelpFileName = NULL;
         return;
     }
-    
+
     pos = 0;
     xfgets(buffer,80,fp);
     while( !feof(fp) )
@@ -1815,19 +1823,19 @@ void InitHelpFile( void )
             {   ptr->info = fix;
                 fix = ptr;
             }
-            
+
             pos = ftell(fp);
             if( !xfgets(buffer,80,fp) )
                 break;
         }
-        
+
         while( fix )
         {   ptr = fix->info;
             fix->info = (void __far*)0;
             fix->fpos = pos;
             fix = ptr;
         }
-        
+
         while( xfgets(buffer,80,fp) )
             if( *buffer=='?' )
                 break;
@@ -1846,10 +1854,10 @@ static void FindHelpInfo( void )
     register char ch;
     char keyword[32];
     char buffer[82];
-    
+
     while( *TokenPtr && (*TokenPtr==' ') )
         TokenPtr++;
-    
+
     if( *TokenPtr )
     {   ptr = NULL;
         do {
@@ -1860,48 +1868,48 @@ static void FindHelpInfo( void )
                     keyword[len++] = ToUpper(ch);
                 } else TokenPtr++;
             keyword[len]='\0';
-            
+
             if( ptr )
             {   tmp = &ptr->info;
                 ptr = (void __far*)0;
             } else tmp = &HelpInfo;
-            
+
             while( *tmp )
             {   res = _fstrcmp(keyword,(*tmp)->keyword);
                 if( res<0 )
                 {   if( PrefixString(keyword,(*tmp)->keyword) )
                 {   ptr = *tmp;
-                    if( ptr->next && 
+                    if( ptr->next &&
                        PrefixString(keyword,ptr->next->keyword) )
                     {   InvalidateCmndLine();
                         WriteString(MsgStrs[StrHTop]);
                         return;
                     } else break;
                 } else break;
-                } else if( res==0 ) 
+                } else if( res==0 )
                 {   ptr = *tmp;
                     break;
                 }
                 tmp = &(*tmp)->next;
             }
-            
+
             while( *TokenPtr && (*TokenPtr==' ') )
                 TokenPtr++;
         } while( *TokenPtr && ptr );
-        
+
         if( !ptr || !ptr->fpos )
         {   InvalidateCmndLine();
             WriteString(MsgStrs[StrHNone]);
             return;
         } else pos=ptr->fpos;
     } else pos=0;
-    
-    
+
+
     if( !(fp=fopen(HelpFileName,"rb")) )
         RasMolFatalExit(MsgStrs[StrHROpn]);
-    
+
     InvalidateCmndLine();
-    
+
     fseek(fp,pos,SEEK_SET);
     while( xfgets(buffer,80,fp) )
         if( *buffer!='?' )
@@ -1919,7 +1927,7 @@ static void FindHelpInfo( void )
 static int FetchToken( void )
 {
     register char ch;
-    
+
     CurToken = 0;
     ch = *TokenPtr++;
     while( ch && (ch!='#') )
@@ -1927,7 +1935,7 @@ static int FetchToken( void )
     {   ch = *TokenPtr++;
         continue;
     }
-        
+
         TokenStart = TokenPtr-1;
         if( isalpha(ch) )
         {   TokenLength = 1;
@@ -1941,30 +1949,30 @@ static int FetchToken( void )
                 return(0);
             } else TokenIdent[TokenLength] = '\0';
             return( CurToken = LookUpKeyword(TokenIdent) );
-            
+
         } else if( isdigit(ch) )
         {   TokenValue = ch-'0';
             while( isdigit(*TokenPtr) )
                 TokenValue = 10*TokenValue + (*TokenPtr++)-'0';
             return( CurToken = NumberTok );
-            
+
         } else if( (ch=='\'') || (ch=='\"') || (ch=='`') )
         {   TokenLength = 0;
             while( *TokenPtr && (TokenLength<128) && (*TokenPtr!=ch) )
                 TokenIdent[TokenLength++] = *TokenPtr++;
-            
+
             if( ch != *TokenPtr )
             {   if( *TokenPtr )
             {   CommandError(MsgStrs[StrCTerm]);
             } else CommandError(MsgStrs[StrCLong]);
                 return( 0 );
             } else TokenPtr++;
-            
+
             TokenIdent[TokenLength]='\0';
             return( CurToken = StringTok );
         } else if( ispunct(ch) )
             return( CurToken = ch );
-        
+
         ch = *TokenPtr++;
     }
     TokenPtr--;
@@ -1985,13 +1993,13 @@ static void FetchFloat( Long value, int scale )
 {
     register int count;
     register int mant;
-    
+
     if( !value && !isdigit(*TokenPtr) )
     {   CommandError(MsgStrs[StrFNum]);
         TokenValue = 0;
         return;
     }
-    
+
     mant = 0;
     count = 1;
     while( isdigit(*TokenPtr) )
@@ -2001,7 +2009,7 @@ static void FetchFloat( Long value, int scale )
     }
         TokenPtr++;
     }
-    
+
     mant = (scale*mant)/count;
     TokenValue = value*scale + mant;
 }
@@ -2019,7 +2027,7 @@ static void FetchBracketedTriple(Long Triple[3]) {
 		}
 		if (CurToken == NumberTok)  {
 		    if (*TokenPtr=='.')  {
-		    	TokenPtr++;
+			TokenPtr++;
                 FetchFloat(TokenValue,250);
 		    }
 		} else if( CurToken=='.' ) {
@@ -2027,8 +2035,8 @@ static void FetchBracketedTriple(Long Triple[3]) {
         } else CommandError(MsgStrs[ErrNotNum]);
 	    Triple[index] = neg?(-TokenValue):TokenValue;
 	    FetchToken();
-	    if( !(CurToken == ',' && index < 2) && 
-           !(CurToken == ']' && index == 2 )) {   
+	    if( !(CurToken == ',' && index < 2) &&
+           !(CurToken == ']' && index == 2 )) {
             CommandError(MsgStrs[ErrSyntax]);
             return;
         }
@@ -2040,55 +2048,55 @@ static void FetchBracketedTriple(Long Triple[3]) {
 static int ParseColour( void )
 {
     register RGBStruct *rgb;
-    
+
     if( IsColourToken(CurToken) )
     {   rgb = ColourTable + Token2Colour(CurToken);
         RVal = rgb->red;
         GVal = rgb->grn;
         BVal = rgb->blu;
         return True;
-        
+
     } else if( CurToken == '[' )
     {   RVal = GVal = BVal = 0;
-        
-        if( NextIf(NumberTok,ErrNotNum) ) 
+
+        if( NextIf(NumberTok,ErrNotNum) )
         {   return False;
         } else if( TokenValue>255 )
-        {   CommandError(MsgStrs[ErrBigNum]); 
+        {   CommandError(MsgStrs[ErrBigNum]);
             return False;
         } else RVal = (int)TokenValue;
-        
-        if( NextIf(',',ErrNotSep) ) 
+
+        if( NextIf(',',ErrNotSep) )
             return False;
-        
-        if( NextIf(NumberTok,ErrNotNum) ) 
+
+        if( NextIf(NumberTok,ErrNotNum) )
         {   return False;
         } else if( TokenValue>255 )
-        {   CommandError(MsgStrs[ErrBigNum]); 
+        {   CommandError(MsgStrs[ErrBigNum]);
             return False;
         } else GVal = (int)TokenValue;
-        
-        if( NextIf(',',ErrNotSep) ) 
+
+        if( NextIf(',',ErrNotSep) )
             return False;
-        
-        if( NextIf(NumberTok,ErrNotNum) ) 
+
+        if( NextIf(NumberTok,ErrNotNum) )
         {   return False;
         } else if( TokenValue>255 )
         {   CommandError(MsgStrs[ErrBigNum]);
             return False;
         } else BVal = (int)TokenValue;
-        
+
         return !NextIf(']',ErrNotBrac);
-        
+
     } else if( !CurToken && (*TokenPtr=='#') )
     {   RVal = 0;
         GVal = 0;
         BVal = 0;
-        
+
     } else if( CurToken == IdentTok )
         if( Interactive )
             return LookUpColour(TokenIdent,&RVal,&GVal,&BVal);
-    
+
     return False;
 }
 
@@ -2097,29 +2105,29 @@ static Expr *ParseRange( int neg )
 {
     register Expr *tmp1,*tmp2;
     register char ch;
-    
+
     tmp1 = AllocateNode();
     tmp1->type = OpLftProp|OpRgtVal;
     tmp1->rgt.val = neg? -(int)TokenValue : (int)TokenValue;
     tmp1->lft.val = PropResId;
-    
+
     if( *TokenPtr == '-' )
     {   TokenPtr++;
         neg = (*TokenPtr=='-');
         if( neg ) TokenPtr++;
         FetchToken();
-        
+
         if( CurToken != NumberTok )
         {   CommandError(MsgStrs[ErrNotNum]);
             DeAllocateExpr( tmp1 );
             return( (Expr*)NULL );
         }
-        
+
         tmp1->type |= OpMoreEq;
         tmp2 = AllocateNode();
         tmp2->rgt.ptr = tmp1;
         tmp2->type = OpAnd;
-        
+
         tmp1 = AllocateNode();
         tmp1->type = OpLftProp|OpRgtVal|OpLessEq;
         tmp1->rgt.val = neg? -(int)TokenValue : (int)TokenValue;
@@ -2127,29 +2135,29 @@ static Expr *ParseRange( int neg )
         tmp2->lft.ptr = tmp1;
         tmp1 = tmp2;
     } else tmp1->type |= OpEqual;
-    
+
     if( *TokenPtr == ':' )
         TokenPtr++;
-    
+
     ch = *TokenPtr;
     if( isalnum(ch) )
     {   ch = ToUpper(ch);
         TokenPtr++;
-        
+
         tmp2 = AllocateNode();
         tmp2->type = OpAnd;
         tmp2->rgt.ptr = tmp1;
-        
+
         tmp1 = AllocateNode();
         tmp1->type = OpEqual | OpLftProp | OpRgtVal;
-        tmp1->lft.val = PropChain;               
+        tmp1->lft.val = PropChain;
         tmp1->rgt.val = ch;
-        
+
         tmp2->lft.ptr = tmp1;
         tmp1 = tmp2;
     } else if( (ch=='?') || (ch=='%') || (ch=='*') )
         TokenPtr++;
-    
+
     FetchToken();
     return tmp1;
 }
@@ -2160,7 +2168,7 @@ static Expr *ParseExpression( int level )
     register Expr *tmp1,*tmp2;
     register int done, pred = 0;
     register int neg;
-    
+
     switch( level )
     {    case(0): /* Disjunctions */
             tmp1 = ParseExpression(1);
@@ -2170,7 +2178,7 @@ static Expr *ParseExpression( int level )
             {   if( FetchToken()=='|' )
                 FetchToken();
             } else FetchToken();
-                
+
                 tmp2 = AllocateNode();
                 tmp2->type = OpOr;
                 tmp2->lft.ptr = tmp1;
@@ -2183,7 +2191,7 @@ static Expr *ParseExpression( int level )
                 tmp1 = tmp2;
             }
             return( tmp1 );
-            
+
         case(1): /* Conjunctions */
             tmp1 = ParseExpression(2);
             while( (CurToken==AndTok) || (CurToken==YTok) || (CurToken=='&') )
@@ -2191,7 +2199,7 @@ static Expr *ParseExpression( int level )
             {   if( FetchToken()=='&' )
                 FetchToken();
             } else FetchToken();
-                
+
                 tmp2 = AllocateNode();
                 tmp2->type = OpAnd;
                 tmp2->lft.ptr = tmp1;
@@ -2204,7 +2212,7 @@ static Expr *ParseExpression( int level )
                 tmp1 = tmp2;
             }
             return( tmp1 );
-            
+
         case(2): /* Primitives */
             if( IsPredTok(CurToken) || (CurToken==BackboneTok) )
             {   switch( CurToken )
@@ -2222,23 +2230,23 @@ static Expr *ParseExpression( int level )
                         break;
                     case(CystineTok):  if( Info.ssbondcount < 0 )
                         FindDisulphideBridges();
-                        pred = PredCystine;     
+                        pred = PredCystine;
                         break;
                     case(CisBondedTok):if( Info.cisbondcount<0 )
                         FindCisBonds();
-                        pred = PredCisBond;   
-                        break;		     
+                        pred = PredCisBond;
+                        break;
                     case(BackboneTok): pred = PredMainChain;   break;
                     case(SelectedTok): pred = PropSelect;      break;
                     default:  pred = PredAbsChr(PredTokOrd(CurToken));
                 }
-                
+
                 tmp1 = AllocateNode();
                 tmp1->type = OpConst|OpLftProp|OpRgtVal;
                 tmp1->lft.val = pred;
                 FetchToken();
                 return( tmp1 );
-                
+
             } else if( IsPropTok(CurToken) )
             {   tmp1 = AllocateNode();
                 tmp1->type = OpLftProp|OpRgtVal;
@@ -2252,7 +2260,7 @@ static Expr *ParseExpression( int level )
                     case(AltlTok):        pred = PropAltl;    break;
                 }
                 tmp1->lft.val = pred;
-                
+
                 FetchToken();
                 if( CurToken=='=' )
                 {   tmp1->type |= OpEqual;
@@ -2283,30 +2291,30 @@ static Expr *ParseExpression( int level )
                     DeAllocateExpr( tmp1 );
                     return( (Expr*)NULL );
                 }
-                
-                
+
+
                 if( CurToken == '-' )
                 {   FetchToken();
                     neg = True;
                 } else neg = False;
-                
+
                 if( CurToken!=NumberTok )
                 {   CommandError(MsgStrs[ErrNotNum]);
                     DeAllocateExpr( tmp1 );
                     return( (Expr*)NULL );
-                } 
-                
+                }
+
                 if( neg )
-                {     tmp1->rgt.val = -(int)TokenValue; 
+                {     tmp1->rgt.val = -(int)TokenValue;
                 } else tmp1->rgt.val = (int)TokenValue;
                 FetchToken();
                 return( tmp1 );
-                
+
             } else switch( CurToken )
             {   case('('):    FetchToken();
                     if( !(tmp1=ParseExpression(0)) )
                         return( (Expr*)NULL );
-                    
+
                     if( CurToken!=')' )
                     {   CommandError(MsgStrs[ErrParen]);
                         DeAllocateExpr( tmp1 );
@@ -2314,28 +2322,28 @@ static Expr *ParseExpression( int level )
                     }
                     FetchToken();
                     return(tmp1);
-                    
+
                 case('!'): case('~'):
                 case(NotTok): FetchToken();
                     if( !(tmp1=ParseExpression(2)) )
                         return( (Expr*)NULL );
-                    
+
                     tmp2 = AllocateNode();
                     tmp2->type = OpNot | OpRgtVal;
                     tmp2->lft.ptr = tmp1;
                     return( tmp2 );
-                    
+
                 case('-'):    if( NextIf(NumberTok,ErrNotNum) )
                     return( (Expr*)NULL );
                     return( ParseRange(True) );
-                    
+
                 case(NumberTok):
                     return( ParseRange(False) );
-                    
+
                 case(WithinTok):
                     if( NextIf('(',ErrFunc) )
                         return( (Expr*)NULL );
-                    
+
                     FetchToken();
                     if( CurToken==NumberTok )
                     {   if( *TokenPtr=='.' )
@@ -2346,50 +2354,50 @@ static Expr *ParseExpression( int level )
                     {   CommandError(MsgStrs[ErrNotNum]);
                         return( (Expr*)NULL );
                     } else FetchFloat(0,250);
-                    
+
                     if( TokenValue>10000 )
                     {   CommandError(MsgStrs[ErrBigNum]);
                         return( (Expr*)NULL );
                     } else pred = (int)TokenValue;
                     if( NextIf(',',ErrNotSep) )
                         return( (Expr*)NULL );
-                    
+
                     FetchToken();
                     if( !(tmp1=ParseExpression(0)) )
                         return( (Expr*)NULL );
-                    
+
                     if( CurToken!=')' )
                     {   CommandError(MsgStrs[ErrParen]);
                         DeAllocateExpr( tmp1 );
                         return( (Expr*)NULL );
                     }
-                    
+
                     FetchToken();
                     if( !pred )
                         return( tmp1 );
-                    
+
                     tmp2 = AllocateNode();
                     tmp2->type = OpWithin;
                     tmp2->lft.limit = (Long)pred*pred;
                     tmp2->rgt.set = BuildAtomSet(tmp1);
                     DeAllocateExpr(tmp1);
                     return( tmp2 );
-                    
+
                 default:      if( CurToken==IdentTok )
                 {   tmp1 = LookUpSetExpr(TokenIdent);
-                    if( !tmp1 ) 
+                    if( !tmp1 )
                         tmp1 = LookUpElement(TokenIdent);
-                    
+
                     if( tmp1 )
                     {   FetchToken();
                         return(tmp1);
                     }
                 }
-                    
+
                     TokenPtr = TokenStart;
                     done = ParsePrimitiveExpr(&TokenPtr);
                     FetchToken();
-                    
+
                     if( !done )
                     {   CommandError(MsgStrs[ErrBadExpr]);
                         DeAllocateExpr( QueryExpr );
@@ -2438,15 +2446,15 @@ static void ExecuteCentreCommand( void )
     register Real x, y, z;
     register Long count;
     int xlatecen;
-    
+
     xlatecen = XlateCen;
-    
+
     FetchToken();
     if( !CurToken || (CurToken==AllTok) )
     {   CentreTransform(0,0,0,xlatecen);
         return;
     }
-    
+
     if( (CurToken==CentreTok) || (CurToken==TranslateTok) ) {
         xlatecen = XlateCen = (CurToken==TranslateTok)?True:False;
         FetchToken();
@@ -2456,16 +2464,16 @@ static void ExecuteCentreCommand( void )
             return;
         }
     }
-    
-    
+
+
     /* Check for Centre [CenX, CenY, CenZ] syntax */
-    
+
     if ( CurToken == '[' )
     {   Long CenV[3];
-        
-        
+
+
         /*      int icen, negcen;
-         
+
          for (icen = 0; icen < 3; icen++)
          { FetchToken();
          CenV[icen] = 0;
@@ -2478,17 +2486,17 @@ static void ExecuteCentreCommand( void )
 	     { CenV[icen] = -TokenValue;
          } else CenV[icen] = TokenValue;
          FetchToken();
-         } 
-         if( !(CurToken == ',' && icen < 2) && 
+         }
+         if( !(CurToken == ',' && icen < 2) &&
          !(CurToken == ']' && icen == 2 ))
          {   CommandError(MsgStrs[ErrSyntax]);
          return;
          }
          }
          */
-        
+
         FetchBracketedTriple(CenV);
-        
+
 #ifdef INVERT
         CenV[1] = -CenV[1];
 #endif
@@ -2504,19 +2512,19 @@ static void ExecuteCentreCommand( void )
 		CentreTransform(CenV[0],CenV[1],-CenV[2],xlatecen);
         return;
     }
-    
+
     QueryExpr = ParseExpression(0);
     if( !QueryExpr ) return;
-    
+
     if( CurToken )
     {   CommandError(MsgStrs[ErrSyntax]);
         DeAllocateExpr(QueryExpr);
         return;
     }
-    
+
     /* CentreZoneExpr(QueryExpr); */
     if( !Database ) return;
-    
+
     count = 0;
     x = y = z = 0.0;
     for( QChain=Database->clist; QChain; QChain=QChain->cnext )
@@ -2528,7 +2536,7 @@ static void ExecuteCentreCommand( void )
                     z += (Real)(QAtom->zorg+QAtom->fzorg);
                     count++;
                 }
-    
+
     if( count )
     {   FetchToken();
         if( CurToken ) {
@@ -2538,7 +2546,7 @@ static void ExecuteCentreCommand( void )
                 CommandError(MsgStrs[ErrSyntax]);
                 return;
             }
-        } 
+        }
         CentreTransform((Long)(x/count),(Long)(y/count),(Long)(z/count),xlatecen);
     } else
     {   InvalidateCmndLine();
@@ -2563,7 +2571,7 @@ static void ExecuteLoadCommand( void )
     register int info;
     register FILE *fp;
 	int checkfile = False;
-    
+
     FetchToken();
     format = FormatPDB;
     if( !*TokenPtr || *TokenPtr==' ' )
@@ -2573,7 +2581,7 @@ static void ExecuteLoadCommand( void )
     } else if( CurToken == DotsTok )
     {   format = FormatDots;
         FetchToken();
-    } else if (CurToken == MapTok) 
+    } else if (CurToken == MapTok)
     {   format = FormatMap;
         if (!Database){
             CommandError(MsgStrs[ErrBadMolDB]);
@@ -2582,7 +2590,7 @@ static void ExecuteLoadCommand( void )
         FetchToken();
     }
     }
-    
+
     if( !CurToken )
     {   CommandError(MsgStrs[ErrFilNam]);
         return;
@@ -2601,15 +2609,15 @@ static void ExecuteLoadCommand( void )
     {   CommandError(MsgStrs[ErrBadLoad]);
         return;
     }
-        
+
         if( CurToken==InLineTok )
         {   if( (FileDepth!=-1) && LineStack[FileDepth] )
-  	    { DivertToData( format, info );
+	    { DivertToData( format, info );
         } else CommandError(MsgStrs[ErrOutScrpt]);
         } else if( CurToken==StringTok )
         {      checkfile = FetchFile(format,info,TokenIdent);
         } else checkfile = FetchFile(format,info,TokenStart);
-		
+
 		/* don't color the molecule unless it's actually loaded! */
 		if (checkfile == True)
 			DefaultRepresentation();
@@ -2618,11 +2626,11 @@ static void ExecuteLoadCommand( void )
     {   CommandError(MsgStrs[ErrBadMolDB]);
         return;
     }
-        
+
         if( CurToken==StringTok )
         {      ProcessFileName(TokenIdent);
         } else ProcessFileName(TokenStart);
-        
+
         if( !(fp=fopen(DataFileName,"rb")) )
         {   CommandError( (char*)NULL );
             WriteString(MsgStrs[StrDFile]);
@@ -2632,8 +2640,8 @@ static void ExecuteLoadCommand( void )
         } else if (format == FormatDots) {
             LoadDotsFile(fp,info);
             fclose(fp);
-        } 
-#ifdef USE_CBFLIB        
+        }
+#ifdef USE_CBFLIB
         else { /* format == FormatMap */
             if(LoadCCP4MapFile(fp,info, -1)) {
                 if( !(fp=fopen(DataFileName,"rb")) ) {
@@ -2664,18 +2672,18 @@ static void ExecutePauseCommand( void )
     {   CommandError(MsgStrs[ErrOutScrpt]);
         return;
     }
-    
+
     /* Ignore Pause Commands via IPC! */
     if( LineStack[FileDepth] )
     {   CommandActive = True;
         IsPaused = True;
-        
+
 #ifdef MSWIN
         /* Disable Drag & Drop! */
         DragAcceptFiles(CanvWin,FALSE);
 #endif
     }
-    
+
 	ReDrawFlag |= RFRefresh;
 }
 
@@ -2718,7 +2726,7 @@ static void ExecuteTitleCommand( void )
     FetchToken();
     if( !CurToken )
     { char VersionStr[50];
-        
+
         sprintf (VersionStr,"RasMol Version %s", VERSION);
         SetCanvasTitle(VersionStr);
     } else if( CurToken == StringTok )
@@ -2751,7 +2759,7 @@ static void ExecuteSendCommand( void )
     char * command;
     char buffer[133];
     unsigned long interpid;
-    
+
     FetchToken();
     if (!CurToken) {
         CommandError(MsgStrs[ErrSyntax]);
@@ -2780,7 +2788,7 @@ static void ExecuteSendCommand( void )
     }
     strncpy(buffer,interptarg,132);
     buffer[132]='\0';
-    
+
     FetchToken();
     if (!CurToken) {
         CommandError(MsgStrs[ErrSyntax]);
@@ -2791,9 +2799,9 @@ static void ExecuteSendCommand( void )
     } else {
         command = TokenStart;
     }
-    
+
     SendInterpCommand(buffer,interpid,command);
-    
+
     return;
 
 }
@@ -2807,7 +2815,7 @@ static void ExecuteSetCommand( void )
 {
     register int option;
     char buffer[50];
-    
+
     switch( FetchToken() )
     {   case(SlabTok):
         case(SlabModeTok):
@@ -2823,14 +2831,14 @@ static void ExecuteSetCommand( void )
             {   option = SlabClose;
             } else if( CurToken==SectionTok )
                 option = SlabSection;
-            
+
             if( option != -1 )
             {   if( UseSlabPlane && (SlabMode!=option) )
                 ReDrawFlag |= RFRefresh;
                 SlabMode = option;
             } else CommandError(MsgStrs[ErrBadOpt]);
             break;
-            
+
         case(ShadowTok):
             FetchToken();
             if( CurToken==TrueTok )
@@ -2846,7 +2854,7 @@ static void ExecuteSetCommand( void )
                 UseShadow = False;
             } else CommandError(MsgStrs[ErrBadOpt]);
             break;
-            
+
         case(SpecularTok):
             FetchToken();
             if( CurToken==TrueTok )
@@ -2857,7 +2865,7 @@ static void ExecuteSetCommand( void )
                 ReDrawFlag |= RFColour;
             } else CommandError(MsgStrs[ErrBadOpt]);
             break;
-            
+
         case(SpecPowerTok):
             FetchToken();
             if( !CurToken )
@@ -2867,12 +2875,12 @@ static void ExecuteSetCommand( void )
             {   if( TokenValue<=100 )
             {   ReDrawFlag |= RFColour;
                 SpecPower = (int)TokenValue;
-            } else 
+            } else
                 CommandError(MsgStrs[ErrBigNum]);
             } else CommandError(MsgStrs[ErrNotNum]);
             break;
-            
-            
+
+
         case(ShadePowerTok):
             FetchToken();
             if( !CurToken )
@@ -2882,11 +2890,11 @@ static void ExecuteSetCommand( void )
             {   if( TokenValue<=100 )
             {   ReDrawFlag |= RFColour;
                 ShadePower = (int)((TokenValue-50)*0.4);
-            } else 
+            } else
                 CommandError(MsgStrs[ErrBigNum]);
             } else CommandError(MsgStrs[ErrNotNum]);
             break;
-            
+
         case(AmbientTok):
             FetchToken();
             if( !CurToken )
@@ -2897,10 +2905,10 @@ static void ExecuteSetCommand( void )
             {   Ambient = TokenValue/100.0;
                 ReDrawFlag |= RFColour;
             } else
-                CommandError(MsgStrs[ErrBigNum]); 
+                CommandError(MsgStrs[ErrBigNum]);
             } else CommandError(MsgStrs[ErrNotNum]);
             break;
-            
+
         case(HeteroTok):
             FetchToken();
             if( CurToken==TrueTok )
@@ -2909,7 +2917,7 @@ static void ExecuteSetCommand( void )
             {   HetaGroups = False;
             } else CommandError(MsgStrs[ErrBadOpt]);
             break;
-            
+
         case(HydrogenTok):
             FetchToken();
             if( CurToken==TrueTok )
@@ -2918,8 +2926,8 @@ static void ExecuteSetCommand( void )
             {   Hydrogens = False;
             } else CommandError(MsgStrs[ErrBadOpt]);
             break;
-            
-            
+
+
         case(BackgroundTok):
             FetchToken();
             if( CurToken == TransparentTok )
@@ -2939,14 +2947,14 @@ static void ExecuteSetCommand( void )
             {   CommandError(MsgStrs[ErrColour]);
             } else CommandError(MsgStrs[ErrNoCol]);
             break;
-            
+
         case(BondModeTok):
             FetchToken();
             if( !CurToken || (CurToken==AndTok) )
             {   ZoneBoth = True;
             } else if( CurToken==OrTok )
             {   ZoneBoth = False;
-            } else if( CurToken==AllTok ) 
+            } else if( CurToken==AllTok )
             {   MarkAtoms = AllAtomFlag;
             } else if( CurToken==NoneTok)
             {	MarkAtoms = 0;
@@ -2957,7 +2965,7 @@ static void ExecuteSetCommand( void )
                 } else CommandError(MsgStrs[ErrBadOpt]);
             } else CommandError(MsgStrs[ErrBadOpt]);
             break;
-            
+
         case(HBondTok):
             FetchToken();
             if( (CurToken==BackboneTok) || (CurToken==MainChainTok) )
@@ -2983,7 +2991,7 @@ static void ExecuteSetCommand( void )
                 } else CommandError(MsgStrs[ErrBadOpt]);
             } else CommandError(MsgStrs[ErrBadOpt]);
             break;
-            
+
         case(SSBondTok):
             FetchToken();
             if( (CurToken==BackboneTok) || (CurToken==MainChainTok) )
@@ -2994,7 +3002,7 @@ static void ExecuteSetCommand( void )
                 SSBondMode = False;
             } else CommandError(MsgStrs[ErrBadOpt]);
             break;
-            
+
         case(HourGlassTok):
             FetchToken();
             if( CurToken==TrueTok )
@@ -3003,7 +3011,7 @@ static void ExecuteSetCommand( void )
             {   UseHourGlass = False;
             } else CommandError(MsgStrs[ErrBadOpt]);
             break;
-            
+
         case(StrandsTok):
             FetchToken();
             if( !CurToken )
@@ -3019,7 +3027,7 @@ static void ExecuteSetCommand( void )
             } else CommandError(MsgStrs[ErrBadOpt]);
             } else CommandError(MsgStrs[ErrNotNum]);
             break;
-            
+
         case(MouseTok):
             FetchToken();
             if( !CurToken || (CurToken==RasMolTok) || (CurToken==NewTok) || (CurToken==OldTok) )
@@ -3032,21 +3040,21 @@ static void ExecuteSetCommand( void )
                         SetMouseMode( MMRasOld );
                     } else CommandError(MsgStrs[ErrBadOpt]);
                     break;
-                  } 
+                  }
                   if (CurToken == NewTok) {
                     FetchToken();
                     if (!CurToken || CurToken==RasMolTok) {
                         SetMouseMode( MMRasMol );
                     } else CommandError(MsgStrs[ErrBadOpt]);
                     break;
-                  } 
+                  }
                   if (CurToken == OldTok) {
                     FetchToken();
                     if (!CurToken || CurToken==RasMolTok) {
                         SetMouseMode( MMRasOld );
                     } else CommandError(MsgStrs[ErrBadOpt]);
                     break;
-                  } 
+                  }
                   SetMouseMode( MMRasMol );
                 }
             } else if( CurToken==InsightTok )
@@ -3060,7 +3068,7 @@ static void ExecuteSetCommand( void )
                 SetMouseMode( MMSybyl );
             } else CommandError(MsgStrs[ErrBadOpt]);
             break;
-            
+
         case(DisplayTok):
             FetchToken();
             /* Affect StereoMode Parameters?? */
@@ -3072,7 +3080,7 @@ static void ExecuteSetCommand( void )
                 DisplayMode = 1;
             } else CommandError(MsgStrs[ErrBadOpt]);
             break;
-            
+
         case(VectPSTok):
             FetchToken();
             if( !CurToken || (CurToken==FalseTok) )
@@ -3081,7 +3089,7 @@ static void ExecuteSetCommand( void )
             {   UseOutLine = True;
             } else CommandError(MsgStrs[ErrBadOpt]);
             break;
-            
+
         case(Raster3DTok):
             FetchToken();
             if( !CurToken || (CurToken==FalseTok) )
@@ -3090,7 +3098,7 @@ static void ExecuteSetCommand( void )
             {   UseOutLine = True;
             } else CommandError(MsgStrs[ErrBadOpt]);
             break;
-            
+
         case(KinemageTok):
             FetchToken();
             if( !CurToken || (CurToken==FalseTok) )
@@ -3099,7 +3107,7 @@ static void ExecuteSetCommand( void )
             {   KinemageFlag = True;
             } else CommandError(MsgStrs[ErrBadOpt]);
             break;
-            
+
         case(MenusTok):
             FetchToken();
             if( !CurToken || (CurToken==TrueTok) )
@@ -3108,7 +3116,7 @@ static void ExecuteSetCommand( void )
             {   EnableMenus(False);
             } else CommandError(MsgStrs[ErrBadOpt]);
             break;
-            
+
         case(RadiusTok):
             FetchToken();
             if( !CurToken )
@@ -3118,7 +3126,7 @@ static void ExecuteSetCommand( void )
             {   TokenPtr++;
                 FetchFloat(TokenValue,250);
             }
-                
+
                 if( TokenValue>1500 )
                 {   CommandError(MsgStrs[ErrBigNum]);
                 } else ProbeRadius = (int)TokenValue;
@@ -3127,12 +3135,12 @@ static void ExecuteSetCommand( void )
                 if( TokenValue>1500 )
                 {   CommandError(MsgStrs[ErrBigNum]);
                 } else ProbeRadius = (int)TokenValue;
-                
+
             } else CommandError(MsgStrs[ErrNotNum]);
             iProbeRad = (int)(Scale*(Real)ProbeRadius);
             ReDrawFlag |= RFRefresh;
             break;
-            
+
         case(SolventTok):
             FetchToken();
             if( !CurToken || (CurToken==FalseTok) )
@@ -3145,30 +3153,30 @@ static void ExecuteSetCommand( void )
             iProbeRad = (int)(Scale*(Real)ProbeRadius);
             ReDrawFlag |= RFRefresh;
             break;
-            
+
         case(FontSizeTok):
             FetchToken();
             if( CurToken==NumberTok )
             {   if( TokenValue<=48 )
             {   int fsize;
-                
+
                 fsize = (int)TokenValue;
                 FetchToken();
                 if ( !CurToken || CurToken==FSTok )
                 { SetFontSize(fsize);
-                } else if ( CurToken ==PSTok ) 
+                } else if ( CurToken ==PSTok )
                 { SetFontSize(-fsize);
                 } else CommandError(MsgStrs[ErrBadOpt]);
             } else CommandError(MsgStrs[ErrBigNum]);
             } else if( !CurToken )
             {   SetFontSize(8);
-            } else if (CurToken == FSTok) 
+            } else if (CurToken == FSTok)
             {   SetFontSize(abs(FontSize));
             } else if (CurToken == PSTok)
             {   SetFontSize(-abs(FontSize));
             } else CommandError(MsgStrs[ErrBadOpt]);
             break;
-            
+
         case(FontStrokeTok):
             FetchToken();
             if( CurToken==NumberTok )
@@ -3183,7 +3191,7 @@ static void ExecuteSetCommand( void )
                 SetFontStroke(0);
             } else CommandError(MsgStrs[ErrBadOpt]);
             break;
-            
+
         case(WriteTok):
             FetchToken();
             if( !CurToken || (CurToken==FalseTok) )
@@ -3194,8 +3202,8 @@ static void ExecuteSetCommand( void )
             } else AllowWrite = True;
             } else CommandError(MsgStrs[ErrBadOpt]);
             break;
-            
-        case(StereoTok):  
+
+        case(StereoTok):
             FetchToken();
             if( !CurToken )
             {   if (UseStereo) {
@@ -3224,21 +3232,21 @@ static void ExecuteSetCommand( void )
             {   StereoAngle = TokenValue;
                 SetStereoMode(True);
             } else {
-                CommandError(MsgStrs[ErrSyntax]); 
+                CommandError(MsgStrs[ErrSyntax]);
                 break;
             }
             if (StereoAngle > 60.) {
                 StereoAngle = 6.;
                 CommandError(MsgStrs[ErrBigNum]);
-                break;            	
+                break;
             }
             if (StereoAngle < -60.) {
                 StereoAngle = -6.;
                 CommandError(MsgStrs[ErrBigNum]);
-                break;            	
+                break;
             }
             break;
-            
+
         case(BondTok):
             FetchToken();
             if( !CurToken || (CurToken==FalseTok) )
@@ -3249,7 +3257,7 @@ static void ExecuteSetCommand( void )
                 DrawDoubleBonds = True;
             } else CommandError(MsgStrs[ErrBadOpt]);
             break;
-            
+
         case(MonitorTok):
             FetchToken();
             if( !CurToken || (CurToken==TrueTok) )
@@ -3260,7 +3268,7 @@ static void ExecuteSetCommand( void )
                 DrawMonitDistance = False;
             } else CommandError(MsgStrs[ErrBadOpt]);
             break;
-            
+
         case(CartoonTok):
             FetchToken();
             if( !CurToken )
@@ -3278,7 +3286,7 @@ static void ExecuteSetCommand( void )
             {   TokenPtr++;
                 FetchFloat(TokenValue,250);
             }
-                
+
                 if( TokenValue <= 500 )
                 {   CartoonHeight = (int)TokenValue;
                     ReDrawFlag |= RFRefresh;
@@ -3289,10 +3297,10 @@ static void ExecuteSetCommand( void )
                 {   CartoonHeight = (int)TokenValue;
                     ReDrawFlag |= RFRefresh;
                 } else CommandError(MsgStrs[ErrBigNum]);
-                
+
             } else CommandError(MsgStrs[ErrBadOpt]);
             break;
-            
+
         case(BackFadeTok):
             FetchToken();
             if( !CurToken || (CurToken==FalseTok) )
@@ -3303,7 +3311,7 @@ static void ExecuteSetCommand( void )
                 UseBackFade = True;
             } else CommandError(MsgStrs[ErrBadOpt]);
             break;
-            
+
         case(TransparentTok):
             FetchToken();
             if( !CurToken || (CurToken==FalseTok) )
@@ -3312,7 +3320,7 @@ static void ExecuteSetCommand( void )
             {   UseTransparent = True;
             } else CommandError(MsgStrs[ErrBadOpt]);
             break;
-            
+
         case(DepthCueTok):
             FetchToken();
             if( !CurToken || (CurToken==FalseTok) )
@@ -3323,7 +3331,7 @@ static void ExecuteSetCommand( void )
                 UseDepthCue = True;
             } else CommandError(MsgStrs[ErrBadOpt]);
             break;
-            
+
         case(CisAngleTok):
             FetchToken();
             if( !CurToken )
@@ -3334,7 +3342,7 @@ static void ExecuteSetCommand( void )
                 {   CisBondCutOff = TokenValue;
                     Info.cisbondcount = -1; /* to recalculate peptide bonds */
                 } else {
-                    CommandError(MsgStrs[ErrBigNum]); 
+                    CommandError(MsgStrs[ErrBigNum]);
                 }
                 } else {
                     CommandError(MsgStrs[ErrNotNum]);
@@ -3342,8 +3350,8 @@ static void ExecuteSetCommand( void )
             }
             sprintf(buffer,"CisBondCutOff = %d\n", CisBondCutOff);
             WriteString( buffer );
-            break;    
-            
+            break;
+
         case(SequenceTok):
             FetchToken();
             if( !CurToken || (CurToken==FalseTok) )
@@ -3352,7 +3360,7 @@ static void ExecuteSetCommand( void )
             {   SeqFormat = True;
             } else CommandError(MsgStrs[ErrBadOpt]);
             break;
-            
+
         case(ConnectTok):
             FetchToken();
             if( !CurToken || (CurToken==TrueTok) )
@@ -3361,13 +3369,13 @@ static void ExecuteSetCommand( void )
             {   CalcBondsFlag = False;
             } else CommandError(MsgStrs[ErrBadOpt]);
             break;
-            
+
         case(AxesTok):     ExecuteAxesCommand();     break;
         case(BoundBoxTok): ExecuteBoundBoxCommand(); break;
         case(PickingTok):  ExecutePickingCommand();  break;
         case(TitleTok):    ExecuteTitleCommand();    break;
         case(UnitCellTok): ExecuteUnitCellCommand(); break;
-            
+
         case(DotsTok):
 			FetchToken();
             if( !CurToken )
@@ -3401,7 +3409,7 @@ static void ExecuteSetCommand( void )
             iProbeRad = (int)(Scale*(Real)ProbeRadius);
             ReDrawFlag |= RFRefresh;
             break;
-            
+
             /* set notoggle command - gm */
 		case (NoToggleTok):
 			FetchToken();
@@ -3416,11 +3424,11 @@ static void ExecuteSetCommand( void )
 				WriteString(MsgStrs[StrNoTogOff]);
 			}
 			break;
-            
+
             /* set play.fps command */
         case (PlayTok):
         {   int errorcode = 0;
-            
+
             FetchToken();
             if (CurToken == '.') {
                 FetchToken();
@@ -3446,17 +3454,17 @@ static void ExecuteSetCommand( void )
              if (errorcode) CommandError(MsgStrs[ErrBadArg]);
             break;
         }
-            
-                        /* set record.fps <n> command 
-                           set record.aps <n> command 
+
+                        /* set record.fps <n> command
+                           set record.aps <n> command
                            set record.dwell <n> <what> command
-                         
+
                            handling of <what> deferred */
         case (RecordTok):
         {   int errorcode = 0;
             double __far * settarget;
             double targetdefault = 24.;
-            
+
             FetchToken();
             if (CurToken == '.') {
                 FetchToken();
@@ -3488,7 +3496,7 @@ static void ExecuteSetCommand( void )
              if (errorcode) CommandError(MsgStrs[ErrBadArg]);
             break;
         }
-            
+
         case(IPCDetailTok):
             FetchToken();
             if( !CurToken || (CurToken==TrueTok) )
@@ -3501,7 +3509,7 @@ static void ExecuteSetCommand( void )
             break;
 
 
-            
+
         default:
             CommandError(MsgStrs[ErrParam]);
     }
@@ -3511,49 +3519,49 @@ static void ExecuteSetCommand( void )
 static void OldExecuteColourCommand( void )
 {
     register int flag;
-    
+
     flag = 0;
     switch( FetchToken() )
     {   case(AtomTok):
             FetchToken();
         default:
             switch( CurToken )
-        {   case(CPKTok):         CPKColourAttrib(); 
+        {   case(CPKTok):         CPKColourAttrib();
                 ReDrawFlag |= RFColour; break;
-                
+
             case(CpkNewTok):      CpkNewColourAttrib();
-                ReDrawFlag |= RFColour; break;	      
-                
+                ReDrawFlag |= RFColour; break;
+
             case(AminoTok):       AminoColourAttrib();
                 ReDrawFlag |= RFColour; break;
-                
+
             case(ShapelyTok):     ShapelyColourAttrib();
                 ReDrawFlag |= RFColour; break;
-                
+
             case(UserTok):        UserMaskAttrib(MaskColourFlag);
                 ReDrawFlag |= RFColour; break;
-                
+
             case(GroupTok):       ScaleColourAttrib(GroupAttr);
                 ReDrawFlag |= RFColour; break;
-                
+
             case(ChainTok):       ScaleColourAttrib(ChainAttr);
                 ReDrawFlag |= RFColour; break;
-                
+
             case(ModelTok):       ScaleColourAttrib(ModelAttr);
                 ReDrawFlag |= RFColour; break;
-                
+
             case(AltlTok):        ScaleColourAttrib(AltAttr);
                 ReDrawFlag |= RFColour; break;
-                
+
             case(ChargeTok):      ScaleColourAttrib(ChargeAttr);
                 ReDrawFlag |= RFColour; break;
-                
+
             case(TemperatureTok): ScaleColourAttrib(TempAttr);
                 ReDrawFlag |= RFColour; break;
-                
+
             case(StructureTok):   StructColourAttrib();
                 ReDrawFlag |= RFColour; break;
-                
+
             default:  if( ParseColour() )
             {   MonoColourAttrib(RVal,GVal,BVal);
                 ReDrawFlag |= RFColour;
@@ -3562,8 +3570,8 @@ static void OldExecuteColourCommand( void )
             } else CommandError(MsgStrs[ErrNoCol]);
         }
             break;
-            
-        case(BondTok):    
+
+        case(BondTok):
         case(DashTok):
             FetchToken();
             if( CurToken==NoneTok )
@@ -3576,7 +3584,7 @@ static void OldExecuteColourCommand( void )
             {      CommandError(MsgStrs[ErrColour]);
             } else CommandError(MsgStrs[ErrNoCol]);
             break;
-            
+
         case(BackboneTok):
             FetchToken();
             if( CurToken==NoneTok )
@@ -3589,7 +3597,7 @@ static void OldExecuteColourCommand( void )
             {      CommandError(MsgStrs[ErrColour]);
             } else CommandError(MsgStrs[ErrNoCol]);
             break;
-            
+
         case(SSBondTok):
             FetchToken();
             if( CurToken==NoneTok )
@@ -3602,7 +3610,7 @@ static void OldExecuteColourCommand( void )
             {      CommandError(MsgStrs[ErrColour]);
             } else CommandError(MsgStrs[ErrNoCol]);
             break;
-            
+
         case(HBondTok):
             FetchToken();
             if( CurToken==NoneTok )
@@ -3618,7 +3626,7 @@ static void OldExecuteColourCommand( void )
             {      CommandError(MsgStrs[ErrColour]);
             } else CommandError(MsgStrs[ErrNoCol]);
             break;
-            
+
         case(DotsTok):
             FetchToken();
             if( CurToken==PotentialTok )
@@ -3631,8 +3639,8 @@ static void OldExecuteColourCommand( void )
             {      CommandError(MsgStrs[ErrColour]);
             } else CommandError(MsgStrs[ErrNoCol]);
             break;
-            
-    	case(MapTok):
+
+	case(MapTok):
             FetchToken();
             if( CurToken==PotentialTok )
             {   ReDrawFlag |= RFColour;
@@ -3655,8 +3663,8 @@ static void OldExecuteColourCommand( void )
             {      CommandError(MsgStrs[ErrColour]);
             } else CommandError(MsgStrs[ErrNoCol]);
             break;
-            
-            
+
+
         case(MonitorTok):
             FetchToken();
             if( CurToken == NoneTok )
@@ -3668,7 +3676,7 @@ static void OldExecuteColourCommand( void )
             {      CommandError(MsgStrs[ErrColour]);
             } else CommandError(MsgStrs[ErrNoCol]);
             break;
-            
+
         case(AxesTok):
         case(BoundBoxTok):
         case(UnitCellTok):
@@ -3680,7 +3688,7 @@ static void OldExecuteColourCommand( void )
             {      CommandError(MsgStrs[ErrColour]);
             } else CommandError(MsgStrs[ErrNoCol]);
             break;
-            
+
         case(LabelTok):
             FetchToken();
             if( CurToken==NoneTok )
@@ -3694,15 +3702,15 @@ static void OldExecuteColourCommand( void )
             {      CommandError(MsgStrs[ErrColour]);
             } else CommandError(MsgStrs[ErrNoCol]);
             break;
-            
-        case(TraceTok): 
+
+        case(TraceTok):
         case(RibbonTok):
         case(StrandsTok):
         case(CartoonTok):  flag = RibColBoth;     break;
         case(Ribbon1Tok):  flag = RibColInside;   break;
         case(Ribbon2Tok):  flag = RibColOutside;  break;
     }
-    
+
     if( flag )
     {   FetchToken();
         if( CurToken==NoneTok )
@@ -3722,7 +3730,7 @@ static void ExecuteColourCommand( void )
 	/* The new ExecuteColorCommand - at present this is a copy of the
 	 * previous version */
     register int flag;
-    
+
 	/* in case we want to use the old code... */
 	if (UseOldColorCode)
 	{
@@ -3730,49 +3738,49 @@ static void ExecuteColourCommand( void )
 		OldExecuteColourCommand();
 		return;
 	}
-    
+
     flag = 0;
     switch( FetchToken() )
     {   case(AtomTok):
             FetchToken();
         default:
             switch( CurToken )
-        {   case(CPKTok):         CPKColourAttrib(); 
+        {   case(CPKTok):         CPKColourAttrib();
                 ReDrawFlag |= RFColour; break;
-                
+
             case(CpkNewTok):      CpkNewColourAttrib();
-                ReDrawFlag |= RFColour; break;	      
-                
+                ReDrawFlag |= RFColour; break;
+
             case(AminoTok):       AminoColourAttrib();
                 ReDrawFlag |= RFColour; break;
-                
+
             case(ShapelyTok):     ShapelyColourAttrib();
                 ReDrawFlag |= RFColour; break;
-                
+
             case(UserTok):        UserMaskAttrib(MaskColourFlag);
                 ReDrawFlag |= RFColour; break;
-                
+
             case(GroupTok):       ScaleColourAttrib(GroupAttr);
                 ReDrawFlag |= RFColour; break;
-                
+
             case(ChainTok):       ScaleColourAttrib(ChainAttr);
                 ReDrawFlag |= RFColour; break;
-                
+
             case(ModelTok):       ScaleColourAttrib(ModelAttr);
                 ReDrawFlag |= RFColour; break;
-                
+
             case(AltlTok):        ScaleColourAttrib(AltAttr);
                 ReDrawFlag |= RFColour; break;
-                
+
             case(ChargeTok):      ScaleColourAttrib(ChargeAttr);
                 ReDrawFlag |= RFColour; break;
-                
+
             case(TemperatureTok): ScaleColourAttrib(TempAttr);
                 ReDrawFlag |= RFColour; break;
-                
+
             case(StructureTok):   StructColourAttrib();
                 ReDrawFlag |= RFColour; break;
-                
+
             default:  if( ParseColour() )
             {   ColourBondNone();
                 MonoColourAttrib(RVal,GVal,BVal);
@@ -3782,8 +3790,8 @@ static void ExecuteColourCommand( void )
             } else CommandError(MsgStrs[ErrNoCol]);
         }
             break;
-            
-        case(BondTok):    
+
+        case(BondTok):
         case(DashTok):
             FetchToken();
             if( CurToken==NoneTok )
@@ -3796,7 +3804,7 @@ static void ExecuteColourCommand( void )
             {      CommandError(MsgStrs[ErrColour]);
             } else CommandError(MsgStrs[ErrNoCol]);
             break;
-            
+
         case(BackboneTok):
             FetchToken();
             if( CurToken==NoneTok )
@@ -3809,7 +3817,7 @@ static void ExecuteColourCommand( void )
             {      CommandError(MsgStrs[ErrColour]);
             } else CommandError(MsgStrs[ErrNoCol]);
             break;
-            
+
         case(SSBondTok):
             FetchToken();
             if( CurToken==NoneTok )
@@ -3822,7 +3830,7 @@ static void ExecuteColourCommand( void )
             {      CommandError(MsgStrs[ErrColour]);
             } else CommandError(MsgStrs[ErrNoCol]);
             break;
-            
+
         case(HBondTok):
             FetchToken();
             if( CurToken==NoneTok )
@@ -3838,7 +3846,7 @@ static void ExecuteColourCommand( void )
             {      CommandError(MsgStrs[ErrColour]);
             } else CommandError(MsgStrs[ErrNoCol]);
             break;
-            
+
         case(DotsTok):
             FetchToken();
             if( CurToken==PotentialTok )
@@ -3851,8 +3859,8 @@ static void ExecuteColourCommand( void )
             {      CommandError(MsgStrs[ErrColour]);
             } else CommandError(MsgStrs[ErrNoCol]);
             break;
-            
-    	case(MapTok):
+
+	case(MapTok):
             FetchToken();
             if( CurToken==PotentialTok )
             {   ReDrawFlag |= RFColour;
@@ -3875,8 +3883,8 @@ static void ExecuteColourCommand( void )
             {      CommandError(MsgStrs[ErrColour]);
             } else CommandError(MsgStrs[ErrNoCol]);
             break;
-            
-            
+
+
         case(MonitorTok):
             FetchToken();
             if( CurToken == NoneTok )
@@ -3888,7 +3896,7 @@ static void ExecuteColourCommand( void )
             {      CommandError(MsgStrs[ErrColour]);
             } else CommandError(MsgStrs[ErrNoCol]);
             break;
-            
+
         case(AxesTok):
         case(BoundBoxTok):
         case(UnitCellTok):
@@ -3900,7 +3908,7 @@ static void ExecuteColourCommand( void )
             {      CommandError(MsgStrs[ErrColour]);
             } else CommandError(MsgStrs[ErrNoCol]);
             break;
-            
+
         case(LabelTok):
             FetchToken();
             if( CurToken==NoneTok )
@@ -3914,15 +3922,15 @@ static void ExecuteColourCommand( void )
             {      CommandError(MsgStrs[ErrColour]);
             } else CommandError(MsgStrs[ErrNoCol]);
             break;
-            
-        case(TraceTok): 
+
+        case(TraceTok):
         case(RibbonTok):
         case(StrandsTok):
         case(CartoonTok):  flag = RibColBoth;     break;
         case(Ribbon1Tok):  flag = RibColInside;   break;
         case(Ribbon2Tok):  flag = RibColOutside;  break;
     }
-    
+
     if( flag )
     {   FetchToken();
         if( CurToken==NoneTok )
@@ -3943,7 +3951,7 @@ static void ExecuteColourCommand( void )
 /*          Chain: ?  Group:  ???  ??  Atom:  ???  ????          */
 static void DescribeSelected( Selection type )
 {
-    
+
     register Chain __far *chain = (Chain __far*)NULL;
     register Group __far *group = (Group __far*)NULL;
     register RAtom __far *ptr   = (RAtom  __far*)NULL;
@@ -3958,12 +3966,12 @@ static void DescribeSelected( Selection type )
     int Ccount     ;
     int model      ;
     char buffer[80];
-    
+
     if(!Database)
         return;
-    
+
     model = -1;
-    
+
     Cselect = Ccount = 0;
     current.chn = NULL;
     ctouched = False;
@@ -4004,30 +4012,30 @@ static void DescribeSelected( Selection type )
                             WriteChar('\n');
                         }
                     }
-                    Acount++; 
-            }     
+                    Acount++;
+            }
             if( touched && Acount == Aselect ) {
                 Gselect++;
                 ctouched++;
             }
-            Gcount++;       
+            Gcount++;
             if( Aselect && type == GRP) {	              /* Group */
                 WriteString(DescribeObj(&current, GRP));
-                sprintf(buffer, "\t(%d/%d)\tatoms\n",Aselect, Acount); 
+                sprintf(buffer, "\t(%d/%d)\tatoms\n",Aselect, Acount);
                 WriteString(buffer);
             }
         }
         if (ctouched && Gcount == Gselect) {
             Cselect++;
         }
-        if( ctouched && type == CHN ) {                    /* Chain */      
+        if( ctouched && type == CHN ) {                    /* Chain */
             WriteString(DescribeObj(&current, CHN));
             if( Gselect > 0 ) {
-                sprintf(buffer,"\t(%d/%d)\tgroups\n",Gselect, Gcount); 	
+                sprintf(buffer,"\t(%d/%d)\tgroups\n",Gselect, Gcount);
                 WriteString(buffer);
             }
             else
-                WriteString("\tno group completely selected\n");	
+                WriteString("\tno group completely selected\n");
         }
     }
     if (model !=-1 && type==MDL) {
@@ -4049,15 +4057,15 @@ static void DescribeSelected( Selection type )
             sprintf(buffer, "%s", "One Model: \tno chain completely selected\n");
             WriteString(buffer);
         }
-        
+
     }
-}  
+}
 
 
 /* Selection for printing selected atoms || groups || chains to terminal  */
 static void ExecuteSelectedCommand()
 {
-    
+
     switch( FetchToken() )
     {
         case(AtomTok):
@@ -4093,11 +4101,11 @@ static void DescribeSequence( void )
     register char *str;
     char buffer[40];
     int  model;
-    
+
     InvalidateCmndLine();
     if( !Database )
         return;
-    
+
     model = -1;
     for( chn=Database->clist; chn; chn=chn->cnext )
     {   chain = (Info.chaincount<2);  count = 0;
@@ -4107,7 +4115,7 @@ static void DescribeSequence( void )
             {   if( !chain )
             {   if (!(model==grp->model))
             {   model = grp->model;
-                if (model) 
+                if (model)
                 {  sprintf(buffer,"Model: %d  ",model);
                     WriteString(buffer);
                 }
@@ -4117,18 +4125,18 @@ static void DescribeSequence( void )
                 WriteString(":\n");
                 chain = True;
             }
-                
+
                 if( !SeqFormat )
                 {   if( count == 10 )
                 {   WriteChar('\n');
                     count = 1;
                 } else count++;
-                    
+
                     str = Residue[grp->refno];
                     WriteChar(str[0]);
                     WriteChar(str[1]);
                     WriteChar(str[2]);
-                    
+
                     sprintf(buffer,"%-3d ",grp->serno);
                     WriteString(buffer);
                 } else
@@ -4140,12 +4148,12 @@ static void DescribeSequence( void )
                 {   count++;
                     subcount++;
                 }
-                    
+
 					if( subcount == 10)
 					{	WriteChar(' ');
 						subcount = 0;
 					}
-                    
+
                     if( grp->refno < 29 )
                     {   WriteChar(ResidueChar[grp->refno]);
                     } else WriteChar('*');
@@ -4162,58 +4170,58 @@ static void ExecuteShowCommand( void )
     register Real temp;
     char buffer[40];
     Real theta,phi,psi;
-    
+
     switch( FetchToken() )
     {   case(DeferTok):
             ShowDeferCommand();
             break;
-        
+
         case(InfoTok):
             DescribeMolecule();
             break;
-            
-    	case(PlayTok):
-    	    ShowPlayCommand();
+
+	case(PlayTok):
+	    ShowPlayCommand();
             break;
-            
-    	case(RecordTok):
-    		ShowRecordCommand();
-    		break;
-            
-    	case(MapTok):
+
+	case(RecordTok):
+		ShowRecordCommand();
+		break;
+
+	case(MapTok):
             ApplyMapShow();
             break;
-            
+
         case(SequenceTok):
             DescribeSequence();
             break;
-            
+
         case(SelectedTok):
             ExecuteSelectedCommand();
-            break;   
-            
+            break;
+
         case(PhiPsiTok):
             WritePhiPsiAngles(NULL, False);  /* Writing to stderr/stdout */
-            break;        	 
-            
+            break;
+
         case(RamPrintTok):
             WritePhiPsiAngles(NULL, -1);     /* Writing to stderr/stdout */
-            break;        	 
-            
+            break;
+
         case(SymmetryTok):
             InvalidateCmndLine();
-            
+
             if( *Info.spacegroup )
             {   sprintf(buffer,"%s ...... %s\n",MsgStrs[StrSGroup],Info.spacegroup);
                 WriteString(buffer);
-                
+
                 sprintf(buffer,"%s A ...... %g\n",MsgStrs[StrUCell],Info.cella);
                 WriteString(buffer);
                 sprintf(buffer,"%s B ...... %g\n",MsgStrs[StrUCell],Info.cellb);
                 WriteString(buffer);
                 sprintf(buffer,"%s C ...... %g\n",MsgStrs[StrUCell],Info.cellc);
                 WriteString(buffer);
-                
+
                 temp = Rad2Deg*Info.cellalpha;
                 sprintf(buffer,"%s alpha .. %g\n",MsgStrs[StrUCell],temp);
                 WriteString(buffer);
@@ -4223,11 +4231,11 @@ static void ExecuteShowCommand( void )
                 temp = Rad2Deg*Info.cellgamma;
                 sprintf(buffer,"%s gamma .. %g\n",MsgStrs[StrUCell],temp);
                 WriteString(buffer);
-                
+
             } else WriteString(MsgStrs[StrSymm]);
             WriteChar('\n');
             break;
-            
+
         case(CentreTok):
             InvalidateCmndLine();
             if ( CenX || CenY || CenZ ) {
@@ -4239,12 +4247,12 @@ static void ExecuteShowCommand( void )
                 WriteString(buffer);
             }
             break;
-            
+
         case(RotateTok):
             InvalidateCmndLine();
             ReDrawFlag |= RFRotate;
             PrepareTransform();
-            
+
             /*
              phi = Round(Rad2Deg*asin(RotX[2]));
              if( phi == 90 )
@@ -4258,14 +4266,14 @@ static void ExecuteShowCommand( void )
              psi =  Round(-Rad2Deg*atan2(RotX[1],RotX[0]));
              }
              */
-            
+
             phi = psi = theta = 0.0;
             RMat2RV(&theta, &phi, &psi, RotX, RotY, RotZ);
             theta *= 180.;
             phi *= 180.;
             psi *= 180.;
-            
-            
+
+
             if( Round(theta) ) {
                 sprintf(buffer,"rotate x %d\n",Round(InvertY(-theta)));
                 WriteString(buffer);
@@ -4280,10 +4288,10 @@ static void ExecuteShowCommand( void )
             }
             if (BondsSelected) {
                 BondRot __far *brptr;
-                
+
                 brptr = BondsSelected;
                 while (brptr) {
-                    sprintf(buffer,"bond %ld %ld pick\n", 
+                    sprintf(buffer,"bond %ld %ld pick\n",
                             (brptr->BSrcAtom)->serno, (brptr->BDstAtom)->serno);
                     WriteString(buffer);
                     if( brptr->BRotValue ) {
@@ -4295,12 +4303,12 @@ static void ExecuteShowCommand( void )
                 }
             }
             break;
-            
+
         case(InterpTok):
             InvalidateCmndLine();
             ShowInterpNames();
             break;
-            
+
         case(TranslateTok):
             InvalidateCmndLine();
             /* temp = 100.0*DialValue[DialTX]; */
@@ -4322,7 +4330,7 @@ static void ExecuteShowCommand( void )
                 WriteString(buffer);
             }
             break;
-            
+
         case(ZoomTok):
             InvalidateCmndLine();
             if( DialValue[DialZoom] != 0.0 )
@@ -4333,7 +4341,7 @@ static void ExecuteShowCommand( void )
                 WriteString(buffer);
             }
             break;
-            
+
         case(FPSTok):
             InvalidateCmndLine();
             sprintf(buffer,"set play.fps %g\n",play_fps);
@@ -4341,13 +4349,13 @@ static void ExecuteShowCommand( void )
             sprintf(buffer,"set record.fps %g\n",record_fps);
                 WriteString(buffer);
             break;
-            
+
         case(APSTok):
             InvalidateCmndLine();
             sprintf(buffer,"set record.aps %g\n",record_aps);
             WriteString(buffer);
             break;
-            
+
         default:
             CommandError(MsgStrs[ErrBadArg]);
     }
@@ -4361,17 +4369,17 @@ static void ExecuteShowCommand( void )
  *               or "select >...>" , continue and stop selection.
  * Escape the parser to make fast atom selection under the format:
  * "select (< or >) x1[-x2],...,xi[-x(i+1)](> or <)" where xi represent atomno.
- */ 
+ */
 static void ReadAtomSelection( int start )
 {	register Long ori=0, end=0;
 	register int neg, bloc=0;
 	register char ch;
 	register Bond __far *bptr;
 	register SurfBond __far *sbptr;
-	
+
 	if( !Database )
 		return;
-    
+
 	/*Empty selection at start*/
 	if( start )
 	{	for( QChain=Database->clist; QChain; QChain=QChain->cnext )
@@ -4380,14 +4388,14 @@ static void ReadAtomSelection( int start )
                 QAtom->flag &= ~SelectFlag;
 		SelectCount = 0;
 	}
-	
+
 	NeedAtomTree = 1;
-	
+
 	while( *TokenPtr )
 	{	bloc = 0;
 		neg = 0;
 		ch = *TokenPtr++;
-        
+
 		/*first number*/
 		while( *TokenPtr && isspace(ch) )
 			ch= *TokenPtr++;
@@ -4401,7 +4409,7 @@ static void ReadAtomSelection( int start )
 			ch= *TokenPtr++;
 			while( *TokenPtr && isspace(ch) )
 				ch = *TokenPtr++;
-			
+
 			/*second number*/
 			if( ch=='-' )
 			{	neg = 0;
@@ -4420,7 +4428,7 @@ static void ReadAtomSelection( int start )
 					ch = *TokenPtr++;
 					while( *TokenPtr && isspace(ch) )
 						ch = *TokenPtr++;
- 					if( ch==','||ch=='>'||ch=='<' )
+					if( ch==','||ch=='>'||ch=='<' )
 						bloc = 1;
 				}
 			} else if( ch==','||ch=='>'||ch=='<' )
@@ -4428,7 +4436,7 @@ static void ReadAtomSelection( int start )
 				bloc = 1;
 			}
 		}
-        
+
 		if( bloc==1 )
 		{	for( QChain=Database->clist; QChain; QChain=QChain->cnext )
             for( QGroup=QChain->glist; QGroup; QGroup=QGroup->gnext )
@@ -4444,22 +4452,22 @@ static void ReadAtomSelection( int start )
 			while( *TokenPtr && ch!=',' && ch!='<' && ch!='>' )
 				ch = *TokenPtr++;
 		}
-        
+
 		if( ch==',' )
 			continue;
-		else if( ch=='<' )	
+		else if( ch=='<' )
 			bloc = 0;
 		else
-			bloc = 1;		
+			bloc = 1;
 		while( *TokenPtr )
             TokenPtr++;
 	}
-    
+
 	/*termination*/
 	if( bloc!=0 )
 	{	if( (FileDepth == -1) || !LineStack[FileDepth] )
         DisplaySelectCount( );
-        
+
 		if( ZoneBoth )
 		{	ForEachBond
             if( (bptr->srcatom->flag&bptr->dstatom->flag) & SelectFlag )
@@ -4488,13 +4496,13 @@ void ZapDatabase( void )
 {
     register int i;
 	int s; 			/* 's' is for "shade" */
-    
+
     for( i=0; i<10; i++ )
         DialValue[i] = 0.0;
     CQRMSet(DialQRot,0.,0.,0.,0.);
 
     SelectCount = 0;
-    
+
     DestroyDatabase();
     ResetSymbolTable();
     ResetTransform();
@@ -4502,21 +4510,21 @@ void ZapDatabase( void )
     ResetRepres();
     ResetBondsSel();
     DeleteMaps();
-    
+
     ZoneBoth = True;
-    HetaGroups = True;    
+    HetaGroups = True;
     Hydrogens = True;
-    
+
 	for (s = 0; s < LastShade; s++)
 		Shade[s].refcount = 0;
-    
+
 #if 0 /* [GSG 11/10/95] */
     BackR = BackG = BackB = 0;
 #endif
 #ifndef IBMPC
     FBClear = False;
 #endif
-    
+
     /* [11/10/95 GSG] Prevent colormap reset, refresh instead of clear */
 #if 0
     ResetColourMap();
@@ -4526,7 +4534,7 @@ void ZapDatabase( void )
 #else
     ReDrawFlag = RFRefresh;
 #endif
-    
+
     if( Interactive )
     {   UpdateScrollBars();
         /* ClearImage(); [GSG 11/10/95] */
@@ -4534,7 +4542,7 @@ void ZapDatabase( void )
     AdviseUpdate(AdvName);
     AdviseUpdate(AdvClass);
     AdviseUpdate(AdvIdent);
-    
+
     /* [GSG 11/10/95] */
     ZapMolecule();
     ReRadius();
@@ -4549,12 +4557,12 @@ void WriteImageFile( char *name, int type, int subtype )
 #else
     type = PPMTok;
 #endif
-    
+
     if ( (type != VRMLTok) && subtype ) {
         CommandError(MsgStrs[ErrSyntax]);
 	}
 	else
-        
+
         switch( type )
     {   case(GIFTok):      WriteGIFFile(name);             break;
         case(BMPTok):      WriteBMPFile(name);             break;
@@ -4567,7 +4575,7 @@ void WriteImageFile( char *name, int type, int subtype )
         case(MonoPSTok):   WriteEPSFFile(name,False,True); break;
         case(VectPSTok):   WriteVectPSFile(name);          break;
         case(Raster3DTok): WriteR3DFile(name);             break;
-            
+
         case(RasMolTok):
         case(ScriptTok):     WriteScriptFile(name);       break;
         case(KinemageTok):   WriteKinemageFile(name);     break;
@@ -4576,9 +4584,9 @@ void WriteImageFile( char *name, int type, int subtype )
         case(POVRay3Tok):    WritePOVRay3File(name);      break;
         case(PhiPsiTok):     WritePhiPsiAngles(name, False); break;
         case(RamachanTok):   WritePhiPsiAngles(name, 1);  break;
-        case(RamPrintTok):   WritePhiPsiAngles(name, -1); break;     
+        case(RamPrintTok):   WritePhiPsiAngles(name, -1); break;
         case(VRMLTok):       WriteVRMLFile(name, subtype); break;
-            
+
     }
 }
 
@@ -4588,15 +4596,15 @@ void ResumePauseCommand( void )
     register int ch,len;
     register FILE *fp;
     register int stat;
-    
+
     CommandActive = False;
     IsPaused = False;
-    
+
 #ifdef MSWIN
     /* Re-enable Drag & Drop! */
     DragAcceptFiles(CanvWin,TRUE);
 #endif
-    
+
     while( FileDepth >= 0 )
     {   fp = FileStack[FileDepth];
         do {
@@ -4607,7 +4615,7 @@ void ResumePauseCommand( void )
                 CurLine[len++] = ch;
                 ch = getc(fp);
             }
-            
+
             LineStack[FileDepth]++;
             if( len<MAXBUFFLEN )
             {   CurLine[len] = '\0';
@@ -4638,12 +4646,12 @@ void InterruptPauseCommand( void )
     WriteString("*** RasMol script interrupted! ***\n\n");
     CommandActive = False;
     IsPaused = False;
-    
+
 #ifdef MSWIN
     /* Re-enable Drag & Drop! */
     DragAcceptFiles(CanvWin,TRUE);
 #endif
-    
+
     while( FileDepth >= 0 )
     {   fclose(FileStack[FileDepth]);
         _ffree(NameStack[FileDepth]);
@@ -4656,7 +4664,7 @@ static void ExecuteConnectCommand( void )
 {
     register Bond __far *bptr;
     register int info,flag;
-    
+
     FetchToken();
     if( !CurToken )
     {   flag = (MainAtomCount+HetaAtomCount<256);
@@ -4664,11 +4672,11 @@ static void ExecuteConnectCommand( void )
     {   flag = True;
     } else if( CurToken == FalseTok )
     {   flag = False;
-    } else 
+    } else
     {   CommandError(MsgStrs[ErrSyntax]);
         return;
     }
-    
+
     if( Database )
     {   ForEachBond
         if( bptr->col )
@@ -4678,48 +4686,48 @@ static void ExecuteConnectCommand( void )
         ReDrawFlag |= RFRefresh|RFColour;
         EnableWireframe(WireFlag,0,0);
     }
-    
+
 	CalcBondsFlag = True;
 }
 
 
-/* Select Maps 
- 
+/* Select Maps
+
  The format of a map command is
  map {<map_selector>} subcommand parameters
- 
+
  where the optional map_selector is one of the following:
  m -- a map number m indicating a particular map for the currently active molecule
- m1-m2 -- a range of map numbers indicating all maps for the current molecule 
+ m1-m2 -- a range of map numbers indicating all maps for the current molecule
  with numbers between m1 and m2, inclusive.   If m1 is blank, m1 is assumed
- to be the number of the first map.  If m2 is blank, m2 is assumed to be the 
+ to be the number of the first map.  If m2 is blank, m2 is assumed to be the
  number of the last map.
  next -- the next map number after the highest number selected map in circular order.
  If all maps are already selected or no maps are selected, the result will be selection
  of the first map.  If there are no maps, next has the same effect as new
- new (or none) -- no maps are selected, but if the subcommand changes any parameters 
+ new (or none) -- no maps are selected, but if the subcommand changes any parameters
  or setting, they are changed for the next map to be created
  all -- all maps are selected
  a quoted string to be used as a map label, or one of the above followed by a
  quoted string to be used as a map label
- 
+
  SelectMaps parses map_selector tokens until it is positioned on the
  token after the last token of the map selector, setting the MapMarkedFlag
  for each selected map and, if it is to be applied to the next map,
  the global map flag.  The MapSelectFlag is not changed at this stage.
  The transfer will be done in a call to ApplyMapSelection, to allow the
  processing to be aborted on errors in the subcommand or parameters
- 
- 
+
+
  */
 
 static void SelectMaps( void ) {
-    
+
     int lomap, himap, labfound, nextflag, newflag, j, nummaps;
     int nomapselected;
     int maxmapsel;
     MapInfo *mapinfo;
-    
+
     lomap = -1;
     himap = -1;
     labfound = 0;
@@ -4727,9 +4735,9 @@ static void SelectMaps( void ) {
     newflag = 0;
     nummaps = 0;
     nomapselected=1;
-    
+
     if (!MapInfoPtr) InitialiseMaps();
-    
+
     if (MapInfoPtr) nummaps = MapInfoPtr->size;
     FetchToken();
     if ( CurToken ) {
@@ -4758,14 +4766,14 @@ static void SelectMaps( void ) {
                 himap = nummaps;
                 FetchToken();
                 if (CurToken == NumberTok) {
-                    himap = (int)TokenValue;	
+                    himap = (int)TokenValue;
                 } else  {
                     if (CurToken == StringTok) labfound = 1;
                 }
             } else  {
                 if (CurToken == StringTok) labfound = 1;
             }
-            
+
         } else  {
             lomap = 1;
             if (CurToken == '-') {
@@ -4773,18 +4781,18 @@ static void SelectMaps( void ) {
                 himap = nummaps;
                 FetchToken();
                 if (CurToken == NumberTok) {
-                    himap = (int)TokenValue;	
+                    himap = (int)TokenValue;
                 } else  {
                     if (CurToken == StringTok) labfound = 1;
                 }
             } else  {
                 if (CurToken == StringTok) labfound = 1;
             }
-            
+
         }
-        
+
     }
-    
+
     if (labfound) {
         if (MapLabel)  {
             _ffree(MapLabel);
@@ -4792,7 +4800,7 @@ static void SelectMaps( void ) {
         MapLabel = _fmalloc(strlen(TokenIdent)+1);
         strcpy(MapLabel,TokenIdent);
     }
-    
+
     MapFlag &= ~(MapMarkedFlag|MapNoSelectFlag);
     if (nomapselected) MapFlag |= MapNoSelectFlag;
     if (MapInfoPtr)  {
@@ -4802,19 +4810,19 @@ static void SelectMaps( void ) {
             mapinfo->flag &= (~MapMarkedFlag);
             if (labfound){
                 if (j+1 >= lomap && j+1 <=himap
-                    && mapinfo->MapLabel 
+                    && mapinfo->MapLabel
                     && !strcasecmp(mapinfo->MapLabel,MapLabel)) {
                     maxmapsel = j;
                     mapinfo->flag |= MapMarkedFlag;
                 }
             } else {
                 if (j+1 >= lomap && j+1 <=himap) {
-                    maxmapsel = j;        	
+                    maxmapsel = j;
                     mapinfo->flag |= MapMarkedFlag;
                 }
             }
         }
-        
+
         if (nextflag) {
             maxmapsel++;
             if ( maxmapsel >= MapInfoPtr->size ) maxmapsel = 1;
@@ -4824,23 +4832,23 @@ static void SelectMaps( void ) {
                 else mapinfo->flag |= MapMarkedFlag;
             }
         }
-        
+
         if (newflag) MapFlag |= MapMarkedFlag;
-        
+
     }
-    
+
     return;
-	
+
 }
 
 static void ApplyMapSelection( void ) {
     int j;
     MapInfo *mapinfo;
-    
+
     if (MapFlag&MapNoSelectFlag) return;
     MapFlag &= (~MapSelectFlag);
     if (MapFlag&MapMarkedFlag) MapFlag |= MapSelectFlag;
-    
+
     if (MapInfoPtr)  {
         for (j=0; j < MapInfoPtr->size; j++) {
             vector_get_elementptr((GenericVec __far *)MapInfoPtr,(void __far * __far *)&mapinfo,j );
@@ -4851,14 +4859,14 @@ static void ApplyMapSelection( void ) {
     return;
 }
 
-/* 
+/*
   ApplyMapAtomSelection
- 
+
      Searchs for atoms within the specified SearchRadius of the points of
      the currently selected maps.  If clear is set, all selections are
      cleared prior to the search.  If current is not set, all atoms are
      selected prior to the search.
- 
+
  */
 
 static void ApplyMapAtomSelection(int dontadd, int searchwithin, int SearchRadius) {
@@ -4871,16 +4879,16 @@ static void ApplyMapAtomSelection(int dontadd, int searchwithin, int SearchRadiu
     tc1 = clock();
 
     /*  First we need to set up the selection flags for CreateAtomTree
-     
+
         If we are adding to the selection (dontadd is false)
         we need to save the current selection using SaveFlag
         and restore those selections at the end.
-          
+
         If we are not searching within (searchwithin is false)
         we need to set all selection flags
-     
+
      */
-    
+
     for( QChain=Database->clist; QChain; QChain=QChain->cnext )
         for( QGroup=QChain->glist; QGroup; QGroup=QGroup->gnext )
             for( QAtom=QGroup->alist; QAtom; QAtom=QAtom->anext ) {
@@ -4888,7 +4896,7 @@ static void ApplyMapAtomSelection(int dontadd, int searchwithin, int SearchRadiu
                 if (!dontadd && ((QAtom->flag)&SelectFlag)) QAtom->flag |= SaveFlag;
                 if (searchwithin==False)  QAtom->flag |= SelectFlag;
             }
-    
+
     if (!AtomTree || dontadd==True || searchwithin==False || NeedAtomTree) {
         if (CreateAtomTree()) {
             RasMolFatalExit(MsgStrs[StrMalloc]);
@@ -4898,7 +4906,7 @@ static void ApplyMapAtomSelection(int dontadd, int searchwithin, int SearchRadiu
     visits = 0;
     CNearTreeSetNodeVisits(AtomTree,visits);
 #endif
-    
+
     /* Now, clear all selection flags */
 
     for( QChain=Database->clist; QChain; QChain=QChain->cnext )
@@ -4906,7 +4914,7 @@ static void ApplyMapAtomSelection(int dontadd, int searchwithin, int SearchRadiu
             for( QAtom=QGroup->alist; QAtom; QAtom=QAtom->anext ) {
                 QAtom->flag &= ~SelectFlag;
             }
-    
+
 
     if (MapInfoPtr)  {
         for (j=0; j < MapInfoPtr->size; j++) {
@@ -4919,16 +4927,16 @@ static void ApplyMapAtomSelection(int dontadd, int searchwithin, int SearchRadiu
                     coord[0] = (double)(MapPointsPtr->array[i]).xpos;
                     coord[1] = (double)(MapPointsPtr->array[i]).ypos;
                     coord[2] = (double)(MapPointsPtr->array[i]).zpos;
-                    
+
                     if (!CNearTreeNearestNeighbor(AtomTree,(double)(SearchRadius),NULL,&objClosest,coord)) {
                         (*((RAtom __far * *)objClosest))->flag |= SelectFlag;
                     }
                  }
-           
+
             }
         }
     }
-    
+
     if (dontadd==False) {
         for( QChain=Database->clist; QChain; QChain=QChain->cnext )
             for( QGroup=QChain->glist; QGroup; QGroup=QGroup->gnext )
@@ -4939,27 +4947,27 @@ static void ApplyMapAtomSelection(int dontadd, int searchwithin, int SearchRadiu
                     }
                 }
      }
-    
+
     tc2 = clock();
     fprintf(stderr,"Map select time %g size %ld depth %ld\n",
             ((double)(tc2-tc1))/CLOCKS_PER_SEC,
-            (long)(AtomTree->m_szsize),(long)(AtomTree->m_szdepth));  
+            (long)(AtomTree->m_szsize),(long)(AtomTree->m_szdepth));
 #ifdef CNEARTREE_INSTRUMENTED
     CNearTreeGetNodeVisits(AtomTree,&visits);
     fprintf(stderr,"Node visits %ld\n", (long)visits);
 #endif
-    
+
     NeedAtomTree = 1;
-    
+
     return;
- 
-	
+
+
 }
 
 void ApplyMapColour( void ) {
     int i, j;
     MapInfo *mapinfo;
-    
+
     if (MapInfoPtr)  {
         for (j=0; j < MapInfoPtr->size; j++) {
             vector_get_elementptr((GenericVec __far *)MapInfoPtr,(void __far * __far *)&mapinfo,j );
@@ -4981,10 +4989,10 @@ void ApplyMapColour( void ) {
 static void ApplyMapFlag( void ) {
     int j, mapflag;
     MapInfo *mapinfo;
-    
-    
+
+
     mapflag = MapFlag&(MapPointFlag|MapMeshDashFlag|MapSurfFlag);
-    
+
     if (MapInfoPtr)  {
         for (j=0; j < MapInfoPtr->size; j++) {
             vector_get_elementptr((GenericVec __far *)MapInfoPtr,(void __far * __far *)&mapinfo,j );
@@ -4998,8 +5006,8 @@ static void ApplyMapFlag( void ) {
                             vector_create((GenericVec __far **)&mapinfo->MapBondsPtr,sizeof(MapBond),1000);
                         if (mapinfo->flag&(MapSurfFlag))
                             vector_create((GenericVec __far **)&mapinfo->MapTanglePtr,sizeof(MapTangle),1000);
-                        map_points(mapinfo->MapPtr, 
-                                   mapinfo->MapLevel+((mapinfo->flag&MapMeanFlag)?mapinfo->MapPtr->mapdatamean:0.), 
+                        map_points(mapinfo->MapPtr,
+                                   mapinfo->MapLevel+((mapinfo->flag&MapMeanFlag)?mapinfo->MapPtr->mapdatamean:0.),
                                    mapinfo->MapSpacing, mapinfo->MapPointsPtr,mapinfo->MapBondsPtr,mapinfo->MapTanglePtr,
                                    mapinfo->MapMaskPtr, mapinfo->MapRGBCol );
                         if (mapinfo->flag&MapColourPot) ColourPointPotential(j);
@@ -5018,16 +5026,16 @@ static void ApplyMapFlag( void ) {
 static void ApplyMapLevel( void ) {
     int j, mapflag;
     MapInfo *mapinfo;
-    
+
     mapflag = MapFlag&MapMeanFlag;
-    
+
     if (MapInfoPtr)  {
         for (j=0; j < MapInfoPtr->size; j++) {
             vector_get_elementptr((GenericVec __far *)MapInfoPtr,(void __far * __far *)&mapinfo,j );
             if (mapinfo->flag&MapSelectFlag) {
                 mapinfo->flag &= ~MapMeanFlag;
                 mapinfo->flag |= mapflag;
-                mapinfo->MapLevel = MapLevel;      	
+                mapinfo->MapLevel = MapLevel;
             }
         }
     }
@@ -5038,7 +5046,7 @@ static void ApplyMapLevel( void ) {
 static void ApplyMapSpread( void ) {
     int j;
     MapInfo *mapinfo;
-    
+
     if (MapInfoPtr)  {
         for (j=0; j < MapInfoPtr->size; j++) {
             vector_get_elementptr((GenericVec __far *)MapInfoPtr,(void __far * __far *)&mapinfo,j );
@@ -5054,7 +5062,7 @@ static void ApplyMapSpread( void ) {
 static void ApplyMapSpacing( void ) {
     int j;
     MapInfo *mapinfo;
-    
+
     if (MapInfoPtr)  {
         for (j=0; j < MapInfoPtr->size; j++) {
             vector_get_elementptr((GenericVec __far *)MapInfoPtr,(void __far * __far *)&mapinfo,j );
@@ -5069,7 +5077,7 @@ static void ApplyMapSpacing( void ) {
 static void ApplyMapZap( void ) {
     int j;
     MapInfo *mapinfo;
-    
+
     if (MapInfoPtr)  {
         for (j=0; j < MapInfoPtr->size; j++) {
             vector_get_elementptr((GenericVec __far *)MapInfoPtr,(void __far * __far *)&mapinfo,j );
@@ -5084,7 +5092,7 @@ static void ApplyMapZap( void ) {
 static void ApplyMapRestriction( void ) {
     int j;
     MapInfo *mapinfo;
-    
+
     if (MapInfoPtr)  {
         for (j=0; j < MapInfoPtr->size; j++) {
             vector_get_elementptr((GenericVec __far *)MapInfoPtr,(void __far * __far *)&mapinfo,j );
@@ -5099,12 +5107,12 @@ static void ApplyMapRestriction( void ) {
 
 /*  Code for calculation of the distance from a point to the Lee-Richards
     Surface of a pair of atoms
-    
+
       x is the location of the test point
       a is the location of the first atom
       b is the location of the second atom
       ra, rb and rp are the radii of a, b and the probe */
-      
+
 #define vsub(result,src,dst) \
       result[0] = dst[0]-src[0]; result[1] = dst[1]-src[1]; result[2] = dst[2]-src[2];
 #define vadd(result,src,dst) \
@@ -5112,7 +5120,7 @@ static void ApplyMapRestriction( void ) {
 #define vdot(u,v) \
       u[0]*v[0] + u[1]*v[1] + u[2]*v[2]
 #define vscale(result,scalar,vector) \
-      result[0] = scalar*vector[0]; result[1] = scalar*vector[1]; result[2] = scalar*vector[2]; 
+      result[0] = scalar*vector[0]; result[1] = scalar*vector[1]; result[2] = scalar*vector[2];
 
 /*
                                 p
@@ -5155,9 +5163,9 @@ static void ApplyMapRestriction( void ) {
 
 
 
-double surfdist(double x[3], double a[3], double b[3], 
+double surfdist(double x[3], double a[3], double b[3],
                 double ra,   double rb,   double rp) {
-    
+
     double dxas, dxbs;      /* signed distances from x to vdw surfaces */
     double xa[3], xb[3];    /* vectors from x to a and b */
     double dab;             /* distance from a to b */
@@ -5168,14 +5176,14 @@ double surfdist(double x[3], double a[3], double b[3],
     double dac, dbc;        /* distances from a to c and b to c */
     double xc[3];           /* x redone as vector from c to x */
     double xcaxial[3];      /* the axial vector component of xc */
-    double dxcaxial;        /* the axial coordinate of xcaxial */ 
+    double dxcaxial;        /* the axial coordinate of xcaxial */
     double xcperp[3];       /* the orthogonal vector component of xc */
     double dxcperp;         /* the orthogonal coordinate of xc */
     double dpasq, dpbsq;    /* squares of lengths from probe center to a and b */
     double dpxsq;           /* square of length from probe center to x */
     double rtot;            /* ra + rb + 2*rb */
     double vdwdist;         /* the distance to the van der Waals surface */
-    
+
     vsub(xa,a,x)
     vsub(xb,b,x)
     dxas = sqrt(vdot(xa,xa)) -ra;
@@ -5184,37 +5192,37 @@ double surfdist(double x[3], double a[3], double b[3],
     dab = sqrt(vdot(vab,vab));
     rtot = ra+rb+rp+rp;
     if ((dxas * dxbs) >= 0. ) {
-        
+
         if (fabs(dxas)<fabs(dxbs)) {
-            
+
             vdwdist = dxas;
-            
+
         } else {
-            
+
             vdwdist = dxbs;
-            
+
         }
-        
+
     } else {
-        
+
         if ( dxas < dxbs ) {
-            
+
             vdwdist = dxas;
-            
+
         } else {
-            
+
             vdwdist = dxbs;
-            
+
         }
     }
-    
+
     /* if the distance is too large or too small ignore the reentrant surface */
     if (dab > rtot || dab < (ra+rb)/2.) {
-        
+
         return vdwdist;
-        
+
     }  else {
-        
+
         vscale(uab,1./dab,vab)
         dac = .5*((rtot)*(ra-rb)/dab + dab);
         dbc = .5*((rtot)*(rb-ra)/dab + dab);
@@ -5226,97 +5234,97 @@ double surfdist(double x[3], double a[3], double b[3],
         vsub(xcperp,xcaxial,xc)
         dxcperp = sqrt(vdot(xcperp,xcperp));
         dpc = sqrt((rp+rb)*(rp+rb) - dbc*dbc);
-        
+
         /* If x is further from the axis than p
-         just return the van der Waals distance 
+         just return the van der Waals distance
          otherwise we will need to check if the
          angle between x-p and c-p is less than
          the angle between a-p or b-p and c-p*/
-        
+
         if (dxcperp >= dpc || dpc < rp ) {
-            
-            return vdwdist;    
-            
+
+            return vdwdist;
+
         } else {
-            
+
             /* In the (axial, perp) coordinate frame centered on c:
-             
+
              x = (dxcaxial,dxcperp)
              p = (o,dpc)
              a = (-dac,0)
              b = (dbc,0)
-             
-             
+
+
              so (a-p).(c-p) = (-dac,-dpc).(0,-dpc) = dpc*dpc
              (b-p).(c-p) = dpc*dpc
              ||a-p|| = sqrt(dac*dac+dpc*dpc)
              ||b-p|| = sqrt(dbc*dbc+dpc*dpc)
-             
+
              We are inside a sector from p to the reentrant surface, on,
              say, the a side, if the cosine of the angle between a-p and
              c-p is larger than the cosine of the angle between x-p and c-p:
-             
+
              |(a-p).(c-p)|/(||a-p||.||c-p||) >= |(x-p).(c-p)|/(||x-p||.||c-p||)
              or
              ||x-p||*|(a-p).(c-p)|>=||a-p||*|(x-p).(c-p)|
-             or 
+             or
              ||x-p||*dpc*dpc >= sqrt(dac*dac+dpc*dpc)*|(dxcperp-dpc)*dpc|
              or
              ||x-p||*dpc >= sqrt(dac*dac+dpc*dpc)*|(dxcperp-dpc)|
-             
-             
+
+
              */
-            
+
             dpxsq = dxcaxial*dxcaxial + (dxcperp-dpc)*(dxcperp-dpc);
-            
+
             if (dxcaxial > 0.){
                 /* x is on the b-side */
-                
+
                 dpbsq =  dbc*dbc + dpc*dpc;
-                
+
                 if (dpc*dpc*dpxsq >= (dxcperp-dpc)*(dxcperp-dpc)*dpbsq) {
-                    
+
                     return vdwdist;
-                    
+
                 } else {
-                    
+
                     return rp - sqrt(dpxsq);
-                    
+
                 }
-                
+
             } else {
-                
+
                 dpasq =  dac*dac + dpc*dpc;
-                
+
                 if (dpc*dpc*dpxsq >= (dxcperp-dpc)*(dxcperp-dpc)*dpasq) {
-                    
+
                     return vdwdist;
-                    
+
                 } else {
-                    
+
                     return rp - sqrt(dpxsq);
-                    
+
                 }
-                
-                
+
+
             }
-            
+
         }
-        
+
     }
-    
+
 }
 
 
 
 
-/* 
+/*
  ApplyMapAtomShow
- 
+
  Searchs for atoms within the specified SearchRadius of the points of
  the currently selected maps.  Show the statistics of the distances
  from the map points to the molecular surface of those atoms
- 
+
  */
 
 static void ApplyMapAtomShow(int SearchRadius) {
@@ -5327,34 +5335,34 @@ static void ApplyMapAtomShow(int SearchRadius) {
     double coord[3], acoord[3], bcoord[3], arad, brad;
     CVectorHandle atomsclosest;
     double vdwdistmin, vdwdistmax, vdwdistmean, vdwvariance;
-    double lrdistmin, lrdistmax, lrdistmean, lrvariance;    
+    double lrdistmin, lrdistmax, lrdistmean, lrvariance;
     double dtemp, vdwdtemp;
     int vdwpcount, vdwptotal, lrpcount, lrptotal;
     char buffer[133];
-    
+
     CVectorCreate(&atomsclosest,sizeof(void CVECTOR_FAR *),2);
-    
+
     vdwpcount = vdwptotal = 0;
-    
+
     vdwdistmean = 0.;
     vdwvariance = 0.;
     vdwdistmin = 1.e9;
     vdwdistmax = -1.e9;
-    
+
     lrpcount = lrptotal =0;
-    
+
     lrdistmean = 0.;
     lrvariance = 0;
     lrdistmin = 1.e9;
     lrdistmax = -1.e9;
-    
-    
+
+
     if (!AtomTree || NeedAtomTree ) {
         if (CreateAtomTree()) {
             RasMolFatalExit(MsgStrs[StrMalloc]);
         }
     }
-    
+
     if (MapInfoPtr)  {
         for (j=0; j < MapInfoPtr->size; j++) {
             vector_get_elementptr((GenericVec __far *)MapInfoPtr,(void __far * __far *)&mapinfo,j );
@@ -5368,7 +5376,7 @@ static void ApplyMapAtomShow(int SearchRadius) {
                         coord[2] = (double)(MapPointsPtr->array[i]).zpos;
                         vdwptotal ++;
                         lrptotal ++;
-                        
+
                         if (!CNearTreeNearestNeighbor(AtomTree,(double)(SearchRadius),NULL,&objClosest,coord)) {
                             acoord[0] =  (double)(*((RAtom __far * *)objClosest))->xorg
                                          + (double)(*((RAtom __far * *)objClosest))->fxorg
@@ -5394,13 +5402,13 @@ static void ApplyMapAtomShow(int SearchRadius) {
                                 vdwdistmean += vdwdtemp;
                                 vdwvariance += vdwdtemp*vdwdtemp;
                             }
-                        }                            
+                        }
 
-                        
+
                         if (!CNearTreeFindKNearest(AtomTree,2,(double)(SearchRadius),NULL,atomsclosest,coord,1)) {
                             switch (CVectorSize(atomsclosest)) {
                                 case 0: break;
-                                case 1: 
+                                case 1:
                                     objClosest = CVectorElementAt(atomsclosest,0);
                                     acoord[0] =  (double)(**((RAtom __far * * *)objClosest))->xorg
                                                  + (double)(**((RAtom __far * * *)objClosest))->fxorg
@@ -5427,7 +5435,7 @@ static void ApplyMapAtomShow(int SearchRadius) {
                                         lrvariance += dtemp*dtemp;
                                     }
                                     break;
-                                case 2: 
+                                case 2:
                                     objClosest = CVectorElementAt(atomsclosest,0);
                                     acoord[0] =  (double)(**((RAtom __far * * *)objClosest))->xorg
                                                  + (double)(**((RAtom __far * * *)objClosest))->fxorg
@@ -5460,17 +5468,17 @@ static void ApplyMapAtomShow(int SearchRadius) {
                                     }
                                     lrdistmean += dtemp;
                                     lrvariance += dtemp*dtemp;
-                                    break;  
+                                    break;
                              }
-                        
-                        } 
+
+                        }
                     }
-                         
-                
+
+
             }
         }
     }
-    
+
     sprintf(buffer,"        points in mesh, points used in distances:\n          total %d, used %d, within %g of surface\n",
             vdwptotal, vdwpcount, ((double)(SearchRadius-((ProbeRadius < 10)?350:ProbeRadius)))/250.);
     WriteString(buffer);
@@ -5483,7 +5491,7 @@ static void ApplyMapAtomShow(int SearchRadius) {
                 vdwdistmean, vdwdistmin, vdwdistmax, sqrt(vdwvariance) );
         WriteString(buffer);
     }
- 
+
     if (lrpcount > 0) {
         lrdistmean /= (250.*(double)lrpcount);
         lrvariance /= (250.*250.*(double)lrpcount)-lrdistmean;
@@ -5493,11 +5501,11 @@ static void ApplyMapAtomShow(int SearchRadius) {
                 lrdistmean, lrdistmin, lrdistmax, sqrt(lrvariance) );
         WriteString(buffer);
     }
-    
+
     CVectorFree(&atomsclosest);
     return;
-    
-	
+
+
 }
 
 
@@ -5505,26 +5513,26 @@ void ApplyMapShow( void ) {
     int j;
     MapInfo *mapinfo;
     char buffer[1124];
-    
+
     InvalidateCmndLine();
-    
+
     if (MapFlag & MapSelectFlag) {
         sprintf(buffer,"map new %s %s %#lg spacing %#lg spread %#lg\n",
                 MapFlag&MapSurfFlag?"surface":(MapFlag&MapMeshFlag?"mesh":(
                                                                            MapFlag&MapPointFlag?"dots":"unknown") ),
                 MapFlag&MapMeanFlag?"level MEAN ":"level ",(double)MapLevel,
                 (double)MapSpacing/250., (double)MapSpread);
-        WriteString(buffer); 
+        WriteString(buffer);
         if (MapMaskPtr) {
-            sprintf(buffer,"mask: mean %#g, esd %#g, min %#g, max %#g\n", 
+            sprintf(buffer,"mask: mean %#g, esd %#g, min %#g, max %#g\n",
                     MapMaskPtr->mapdatamean,
                     MapMaskPtr->mapdataesd,
                     MapMaskPtr->mapdatamin,
                     MapMaskPtr->mapdatamax );
-            WriteString(buffer);         
+            WriteString(buffer);
         }
     }
-    
+
     if (MapInfoPtr)  {
         for (j=0; j < MapInfoPtr->size; j++) {
             vector_get_elementptr((GenericVec __far *)MapInfoPtr,(void __far * __far *)&mapinfo,j );
@@ -5543,7 +5551,7 @@ void ApplyMapShow( void ) {
                     WriteString("\n");
                 }
                 if (mapinfo->MapPtr) {
-                    sprintf(buffer,"map:    mean %#g, esd %#g, min %#g, max %#g\n", 
+                    sprintf(buffer,"map:    mean %#g, esd %#g, min %#g, max %#g\n",
                             mapinfo->MapPtr->mapdatamean,
                             mapinfo->MapPtr->mapdataesd,
                             mapinfo->MapPtr->mapdatamin,
@@ -5554,12 +5562,12 @@ void ApplyMapShow( void ) {
                     WriteString("map: NONE\n");
                 }
                 if (mapinfo->MapMaskPtr) {
-                    sprintf(buffer,"mask:   mean %#g, esd %#g, min %#g, max %#g\n", 
+                    sprintf(buffer,"mask:   mean %#g, esd %#g, min %#g, max %#g\n",
                             mapinfo->MapMaskPtr->mapdatamean,
                             mapinfo->MapMaskPtr->mapdataesd,
                             mapinfo->MapMaskPtr->mapdatamin,
                             mapinfo->MapMaskPtr->mapdatamax );
-                    WriteString(buffer);         
+                    WriteString(buffer);
                 }
             }
         }
@@ -5574,10 +5582,10 @@ int ApplyMapMask(int mapno ) {
     MapStruct __far *mapmaskptr;
     MapAtmSelVec __far *mapmaskgensel;
     Long flag;
-    
+
     ApplyMapSelection();
     if (MapSpacing <= 0) MapSpacing = 250L;
-    
+
     if (MapInfoPtr)  {
         if (mapno != -1 && mapno > MapInfoPtr->size)  {
             CommandError(MsgStrs[ErrBadArg]);
@@ -5593,29 +5601,29 @@ int ApplyMapMask(int mapno ) {
         for (j=-1; j==-1 || j < MapInfoPtr->size; j++) {
             mapmaskgensel = NULL;
             mapmaskptr = NULL;
-            
+
             if (j >=0 ) {
                 vector_get_elementptr((GenericVec __far *)MapInfoPtr,(void __far * __far *)&mapinfo,j );
                 flag = mapinfo->flag;
             } else  {
                 flag=MapFlag;
             }
-            
+
             if (flag&MapSelectFlag) {
                 if (mapno == 0) {
-                    
+
                     if (MapSpread < 0.) MapSpread = 2.*(double)MapSpacing/750.;
-                    
-                    if(generate_map(&mapmaskptr,MapSpacing, 
+
+                    if(generate_map(&mapmaskptr,MapSpacing,
                                     MapSpacing, MapSpacing, 0L, 0L, 0L,
-                                    (Long)(250.*(1.+MapSpread)+MapSpacing), 
-                                    (MapSpread > 0.)?(1./MapSpread):0., 
+                                    (Long)(250.*(1.+MapSpread)+MapSpacing),
+                                    (MapSpread > 0.)?(1./MapSpread):0.,
                                     (flag&MapScaleFlag)?1:0,
                                     flag&MapSASurfFlag)){
                         CommandError(MsgStrs[StrMalloc]);
                         return 1;
                     }
-                    
+
                     vector_create((GenericVec __far **)&mapmaskgensel,sizeof(MapAtmSel),10);
                     WriteMapAtoms(mapmaskgensel);
                 } else if (mapno > 0) {
@@ -5625,7 +5633,7 @@ int ApplyMapMask(int mapno ) {
                             mapmaskptr = (MapStruct __far *)_fmalloc(sizeof(MapStruct));
                             if(!mapmaskptr) {
                                 CommandError(MsgStrs[StrMalloc]);
-                                return 1;	
+                                return 1;
                             }
                             mapmaskptr->mapdata = _fmalloc(omapinfo->MapPtr->elsize*
                                                            ((omapinfo->MapPtr)->xhigh-(omapinfo->MapPtr)->xlow+1)*
@@ -5684,7 +5692,7 @@ int ApplyMapMask(int mapno ) {
                 if (j < 0 )  {
                     if (MapMaskPtr)  {
                         if (MapMaskPtr->mapdata)_ffree((void __far *)MapMaskPtr->mapdata);
-                        _ffree((void __far *)MapMaskPtr);            	
+                        _ffree((void __far *)MapMaskPtr);
                     }
                     MapMaskPtr = mapmaskptr;
                 } else {
@@ -5705,7 +5713,7 @@ int ApplyMapMask(int mapno ) {
                     }
                     mapinfo->MapMaskGenSel=mapmaskgensel;
                 }
-            }       
+            }
         }
     }
     MapReRadius();
@@ -5726,12 +5734,12 @@ static int ExecuteGenerateCommand( int mapflags ) {
     int mapallocfailed;
     int SASflag;
     char buffer[60];
-    
+
     ApplyMapSelection();
     if (MapSpacing <= 0) MapSpacing = 250L;
-    
+
     /* Initialize a mapinfo struct */
-    
+
     mapinfo.MapLevel = MapLevel;
     mapinfo.MapSpacing = MapSpacing;
     if (mapinfo.MapSpacing < 25) mapinfo.MapSpacing = 25;
@@ -5763,7 +5771,7 @@ static int ExecuteGenerateCommand( int mapflags ) {
         mapmaskptr = (MapStruct __far *)_fmalloc(sizeof(MapStruct));
         if(!mapmaskptr) {
             CommandError(MsgStrs[StrMalloc]);
-            return 1;	
+            return 1;
         }
         mapmaskptr->mapdata = _fmalloc(MapMaskPtr->elsize*
                                        ((MapMaskPtr)->xhigh-(MapMaskPtr)->xlow+1)*
@@ -5819,9 +5827,9 @@ static int ExecuteGenerateCommand( int mapflags ) {
         }
         mapinfo.MapMaskGenSel = mapmaskgensel;
     }
-    
+
     MapSpaceAdjust = 1.;
-    
+
 
     do {
         mapallocfailed=
@@ -5833,7 +5841,7 @@ static int ExecuteGenerateCommand( int mapflags ) {
         sprintf(buffer," Trying coarser map spacing %g\n",((double)(mapinfo.MapSpacing*MapSpaceAdjust))/250.);
         WriteString(buffer);
     } while (True);
-    
+
     if (mapallocfailed) {
         CommandError(MsgStrs[StrMalloc]);
         if (mapinfo.MapMaskGenSel) vector_free((GenericVec __far * __far *)&(mapinfo.MapMaskGenSel));
@@ -5842,23 +5850,23 @@ static int ExecuteGenerateCommand( int mapflags ) {
             _ffree((void __far *)mapinfo.MapMaskPtr);
         }
     }
-        
+
     mapinfo.MapSpacing *= MapSpaceAdjust;
     vector_create((GenericVec __far **)&mapinfo.MapGenSel,sizeof(MapAtmSel),10);
     WriteMapAtoms(mapinfo.MapGenSel);
-    
-    
+
+
     if (mapinfo.flag&(MapPointFlag|MapMeshFlag|MapSurfFlag)) {
         vector_create((GenericVec __far **)&mapinfo.MapPointsPtr,sizeof(MapPoint),1000);
         if (mapinfo.flag&(MapMeshFlag))
             vector_create((GenericVec __far **)&mapinfo.MapBondsPtr,sizeof(MapBond),1000);
         if (mapinfo.flag&(MapSurfFlag))
             vector_create((GenericVec __far **)&mapinfo.MapTanglePtr,sizeof(MapTangle),1000);
-        map_points(mapinfo.MapPtr, 
-                   mapinfo.MapLevel+((mapinfo.flag&MapMeanFlag)?mapinfo.MapPtr->mapdatamean:0.), 
+        map_points(mapinfo.MapPtr,
+                   mapinfo.MapLevel+((mapinfo.flag&MapMeanFlag)?mapinfo.MapPtr->mapdatamean:0.),
                    mapinfo.MapSpacing, mapinfo.MapPointsPtr,mapinfo.MapBondsPtr,mapinfo.MapTanglePtr,
                    mapinfo.MapMaskPtr, mapinfo.MapRGBCol );
-        
+
         if (MapFlag&MapNoSelectFlag) {
             vector_add_element((GenericVec __far *)MapInfoPtr,(void __far *)&mapinfo);
         } else {
@@ -5873,11 +5881,11 @@ static int ExecuteGenerateCommand( int mapflags ) {
                         break;
                     }
                 }
-                
+
             }
-            
+
         }
-        
+
         MapReRadius();
         ReRadius();
         ReDrawFlag |= RFInitial|RFColour;
@@ -5891,8 +5899,8 @@ int ExecuteAtomCommand(int heta) {
     double coords[3];
     double __far *poffsetss;
     double offsets[3];
-    
-    
+
+
 }
 
 /* Execute a command given as
@@ -5900,11 +5908,11 @@ int ExecuteAtomCommand(int heta) {
  if a selection is provided, it applies only during
  execution of this command, except for the following
  commands, the prior selection is not restored:
- 
+
  Select
  Restrict
  Script
- 
+
  */
 
 
@@ -5912,18 +5920,18 @@ int ExecuteCommandOne( int * );
 
 int ExecuteCommand( void )
 {
-    
+
     int xret;
     int restore;
-    
+
     TokenPtr = CurLine;
     if( !FetchToken() )
     {   TokenPtr = NULL;
         return False;
     }
-    
+
     restore = 1;
-    
+
     if (CurToken == '(') {
         SaveAtomSelection();
         FetchToken();
@@ -5950,9 +5958,9 @@ int ExecuteCommand( void )
             } else CommandError(MsgStrs[ErrSyntax]);
                 DeAllocateExpr(QueryExpr);
             }
-        } else 
+        } else
         {  CommandError(MsgStrs[ErrSyntax]);
-            return False;      	
+            return False;
         }
         NeedAtomTree = 1;
         FetchToken();
@@ -5964,11 +5972,11 @@ int ExecuteCommand( void )
                 NeedAtomTree = 1;
             }
             return xret;
-        }else 
+        }else
         {  CommandError(MsgStrs[ErrSyntax]);
-            return False;      	
+            return False;
         }
-        
+
     }
     else return ExecuteCommandOne(&restore);
 }
@@ -5982,24 +5990,24 @@ int ExecuteCommandOne( int * restore )
     register Long temp;
 	int suboption;
     FILE *script;
-    
+
     if( !CurToken ) {
         TokenPtr = NULL;
         return False;
     }
-    
+
     if (CurToken=='.')  {
         if( !FetchToken() ) {
             TokenPtr = NULL;
             return False;
         }
     }
-    
+
     *restore = 1;
-    if (CurToken == SelectTok 
+    if (CurToken == SelectTok
         || CurToken == RestrictTok
         || CurToken == ScriptTok) *restore = 0;
-    
+
     switch( CurToken )
     {   case(AtomTok):       ExecuteAtomCommand(False);  break;
         case(AxesTok):       ExecuteAxesCommand();       break;
@@ -6010,11 +6018,11 @@ int ExecuteCommandOne( int * restore )
         case(ClipboardTok):  ExecuteClipboardCommand();  break;
         case(ColourTok):     ExecuteColourCommand();     break;
         case(ConnectTok):    ExecuteConnectCommand();    break;
-    	case(DeferTok):      ExecuteDeferCommand();      break;
+	case(DeferTok):      ExecuteDeferCommand();      break;
         case(EnglishTok):    SwitchLang(English);        break;
-    	case(ExecuteTok):    ExecuteExecuteCommand();    break;
+	case(ExecuteTok):    ExecuteExecuteCommand();    break;
         case(FrenchTok):     SwitchLang(French);         break;
-    	case(GenerateTok):   ExecuteGenerateCommand(MapMeshFlag);
+	case(GenerateTok):   ExecuteGenerateCommand(MapMeshFlag);
             break;
         case(HetAtomTok):    ExecuteAtomCommand(True);   break;
         case(ItalianTok):    SwitchLang(Italian);        break;
@@ -6023,14 +6031,14 @@ int ExecuteCommandOne( int * restore )
         case(WaitTok):       ExecutePauseCommand();      break;
         case(PickingTok):    ExecutePickingCommand();    break;
         case(PrintTok):      ExecutePrintCommand();      break;
-    	case(RussianTok):    SwitchLang(Russian);        break;
+	case(RussianTok):    SwitchLang(Russian);        break;
         case(SendTok):       ExecuteSendCommand();       break;
         case(SetTok):        ExecuteSetCommand();        break;
         case(ShowTok):       ExecuteShowCommand();       break;
         case(SpanishTok):    SwitchLang(Spanish);        break;
         case(TitleTok):      ExecuteTitleCommand();      break;
         case(UnitCellTok):   ExecuteUnitCellCommand();   break;
-            
+
         case(TimeTok):
             {   double prevtime;
                 char buffer[40];
@@ -6044,19 +6052,19 @@ int ExecuteCommandOne( int * restore )
                 WriteString(buffer);
             }
             break;
-            
+
         case(RefreshTok):    RefreshScreen();
                              ReDrawFlag = NextReDrawFlag; break;
-            
-            
+
+
         case(ZapTok):        FetchToken();
             if ( CurToken == MapTok )  {
-                DeleteMaps(); break;	
+                DeleteMaps(); break;
             } else if (!CurToken) {
                 ZapDatabase(); break;
             } else CommandError(MsgStrs[ErrBadArg]);
             break;
-            
+
 		case (ColourModeTok): /* gm */
             FetchToken();
             if (CurToken == TrueTok)
@@ -6088,9 +6096,9 @@ int ExecuteCommandOne( int * restore )
                 }
             }
             break;
-            
+
 		case (NoToggleTok): /* gm */
-            
+
             FetchToken();
             if (CurToken == TrueTok)
             {
@@ -6107,8 +6115,8 @@ int ExecuteCommandOne( int * restore )
                 WriteString(MsgStrs[StrNoTogOn]);
             }
             break;
-            
-            
+
+
         case(BondTok):    FetchToken();
             if( CurToken == NumberTok )
             { temp = TokenValue;
@@ -6117,13 +6125,13 @@ int ExecuteCommandOne( int * restore )
                     FetchToken();
                 if( CurToken == NumberTok )
                 {   Long temp2;
-                    
+
                     temp2 = TokenValue;
                     FetchToken();
                     if ( (!CurToken) || CurToken == '+' ) {
                         CreateBondOrder(temp, temp2);
                         ReDrawFlag |= RFInitial;
-                    } else if ( CurToken == PickingTok ) { 
+                    } else if ( CurToken == PickingTok ) {
                         CreateBondAxis(temp,TokenValue);
                         ReDrawFlag |= RFInitial;
                     } else CommandError(MsgStrs[ErrBadArg]);
@@ -6142,7 +6150,7 @@ int ExecuteCommandOne( int * restore )
                 } else CommandError(MsgStrs[ErrBadArg]);
             } else CommandError(MsgStrs[ErrBadArg]);
             break;
-            
+
         case(UnBondTok):  FetchToken();
             if( CurToken == NumberTok )
             { temp = TokenValue;
@@ -6166,7 +6174,7 @@ int ExecuteCommandOne( int * restore )
             }
             } else CommandError(MsgStrs[ErrBadArg]);
             break;
-            
+
         case(MoleculeTok):
             FetchToken();
             if (CurToken == NewTok ) {
@@ -6185,7 +6193,7 @@ int ExecuteCommandOne( int * restore )
             }
             SelectMolecule(TokenValue-1);
             break;
-            
+
         case(SelectTok):  FetchToken();
             if( !CurToken )
             {   option = NormAtomFlag;
@@ -6213,7 +6221,7 @@ int ExecuteCommandOne( int * restore )
             }
             NeedAtomTree = 1;
             break;
-            
+
         case(RestrictTok):
             FetchToken();
             if( !CurToken )
@@ -6237,18 +6245,18 @@ int ExecuteCommandOne( int * restore )
                 } else CommandError(MsgStrs[ErrSyntax]);
                     DeAllocateExpr(QueryExpr);
                 }
-            } 
+            }
             NeedAtomTree = 1;
             break;
-            
-            
+
+
         case(MapTok):
             SelectMaps();
             if (CurToken) {
                 switch (CurToken) {
                         int mapflags, j;
                         FILE *fp;
-                        
+
                     case(DotsTok):
                         FetchToken();
                         if (CurToken==FalseTok) {
@@ -6261,7 +6269,7 @@ int ExecuteCommandOne( int * restore )
                         { TokenPtr++;
                             FetchFloat(TokenValue,250);
                         }
-                            
+
                             if( TokenValue<=500 )
                             { if (TokenValue !=0) {
                                 MapFlag &= ~(MapPointFlag|MapMeshDashFlag|MapSurfFlag);
@@ -6287,7 +6295,7 @@ int ExecuteCommandOne( int * restore )
                         ApplyMapFlag();
                         ReDrawFlag |= RFRefresh;
                         break;
-                        
+
                     case(WireframeTok):
                         FetchToken();
                         if (CurToken==FalseTok) {
@@ -6303,7 +6311,7 @@ int ExecuteCommandOne( int * restore )
                         { TokenPtr++;
                             FetchFloat(TokenValue,250);
                         }
-                            
+
                             if( TokenValue<=500 )
                             { MapFlag &= ~(MapPointFlag|MapMeshDashFlag|MapSurfFlag);
                                 MapFlag |= MapMeshFlag;
@@ -6325,7 +6333,7 @@ int ExecuteCommandOne( int * restore )
                         ApplyMapFlag();
                         ReDrawFlag |= RFRefresh;
                         break;
-                        
+
                     case(SurfaceTok):
                         MapFlag &= ~(MapPointFlag|MapMeshFlag|MapSurfFlag);
                         MapFlag |= MapSurfFlag;
@@ -6337,13 +6345,13 @@ int ExecuteCommandOne( int * restore )
                         }
                         ReDrawFlag |= RFRefresh;
                         break;
-                        
+
                     case(ScaleTok):
                         FetchToken();
                         if (CurToken == TrueTok || CurToken==ZTok || !CurToken) {
                             MapFlag |= MapScaleFlag;
                         } else if (CurToken == NoneTok || CurToken == FalseTok)  {
-                            MapFlag &= ~MapScaleFlag;                              		
+                            MapFlag &= ~MapScaleFlag;
                         } else { CommandError(MsgStrs[ErrBadArg]);
                             break;
                         }
@@ -6351,15 +6359,15 @@ int ExecuteCommandOne( int * restore )
                         ReDrawFlag |= RFRefresh;
                         break;
                         ApplyMapFlag();
-                        
-                        
+
+
                     case(GenerateTok):
                         mapflags = MapFlag;
                         FetchToken();
                         if (CurToken==MolSurfTok) {
                             mapflags |= MapLRSurfFlag;
                             FetchToken();
-                        } 
+                        }
                         if (CurToken==SASurfTok) {
                             mapflags |= MapSASurfFlag;
                             FetchToken();
@@ -6376,34 +6384,34 @@ int ExecuteCommandOne( int * restore )
                             mapflags &= ~(MapPointFlag|MapMeshFlag|MapSurfFlag);
                             mapflags |= MapSurfFlag;
                             FetchToken();
-                        }   else if (CurToken) { 
+                        }   else if (CurToken) {
                             CommandError(MsgStrs[ErrBadArg]);
                             break;
                         }
                         if (!(mapflags &(MapPointFlag|MapMeshFlag|MapSurfFlag)))
                             mapflags |= MapPointFlag;
-                        ExecuteGenerateCommand(mapflags);  
+                        ExecuteGenerateCommand(mapflags);
                         break;
-                        
+
                     case(LoadTok):
                         FetchToken();
-                        if( !Database ) { 
+                        if( !Database ) {
                             CommandError(MsgStrs[ErrBadMolDB]);
                             break;
                         }
-                        
+
                         if( CurToken==StringTok ) {
                             ProcessFileName(TokenIdent);
                         } else ProcessFileName(TokenStart);
-                        
+
                         if( !(fp=fopen(DataFileName,"rb")) ) {
                             CommandError( (char*)NULL );
                             WriteString(MsgStrs[StrDFile]);
                             WriteString(DataFileName);
                             WriteString("'!\n");
                             break;
-                        } 
-#ifdef USE_CBFLIB        
+                        }
+#ifdef USE_CBFLIB
                         else {
                             int mapno=0;
                             MapInfo *omapinfo;
@@ -6445,12 +6453,12 @@ int ExecuteCommandOne( int * restore )
                         CommandError(MsgStrs[ErrBadArg]);
 #endif
                         break;
-                        
-                        
+
+
                     case(LevelTok):
                     {
                         int neg;
-                        
+
                         FetchToken();
                         MapFlag &= ~MapMeanFlag;
                         MapLevel = 1.;
@@ -6474,7 +6482,7 @@ int ExecuteCommandOne( int * restore )
                         }
                             if( TokenValue<=50000 )
                             {   if (TokenValue > 0 || MapFlag&MapMeanFlag)  {
-                                MapLevel = ((Real)TokenValue)/1000.; 
+                                MapLevel = ((Real)TokenValue)/1000.;
                                 if (neg) MapLevel *= -1.;
                                 ApplyMapSelection();
                                 ApplyMapLevel();
@@ -6491,7 +6499,7 @@ int ExecuteCommandOne( int * restore )
                                 ReDrawFlag |= RFRefresh;
                                 break;
                             } else CommandError(MsgStrs[ErrBigNum]);
-                        } 
+                        }
                         if (!CurToken && (MapFlag&MapMeanFlag)) {
                             ApplyMapSelection();
                             ApplyMapLevel();
@@ -6499,8 +6507,8 @@ int ExecuteCommandOne( int * restore )
                         } else CommandError(MsgStrs[ErrBadArg]);
                         break;
                     }
-                        
-                     
+
+
                     case(SaveTok):
                     case(WriteTok):
                         if( !AllowWrite )
@@ -6509,28 +6517,28 @@ int ExecuteCommandOne( int * restore )
                                 break;
                             }
                         FetchToken();
-                        if( !Database ) { 
+                        if( !Database ) {
                             CommandError(MsgStrs[ErrBadMolDB]);
                             break;
                         }
 
-                        
+
                         if( !CurToken ) {
                             CommandError(MsgStrs[ErrFilNam]);
                             break;
                         } else if( CurToken==StringTok ) {
                             ProcessFileName(TokenIdent);
                         } else ProcessFileName(TokenStart);
-                        
+
                         param = DataFileName;
                         CurToken = 0;
-                        
-#ifdef USE_CBFLIB        
+
+#ifdef USE_CBFLIB
                         if( !(fp=fopen(DataFileName,"w+b")) ) {
                             CommandError( (char*)NULL );
                             FatalOutputError(DataFileName);
                             break;
-                        } 
+                        }
                         else {
                             MapInfo *omapinfo;
                             {
@@ -6562,8 +6570,8 @@ int ExecuteCommandOne( int * restore )
                         CommandError(MsgStrs[ErrBadArg]);
 #endif
                         break;
-                        
-                        
+
+
                     case(MaskTok):
                         FetchToken();
                         if (CurToken == SelectedTok) {
@@ -6575,7 +6583,7 @@ int ExecuteCommandOne( int * restore )
                         }
                         else CommandError(MsgStrs[ErrBadArg]);
                         break;
-                        
+
                     case(ResolutionTok):
                         FetchToken();
                         if ( CurToken==NumberTok && TokenValue >=0)
@@ -6606,9 +6614,9 @@ int ExecuteCommandOne( int * restore )
                             } else CommandError(MsgStrs[ErrBigNum]);
                         } else CommandError(MsgStrs[ErrBadArg]);
                         break;
-                        
-                        
-                        
+
+
+
                     case(SpreadTok):
                         FetchToken();
                         if ( CurToken==NumberTok && TokenValue >=0)
@@ -6619,7 +6627,7 @@ int ExecuteCommandOne( int * restore )
                             TokenValue *= 1000;
                         }
                             if( TokenValue<=50000 )
-                            {   MapSpread = ((Real)TokenValue)/1000.;                          
+                            {   MapSpread = ((Real)TokenValue)/1000.;
                                 ApplyMapSelection();
                                 ApplyMapSpread();
                                 ReDrawFlag |= RFRefresh;
@@ -6634,7 +6642,7 @@ int ExecuteCommandOne( int * restore )
                             } else CommandError(MsgStrs[ErrBigNum]);
                         } else CommandError(MsgStrs[ErrBadArg]);
                         break;
-                        
+
                     case(SpacingTok):
                         FetchToken();
                         if ( CurToken==NumberTok && TokenValue >=0)
@@ -6644,7 +6652,7 @@ int ExecuteCommandOne( int * restore )
                         }
                             if( TokenValue<=50000 )
                             {   if (TokenValue !=0)
-                                MapSpacing = TokenValue;                          
+                                MapSpacing = TokenValue;
                                 ApplyMapSelection();
                                 ApplyMapSpacing();
                                 ReDrawFlag |= RFRefresh;
@@ -6659,7 +6667,7 @@ int ExecuteCommandOne( int * restore )
                             } else CommandError(MsgStrs[ErrBigNum]);
                         } else CommandError(MsgStrs[ErrBadArg]);
                         break;
-                        
+
                     case(ColourTok):
                         FetchToken();
                         if( CurToken==PotentialTok )
@@ -6682,7 +6690,7 @@ int ExecuteCommandOne( int * restore )
                         ApplyMapSelection();
                         ApplyMapColour();
                         break;
-                        
+
                     case(ZapTok):
                         FetchToken();
                         if (!CurToken) {
@@ -6691,11 +6699,11 @@ int ExecuteCommandOne( int * restore )
                         }
                         else CommandError(MsgStrs[ErrSyntax]);
                         break;
-                        
+
                     /*  map {<mapselection>} select
                         map {<mapselection>} select atom {SearchRadius} {+|add} {-|within}
                         map {<mapselection>} restrict atom {SearchRadius} {+|add} {-|within}
-                     
+
                         The default SearchRadius is 6 Angstroms + probe radius
                         The default is to discard all current selections first
                            use '+' or 'add' to add to the current selections instead
@@ -6745,13 +6753,13 @@ int ExecuteCommandOne( int * restore )
                                 break;
                             }
                             ApplyMapAtomSelection(dontadd,searchwithin,SearchRadius);
-                        	SelectZone(SelectFlag);
-                        	NeedAtomTree = 1;
-                        	ReDrawFlag |= RFRefresh;
+				SelectZone(SelectFlag);
+				NeedAtomTree = 1;
+				ReDrawFlag |= RFRefresh;
                         }
                         else CommandError(MsgStrs[ErrSyntax]);
                         break;
-                        
+
                     case(RestrictTok):
                         FetchToken();
                         if (!CurToken) {
@@ -6797,11 +6805,11 @@ int ExecuteCommandOne( int * restore )
                             ApplyMapAtomSelection(dontadd,searchwithin,SearchRadius);
                             RestrictZone(SelectFlag);
                             NeedAtomTree = 1;
-                        	ReDrawFlag |= RFRefresh;
+				ReDrawFlag |= RFRefresh;
                        }
                         else CommandError(MsgStrs[ErrSyntax]);
                         break;
-                        
+
                     case(ShowTok):
                         FetchToken();
                         if (!CurToken) {
@@ -6810,16 +6818,16 @@ int ExecuteCommandOne( int * restore )
                         }
                         else CommandError(MsgStrs[ErrSyntax]);
                         break;
-                        
-                        
+
+
                     default:  CommandError(MsgStrs[ErrBadArg]); break;
-                        
+
                 }
             } else CommandError(MsgStrs[ErrSyntax]);
             break;
-            
-            
-            
+
+
+
         case(WireframeTok):
             FetchToken();
             if( CurToken==FalseTok )
@@ -6836,7 +6844,7 @@ int ExecuteCommandOne( int * restore )
             {   TokenPtr++;
                 FetchFloat(TokenValue,250);
             }
-                
+
                 if( TokenValue<=500 )
                 {   if (TokenValue !=0)
                 {   EnableWireframe(CylinderFlag,
@@ -6859,7 +6867,7 @@ int ExecuteCommandOne( int * restore )
                 } else CommandError(MsgStrs[ErrBigNum]);
             } else CommandError(MsgStrs[ErrBadArg]);
             break;
-            
+
         case(BackboneTok):
             FetchToken();
             if( CurToken==FalseTok )
@@ -6876,8 +6884,8 @@ int ExecuteCommandOne( int * restore )
             {   TokenPtr++;
                 FetchFloat(TokenValue,250);
             }
-                
-                
+
+
                 if( TokenValue<=500 )
                 {   if (TokenValue!=0)                                                                 { EnableBackbone(CylinderFlag,
                                                                                                                         (int)TokenValue,
@@ -6893,7 +6901,7 @@ int ExecuteCommandOne( int * restore )
                 } else CommandError(MsgStrs[ErrBigNum]);
             } else CommandError(MsgStrs[ErrBadArg]);
             break;
-            
+
         case(CPKTok):
         case(SpacefillTok):
             FetchToken();
@@ -6905,7 +6913,7 @@ int ExecuteCommandOne( int * restore )
             {   TokenPtr++;
                 FetchFloat(TokenValue,250);
             }
-                
+
                 if( TokenValue<=3000 )
                 {   SetRadiusValue(MaxFun((int)TokenValue,1),
                                    SphereFlag);
@@ -6946,23 +6954,23 @@ int ExecuteCommandOne( int * restore )
                 } else if( CurToken == NumberTok )
                 {   if( *TokenPtr=='.' )
                 {   TokenPtr++;
-                    FetchFloat(TokenValue,250);   
+                    FetchFloat(TokenValue,250);
                 }
                     if( TokenValue<=3000 )
                     {   ProbeRadius = (int)TokenValue;
                         DrawSurf = True;
                         ReDrawFlag |= RFRefresh;
-                        SetVanWaalRadius( SphereFlag |  
+                        SetVanWaalRadius( SphereFlag |
                                          ExpandFlag );
                     } else CommandError(MsgStrs[ErrBigNum]);
                 } else CommandError(MsgStrs[ErrBadArg]);
-                
-            } else if( CurToken == MoleculeTok) {   
+
+            } else if( CurToken == MoleculeTok) {
                 FetchToken();
                 if( CurToken == DotsTok ) {
                 } else if( CurToken == SolidTok ) {
                 } else if( CurToken == NumberTok )
-                {   if( *TokenPtr=='.' )   
+                {   if( *TokenPtr=='.' )
                 {   TokenPtr++;
                     FetchFloat(TokenValue,250);
                 }
@@ -6975,7 +6983,7 @@ int ExecuteCommandOne( int * restore )
                             SetVanWaalRadius( SphereFlag | TouchFlag );
                         else if( CurToken==NumberTok ) {
                             if( *TokenPtr=='.' ) {
-                                TokenPtr++; 
+                                TokenPtr++;
                                 FetchFloat(TokenValue,250);
                             }
                             if( TokenValue<=3000 ) {
@@ -6999,7 +7007,7 @@ int ExecuteCommandOne( int * restore )
                 } else CommandError(MsgStrs[ErrBadArg]);
             } else CommandError(MsgStrs[ErrBadArg]);
             break;
-            
+
         case(MolSurfTok):
             FetchToken();
             if( CurToken==FalseTok )
@@ -7011,7 +7019,7 @@ int ExecuteCommandOne( int * restore )
             {   TokenPtr++;
                 FetchFloat(TokenValue,250);
             }
-                
+
                 if( TokenValue<=1500 )
                 {   SetRadiusValue(MaxFun((int)TokenValue,1),
                                    SphereFlag);
@@ -7040,7 +7048,7 @@ int ExecuteCommandOne( int * restore )
                 SetVanWaalRadius( SphereFlag );
             } else CommandError(MsgStrs[ErrBadArg]);
             break;
-            
+
         case(StarTok):
             FetchToken();
             if( CurToken==FalseTok )
@@ -7074,7 +7082,7 @@ int ExecuteCommandOne( int * restore )
                 SetVanWaalRadius( StarFlag );
             } else CommandError(MsgStrs[ErrBadArg]);
             break;
-            
+
         case(DashTok):    FetchToken();
             if( CurToken==FalseTok )
             {   ReDrawFlag |= RFRefresh;
@@ -7084,14 +7092,14 @@ int ExecuteCommandOne( int * restore )
                 EnableWireframe(DashFlag,0,0);
             } else CommandError(MsgStrs[ErrBadArg]);
             break;
-            
+
         case(SSBondTok):  FetchToken();
             if( CurToken==NumberTok )
             {   if( *TokenPtr=='.' )
             {   TokenPtr++;
                 FetchFloat(TokenValue,250);
             }
-                
+
                 if( TokenValue<=500 )
                 {   SetHBondStatus(False,True,(int)TokenValue,
                                    (int)((4*TokenValue)/5));
@@ -7112,14 +7120,14 @@ int ExecuteCommandOne( int * restore )
                 SetHBondStatus(False,True,0,0);
             } else CommandError(MsgStrs[ErrBadArg]);
             break;
-            
+
         case(HBondTok):   FetchToken();
             if( CurToken==NumberTok )
             {   if( *TokenPtr=='.' )
             {   TokenPtr++;
                 FetchFloat(TokenValue,250);
             }
-                
+
                 if( TokenValue<=500 )
                 {   SetHBondStatus(True,True,(int)TokenValue,
                                    (int)((4*TokenValue)/5));
@@ -7140,20 +7148,20 @@ int ExecuteCommandOne( int * restore )
                 SetHBondStatus(True,True,0,0);
             } else CommandError(MsgStrs[ErrBadArg]);
             break;
-            
+
         case(RibbonTok):  FetchToken();
             if( CurToken==NumberTok && TokenValue>=0)
             {   if( *TokenPtr=='.' )
             {   TokenPtr++;
                 FetchFloat(TokenValue,250);
             }
-                
+
                 if( TokenValue<=1000 )
                 {  if (TokenValue !=0)
                 {SetRibbonStatus(True,RibbonFlag,
                                  (int)TokenValue);
                     ReDrawFlag |= RFRefresh;
-                } else { ReDrawFlag |= RFRefresh; 
+                } else { ReDrawFlag |= RFRefresh;
                     SetRibbonStatus(False, RibbonFlag,0);
                 }
                 } else CommandError(MsgStrs[ErrBigNum]);
@@ -7172,19 +7180,19 @@ int ExecuteCommandOne( int * restore )
                 SetRibbonStatus(True,RibbonFlag,0);
             } else CommandError(MsgStrs[ErrBadArg]);
             break;
-            
+
         case(StrandsTok): FetchToken();
             if( CurToken == DashTok )
             {   option = DashStrandFlag;
                 FetchToken();
             } else option = StrandFlag;
-            
+
             if( CurToken==NumberTok && TokenValue>=0)
             {   if( *TokenPtr=='.' )
             {   TokenPtr++;
                 FetchFloat(TokenValue,250);
             }
-                
+
                 if( TokenValue<=1000 )
                 { if (TokenValue !=0)
                 {   SetRibbonStatus(True,option,(int)TokenValue);
@@ -7208,7 +7216,7 @@ int ExecuteCommandOne( int * restore )
                 SetRibbonStatus(True,option,0);
             } else CommandError(MsgStrs[ErrBadArg]);
             break;
-            
+
         case(TraceTok):   FetchToken();
             if( CurToken==FalseTok )
             {   ReDrawFlag |= RFRefresh;
@@ -7227,17 +7235,17 @@ int ExecuteCommandOne( int * restore )
             {   TokenPtr++;
                 FetchFloat(TokenValue,250);
             }
-                
+
                 if( TokenValue<=500)
-                {   if (TokenValue !=0) 
+                {   if (TokenValue !=0)
                 {   SetRibbonStatus(True,TraceFlag,
                                     (int)TokenValue);
                     ReDrawFlag |= RFRefresh;
-                } else 
+                } else
                 {
                     ReDrawFlag |= RFRefresh;
                     SetRibbonStatus(False,TraceFlag,80);
-                }			      
+                }
                 } else CommandError(MsgStrs[ErrBigNum]);
             } else if( CurToken=='.' )
             {   FetchFloat(0,250);
@@ -7248,24 +7256,24 @@ int ExecuteCommandOne( int * restore )
                 } else CommandError(MsgStrs[ErrBigNum]);
             } else CommandError(MsgStrs[ErrBadArg]);
             break;
-            
+
         case(CartoonTok): FetchToken();
             if( CurToken==NumberTok && TokenValue>=0)
             {   if( *TokenPtr=='.' )
             {   TokenPtr++;
                 FetchFloat(TokenValue,250);
             }
-                
+
                 if( TokenValue<=1000 )
                 {  if (TokenValue !=0)
                 {   SetRibbonStatus(True,CartoonFlag,
                                     (int)TokenValue);
                     ReDrawFlag |= RFRefresh;
-                } else 
+                } else
                 {
                     ReDrawFlag |= RFRefresh;
                     SetRibbonStatus(False,CartoonFlag,0);
-                }  
+                }
                 } else CommandError(MsgStrs[ErrBigNum]);
             } else if( CurToken=='.' )
             {   FetchFloat(0,250);
@@ -7282,7 +7290,7 @@ int ExecuteCommandOne( int * restore )
                 SetRibbonStatus(True,CartoonFlag,0);
             } else CommandError(MsgStrs[ErrBadArg]);
             break;
-            
+
         case(DotsTok):    FetchToken();
             if( CurToken==NumberTok )
             {   if( TokenValue<=1000 )
@@ -7300,14 +7308,14 @@ int ExecuteCommandOne( int * restore )
                 CalculateSurface(100);
             } else CommandError(MsgStrs[ErrBadArg]);
             break;
-            
+
         case(MonitorTok): FetchToken();
             if( CurToken == NumberTok )
             {   temp = TokenValue;
                 FetchToken();
                 if( CurToken == ',' )
                     FetchToken();
-                
+
                 if( CurToken == NumberTok )
                 {   CreateMonitor(temp,TokenValue);
                     ReDrawFlag |= RFRefresh;
@@ -7320,7 +7328,7 @@ int ExecuteCommandOne( int * restore )
                 DrawMonitDistance = True;
             }else CommandError(MsgStrs[ErrBadArg]);
             break;
-            
+
         case(SlabTok):    FetchToken();
             if( (CurToken==NumberTok) || (CurToken=='.') )
             {   if( CurToken==NumberTok )
@@ -7329,7 +7337,7 @@ int ExecuteCommandOne( int * restore )
                 FetchFloat(TokenValue,100);
             } else TokenValue *= 100;
             } else FetchFloat(0,100);
-                
+
                 if( TokenValue<=10000 )
                 {   DialValue[DialSlab] = (TokenValue-5000)/5000.0;
                     /* UpdateScrollBars(); */
@@ -7337,7 +7345,7 @@ int ExecuteCommandOne( int * restore )
                     UseSlabPlane = True;
                     UseShadow = False;
                 } else CommandError(MsgStrs[ErrBigNum]);
-                
+
             } else if( CurToken==FalseTok )
             {   if( UseSlabPlane )
             {   ReDrawFlag |= RFRefresh;
@@ -7351,7 +7359,7 @@ int ExecuteCommandOne( int * restore )
             }
             } else CommandError(MsgStrs[ErrSyntax]);
             break;
-            
+
         case(DepthTok):    FetchToken();
             if( (CurToken==NumberTok) || (CurToken=='.') )
             {   if( CurToken==NumberTok )
@@ -7360,7 +7368,7 @@ int ExecuteCommandOne( int * restore )
                 FetchFloat(TokenValue,100);
             } else TokenValue *= 100;
             } else FetchFloat(0,100);
-                
+
                 if( TokenValue<=10000 )
                 {   DialValue[DialBClip] = (TokenValue-5000)/5000.0;
                     /* UpdateScrollBars(); */
@@ -7368,7 +7376,7 @@ int ExecuteCommandOne( int * restore )
                     UseDepthPlane = True;
                     UseShadow = False;
                 } else CommandError(MsgStrs[ErrBigNum]);
-                
+
             } else if( CurToken==FalseTok )
             {   if( UseDepthPlane )
             {   ReDrawFlag |= RFRotate;
@@ -7382,7 +7390,7 @@ int ExecuteCommandOne( int * restore )
             }
             } else CommandError(MsgStrs[ErrSyntax]);
             break;
-            
+
         case(ZoomTok):    FetchToken();
             if( (CurToken==NumberTok) || (CurToken=='.') )
             {   if( CurToken==NumberTok )
@@ -7391,7 +7399,7 @@ int ExecuteCommandOne( int * restore )
                 FetchFloat(TokenValue,100);
             } else TokenValue *= 100;
             } else FetchFloat(0,100);
-                
+
                 if( TokenValue<=10000 )
                 {   DialValue[DialZoom] = (TokenValue-10000)/10000.0;
                     ReDrawFlag |= RFZoom;
@@ -7413,7 +7421,7 @@ int ExecuteCommandOne( int * restore )
             } else CommandError(MsgStrs[ErrSyntax]);
             /* UpdateScrollBars(); */
             break;
-            
+
         case(RotateTok):  FetchToken();
             if( CurToken==XTok )
             {   option = 0;
@@ -7436,16 +7444,16 @@ int ExecuteCommandOne( int * restore )
             {   CommandError(MsgStrs[ErrSyntax]);
                 break;
             }
-            
+
             FetchToken();
-            if( option < 0 && 
-               (!CurToken || CurToken==FalseTok || 
+            if( option < 0 &&
+               (!CurToken || CurToken==FalseTok ||
                 CurToken==TrueTok))
-            { if( (option == -1 && 
+            { if( (option == -1 &&
                    CurToken==FalseTok && RotMode==RotBond) ||
-                 (option == -2 && 
+                 (option == -2 &&
                   (!CurToken || CurToken==TrueTok)) ||
-                 (option == -3 && 
+                 (option == -3 &&
                   CurToken==FalseTok && RotMode==RotAll) )
             { RotMode = RotMol;
                 ReDrawFlag |= RFRotate;
@@ -7475,14 +7483,14 @@ int ExecuteCommandOne( int * restore )
                 FetchFloat(TokenValue,100);
             } else TokenValue *= 100;
             } else FetchFloat(0,100);
-                
+
                 if( TokenValue )
                 {   if( ReDrawFlag & RFRotate )
                     PrepareTransform();
                     if( done ) TokenValue = -TokenValue;
                     if (option == -1) {
                         ReDrawFlag |= RFRotBond;
-                        BondSelected->BRotValue += 
+                        BondSelected->BRotValue +=
                         TokenValue/18000.0;
                         while( BondSelected->BRotValue < -1.0 )
                             BondSelected->BRotValue += 2.0;
@@ -7490,26 +7498,26 @@ int ExecuteCommandOne( int * restore )
                             BondSelected->BRotValue -= 2.0;
                     } else {
                         double xtemp;
-                        
+
                         if (option < 0) {
                             CommandError(MsgStrs[ErrSyntax]);
-                            break;                                 	
+                            break;
                         }
                         if (RotMode == RotAll) {
                             xtemp = WorldDialValue[option];
                         } else {
                             xtemp = DialValue[option];
                         }
-                        
+
                         ReDrawFlag |= (1<<option);
-                        
+
                         xtemp += TokenValue/18000.0;
-                        
+
                         while( xtemp<-1.0 )
                             xtemp += 2.0;
                         while( xtemp>1.0 )
                             xtemp -= 2.0;
-                        
+
                         if (RotMode == RotAll) {
                             WorldDialValue[option] = xtemp;
                         } else {
@@ -7534,10 +7542,10 @@ int ExecuteCommandOne( int * restore )
                 }
                 if( Interactive )
                     UpdateScrollBars();
-                ReDrawFlag |= RFRefresh;  
+                ReDrawFlag |= RFRefresh;
             } else CommandError(MsgStrs[ErrNotNum]);
             break;
-            
+
         case(TranslateTok):
             FetchToken();
             if( CurToken==XTok )
@@ -7550,7 +7558,7 @@ int ExecuteCommandOne( int * restore )
             {   CommandError(MsgStrs[ErrSyntax]);
                 break;
             }
-            
+
             FetchToken();
             if( CurToken == '-' )
             {   FetchToken();
@@ -7560,7 +7568,7 @@ int ExecuteCommandOne( int * restore )
             if( option == 5 )
                 done = !done;
 #endif
-            
+
             if( (CurToken==NumberTok) || (CurToken=='.') )
             {   if( CurToken==NumberTok )
             {   if( *TokenPtr=='.' )
@@ -7568,16 +7576,16 @@ int ExecuteCommandOne( int * restore )
                 FetchFloat(TokenValue,100);
             } else TokenValue *= 100;
             } else FetchFloat(0,100);
-                
+
                 if( TokenValue<=10000 )
                 {   double wtemp;
-                    
+
                     ReDrawFlag |= RFTrans;
                     if( done ) TokenValue = -TokenValue;
                     wtemp = TokenValue/10000.0;
                     if( RotMode == RotAll && option == 4 ) {
                         WorldDialValue[DialTX] = wtemp;
-                    } else { 
+                    } else {
                         if( RotMode == RotAll && option == 5 ) {
                             WorldDialValue[DialTY] = wtemp;
                         } else {
@@ -7588,12 +7596,12 @@ int ExecuteCommandOne( int * restore )
                             }
                         }
                     }
-                    
+
                     /* UpdateScrollBars(); */
                 } else CommandError(MsgStrs[ErrBigNum]);
             } else CommandError(MsgStrs[ErrNotNum]);
             break;
-            
+
         case(StereoTok):  FetchToken();
             if( !CurToken || (CurToken==TrueTok) )
             {   SetStereoMode(True);
@@ -7614,30 +7622,30 @@ int ExecuteCommandOne( int * restore )
             if (StereoAngle > 60.) {
                 StereoAngle = 6.;
                 CommandError(MsgStrs[ErrBigNum]);
-                break;            	
+                break;
             }
             if (StereoAngle < -60.) {
                 StereoAngle = -6.;
                 CommandError(MsgStrs[ErrBigNum]);
-                break;            	
+                break;
             }
             break;
-            
+
         case(ResizeTok):  FetchToken();
             break;
-            
+
         case(ResetTok):   for( i=0; i<10; i++ )
             DialValue[i] = 0.0;
             ReDrawFlag |= RFDials;
             ResetTransform();
-            
+
             /* ReDrawFlag |= RFRefresh|RFColour; */
             /* DisplayMode = 0;                  */
-            
+
             if( Interactive )
                 UpdateScrollBars();
             break;
-            
+
         case('?'):
         case(HelpTok):    if( !HelpFileName )
             InitHelpFile();
@@ -7645,7 +7653,7 @@ int ExecuteCommandOne( int * restore )
                 FindHelpInfo();
             CurToken=0;
             break;
-            
+
         case(LabelTok):   FetchToken();
             if( !CurToken || (CurToken==TrueTok) )
             {   if( Info.chaincount>1 )
@@ -7661,7 +7669,7 @@ int ExecuteCommandOne( int * restore )
             } else DefineLabels(TokenIdent);
             ReDrawFlag |= RFRefresh;
             break;
-            
+
         case(EchoTok):    FetchToken();
             InvalidateCmndLine();
             if( CurToken==StringTok )
@@ -7671,13 +7679,13 @@ int ExecuteCommandOne( int * restore )
             WriteChar('\n');
             CurToken = 0;
             break;
-            
+
         case(DefineTok):  FetchToken();
-            if( CurToken != IdentTok ) 
+            if( CurToken != IdentTok )
             {   CommandError(MsgStrs[ErrSetName]);
                 break;
             }
-            
+
             param = (char*)malloc(TokenLength+1);
             if( param )
             {   memcpy(param,TokenIdent,TokenLength+1);
@@ -7688,11 +7696,11 @@ int ExecuteCommandOne( int * restore )
                     } else done = True;
                 } else done = DefineSetExpr(param,(Expr*)NULL);
             } else done = False;
-            
+
             if( !done )
                 CommandError(MsgStrs[ErrBadSet]);
             break;
-            
+
         case(BackgroundTok):
             FetchToken();
             if( CurToken == TransparentTok )
@@ -7715,7 +7723,7 @@ int ExecuteCommandOne( int * restore )
         case(PlayTok):
         {
             int newPlayFrom, newPlayUntil;
-            
+
             newPlayFrom = PlayFrom;
             newPlayUntil = PlayUntil;
             if (PlayTemplate[0]==0){
@@ -7726,9 +7734,9 @@ int ExecuteCommandOne( int * restore )
             do {
                 if (CurToken == FromTok) {
                     FetchToken();
-                    if( (CurToken==NumberTok) || (CurToken=='.') ) {   
+                    if( (CurToken==NumberTok) || (CurToken=='.') ) {
                         if( CurToken==NumberTok ) {
-                            if( *TokenPtr=='.' ) {   
+                            if( *TokenPtr=='.' ) {
                                 TokenPtr++;
                                 FetchFloat(TokenValue,1000);
                             } else TokenValue *= 1000;
@@ -7741,9 +7749,9 @@ int ExecuteCommandOne( int * restore )
                     }
                 } else if (CurToken == UntilTok) {
                     FetchToken();
-                    if( (CurToken==NumberTok) || (CurToken=='.') ) {   
+                    if( (CurToken==NumberTok) || (CurToken=='.') ) {
                         if( CurToken==NumberTok ) {
-                            if( *TokenPtr=='.' ) {   
+                            if( *TokenPtr=='.' ) {
                                 TokenPtr++;
                                 FetchFloat(TokenValue,1000);
                             } else TokenValue *= 1000;
@@ -7763,13 +7771,13 @@ int ExecuteCommandOne( int * restore )
                        || (IsImageToken(option)) )
                     {   if( !*TokenPtr || *TokenPtr==' ' )
                         suboption = FetchToken();
-                        if (suboption == MirrorTok || suboption == RotateTok) 
+                        if (suboption == MirrorTok || suboption == RotateTok)
                         {  if (!*TokenPtr || *TokenPtr==' ')
                             FetchToken();
                         }
                         else suboption = 0;
                     } else option = 0;
-                    
+
                     if( !CurToken )
                     {   CommandError(MsgStrs[ErrFilNam]);
                         break;
@@ -7806,11 +7814,11 @@ int ExecuteCommandOne( int * restore )
             if (!PlayPause && PlayTemplate[0] != '\0') PlayMovie();
             break;
         }
-            
+
         case(RecordTok):
         {
             int newRecordFrom, newRecordUntil;
-            
+
             newRecordFrom = RecordFrom;
             newRecordUntil = RecordUntil;
             if (RecordTemplate[0]==0){
@@ -7822,7 +7830,7 @@ int ExecuteCommandOne( int * restore )
                 {   CommandError(MsgStrs[ErrInScrpt]);
                     break;
                 }
-            if( !Database ) { 
+            if( !Database ) {
                 CommandError(MsgStrs[ErrBadMolDB]);
                 break;
             }
@@ -7830,9 +7838,9 @@ int ExecuteCommandOne( int * restore )
             do {
                 if (CurToken == FromTok) {
                     FetchToken();
-                    if( (CurToken==NumberTok) || (CurToken=='.') ) {   
+                    if( (CurToken==NumberTok) || (CurToken=='.') ) {
                         if( CurToken==NumberTok ) {
-                            if( *TokenPtr=='.' ) {   
+                            if( *TokenPtr=='.' ) {
                                 TokenPtr++;
                                 FetchFloat(TokenValue,1000);
                             } else TokenValue *= 1000;
@@ -7845,9 +7853,9 @@ int ExecuteCommandOne( int * restore )
                     }
                 } else if (CurToken == UntilTok) {
                     FetchToken();
-                    if( (CurToken==NumberTok) || (CurToken=='.') ) {   
+                    if( (CurToken==NumberTok) || (CurToken=='.') ) {
                         if( CurToken==NumberTok ) {
-                            if( *TokenPtr=='.' ) {   
+                            if( *TokenPtr=='.' ) {
                                 TokenPtr++;
                                 FetchFloat(TokenValue,1000);
                             } else TokenValue *= 1000;
@@ -7867,13 +7875,13 @@ int ExecuteCommandOne( int * restore )
                        || (IsImageToken(option)) )
                     {   if( !*TokenPtr || *TokenPtr==' ' )
                         suboption = FetchToken();
-                        if (suboption == MirrorTok || suboption == RotateTok) 
+                        if (suboption == MirrorTok || suboption == RotateTok)
                         {  if (!*TokenPtr || *TokenPtr==' ')
                             FetchToken();
                         }
                         else suboption = 0;
                     } else option = 0;
-                    
+
                     if( !CurToken )
                     {   CommandError(MsgStrs[ErrFilNam]);
                         break;
@@ -7904,18 +7912,18 @@ int ExecuteCommandOne( int * restore )
                 } else if (CurToken == MotionTok || CurToken==MouseTok) {
                     FetchToken();
                     if (CurToken ==0 || CurToken == OnTok)  {
-                    	record_on[0] = True;
+			record_on[0] = True;
                     } else if (CurToken == OffTok ){
                         record_on[0] = False;
                     }
                 } else if (CurToken == AppearanceTok ) {
                     FetchToken();
                     if (CurToken ==0 || CurToken == OnTok)  {
-                    	record_on[1] = True;
+			record_on[1] = True;
                     } else if (CurToken == OffTok ){
                         record_on[1] = False;
                     }
-                	
+
                 } else {
                     CommandError(MsgStrs[ErrSyntax]);
                     break;
@@ -7925,7 +7933,7 @@ int ExecuteCommandOne( int * restore )
             break;
         }
 
-            
+
         case(WriteTok):
         case(SaveTok):    i = CurToken; /* Save keyword! */
             if( !AllowWrite )
@@ -7933,11 +7941,11 @@ int ExecuteCommandOne( int * restore )
                 {   CommandError(MsgStrs[ErrInScrpt]);
                     break;
                 }
-            if( !Database ) { 
+            if( !Database ) {
                 CommandError(MsgStrs[ErrBadMolDB]);
                 break;
             }
-            
+
             option = FetchToken();
             suboption = 0;
             if( (option==RasMolTok) || (option==ScriptTok)
@@ -7945,7 +7953,7 @@ int ExecuteCommandOne( int * restore )
                || (IsImageToken(option)) )
             {   if( !*TokenPtr || *TokenPtr==' ' )
                 suboption = FetchToken();
-                if (suboption == MirrorTok || suboption == RotateTok) 
+                if (suboption == MirrorTok || suboption == RotateTok)
                 {  if (!*TokenPtr || *TokenPtr==' ')
                     FetchToken();
                 }
@@ -7953,7 +7961,7 @@ int ExecuteCommandOne( int * restore )
             } else if( i==SaveTok )
             {   option = PDBTok;
             } else option = 0;
-            
+
             if( !CurToken )
             {   CommandError(MsgStrs[ErrFilNam]);
                 break;
@@ -7962,14 +7970,14 @@ int ExecuteCommandOne( int * restore )
             } else ProcessFileName(TokenStart);
             param = DataFileName;
             CurToken = 0;
-            
+
             if( !IsMoleculeToken(option) )
             {   if( ReDrawFlag )  {
-            	  RefreshScreen();
+		  RefreshScreen();
                   ReDrawFlag = NextReDrawFlag;
                 }
                 WriteImageFile( param, option, suboption );
-                
+
             } else switch(option)
             {   case(NMRPDBTok):
                 case(PDBTok):  SavePDBMolecule(param); break;
@@ -7983,7 +7991,7 @@ int ExecuteCommandOne( int * restore )
                 case(AlchemyTok): SaveAlchemyMolecule(param);
                     break;
             } break;
-            
+
         case(SourceTok):
         case(ScriptTok):  FetchToken();
             if( FileDepth<STACKSIZE )
@@ -7994,27 +8002,27 @@ int ExecuteCommandOne( int * restore )
             {      ProcessFileName(TokenIdent);
             } else ProcessFileName(TokenStart);
                 CurToken = 0;
-                
+
                 script = fopen(DataFileName,"rb");
                 LoadScriptFile(script,DataFileName);
             } else CommandError(MsgStrs[ErrScript]);
             break;
-            
+
         case(RenumTok):   FetchToken();
             if( CurToken )
             {   if( CurToken=='-' )
             {    FetchToken();
                 done = True;
             } else done = False;
-                
+
                 if( CurToken == NumberTok )
                 {   if( done )
                 {     RenumberMolecule(-(int)TokenValue);
-                } else RenumberMolecule((int)TokenValue); 
+                } else RenumberMolecule((int)TokenValue);
                 } else CommandError(MsgStrs[ErrNotNum]);
             } else RenumberMolecule(1);
             break;
-            
+
         case(StructureTok):
             FetchToken();
             if( !CurToken || (CurToken==FalseTok) )
@@ -8023,7 +8031,7 @@ int ExecuteCommandOne( int * restore )
             {   DetermineStructure(True);
             } else CommandError(MsgStrs[ErrSyntax]);
             break;
-            
+
         case(HeaderTok):
         case(CIFDataTok):
             if( AcceptData[FileDepth] == 'Y' ) {
@@ -8038,7 +8046,7 @@ int ExecuteCommandOne( int * restore )
                                 CommandError(MsgStrs[ErrBadLoad]);
                             }
                             break;
-                            
+
                         case(CIFDataTok):
                             if (SetNewMolecule()){
                                 ProcessFile(FormatCIF,False,
@@ -8055,13 +8063,13 @@ int ExecuteCommandOne( int * restore )
             }
             CurToken = 0;
             return( ExitTok );
-            
+
         case(ExitTok):    return( ExitTok );
         case(QuitTok):    return( QuitTok );
         default:          CommandError(MsgStrs[StrUnrec]);
             break;
     }
-    
+
     if( CurToken )
         if( FetchToken() )
             CommandError(MsgStrs[StrIgnore]);
@@ -8076,43 +8084,43 @@ int ExecuteIPCCommand( char __huge *ptr )
     register int stat,result;
     register int len,depth;
     register char *dst;
-    
+
     /* Ignore IPC commands while paused! */
     if( IsPaused ) return 0;
-    
+
     FileDepth = 0;
     *LineStack = 0;
     result = IPC_Ok;
     *NameStack = "IPC Error";
-    
+
     /* Save command line */
     strcpy(buffer,CurLine);
-    
+
     while( *ptr && (*ptr==' ') )
         ptr++;
-    
+
     if( *ptr == '[' )
     {   while( *ptr++ == '[' )
     {   dst = CurLine;
-        depth = 0;  
+        depth = 0;
         len = 0;
-        
+
         while( *ptr )
         {   if( *ptr == ']' )
         {   if( !depth )
-        {   ptr++; 
+        {   ptr++;
             break;
         } else depth--;
         } else if( *ptr=='[' )
             depth++;
-            
+
             if( len < MAXBUFFLEN-1 )
             {   *dst++ = *ptr++;
                 len++;
             } else ptr++;
         }
         *dst = '\0';
-        
+
         if( len < MAXBUFFLEN-1 )
         {   stat = ExecuteCommand();
             if( stat == QuitTok )
@@ -8123,7 +8131,7 @@ int ExecuteIPCCommand( char __huge *ptr )
         {   InvalidateCmndLine();
             WriteString(MsgStrs[StrRCLong]);
         }
-        
+
         while( *ptr && ((*ptr==' ')||(*ptr==';')) )
             ptr++;
     }
@@ -8137,7 +8145,7 @@ int ExecuteIPCCommand( char __huge *ptr )
         } else break;
         }
         *dst = '\0';
-        
+
         if( len < MAXBUFFLEN-1 )
         {   stat = ExecuteCommand();
             if( stat == QuitTok )
@@ -8149,7 +8157,7 @@ int ExecuteIPCCommand( char __huge *ptr )
             WriteString(MsgStrs[StrRCLong]);
         }
     }
-    
+
     FileDepth = -1;
     if( CommandActive )
     {   strcpy(CurLine,buffer);
@@ -8162,37 +8170,36 @@ int ExecuteIPCCommand( char __huge *ptr )
 void InitialiseCommand( void )
 {
     int ii;
-    
+
     for (ii=0; ii < 256; ii++) Defer_Symbols[ii] = (Symbol __far *)NULL;
     FreeSymbol = (Symbol __far *)NULL;
     HelpFileName = NULL;
     FreeInfo = (void __far*)0;
     HelpInfo = (void __far*)0;
-    
+
     SelectCount = 0;
     TokenPtr = NULL;
     FileDepth = -1;
-    
+
     SeqFormat = False;
     IsPaused = False;
-    
+
     /* Movie and animation intialization */
-    
+
     play_fps = record_fps = 24.;  /* default to 24 fps */;
     record_aps = 10.;             /* default to 10 Angstroms per second */
-    record_on[0] = record_on[1] = False; 
+    record_on[0] = record_on[1] = False;
     /* default, not recording motion or appearance */
     record_frame[0] = record_frame[1] = 0;
-    /* start the overall and dwell frame counts at 0 */ 
+    /* start the overall and dwell frame counts at 0 */
     play_frame[0] = play_frame[1] = 0;
-    
+
     record_dwell = 0.5;           /* dwell half second per command (12 frames)   */
     RecordTemplate[0] = 0;        /* no initial recording */
     PlayTemplate[0] = 0;          /* no initial playback  */
-    RecordCurrent = RecordFrom = RecordUntil 
+    RecordCurrent = RecordFrom = RecordUntil
     = PlayCurrent = PlayFrom = PlayUntil = RecordMaxMS = PlayMaxMS = 0.;
     RecordPause = True;
     PlayPause = False;
-    
-}
 
+}

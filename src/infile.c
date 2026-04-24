@@ -215,7 +215,9 @@
 #if defined(IBMPC) || defined(VMS) || defined(APPLEMAC)
 #include "string_case.h"
 #else
+#ifndef _WIN32
 #include <strings.h>
+#endif
 #endif
 #include <ctype.h>
 #include <stdio.h>
