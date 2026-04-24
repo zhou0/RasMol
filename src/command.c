@@ -120,7 +120,9 @@
 
 
 #if !defined(IBMPC) && !defined(VMS) && !defined(APPLEMAC)
+#ifndef _WIN32
 #include <pwd.h>
+#endif
 #endif
 
 #define COMMAND
@@ -401,7 +403,9 @@ static int IsSecure( int ch )
 
 char *ProcessFileName( char *name )
 {
+    #ifndef _WIN32
     register struct passwd *entry;
+#endif
     register char *temp;
     register char *ptr;
     char username[64];
@@ -418,10 +422,14 @@ char *ProcessFileName( char *name )
         
         ptr = DataFileName;
         if( *username )
-        {   if( (entry=getpwnam(username)) )
+        {
+#ifndef _WIN32
+            if( (entry=getpwnam(username)) )
             {   temp = entry->pw_dir;
                 endpwent();
-            } else /* Unknown user! */
+            } else
+#endif
+            /* Unknown user! */
             {   temp = username;
                 *ptr++ = '~';
             }
