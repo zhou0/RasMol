@@ -1,0 +1,10 @@
+# Build artifacts
+build/
+*.o
+*.obj
+rasmol
+rastxt
+
+# Temporary and editor files
+*~
+.DS_Store
