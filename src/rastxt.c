@@ -107,19 +107,25 @@
 #ifdef IBMPC
 #include <conio.h>
 #endif
-#ifdef UNIX
 #include <signal.h>
-#endif
 
 #ifdef TERMIOS
 #include <sys/types.h>
+#ifndef _WIN32
 #include <sys/time.h>
+#endif
+#ifndef _WIN32
 #include <termios.h>
+#endif
 
 #ifdef esv
+#ifndef _WIN32
 #include <sysv/unistd.h>
+#endif
 #else
+#ifndef _WIN32
 #include <unistd.h>
+#endif
 #endif
 #endif /* TERMIOS */
 
@@ -677,8 +683,10 @@ int main( int argc, char *argv[] )
     OpenDisplay();
     InitTerminal();
 
-#ifdef UNIX
+#ifdef SIGINT
     signal(SIGINT,RasMolSignalExit);
+#endif
+#ifdef SIGPIPE
     signal(SIGPIPE,SIG_IGN);
 #endif
 

@@ -212,7 +212,7 @@
 #endif
 
 #include <string.h>
-#if defined(IBMPC) || defined(VMS) || defined(APPLEMAC)
+#if defined(IBMPC) || defined(VMS) || defined(APPLEMAC) || defined(_WIN32)
 #include "string_case.h"
 #else
 #include <strings.h>
@@ -238,7 +238,9 @@
 #ifndef VMS
 #include <sys/types.h>
 #endif
+#ifndef _WIN32
 #include <sys/time.h>
+#endif
 #endif
 #include <time.h>
 #endif
