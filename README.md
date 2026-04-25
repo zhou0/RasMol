@@ -171,6 +171,7 @@ Biomolecular Structures Group, Glaxo Wellcome Research & Development, Stevenage,
   Contents
 
      * IMPORTANT - Copying and Distribution
+     * Building with CMake
      * Installation Instructions
      * Changes
      * Things To Do
@@ -178,6 +179,7 @@ Biomolecular Structures Group, Glaxo Wellcome Research & Development, Stevenage,
      * Source Code and Binaries
      * Directories
           * ChangeLog -- Full ChangeLog directory
+          * CMakeLists.txt -- CMake build configuration
           * src -- source code
                * mac -- Macintosh build directory
                * mswin -- Windows build directory

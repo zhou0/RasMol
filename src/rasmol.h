@@ -87,14 +87,22 @@
 /* #define MSWIN        */
 /* #define APPLEMAC     */
 /* #define X11WIN       */    /* X11WIN or GTKWIN defined in Imakefile */
+#ifndef _WIN32
+#ifndef UNIX
 #define UNIX
+#endif
+#endif
+#ifndef STDINT
 #define STDINT
+#endif
 
 /* #define DIALBOX      */
 #ifndef GTKWIN
 #define SOCKETS
 #endif
+#ifndef _WIN32
 #define TERMIOS
+#endif
 #define PROFILE
 #define MITSHM
 
@@ -116,7 +124,7 @@
 /* #define XPROCARCH    */
 #define USE_UNAME
 
-#define USE_CBFLIB
+/* #define USE_CBFLIB */
 
 #ifndef CNEARTREE_FAR
 #define CNEARTREE_FAR 
@@ -326,4 +334,8 @@ void HandleMenu( int hand );
 
 #ifdef APPLEMAC
 #include "rasmac.h"
+#endif
+
+#ifdef _WIN32
+#include "string_case.h"
 #endif
