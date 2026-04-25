@@ -1114,7 +1114,7 @@ int CheckInterpName( char __huge *name, unsigned long __huge *interpid) {
         while( *ptr != ' ' ) {
             if (!*ptr ) break;
             if (isxdigit(*ptr)) {
-                *interpid = ((*interpid)<<4)|(unsigned long)digittoint(*ptr);
+                *interpid = ((*interpid)<<4)|(unsigned long)rasmol_digittoint(*ptr);
             } else {
                 break;
             }
