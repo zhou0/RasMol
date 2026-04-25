@@ -213,7 +213,7 @@ extern "C" {
 #include "cif_ctonum.h"
 #include <math.h>
 #include <string.h>
-#if defined(IBMPC) || defined(VMS) || defined(APPLEMAC)
+#if defined(IBMPC) || defined(VMS) || defined(APPLEMAC) || defined(_WIN32)
 #include "string_case.h"
 #else
 #include <strings.h>

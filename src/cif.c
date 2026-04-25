@@ -284,7 +284,9 @@ extern "C" {
 #include <string.h>
 #include <stdlib.h>
 #include <errno.h>
+#ifndef _WIN32
 #include <unistd.h>
+#endif
 #define C2CBUFSIZ 4096
 
 #if defined(IBMPC) || defined(VMS) || defined(APPLEMAC)
@@ -373,7 +375,7 @@ extern "C" {
 #include <ctype.h>
 #include <stdio.h>
 #include <math.h>
-#if defined(IBMPC) || defined(VMS) || defined(APPLEMAC)
+#if defined(IBMPC) || defined(VMS) || defined(APPLEMAC) || defined(_WIN32)
 #include "string_case.h"
 #else
 #include <strings.h>
