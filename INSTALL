@@ -275,6 +275,20 @@
 
     UNIX X11:
 
+            CMake is now the preferred build system.
+
+            Building with CMake:
+            1. Ensure you have X11 development headers installed (libx11-dev, etc.)
+            2. Run:
+               mkdir build
+               cd build
+               cmake ..
+               make
+
+            This will build both 'rasmol' and 'rastxt'.
+
+            Legacy build system (Imake):
+
    If you are using a precompiled binary, see the instructions that are
    provided with the binary kit. In general, the binary kits for unix
    provided directly by this project are tarballs of the
@@ -338,13 +352,22 @@
     MS Windows:
 
             If you are using a precompiled binary, follow the instructions
-            that come with the binary, but in general, you either need to
-            place raswin.exe, rasmol.hlp and raswin.hlp into the directory
-            from which you will run, or you need to execute the installer
-            program by double clicking it.
+            that come with the binary.
 
-            If you are building from source, you will need MINGW, not visual
-            studio. CodeWarrior version 9 can also be used.
+            If you are building from source, CMake is now the recommended
+            method and supports both MSVC (Visual Studio) and MinGW.
+
+            Building with CMake:
+            1. Install CMake (3.11+) and a compiler (VS 2022, MinGW, etc.)
+            2. Run:
+               mkdir build
+               cd build
+               cmake ..
+               cmake --build . --config Release
+
+            The build will produce 'rasmol.exe' (if X11 is available) and
+            'rastxt.exe'. Documentation and data files will be in the
+            source tree.
 
     Macintosh under OSX:
 

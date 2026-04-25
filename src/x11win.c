@@ -529,7 +529,7 @@ static int DialEvent;
 static int UseDials;
 #endif
 
-static int digittoint(int c) {
+static int rasmol_digittoint(int c) {
     if (isdigit(c)) return c - '0';
     if (isxdigit(c)) {
         if (isupper(c)) return c - 'A' + 10;
@@ -1110,7 +1110,7 @@ int CheckInterpName( char __huge *name, unsigned long __huge *interpid) {
         while( *ptr != ' ' ) {
             if (!*ptr ) break;
             if (isxdigit(*ptr)) {
-                *interpid = ((*interpid)<<4)|(unsigned long)digittoint(*ptr);
+                *interpid = ((*interpid)<<4)|(unsigned long)rasmol_digittoint(*ptr);
             } else {
                 break;
             }
