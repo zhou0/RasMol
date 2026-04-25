@@ -249,7 +249,9 @@
 /* #include <string.h> */  /* Ladislav Michnovic, 10 Jan 08 */
 
 #if !defined(IBMPC) && !defined(VMS) && !defined(APPLEMAC)
+#ifndef _WIN32
 #include <pwd.h>
+#endif
 #endif
 
 #include <stdarg.h>

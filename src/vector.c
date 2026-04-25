@@ -178,7 +178,9 @@
 #include <stdio.h>
 
 #if !defined(IBMPC) && !defined(VMS) && !defined(APPLEMAC)
+#ifndef _WIN32
 #include <pwd.h>
+#endif
 #endif
 
 #include <math.h>

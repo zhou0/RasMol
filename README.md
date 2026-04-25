@@ -161,7 +161,7 @@ Biomolecular Structures Group, Glaxo Wellcome Research & Development, Stevenage,
    RasMol version 2.7.3.1, on RasMol version 2.7.3, on RasMol version
    2.7.2.1.1, on RasMol version 2.7.2, on RasMol version 2.7.1, on RasMol
    version 2.6_CIF.2, on RasMol version 2.6x1, on RasMol version 2.6.4, and
-   on RasMol 2.5-ucb and 2.6-ucb.
+   RasMol 2.5-ucb and 2.6-ucb.
 
    Please read the file NOTICE for important notices which apply to this
    package and for license terms (GPL or RASLIC).
@@ -171,6 +171,7 @@ Biomolecular Structures Group, Glaxo Wellcome Research & Development, Stevenage,
   Contents
 
      * IMPORTANT - Copying and Distribution
+     * Building with CMake
      * Installation Instructions
      * Changes
      * Things To Do
@@ -178,6 +179,7 @@ Biomolecular Structures Group, Glaxo Wellcome Research & Development, Stevenage,
      * Source Code and Binaries
      * Directories
           * ChangeLog -- Full ChangeLog directory
+          * CMakeLists.txt -- CMake build configuration
           * src -- source code
                * mac -- Macintosh build directory
                * mswin -- Windows build directory
@@ -307,7 +309,7 @@ Biomolecular Structures Group, Glaxo Wellcome Research & Development, Stevenage,
 
    http://www.sourceforge.net/projects/rasmol.
 
-   Any comments, suggestions or questions about this modified version of
+     Any comments, suggestions or questions about this modified version of
           RasMol should be directed to rasmol@bernstein-plus-sons.com.
 
 | OpenRasMol | Copying and Distribution | Contents | Installation Instructions |
