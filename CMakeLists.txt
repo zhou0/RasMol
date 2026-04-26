@@ -149,3 +149,18 @@ install(DIRECTORY doc/ DESTINATION share/rasmol/doc)
 if(EXISTS "${CMAKE_SOURCE_DIR}/doc/rasmol.hlp")
     install(FILES doc/rasmol.hlp DESTINATION share/rasmol)
 endif()
+
+# Tcl/Tk Support
+set(TCL_INCLUDE_PATH "/usr/include/tcl8.6")
+set(TK_INCLUDE_PATH "/usr/include/tcl8.6")
+set(TCL_LIBRARY "/usr/lib/x86_64-linux-gnu/libtcl8.6.so")
+set(TK_LIBRARY "/usr/lib/x86_64-linux-gnu/libtk8.6.so")
+
+include_directories(${TCL_INCLUDE_PATH} ${TK_INCLUDE_PATH})
+add_executable(rasmol_tcl warpings/tcl/rasmol_tcl.c ${CORE_SOURCES})
+target_include_directories(rasmol_tcl PRIVATE src)
+target_link_libraries(rasmol_tcl ${TCL_LIBRARY} ${TK_LIBRARY} ${EXTERNAL_LIBRARIES})
+if(X11_FOUND)
+    target_link_libraries(rasmol_tcl ${X11_LIBRARIES})
+endif()
+install(TARGETS rasmol_tcl DESTINATION bin)
