@@ -2,6 +2,7 @@
 #include <tk.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 #include <cqrlib.h>
 #include "rasmol.h"
 #include "molecule.h"
@@ -96,9 +97,38 @@ int Tcl_AppInit(Tcl_Interp *interp) {
     Tcl_CreateObjCommand(interp, "rasmol_register_photo", RasMol_RegisterPhotoObjCmd, NULL, NULL);
     Tcl_CreateObjCommand(interp, "rasmol_handle_menu", RasMol_HandleMenuObjCmd, NULL, NULL);
 
-    /* Source the UI script */
-    if (Tcl_Eval(interp, "if {[file exists gui/tcltk/rasmol_ui.tcl]} { source gui/tcltk/rasmol_ui.tcl }") == TCL_ERROR) {
-        // Warning only
+    /* Search for the UI script in multiple locations */
+    const char *script_name = "rasmol_ui.tcl";
+    const char *search_dirs[] = {
+        "gui/tcltk",
+        "../gui/tcltk",
+        "../../gui/tcltk",
+        "../../../gui/tcltk",
+        "./",
+        "/usr/local/share/rasmol",
+        "/usr/share/rasmol",
+        NULL
+    };
+
+    char full_path[1024];
+    int found = 0;
+
+    for (int i = 0; search_dirs[i] != NULL; i++) {
+        snprintf(full_path, sizeof(full_path), "%s/%s", search_dirs[i], script_name);
+        if (access(full_path, R_OK) == 0) {
+            if (Tcl_EvalFile(interp, full_path) == TCL_OK) {
+                found = 1;
+                break;
+            } else {
+                fprintf(stderr, "Error executing RasMol UI script '%s':\n%s\n",
+                        full_path, Tcl_GetVar(interp, "errorInfo", TCL_GLOBAL_ONLY));
+            }
+        }
+    }
+
+    if (!found) {
+        fprintf(stderr, "Warning: Could not load RasMol UI script '%s' from any searched location.\n", script_name);
+        fprintf(stderr, "Current working directory: %s\n", getcwd(NULL, 0));
     }
 
     return TCL_OK;

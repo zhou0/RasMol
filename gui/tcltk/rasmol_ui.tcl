@@ -1,6 +1,8 @@
 package require Tk
 package require Ttk
 
+puts "Starting RasMol Themed UI..."
+
 # Main Window setup
 wm title . "RasMol Themed UI"
 wm geometry . 1024x768
@@ -88,7 +90,7 @@ ttk::panedwindow .pw -orient horizontal
 pack .pw -fill both -expand yes
 
 # Left control panel
-ttk::frame .pw.left -padding 5
+ttk::frame .pw.left -padding 5 -width 200
 .pw add .pw.left
 
 ttk::labelframe .pw.left.opts -text "Quick Controls" -padding 5
@@ -102,6 +104,7 @@ ttk::frame .pw.right
 .pw add .pw.right
 
 # RasMol Canvas Area
+puts "Creating photo image..."
 set rasmol_img [image create photo rasmol_view -width 576 -height 576]
 ttk::frame .pw.right.f -relief sunken -borderwidth 2
 pack .pw.right.f -fill both -expand yes -padx 5 -pady 5
@@ -112,6 +115,7 @@ pack .pw.right.f.c -fill both -expand yes
 
 # Register the photo image with the C bridge
 if {[info commands rasmol_register_photo] ne ""} {
+    puts "Registering photo image..."
     rasmol_register_photo rasmol_view
 }
 
@@ -168,3 +172,5 @@ set show_labels 0
 set pick_mode 1
 set rot_mode 13
 set use_slab 0
+
+puts "UI initialized."
