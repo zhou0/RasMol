@@ -23,6 +23,11 @@ endif()
 # We need PIC for shared libraries on some platforms (like macOS)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
+# Set default output directories EARLY to prevent subprojects from overriding them
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+
 find_path(CBF_INCLUDE_DIR NAMES cbf.h PATH_SUFFIXES cbf cbflib)
 find_path(NEARTREE_INCLUDE_DIR NAMES CNearTree.h PATH_SUFFIXES NearTree neartree)
 find_path(CQRLIB_INCLUDE_DIR NAMES cqrlib.h PATH_SUFFIXES cqrlib CQRlib)
@@ -81,6 +86,11 @@ if(NOT CBF_LIBRARY)
         set(CBF_INCLUDE_DIR "")
     endif()
 endif()
+
+# Re-force output directories AFTER FetchContent just in case they were overridden
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 
 add_definitions(-D_USE_RASMOL_H_)
 if(NOT WIN32)
