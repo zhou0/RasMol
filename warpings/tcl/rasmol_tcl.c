@@ -49,6 +49,30 @@ static int RasMol_RegisterPhotoObjCmd(ClientData clientData, Tcl_Interp *interp,
     return TCL_OK;
 }
 
+/* Forward declaration for HandleMenu */
+void HandleMenu( int hand );
+
+/* Tcl command to handle RasMol menu actions */
+static int RasMol_HandleMenuObjCmd(ClientData clientData, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[]) {
+    int menu, item;
+    if (objc != 3) {
+        Tcl_WrongNumArgs(interp, 1, objv, "menu item");
+        return TCL_ERROR;
+    }
+
+    if (Tcl_GetIntFromObj(interp, objv[1], &menu) != TCL_OK) return TCL_ERROR;
+    if (Tcl_GetIntFromObj(interp, objv[2], &item) != TCL_OK) return TCL_ERROR;
+
+    HandleMenu((menu << 8) | item);
+
+    if (ReDrawFlag) {
+        RefreshScreen();
+        ReDrawFlag = NextReDrawFlag;
+    }
+
+    return TCL_OK;
+}
+
 int Tcl_AppInit(Tcl_Interp *interp) {
     if (Tcl_Init(interp) == TCL_ERROR) return TCL_ERROR;
     if (Tk_Init(interp) == TCL_ERROR) return TCL_ERROR;
@@ -70,10 +94,11 @@ int Tcl_AppInit(Tcl_Interp *interp) {
 
     Tcl_CreateObjCommand(interp, "rasmol_command", RasMol_CommandObjCmd, NULL, NULL);
     Tcl_CreateObjCommand(interp, "rasmol_register_photo", RasMol_RegisterPhotoObjCmd, NULL, NULL);
+    Tcl_CreateObjCommand(interp, "rasmol_handle_menu", RasMol_HandleMenuObjCmd, NULL, NULL);
 
     /* Source the UI script */
     if (Tcl_Eval(interp, "if {[file exists gui/tcltk/rasmol_ui.tcl]} { source gui/tcltk/rasmol_ui.tcl }") == TCL_ERROR) {
-        // Warning only, as it might be sourced differently in production
+        // Warning only
     }
 
     return TCL_OK;
@@ -132,7 +157,6 @@ void RefreshScreen( void ) {
 }
 
 void RasMolExit( void ) { exit(0); }
-void HandleMenu( int hand ) { (void)hand; }
 void UpdateLanguage( void ) {}
 void ReDrawWindow( void ) {}
 void UpdateScrollBars( void ) {}
@@ -182,6 +206,76 @@ int CreateImage( void ) {
 int ShowInterpNames ( void ) { return False; }
 int CheckInterpName (char __huge *name , unsigned long __huge *id) { (void)name; (void)id; return False; }
 int SendInterpCommand( char __huge *name, unsigned long id, char __huge *cmd) { (void)name; (void)id; (void)cmd; return False; }
+
+/* Placeholder for HandleMenu if not linked from rasmol.c */
+void HandleMenu( int hand ) {
+    int menu = hand >> 8;
+    int item = hand & 0xff;
+
+    switch(menu) {
+        case 0: /* File */
+            switch(item) {
+                case 3: ExecuteIPCCommand("zap"); break;
+                case 5: exit(0); break;
+            }
+            break;
+        case 1: /* Display */
+            switch(item) {
+                case 1: ExecuteIPCCommand("wireframe"); break;
+                case 2: ExecuteIPCCommand("backbone"); break;
+                case 3: ExecuteIPCCommand("sticks"); break;
+                case 4: ExecuteIPCCommand("spacefill"); break;
+                case 5: ExecuteIPCCommand("ballstick"); break;
+                case 6: ExecuteIPCCommand("ribbons"); break;
+                case 7: ExecuteIPCCommand("strands"); break;
+                case 8: ExecuteIPCCommand("cartoons"); break;
+                case 9: ExecuteIPCCommand("surface"); break;
+            }
+            break;
+        case 2: /* Colours */
+            switch(item) {
+                case 1: ExecuteIPCCommand("colour monochrome"); break;
+                case 2: ExecuteIPCCommand("colour cpk"); break;
+                case 3: ExecuteIPCCommand("colour shapely"); break;
+                case 4: ExecuteIPCCommand("colour group"); break;
+                case 5: ExecuteIPCCommand("colour chain"); break;
+                case 6: ExecuteIPCCommand("colour temperature"); break;
+                case 7: ExecuteIPCCommand("colour structure"); break;
+                case 8: ExecuteIPCCommand("colour user"); break;
+                case 9: ExecuteIPCCommand("colour model"); break;
+                case 10: ExecuteIPCCommand("colour alt"); break;
+            }
+            break;
+        case 3: /* Options */
+            switch(item) {
+                case 1: ExecuteIPCCommand("slab"); break;
+                case 2: ExecuteIPCCommand("set hydrogens"); break;
+                case 3: ExecuteIPCCommand("set hetero"); break;
+                case 4: ExecuteIPCCommand("set specular"); break;
+                case 5: ExecuteIPCCommand("set shadows"); break;
+                case 6: ExecuteIPCCommand("stereo"); break;
+                case 7: ExecuteIPCCommand("set labels"); break;
+            }
+            break;
+        case 4: /* Settings */
+            switch(item) {
+                case 1: ExecuteIPCCommand("set picking off"); break;
+                case 2: ExecuteIPCCommand("set picking ident"); break;
+                case 3: ExecuteIPCCommand("set picking distance"); break;
+                case 4: ExecuteIPCCommand("set picking monitor"); break;
+                case 5: ExecuteIPCCommand("set picking angle"); break;
+                case 6: ExecuteIPCCommand("set picking torsion"); break;
+                case 7: ExecuteIPCCommand("set picking label"); break;
+                case 8: ExecuteIPCCommand("set picking centre"); break;
+                case 9: ExecuteIPCCommand("set picking coord"); break;
+                case 10: ExecuteIPCCommand("set picking bond"); break;
+                case 11: ExecuteIPCCommand("set rotation bond"); break;
+                case 12: ExecuteIPCCommand("set rotation molecule"); break;
+                case 13: ExecuteIPCCommand("set rotation all"); break;
+            }
+            break;
+    }
+}
 
 int main(int argc, char *argv[]) {
     Tk_Main(argc, argv, Tcl_AppInit);

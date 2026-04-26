@@ -3,7 +3,7 @@ package require Ttk
 
 # Main Window setup
 wm title . "RasMol Themed UI"
-wm geometry . 800x600
+wm geometry . 1024x768
 
 # Theme selection (Tile/Ttk)
 ttk::style theme use clam
@@ -12,18 +12,76 @@ ttk::style theme use clam
 menu .menubar
 . configure -menu .menubar
 
+# File Menu
 menu .menubar.file -tearoff 0
 .menubar add cascade -label "File" -menu .menubar.file
 .menubar.file add command -label "Open..." -command {load_molecule}
+.menubar.file add command -label "Save As..." -command {send_rasmol_menu 0 2}
+.menubar.file add command -label "Close" -command {send_rasmol_menu 0 3}
 .menubar.file add separator
 .menubar.file add command -label "Exit" -command {exit}
 
+# Display Menu
 menu .menubar.display -tearoff 0
 .menubar add cascade -label "Display" -menu .menubar.display
-.menubar.display add radiobutton -label "Wireframe" -variable display_mode -value "wireframe" -command {send_rasmol "wireframe"}
-.menubar.display add radiobutton -label "Backbone" -variable display_mode -value "backbone" -command {send_rasmol "backbone"}
-.menubar.display add radiobutton -label "Sticks" -variable display_mode -value "sticks" -command {send_rasmol "sticks"}
-.menubar.display add radiobutton -label "Spacefill" -variable display_mode -value "spacefill" -command {send_rasmol "spacefill"}
+.menubar.display add radiobutton -label "Wireframe" -variable display_mode -value 1 -command {send_rasmol_menu 1 1}
+.menubar.display add radiobutton -label "Backbone" -variable display_mode -value 2 -command {send_rasmol_menu 1 2}
+.menubar.display add radiobutton -label "Sticks" -variable display_mode -value 3 -command {send_rasmol_menu 1 3}
+.menubar.display add radiobutton -label "Spacefill" -variable display_mode -value 4 -command {send_rasmol_menu 1 4}
+.menubar.display add radiobutton -label "Ball & Stick" -variable display_mode -value 5 -command {send_rasmol_menu 1 5}
+.menubar.display add radiobutton -label "Ribbons" -variable display_mode -value 6 -command {send_rasmol_menu 1 6}
+.menubar.display add radiobutton -label "Strands" -variable display_mode -value 7 -command {send_rasmol_menu 1 7}
+.menubar.display add radiobutton -label "Cartoons" -variable display_mode -value 8 -command {send_rasmol_menu 1 8}
+.menubar.display add radiobutton -label "Molecular Surface" -variable display_mode -value 9 -command {send_rasmol_menu 1 9}
+
+# Colours Menu
+menu .menubar.colours -tearoff 0
+.menubar add cascade -label "Colours" -menu .menubar.colours
+.menubar.colours add radiobutton -label "Monochrome" -variable colour_mode -value 1 -command {send_rasmol_menu 2 1}
+.menubar.colours add radiobutton -label "CPK" -variable colour_mode -value 2 -command {send_rasmol_menu 2 2}
+.menubar.colours add radiobutton -label "Shapely" -variable colour_mode -value 3 -command {send_rasmol_menu 2 3}
+.menubar.colours add radiobutton -label "Group" -variable colour_mode -value 4 -command {send_rasmol_menu 2 4}
+.menubar.colours add radiobutton -label "Chain" -variable colour_mode -value 5 -command {send_rasmol_menu 2 5}
+.menubar.colours add radiobutton -label "Temperature" -variable colour_mode -value 6 -command {send_rasmol_menu 2 6}
+.menubar.colours add radiobutton -label "Structure" -variable colour_mode -value 7 -command {send_rasmol_menu 2 7}
+.menubar.colours add radiobutton -label "User" -variable colour_mode -value 8 -command {send_rasmol_menu 2 8}
+.menubar.colours add radiobutton -label "Model" -variable colour_mode -value 9 -command {send_rasmol_menu 2 9}
+.menubar.colours add radiobutton -label "Alt" -variable colour_mode -value 10 -command {send_rasmol_menu 2 10}
+
+# Options Menu
+menu .menubar.options -tearoff 0
+.menubar add cascade -label "Options" -menu .menubar.options
+.menubar.options add checkbutton -label "Slab Mode" -variable use_slab -command {send_rasmol_menu 3 1}
+.menubar.options add checkbutton -label "Hydrogens" -variable show_h -command {send_rasmol_menu 3 2}
+.menubar.options add checkbutton -label "Hetero Atoms" -variable show_het -command {send_rasmol_menu 3 3}
+.menubar.options add checkbutton -label "Specular" -variable use_spec -command {send_rasmol_menu 3 4}
+.menubar.options add checkbutton -label "Shadows" -variable use_shadow -command {send_rasmol_menu 3 5}
+.menubar.options add checkbutton -label "Stereo" -variable use_stereo -command {send_rasmol_menu 3 6}
+.menubar.options add checkbutton -label "Labels" -variable show_labels -command {send_rasmol_menu 3 7}
+
+# Settings Menu
+menu .menubar.settings -tearoff 0
+.menubar add cascade -label "Settings" -menu .menubar.settings
+.menubar.settings add radiobutton -label "Pick Off" -variable pick_mode -value 1 -command {send_rasmol_menu 4 1}
+.menubar.settings add radiobutton -label "Pick Ident" -variable pick_mode -value 2 -command {send_rasmol_menu 4 2}
+.menubar.settings add radiobutton -label "Pick Distance" -variable pick_mode -value 3 -command {send_rasmol_menu 4 3}
+.menubar.settings add radiobutton -label "Pick Monitor" -variable pick_mode -value 4 -command {send_rasmol_menu 4 4}
+.menubar.settings add radiobutton -label "Pick Angle" -variable pick_mode -value 5 -command {send_rasmol_menu 4 5}
+.menubar.settings add radiobutton -label "Pick Torsion" -variable pick_mode -value 6 -command {send_rasmol_menu 4 6}
+.menubar.settings add radiobutton -label "Pick Label" -variable pick_mode -value 7 -command {send_rasmol_menu 4 7}
+.menubar.settings add radiobutton -label "Pick Centre" -variable pick_mode -value 8 -command {send_rasmol_menu 4 8}
+.menubar.settings add radiobutton -label "Pick Coord" -variable pick_mode -value 9 -command {send_rasmol_menu 4 9}
+.menubar.settings add radiobutton -label "Pick Bond" -variable pick_mode -value 10 -command {send_rasmol_menu 4 10}
+.menubar.settings add separator
+.menubar.settings add radiobutton -label "Rotate Bond" -variable rot_mode -value 11 -command {send_rasmol_menu 4 11}
+.menubar.settings add radiobutton -label "Rotate Molecule" -variable rot_mode -value 12 -command {send_rasmol_menu 4 12}
+.menubar.settings add radiobutton -label "Rotate All" -variable rot_mode -value 13 -command {send_rasmol_menu 4 13}
+
+# Help Menu
+menu .menubar.help -tearoff 0
+.menubar add cascade -label "Help" -menu .menubar.help
+.menubar.help add command -label "About RasMol" -command {send_rasmol_menu 6 1}
+.menubar.help add command -label "User Manual" -command {send_rasmol_menu 6 2}
 
 # Main layout using ttk::panedwindow
 ttk::panedwindow .pw -orient horizontal
@@ -33,20 +91,11 @@ pack .pw -fill both -expand yes
 ttk::frame .pw.left -padding 5
 .pw add .pw.left
 
-ttk::labelframe .pw.left.opts -text "Controls" -padding 5
+ttk::labelframe .pw.left.opts -text "Quick Controls" -padding 5
 pack .pw.left.opts -fill x -side top
 
-ttk::button .pw.left.opts.btn1 -text "Reset View" -command {send_rasmol "reset"}
-pack .pw.left.opts.btn1 -pady 2 -fill x
-
-ttk::checkbutton .pw.left.opts.hydrogens -text "Show Hydrogens" -variable show_h -command {
-    if {$show_h} {
-        send_rasmol "set hydrogens on"
-    } else {
-        send_rasmol "set hydrogens off"
-    }
-}
-pack .pw.left.opts.hydrogens -pady 2 -fill x
+ttk::button .pw.left.opts.reset -text "Reset View" -command {send_rasmol "reset"}
+pack .pw.left.opts.reset -pady 2 -fill x
 
 # Right side: Visualization and Command entry
 ttk::frame .pw.right
@@ -85,7 +134,15 @@ proc send_rasmol {cmd} {
     if {[info commands rasmol_command] ne ""} {
         rasmol_command $cmd
     } else {
-        puts "RasMol: $cmd"
+        puts "RasMol Command: $cmd"
+    }
+}
+
+proc send_rasmol_menu {menu item} {
+    if {[info commands rasmol_handle_menu] ne ""} {
+        rasmol_handle_menu $menu $item
+    } else {
+        puts "RasMol Menu: $menu $item"
     }
 }
 
@@ -100,12 +157,14 @@ proc load_molecule {} {
     }
 }
 
-bind .pw.right.f.c <Configure> {
-    # Handle resize
-    set w [winfo width %W]
-    set h [winfo height %W]
-    # Optionally send resize command to RasMol
-}
-
-set display_mode "wireframe"
-set show_h 1
+set display_mode 1
+set colour_mode 2
+set show_h 0
+set show_het 1
+set use_spec 0
+set use_shadow 0
+set use_stereo 0
+set show_labels 0
+set pick_mode 1
+set rot_mode 13
+set use_slab 0
