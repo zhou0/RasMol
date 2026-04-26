@@ -1,0 +1,13 @@
+Summary of changes for Themed Tk UI:
+
+1.  **New Files**:
+    - `warpings/tcl/rasmol_tcl.c`: Tcl/Tk entry point. It initializes RasMol core, defines necessary global variables and dummy functions (as it's a new frontend), and exposes `rasmol_command` to Tcl.
+    - `gui/tcltk/rasmol_ui.tcl`: Themed Tcl/Tk UI script using `ttk` (Tile). Provides a modern interface with menus and basic controls.
+
+2.  **Modified File**:
+    - `CMakeLists.txt`: Added build instructions for `rasmol_tcl`. Manually specified Tcl/Tk paths for the environment and linked necessary libraries.
+
+3.  **Verification**:
+    - Successfully compiled `rasmol_tcl`.
+    - Verified that existing targets `rasmol` and `rastxt` still build and function.
+    - `rasmol_tcl` starts and correctly reports Tcl/Tk command line options.
