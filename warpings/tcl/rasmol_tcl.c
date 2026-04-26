@@ -19,6 +19,9 @@
 /* The Tk Photo handle for rendering */
 static Tk_PhotoHandle rasmol_photo_handle = NULL;
 
+/* Forward declaration for RefreshScreen */
+void RefreshScreen( void );
+
 /* Tcl command to execute RasMol commands */
 static int RasMol_CommandObjCmd(ClientData clientData, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[]) {
     if (objc != 2) {
@@ -26,8 +29,16 @@ static int RasMol_CommandObjCmd(ClientData clientData, Tcl_Interp *interp, int o
         return TCL_ERROR;
     }
 
+    void *old_db = Database;
     char *command = Tcl_GetString(objv[1]);
     ExecuteIPCCommand((char __huge *)command);
+
+    /* If a new molecule was loaded and no redraw is pending, force a default view */
+    if (Database && (Database != old_db)) {
+        DefaultRepresentation();
+        ReDrawFlag |= RFRefresh | RFApply;
+    }
+
     RefreshScreen();
     return TCL_OK;
 }
@@ -47,6 +58,29 @@ static int RasMol_RegisterPhotoObjCmd(ClientData clientData, Tcl_Interp *interp,
         return TCL_ERROR;
     }
 
+    return TCL_OK;
+}
+
+/* Tcl command to handle Resizing */
+static int RasMol_ResizeObjCmd(ClientData clientData, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[]) {
+    int w, h;
+    if (objc != 3) {
+        Tcl_WrongNumArgs(interp, 1, objv, "width height");
+        return TCL_ERROR;
+    }
+    if (Tcl_GetIntFromObj(interp, objv[1], &w) != TCL_OK) return TCL_ERROR;
+    if (Tcl_GetIntFromObj(interp, objv[2], &h) != TCL_OK) return TCL_ERROR;
+
+    if (w > 0 && h > 0) {
+        XRange = w;
+        YRange = h;
+        WRange = XRange >> 1;
+        HRange = YRange >> 1;
+        Range = MinFun(XRange, YRange);
+
+        ReDrawFlag |= RFReSize | RFRefresh | RFApply;
+        RefreshScreen();
+    }
     return TCL_OK;
 }
 
@@ -93,9 +127,13 @@ int Tcl_AppInit(Tcl_Interp *interp) {
     InitialiseRepres();
     InitHelpFile();
 
+    /* Ensure initial resize to allocate buffer */
+    ReDrawFlag |= RFReSize;
+
     Tcl_CreateObjCommand(interp, "rasmol_command", RasMol_CommandObjCmd, NULL, NULL);
     Tcl_CreateObjCommand(interp, "rasmol_register_photo", RasMol_RegisterPhotoObjCmd, NULL, NULL);
     Tcl_CreateObjCommand(interp, "rasmol_handle_menu", RasMol_HandleMenuObjCmd, NULL, NULL);
+    Tcl_CreateObjCommand(interp, "rasmol_resize", RasMol_ResizeObjCmd, NULL, NULL);
 
     /* Search for the UI script in multiple locations */
     const char *script_name = "rasmol_ui.tcl";
@@ -128,7 +166,6 @@ int Tcl_AppInit(Tcl_Interp *interp) {
 
     if (!found) {
         fprintf(stderr, "Warning: Could not load RasMol UI script '%s' from any searched location.\n", script_name);
-        fprintf(stderr, "Current working directory: %s\n", getcwd(NULL, 0));
     }
 
     return TCL_OK;
@@ -169,7 +206,35 @@ void RasMolFatalExit( char *ptr ) { fprintf(stderr, "Fatal Error: %s\n", ptr); e
 void AdviseUpdate( int item ) { (void)item; }
 
 void RefreshScreen( void ) {
+    if( !UseSlabPlane ) {
+        ReDrawFlag &= ~RFTransZ|RFSlab;
+    } else {
+        ReDrawFlag &= ~RFTransZ;
+    }
+
+    if( ReDrawFlag ) {
+        if( ReDrawFlag & RFReSize )
+            ReSizeScreen();
+
+        if( ReDrawFlag & RFColour )
+            DefineColourMap();
+
+        NextReDrawFlag = 0;
+        if( Database ) {
+            if( ReDrawFlag & RFApply )
+                ApplyTransform();
+            DrawFrame();
+        }
+    }
+
     if (rasmol_photo_handle == NULL || FBuffer == NULL) return;
+
+    /* Set Alpha channel to 255 for visibility */
+    int i;
+    unsigned char *p = (unsigned char *)FBuffer;
+    for (i = 0; i < XRange * YRange; i++) {
+        p[i*4 + 3] = 255;
+    }
 
     Tk_PhotoImageBlock block;
     block.width = XRange;
@@ -178,6 +243,9 @@ void RefreshScreen( void ) {
     block.pixelSize = 4;
     block.pixelPtr = (unsigned char *)FBuffer;
 
+    /* Tk photo expects RGB usually, but let's check RasMol's mapping.
+       Most systems use 0x00RRGGBB or 0x00BBGGRR.
+       On many modern Linux/macOS systems, it's RGBA. */
     block.offset[0] = 0; /* Red */
     block.offset[1] = 1; /* Green */
     block.offset[2] = 2; /* Blue */

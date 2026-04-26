@@ -99,6 +99,12 @@ pack .pw.left.opts -fill x -side top
 ttk::button .pw.left.opts.reset -text "Reset View" -command {send_rasmol "reset"}
 pack .pw.left.opts.reset -pady 2 -fill x
 
+ttk::button .pw.left.opts.default -text "Default View" -command {
+    send_rasmol "backbone"
+    send_rasmol "colour chain"
+}
+pack .pw.left.opts.default -pady 2 -fill x
+
 # Right side: Visualization and Command entry
 ttk::frame .pw.right
 .pw add .pw.right
@@ -158,6 +164,14 @@ proc load_molecule {} {
     set file [tk_getOpenFile -filetypes $types]
     if {$file ne ""} {
         send_rasmol "load pdb $file"
+    }
+}
+
+bind .pw.right.f.c <Configure> {
+    set w [winfo width %W]
+    set h [winfo height %W]
+    if {[info commands rasmol_resize] ne ""} {
+        rasmol_resize $w $h
     }
 }
 
