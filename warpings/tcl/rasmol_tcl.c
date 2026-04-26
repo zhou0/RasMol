@@ -198,8 +198,15 @@ int Tcl_AppInit(Tcl_Interp *interp) {
             if (Tcl_EvalFile(interp, full_path) == TCL_OK) {
                 found = 1;
                 break;
+            } else {
+                fprintf(stderr, "Error executing RasMol UI script '%s':\n%s\n",
+                        full_path, Tcl_GetVar(interp, "errorInfo", TCL_GLOBAL_ONLY));
             }
         }
+    }
+
+    if (!found) {
+        fprintf(stderr, "Warning: Could not load RasMol UI script '%s' from any searched location.\n", script_name);
     }
 
     return TCL_OK;
