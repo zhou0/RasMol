@@ -31,6 +31,9 @@ int Tcl_AppInit(Tcl_Interp *interp) {
     if (Tcl_Init(interp) == TCL_ERROR) return TCL_ERROR;
     if (Tk_Init(interp) == TCL_ERROR) return TCL_ERROR;
 
+    /* Initialize Display state FIRST so XRange/YRange are set */
+    OpenDisplay();
+
     /* Initialize RasMol core */
     InitialiseCmndLine();
     InitialiseCommand();
@@ -100,12 +103,40 @@ void EnableMenus( int flag ) { (void)flag; }
 void CloseDisplay( void ) {}
 void BeginWait( void ) {}
 void EndWait( void ) {}
-int OpenDisplay( void ) { return False; }
+
+int OpenDisplay( void ) {
+    register int i;
+
+    for( i=0; i<10; i++ )
+        DialValue[i] = 0.0;
+
+    XRange = 576;   WRange = XRange>>1;
+    YRange = 576;   HRange = YRange>>1;
+    Range = MinFun(XRange,YRange);
+    ZRange = 20000;
+
+    /* Initialise Palette! */
+    for( i=0; i<LutSize; i++ )
+        ULut[i] = False;
+    return True;
+}
+
 int ClipboardImage( void ) { return False; }
 void ClearImage( void ) {}
 int PrintImage( void ) { return False; }
 void AllocateColourMap( void ) {}
-int CreateImage( void ) { return False; }
+
+int CreateImage( void ) {
+    size_t size;
+
+    if( FBuffer ) _ffree( FBuffer );
+
+    if (XRange <= 0 || YRange <= 0) return False;
+
+    size = (size_t)XRange*YRange*sizeof(Pixel);
+    FBuffer = (Pixel __huge*)_fmalloc( size );
+    return( FBuffer != (Pixel __huge*)0 );
+}
 
 int ShowInterpNames ( void ) { return False; }
 int CheckInterpName (char __huge *name , unsigned long __huge *id) { (void)name; (void)id; return False; }
