@@ -1,15 +1,13 @@
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.11)
 project(RasMol C)
-
-# Options
-set(PIXELDEPTH "8" CACHE STRING "Pixel depth (8, 16, or 32)")
+if(POLICY CMP0135)
+  cmake_policy(SET CMP0135 NEW)
+endif()
+set(PIXELDEPTH "32" CACHE STRING "Pixel depth (8, 16, or 32)")
 option(WITH_X11 "Build with X11 support" ON)
-
 if(NOT PIXELDEPTH MATCHES "^(8|16|32)$")
     message(FATAL_ERROR "PIXELDEPTH must be 8, 16, or 32")
 endif()
-
-# Dependencies
 set(EXTERNAL_LIBRARIES)
 if(NOT MSVC)
     find_library(MATH_LIBRARY m)
@@ -17,26 +15,91 @@ if(NOT MSVC)
         list(APPEND EXTERNAL_LIBRARIES ${MATH_LIBRARY})
     endif()
 endif()
-
-# Required libraries - Use find_path with common suffixes to handle various distributions
 find_path(CBF_INCLUDE_DIR NAMES cbf.h PATH_SUFFIXES cbf cbflib)
 find_path(NEARTREE_INCLUDE_DIR NAMES CNearTree.h PATH_SUFFIXES NearTree neartree)
 find_path(CQRLIB_INCLUDE_DIR NAMES cqrlib.h PATH_SUFFIXES cqrlib CQRlib)
 find_path(CVECTOR_INCLUDE_DIR NAMES CVector.h PATH_SUFFIXES cvector)
-
-# HDF5 is often a dependency of CBFlib
+find_library(CBF_LIBRARY NAMES cbf)
+find_library(NEARTREE_LIBRARY NAMES CNearTree neartree)
+find_library(CQRLIB_LIBRARY NAMES CQRlib cqrlib)
+find_library(CVECTOR_LIBRARY NAMES CVector cvector)
+include(FetchContent)
+if(NOT CQRLIB_LIBRARY)
+    message(STATUS "CQRlib not found. Fetching from GitHub...")
+    fetchcontent_declare(cqrlib URL https://github.com/zhou0/cqrlib/archive/73cd0aad2b7240b7fbe8ad928cc67015cc6579d1.tar.gz)
+    fetchcontent_makeavailable(cqrlib)
+    set(CQRLIB_LIBRARY CQRlib)
+    set(CQRLIB_INCLUDE_DIR ${cqrlib_SOURCE_DIR})
+endif()
+if(NOT CVECTOR_LIBRARY)
+    message(STATUS "CVector not found. Fetching from GitHub...")
+    fetchcontent_declare(cvector URL https://github.com/zhou0/CVector/archive/refs/heads/master.tar.gz)
+    fetchcontent_makeavailable(cvector)
+    set(CVECTOR_LIBRARY CV_static)
+    set(CVECTOR_INCLUDE_DIR ${cvector_SOURCE_DIR})
+endif()
+if(NOT NEARTREE_LIBRARY)
+    message(STATUS "NearTree not found. Fetching from GitHub...")
+    fetchcontent_declare(neartree URL https://github.com/zhou0/NearTree/archive/refs/heads/master.tar.gz)
+    set(CVECTOR_INCLUDE_DIR ${CVECTOR_INCLUDE_DIR} CACHE PATH "" FORCE)
+    set(CVECTOR_LIBRARY ${CVECTOR_LIBRARY} CACHE STRING "" FORCE)
+    fetchcontent_makeavailable(neartree)
+    set(NEARTREE_LIBRARY CNearTree)
+    set(NEARTREE_INCLUDE_DIR ${neartree_SOURCE_DIR})
+endif()
+if(NOT CBF_LIBRARY)
+    message(STATUS "CBFlib not found. Fetching from GitHub...")
+    fetchcontent_declare(cbflib URL https://github.com/yayahjb/cbflib/archive/refs/heads/master.tar.gz)
+    set(CBF_ENABLE_FORTRAN OFF CACHE BOOL "" FORCE)
+    set(CBF_ENABLE_JAVA OFF CACHE BOOL "" FORCE)
+    set(CBF_ENABLE_PYTHON OFF CACHE BOOL "" FORCE)
+    set(CBF_ENABLE_DOC OFF CACHE BOOL "" FORCE)
+    find_package(BISON)
+    if(BISON_FOUND)
+        fetchcontent_makeavailable(cbflib)
+        set(CBF_LIBRARY cbf)
+        set(CBF_INCLUDE_DIR ${cbflib_SOURCE_DIR}/include)
+    else()
+        message(WARNING "Bison not found. Cannot build external CBFlib fallback. CIF support will use internal code.")
+        set(CBF_LIBRARY "")
+        set(CBF_INCLUDE_DIR "")
+    endif()
+endif()
+add_definitions(-D_USE_RASMOL_H_)
+if(NOT WIN32)
+    add_definitions(-DUNIX)
+endif()
+if(MSVC)
+    add_definitions(-D_CRT_SECURE_NO_WARNINGS)
+endif()
+if(PIXELDEPTH EQUAL 8)
+    add_definitions(-DEIGHTBIT)
+else()
+    if(PIXELDEPTH EQUAL 16)
+        add_definitions(-DSIXTEENBIT)
+    else()
+        if(PIXELDEPTH EQUAL 32)
+            add_definitions(-DTHIRTYTWOBIT)
+        endif()
+    endif()
+endif()
+if(NOT RASMOLDIR)
+    set(RASMOLDIR "${CMAKE_INSTALL_PREFIX}/share/rasmol/")
+endif()
+add_definitions(-DRASMOLDIR="${RASMOLDIR}")
+if(CBF_LIBRARY)
+    add_definitions(-DUSE_CBFLIB)
+endif()
 find_package(HDF5 COMPONENTS C)
 if(HDF5_FOUND)
     include_directories(${HDF5_INCLUDE_DIRS})
     list(APPEND EXTERNAL_LIBRARIES ${HDF5_LIBRARIES})
 else()
-    # Fallback for systems where find_package(HDF5) might fail but headers are in standard locations
     find_path(HDF5_INCLUDE_DIR hdf5.h PATH_SUFFIXES hdf5/serial)
     if(HDF5_INCLUDE_DIR)
         include_directories(${HDF5_INCLUDE_DIR})
     endif()
 endif()
-
 if(CBF_INCLUDE_DIR)
     include_directories(${CBF_INCLUDE_DIR})
 endif()
@@ -49,12 +112,6 @@ endif()
 if(CVECTOR_INCLUDE_DIR)
     include_directories(${CVECTOR_INCLUDE_DIR})
 endif()
-
-find_library(CBF_LIBRARY NAMES cbf)
-find_library(NEARTREE_LIBRARY NAMES CNearTree neartree)
-find_library(CQRLIB_LIBRARY NAMES CQRlib cqrlib)
-find_library(CVECTOR_LIBRARY NAMES CVector cvector)
-
 if(CBF_LIBRARY)
     list(APPEND EXTERNAL_LIBRARIES ${CBF_LIBRARY})
 endif()
@@ -67,53 +124,10 @@ endif()
 if(CVECTOR_LIBRARY)
     list(APPEND EXTERNAL_LIBRARIES ${CVECTOR_LIBRARY})
 endif()
-
-# Core source files shared by both rasmol and rastxt
-set(CORE_SOURCES
-    src/abstree.c
-    src/cif.c
-    src/cif_ctonum.c
-    src/cif_fract.c
-    src/cif_stx.c
-    src/cmndline.c
-    src/command.c
-    src/infile.c
-    src/langsel_unix.c
-    src/maps.c
-    src/molecule.c
-    src/multiple.c
-    src/outfile.c
-    src/pixutils.c
-    src/render.c
-    src/repres.c
-    src/script.c
-    src/tokens.c
-    src/transfor.c
-    src/vector.c
-    src/wbrotate.c
-)
-
-# Common definitions
-add_definitions(-D_USE_RASMOL_H_)
-if(NOT WIN32)
-    add_definitions(-DUNIX)
+set(CORE_SOURCES src/abstree.c src/cif.c src/cif_ctonum.c src/cif_fract.c src/cif_stx.c src/cmndline.c src/command.c src/infile.c src/langsel_unix.c src/maps.c src/molecule.c src/multiple.c src/outfile.c src/pixutils.c src/render.c src/repres.c src/script.c src/tokens.c src/transfor.c src/vector.c src/wbrotate.c)
+if(WIN32)
+    list(APPEND CORE_SOURCES src/string_case.c)
 endif()
-
-if(PIXELDEPTH EQUAL 8)
-    add_definitions(-DEIGHTBIT)
-elseif(PIXELDEPTH EQUAL 16)
-    add_definitions(-DSIXTEENBIT)
-elseif(PIXELDEPTH EQUAL 32)
-    add_definitions(-DTHIRTYTWOBIT)
-endif()
-
-# RasMol directory for data/help files
-if(NOT RASMOLDIR)
-    set(RASMOLDIR "${CMAKE_INSTALL_PREFIX}/share/rasmol/")
-endif()
-add_definitions(-DRASMOLDIR="${RASMOLDIR}")
-
-# rasmol executable (GUI)
 if(WITH_X11)
     find_package(X11)
     if(X11_FOUND)
@@ -123,26 +137,15 @@ if(WITH_X11)
         target_compile_definitions(rasmol PRIVATE X11WIN)
     endif()
 endif()
-
-# rastxt executable (Text-only)
 add_executable(rastxt src/rastxt.c ${CORE_SOURCES})
-# rastxt needs src/txt before src/ to get the text-only rasmol.h
 target_include_directories(rastxt PRIVATE src/txt src)
 target_link_libraries(rastxt ${EXTERNAL_LIBRARIES})
-
-# Installation
 install(TARGETS rastxt DESTINATION bin)
 if(TARGET rasmol)
     install(TARGETS rasmol DESTINATION bin)
 endif()
-
-# Install data files
 install(DIRECTORY data/ DESTINATION share/rasmol/data)
-
-# Install documentation
 install(DIRECTORY doc/ DESTINATION share/rasmol/doc)
-
-# Install help file
 if(EXISTS "${CMAKE_SOURCE_DIR}/doc/rasmol.hlp")
     install(FILES doc/rasmol.hlp DESTINATION share/rasmol)
 endif()

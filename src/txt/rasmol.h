@@ -60,11 +60,17 @@
 /* #define MSWIN        */
 /* #define APPLEMAC     */
 /* #define X11WIN       */
+#ifndef _WIN32
+#ifndef UNIX
 #define UNIX
+#endif
+#endif
 
 /* #define DIALBOX      */
 #define SOCKETS
+#ifndef _WIN32
 #define TERMIOS
+#endif
 #define PROFILE
 /* #define MITSHM       */
 
@@ -221,4 +227,8 @@ void RasMolExit( void );
 
 #ifdef APPLEMAC
 #include "rasmac.h"
+#endif
+
+#ifdef _WIN32
+#include "string_case.h"
 #endif
