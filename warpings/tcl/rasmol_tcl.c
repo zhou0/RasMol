@@ -15,9 +15,6 @@
 #include "transfor.h"
 #include "graphics.h"
 
-/* The Tk Photo handle for rendering */
-static Tk_PhotoHandle rasmol_photo_handle = NULL;
-
 /* Tcl command to execute RasMol commands */
 static int RasMol_CommandObjCmd(ClientData clientData, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[]) {
     if (objc != 2) {
