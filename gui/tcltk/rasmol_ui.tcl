@@ -52,11 +52,19 @@ pack .pw.left.opts.hydrogens -pady 2 -fill x
 ttk::frame .pw.right
 .pw add .pw.right
 
-# Placeholder for RasMol Canvas
-ttk::frame .pw.right.canvas -relief sunken -borderwidth 2
-pack .pw.right.canvas -fill both -expand yes -padx 5 -pady 5
-ttk::label .pw.right.canvas.lbl -text "RasMol Visualization Area"
-pack .pw.right.canvas.lbl -expand yes
+# RasMol Canvas Area
+set rasmol_img [image create photo rasmol_view -width 576 -height 576]
+ttk::frame .pw.right.f -relief sunken -borderwidth 2
+pack .pw.right.f -fill both -expand yes -padx 5 -pady 5
+
+canvas .pw.right.f.c -width 576 -height 576 -highlightthickness 0 -bg black
+pack .pw.right.f.c -fill both -expand yes
+.pw.right.f.c create image 0 0 -image $rasmol_img -anchor nw -tags rasmol_image
+
+# Register the photo image with the C bridge
+if {[info commands rasmol_register_photo] ne ""} {
+    rasmol_register_photo rasmol_view
+}
 
 # Command Entry
 ttk::frame .pw.right.cmd -padding 5
@@ -74,9 +82,10 @@ bind .pw.right.cmd.entry <Return> {
 
 # Functions
 proc send_rasmol {cmd} {
-    puts "Sending to RasMol: $cmd"
     if {[info commands rasmol_command] ne ""} {
         rasmol_command $cmd
+    } else {
+        puts "RasMol: $cmd"
     }
 }
 
@@ -89,6 +98,13 @@ proc load_molecule {} {
     if {$file ne ""} {
         send_rasmol "load pdb $file"
     }
+}
+
+bind .pw.right.f.c <Configure> {
+    # Handle resize
+    set w [winfo width %W]
+    set h [winfo height %W]
+    # Optionally send resize command to RasMol
 }
 
 set display_mode "wireframe"
