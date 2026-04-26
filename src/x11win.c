@@ -529,17 +529,15 @@ static int DialEvent;
 static int UseDials;
 #endif
 
-#if defined(__APPLE__) || defined(__FreeBSD__) || defined(__NetBSD__) || defined(__OpenBSD__)
-    #include <ctype.h>
-#else
-    static int digittoint(int c) {
-        if (isdigit(c)) return c - '0';
-        if (isxdigit(c)) {
-            if (isupper(c)) return c - 'A' + 10;
-            return c - 'a' + 10;
-        }
-        return 0;
+#ifndef __APPLE__
+static int digittoint(int c) {
+    if (isdigit(c)) return c - '0';
+    if (isxdigit(c)) {
+        if (isupper(c)) return c - 'A' + 10;
+        return c - 'a' + 10;
     }
+    return 0;
+}
 #endif
 
 #ifdef MITSHM
@@ -1114,7 +1112,7 @@ int CheckInterpName( char __huge *name, unsigned long __huge *interpid) {
         while( *ptr != ' ' ) {
             if (!*ptr ) break;
             if (isxdigit(*ptr)) {
-                *interpid = ((*interpid)<<4)|(unsigned long)rasmol_digittoint(*ptr);
+                *interpid = ((*interpid)<<4)|(unsigned long)digittoint(*ptr);
             } else {
                 break;
             }
