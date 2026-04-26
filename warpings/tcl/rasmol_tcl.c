@@ -15,6 +15,9 @@
 #include "transfor.h"
 #include "graphics.h"
 
+/* The Tk Photo handle for rendering */
+static Tk_PhotoHandle rasmol_photo_handle = NULL;
+
 /* Tcl command to execute RasMol commands */
 static int RasMol_CommandObjCmd(ClientData clientData, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[]) {
     if (objc != 2) {
@@ -69,29 +72,8 @@ int Tcl_AppInit(Tcl_Interp *interp) {
     Tcl_CreateObjCommand(interp, "rasmol_register_photo", RasMol_RegisterPhotoObjCmd, NULL, NULL);
 
     /* Source the UI script */
-    const char *script_paths[] = {
-        "gui/tcltk/rasmol_ui.tcl",
-        "../gui/tcltk/rasmol_ui.tcl",
-        "/usr/local/lib/rasmol/rasmol_ui.tcl"
-    };
-    int found = 0;
-    for (int i = 0; i < 3; i++) {
-        if (Tcl_EvalEx(interp, "file exists [set path]", -1, 0) == TCL_OK) {
-             // Simplified check logic for brevity in this mock-up
-        }
-        // Actually just try to source them
-        Tcl_Obj *pathObj = Tcl_NewStringObj(script_paths[i], -1);
-        Tcl_IncrRefCount(pathObj);
-        if (Tcl_FSEvalFile(interp, pathObj) == TCL_OK) {
-            found = 1;
-            Tcl_DecrRefCount(pathObj);
-            break;
-        }
-        Tcl_DecrRefCount(pathObj);
-    }
-
-    if (!found) {
-        fprintf(stderr, "Warning: Could not find gui/tcltk/rasmol_ui.tcl\n");
+    if (Tcl_Eval(interp, "if {[file exists gui/tcltk/rasmol_ui.tcl]} { source gui/tcltk/rasmol_ui.tcl }") == TCL_ERROR) {
+        // Warning only, as it might be sourced differently in production
     }
 
     return TCL_OK;
@@ -141,13 +123,10 @@ void RefreshScreen( void ) {
     block.pixelSize = 4;
     block.pixelPtr = (unsigned char *)FBuffer;
 
-    /* RasMol's THIRTYTWOBIT FBuffer is typically RGBA or similar
-       Wait, RasMol Pixel in 32-bit mode is usually just 3 bytes or 4 bytes.
-       Let's check the offset mapping. */
     block.offset[0] = 0; /* Red */
     block.offset[1] = 1; /* Green */
     block.offset[2] = 2; /* Blue */
-    block.offset[3] = 3; /* Alpha - might need to be 3 if 4 bytes */
+    block.offset[3] = 3; /* Alpha */
 
     Tk_PhotoPutBlock(NULL, rasmol_photo_handle, &block, 0, 0, XRange, YRange, TK_PHOTO_COMPOSITE_SET);
 }
