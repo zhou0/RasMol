@@ -1,6 +1,6 @@
 # RasMol: Molecular Graphics Visualization
 
-RasMol is a molecular graphics program for visualising proteins, nucleic acids, and small molecules. Originally developed at the University of Edinburgh, it supports numerous formats like PDB, CIF, and MDL Mol.
+RasMol is a molecular graphics program for visualizing proteins, nucleic acids, and small molecules. Originally developed at the University of Edinburgh, it supports numerous formats like PDB, CIF, and MDL Mol.
 
 ## Modern Updates
 The project now features a modern **CMake-based build system** supporting Linux、macOS and Windows (MSVC). A new **themed Tcl/Tk user interface** (ttk) is available in `gui/tcltk/`, integrated via a C bridge in `warpings/tcl/`. Optional **VTK integration** provides an advanced OpenGL rendering mode.
