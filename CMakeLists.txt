@@ -83,15 +83,27 @@ if(NOT CBF_LIBRARY)
 endif()
 
 # VTK Support
-find_package(VTK 9.3.1 QUIET COMPONENTS FiltersCore IOLegacy RenderingCore RenderingOpenGL2)
+set(VTK_COMPONENTS
+    CommonCore
+    CommonDataModel
+    FiltersCore
+    IOGeometry
+    IOLegacy
+    IOPDB
+    RenderingCore
+    RenderingOpenGL2
+    RenderingFreeType
+)
+find_package(VTK 9.3.1 QUIET COMPONENTS ${VTK_COMPONENTS})
 if(NOT VTK_FOUND AND NOT UNIX)
     message(STATUS "VTK 9.3.1 not found. Fetching from vtk.org...")
     fetchcontent_declare(vtk URL https://vtk.org/files/release/9.3/VTK-9.3.1.tar.gz)
     set(VTK_ENABLE_REMOTE_MODULES OFF CACHE BOOL "" FORCE)
     set(VTK_BUILD_TESTING OFF CACHE BOOL "" FORCE)
     set(VTK_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
+    set(VTK_GROUP_ENABLE_Qt NO CACHE STRING "" FORCE)
     fetchcontent_makeavailable(vtk)
-    find_package(VTK 9.3.1 QUIET COMPONENTS FiltersCore IOLegacy RenderingCore RenderingOpenGL2)
+    find_package(VTK 9.3.1 QUIET COMPONENTS ${VTK_COMPONENTS})
 endif()
 
 if(VTK_FOUND)
@@ -220,16 +232,15 @@ if(TCL_INCLUDE_PATH AND TK_INCLUDE_PATH AND TCL_LIBRARY AND TK_LIBRARY)
     if(VTK_FOUND)
         list(APPEND RASMOL_TCL_SOURCES warpings/tcl/rasmol_vtk.cpp)
     endif()
-    add_executable(rasmol_t ${RASMOL_TCL_SOURCES})
-    set_target_properties(rasmol_t PROPERTIES OUTPUT_NAME "rasmol_tcl")
-    target_include_directories(rasmol_t PRIVATE src)
-    target_link_libraries(rasmol_t ${TCL_LIBRARY} ${TK_LIBRARY} ${EXTERNAL_LIBRARIES})
+    add_executable(rasmol_tcl ${RASMOL_TCL_SOURCES})
+    target_include_directories(rasmol_tcl PRIVATE src)
+    target_link_libraries(rasmol_tcl ${TCL_LIBRARY} ${TK_LIBRARY} ${EXTERNAL_LIBRARIES})
     if(VTK_FOUND)
-        target_link_libraries(rasmol_t PRIVATE ${VTK_LIBRARIES})
-        vtk_module_autoinit(TARGETS rasmol_t MODULES ${VTK_LIBRARIES})
+        target_link_libraries(rasmol_tcl PRIVATE ${VTK_LIBRARIES})
+        vtk_module_autoinit(TARGETS rasmol_tcl MODULES ${VTK_LIBRARIES})
     endif()
     if(UNIX AND NOT APPLE)
-        target_link_libraries(rasmol_t ${X11_LIBRARIES})
+        target_link_libraries(rasmol_tcl ${X11_LIBRARIES})
     endif()
-    install(TARGETS rasmol_t DESTINATION bin)
+    install(TARGETS rasmol_tcl DESTINATION bin)
 endif()

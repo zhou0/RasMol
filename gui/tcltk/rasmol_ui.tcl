@@ -53,8 +53,13 @@ menu .menubar.colours -tearoff 0
 # Options Menu
 menu .menubar.options -tearoff 0
 .menubar add cascade -label "Options" -menu .menubar.options
-.menubar.options add checkbutton -label "OpenGL mode" -variable opengl_mode -command {toggle_opengl}
-.menubar.options add separator
+
+set has_vtk [rasmol_info vtk]
+if {$has_vtk} {
+    .menubar.options add checkbutton -label "OpenGL mode" -variable opengl_mode -command {toggle_opengl}
+    .menubar.options add separator
+}
+
 .menubar.options add checkbutton -label "Slab Mode" -variable use_slab -command {send_rasmol_menu 3 1}
 .menubar.options add checkbutton -label "Hydrogens" -variable show_h -command {send_rasmol_menu 3 2}
 .menubar.options add checkbutton -label "Hetero Atoms" -variable show_het -command {send_rasmol_menu 3 3}
@@ -112,7 +117,6 @@ ttk::frame .pw.right
 .pw add .pw.right
 
 # RasMol Canvas Area
-puts "Creating photo image..."
 set rasmol_img [image create photo rasmol_view -width 576 -height 576]
 ttk::frame .pw.right.f -relief sunken -borderwidth 2
 pack .pw.right.f -fill both -expand yes -padx 5 -pady 5
@@ -123,8 +127,39 @@ pack .pw.right.f.c -fill both -expand yes
 
 # Register the photo image with the C bridge
 if {[info commands rasmol_register_photo] ne ""} {
-    puts "Registering photo image..."
     rasmol_register_photo rasmol_view
+}
+
+# Mouse and Keyboard Interaction
+bind .pw.right.f.c <ButtonPress> {
+    if {[info commands rasmol_mouse_down] ne ""} {
+        rasmol_mouse_down %x %y %s
+    }
+}
+bind .pw.right.f.c <B1-Motion> {
+    if {[info commands rasmol_mouse_move] ne ""} {
+        rasmol_mouse_move %x %y %s
+    }
+}
+bind .pw.right.f.c <B2-Motion> {
+    if {[info commands rasmol_mouse_move] ne ""} {
+        rasmol_mouse_move %x %y %s
+    }
+}
+bind .pw.right.f.c <B3-Motion> {
+    if {[info commands rasmol_mouse_move] ne ""} {
+        rasmol_mouse_move %x %y %s
+    }
+}
+bind .pw.right.f.c <ButtonRelease> {
+    if {[info commands rasmol_mouse_up] ne ""} {
+        rasmol_mouse_up %x %y %s
+    }
+}
+bind . <KeyPress> {
+    if {[info commands rasmol_key_press] ne ""} {
+        rasmol_key_press %N
+    }
 }
 
 # Command Entry
@@ -139,7 +174,14 @@ bind .pw.right.cmd.entry <Return> {
     set cmd [.pw.right.cmd.entry get]
     send_rasmol $cmd
     .pw.right.cmd.entry delete 0 end
+    update_status
 }
+
+# Status Bar
+ttk::frame .status -relief sunken
+pack .status -side bottom -fill x
+ttk::label .status.lbl -text "Ready"
+pack .status.lbl -side left -padx 5
 
 # Functions
 proc send_rasmol {cmd} {
@@ -156,12 +198,24 @@ proc send_rasmol_menu {menu item} {
     } else {
         puts "RasMol Menu: $menu $item"
     }
+    update_status
+}
+
+proc update_status {} {
+    if {[info commands rasmol_info] ne ""} {
+        set moles [rasmol_info molecules]
+        set atoms [rasmol_info atoms]
+        .status.lbl configure -text "Molecules: $moles, Atoms: $atoms"
+    }
 }
 
 proc toggle_opengl {} {
     global opengl_mode
     if {[info commands rasmol_opengl_mode] ne ""} {
+        .status.lbl configure -text "Switching to OpenGL mode..."
+        update
         rasmol_opengl_mode $opengl_mode
+        update_status
     }
 }
 
@@ -172,7 +226,10 @@ proc load_molecule {} {
     }
     set file [tk_getOpenFile -filetypes $types]
     if {$file ne ""} {
-        send_rasmol "load pdb $file"
+        .status.lbl configure -text "Loading $file..."
+        update
+        send_rasmol "load pdb \"$file\""
+        update_status
     }
 }
 

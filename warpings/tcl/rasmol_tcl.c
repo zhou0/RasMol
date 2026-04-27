@@ -15,6 +15,7 @@
 #include "repres.h"
 #include "transfor.h"
 #include "graphics.h"
+#include "multiple.h"
 
 /* The Tk Photo handle for rendering */
 static Tk_PhotoHandle rasmol_photo_handle = NULL;
@@ -37,24 +38,20 @@ static int RasMol_CommandObjCmd(ClientData clientData, Tcl_Interp *interp, int o
     }
 
     void *old_db = Database;
+    int old_num = NumMolecules;
     char *command = Tcl_GetString(objv[1]);
-
-    /* If in OpenGL mode, we might want to capture 'load' commands */
-    if (opengl_mode && strncmp(command, "load ", 5) == 0) {
-        char *filename = command + 5;
-        /* skip format if present, e.g. "load pdb filename" */
-        if (strncmp(filename, "pdb ", 4) == 0) filename += 4;
-
-#ifdef USE_VTK
-        VTK_LoadPDB(filename);
-#endif
-    }
 
     ExecuteIPCCommand((char __huge *)command);
 
-    if (Database && (Database != old_db)) {
+    if (Database && (Database != old_db || NumMolecules != old_num)) {
         DefaultRepresentation();
         ReDrawFlag |= RFRefresh | RFApply;
+
+#ifdef USE_VTK
+        if (opengl_mode && DataFileName[0]) {
+            VTK_LoadPDB(DataFileName);
+        }
+#endif
     }
 
     RefreshScreen();
@@ -76,6 +73,31 @@ static int RasMol_RegisterPhotoObjCmd(ClientData clientData, Tcl_Interp *interp,
         return TCL_ERROR;
     }
 
+    return TCL_OK;
+}
+
+/* Tcl command to query RasMol info */
+static int RasMol_InfoObjCmd(ClientData clientData, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[]) {
+    if (objc != 2) {
+        Tcl_WrongNumArgs(interp, 1, objv, "topic");
+        return TCL_ERROR;
+    }
+
+    char *topic = Tcl_GetString(objv[1]);
+    if (strcmp(topic, "vtk") == 0) {
+#ifdef USE_VTK
+        Tcl_SetObjResult(interp, Tcl_NewBooleanObj(1));
+#else
+        Tcl_SetObjResult(interp, Tcl_NewBooleanObj(0));
+#endif
+    } else if (strcmp(topic, "molecules") == 0) {
+        Tcl_SetObjResult(interp, Tcl_NewIntObj(NumMolecules));
+    } else if (strcmp(topic, "atoms") == 0) {
+        Tcl_SetObjResult(interp, Tcl_NewLongObj(MainAtomCount));
+    } else {
+        Tcl_SetObjResult(interp, Tcl_NewStringObj("unknown topic", -1));
+        return TCL_ERROR;
+    }
     return TCL_OK;
 }
 
@@ -122,6 +144,62 @@ static int RasMol_ResizeObjCmd(ClientData clientData, Tcl_Interp *interp, int ob
         ReDrawFlag |= RFReSize | RFRefresh | RFApply;
         RefreshScreen();
     }
+    return TCL_OK;
+}
+
+/* Mouse and Keyboard bridge functions */
+
+static int RasMol_MouseDownObjCmd(ClientData clientData, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[]) {
+    int x, y, mask;
+    if (objc != 4) {
+        Tcl_WrongNumArgs(interp, 1, objv, "x y mask");
+        return TCL_ERROR;
+    }
+    Tcl_GetIntFromObj(interp, objv[1], &x);
+    Tcl_GetIntFromObj(interp, objv[2], &y);
+    Tcl_GetIntFromObj(interp, objv[3], &mask);
+    ProcessMouseDown(x, y, mask);
+    RefreshScreen();
+    return TCL_OK;
+}
+
+static int RasMol_MouseMoveObjCmd(ClientData clientData, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[]) {
+    int x, y, mask;
+    if (objc != 4) {
+        Tcl_WrongNumArgs(interp, 1, objv, "x y mask");
+        return TCL_ERROR;
+    }
+    Tcl_GetIntFromObj(interp, objv[1], &x);
+    Tcl_GetIntFromObj(interp, objv[2], &y);
+    Tcl_GetIntFromObj(interp, objv[3], &mask);
+    ProcessMouseMove(x, y, mask);
+    RefreshScreen();
+    return TCL_OK;
+}
+
+static int RasMol_MouseUpObjCmd(ClientData clientData, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[]) {
+    int x, y, mask;
+    if (objc != 4) {
+        Tcl_WrongNumArgs(interp, 1, objv, "x y mask");
+        return TCL_ERROR;
+    }
+    Tcl_GetIntFromObj(interp, objv[1], &x);
+    Tcl_GetIntFromObj(interp, objv[2], &y);
+    Tcl_GetIntFromObj(interp, objv[3], &mask);
+    ProcessMouseUp(x, y, mask);
+    RefreshScreen();
+    return TCL_OK;
+}
+
+static int RasMol_KeyPressObjCmd(ClientData clientData, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[]) {
+    int key;
+    if (objc != 2) {
+        Tcl_WrongNumArgs(interp, 1, objv, "key");
+        return TCL_ERROR;
+    }
+    Tcl_GetIntFromObj(interp, objv[1], &key);
+    ProcessCharacter(key);
+    RefreshScreen();
     return TCL_OK;
 }
 
@@ -175,6 +253,11 @@ int Tcl_AppInit(Tcl_Interp *interp) {
     Tcl_CreateObjCommand(interp, "rasmol_handle_menu", RasMol_HandleMenuObjCmd, NULL, NULL);
     Tcl_CreateObjCommand(interp, "rasmol_resize", RasMol_ResizeObjCmd, NULL, NULL);
     Tcl_CreateObjCommand(interp, "rasmol_opengl_mode", RasMol_OpenGLModeObjCmd, NULL, NULL);
+    Tcl_CreateObjCommand(interp, "rasmol_info", RasMol_InfoObjCmd, NULL, NULL);
+    Tcl_CreateObjCommand(interp, "rasmol_mouse_down", RasMol_MouseDownObjCmd, NULL, NULL);
+    Tcl_CreateObjCommand(interp, "rasmol_mouse_move", RasMol_MouseMoveObjCmd, NULL, NULL);
+    Tcl_CreateObjCommand(interp, "rasmol_mouse_up", RasMol_MouseUpObjCmd, NULL, NULL);
+    Tcl_CreateObjCommand(interp, "rasmol_key_press", RasMol_KeyPressObjCmd, NULL, NULL);
 
     /* Search for the UI script in multiple locations */
     const char *script_name = "rasmol_ui.tcl";
@@ -198,15 +281,8 @@ int Tcl_AppInit(Tcl_Interp *interp) {
             if (Tcl_EvalFile(interp, full_path) == TCL_OK) {
                 found = 1;
                 break;
-            } else {
-                fprintf(stderr, "Error executing RasMol UI script '%s':\n%s\n",
-                        full_path, Tcl_GetVar(interp, "errorInfo", TCL_GLOBAL_ONLY));
             }
         }
-    }
-
-    if (!found) {
-        fprintf(stderr, "Warning: Could not load RasMol UI script '%s' from any searched location.\n", script_name);
     }
 
     return TCL_OK;
