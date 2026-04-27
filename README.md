@@ -11,7 +11,7 @@ Configure and build with CMake:
 cmake -B build -S .
 cmake --build build
 ```
-Launch `rasmol_tcl` for the themed UI.
+Launch `rasmol_tcl` for the ttk UI.
 
 ## License
 Version based on 2.7.5.2. Distributed under GPL or RASLIC. See `doc/NOTICE.html` for details.
