@@ -117,7 +117,6 @@ ttk::frame .pw.right
 .pw add .pw.right
 
 # RasMol Canvas Area
-puts "Creating photo image..."
 set rasmol_img [image create photo rasmol_view -width 576 -height 576]
 ttk::frame .pw.right.f -relief sunken -borderwidth 2
 pack .pw.right.f -fill both -expand yes -padx 5 -pady 5
@@ -213,7 +212,10 @@ proc update_status {} {
 proc toggle_opengl {} {
     global opengl_mode
     if {[info commands rasmol_opengl_mode] ne ""} {
+        .status.lbl configure -text "Switching to OpenGL mode..."
+        update
         rasmol_opengl_mode $opengl_mode
+        update_status
     }
 }
 
@@ -224,7 +226,9 @@ proc load_molecule {} {
     }
     set file [tk_getOpenFile -filetypes $types]
     if {$file ne ""} {
-        send_rasmol "load pdb $file"
+        .status.lbl configure -text "Loading $file..."
+        update
+        send_rasmol "load pdb \"$file\""
         update_status
     }
 }

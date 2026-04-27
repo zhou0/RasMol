@@ -15,6 +15,7 @@
 #include "repres.h"
 #include "transfor.h"
 #include "graphics.h"
+#include "multiple.h"
 
 /* The Tk Photo handle for rendering */
 static Tk_PhotoHandle rasmol_photo_handle = NULL;
@@ -37,21 +38,20 @@ static int RasMol_CommandObjCmd(ClientData clientData, Tcl_Interp *interp, int o
     }
 
     void *old_db = Database;
+    int old_num = NumMolecules;
     char *command = Tcl_GetString(objv[1]);
-
-#ifdef USE_VTK
-    if (opengl_mode && strncmp(command, "load ", 5) == 0) {
-        char *filename = command + 5;
-        if (strncmp(filename, "pdb ", 4) == 0) filename += 4;
-        VTK_LoadPDB(filename);
-    }
-#endif
 
     ExecuteIPCCommand((char __huge *)command);
 
-    if (Database && (Database != old_db)) {
+    if (Database && (Database != old_db || NumMolecules != old_num)) {
         DefaultRepresentation();
         ReDrawFlag |= RFRefresh | RFApply;
+
+#ifdef USE_VTK
+        if (opengl_mode && DataFileName[0]) {
+            VTK_LoadPDB(DataFileName);
+        }
+#endif
     }
 
     RefreshScreen();
@@ -281,15 +281,8 @@ int Tcl_AppInit(Tcl_Interp *interp) {
             if (Tcl_EvalFile(interp, full_path) == TCL_OK) {
                 found = 1;
                 break;
-            } else {
-                fprintf(stderr, "Error executing RasMol UI script '%s':\n%s\n",
-                        full_path, Tcl_GetVar(interp, "errorInfo", TCL_GLOBAL_ONLY));
             }
         }
-    }
-
-    if (!found) {
-        fprintf(stderr, "Warning: Could not load RasMol UI script '%s' from any searched location.\n", script_name);
     }
 
     return TCL_OK;
