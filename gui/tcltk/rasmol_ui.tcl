@@ -53,6 +53,8 @@ menu .menubar.colours -tearoff 0
 # Options Menu
 menu .menubar.options -tearoff 0
 .menubar add cascade -label "Options" -menu .menubar.options
+.menubar.options add checkbutton -label "OpenGL mode" -variable opengl_mode -command {toggle_opengl}
+.menubar.options add separator
 .menubar.options add checkbutton -label "Slab Mode" -variable use_slab -command {send_rasmol_menu 3 1}
 .menubar.options add checkbutton -label "Hydrogens" -variable show_h -command {send_rasmol_menu 3 2}
 .menubar.options add checkbutton -label "Hetero Atoms" -variable show_het -command {send_rasmol_menu 3 3}
@@ -156,6 +158,13 @@ proc send_rasmol_menu {menu item} {
     }
 }
 
+proc toggle_opengl {} {
+    global opengl_mode
+    if {[info commands rasmol_opengl_mode] ne ""} {
+        rasmol_opengl_mode $opengl_mode
+    }
+}
+
 proc load_molecule {} {
     set types {
         {"PDB Files" {.pdb}}
@@ -186,5 +195,6 @@ set show_labels 0
 set pick_mode 1
 set rot_mode 13
 set use_slab 0
+set opengl_mode 0
 
 puts "UI initialized."

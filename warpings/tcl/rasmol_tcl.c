@@ -18,6 +18,13 @@
 
 /* The Tk Photo handle for rendering */
 static Tk_PhotoHandle rasmol_photo_handle = NULL;
+static int opengl_mode = 0;
+
+#ifdef USE_VTK
+extern void VTK_Initialize();
+extern int VTK_LoadPDB(const char* filename);
+extern void VTK_RenderToBuffer(unsigned char* buffer, int width, int height);
+#endif
 
 /* Forward declaration for RefreshScreen */
 void RefreshScreen( void );
@@ -31,9 +38,20 @@ static int RasMol_CommandObjCmd(ClientData clientData, Tcl_Interp *interp, int o
 
     void *old_db = Database;
     char *command = Tcl_GetString(objv[1]);
+
+    /* If in OpenGL mode, we might want to capture 'load' commands */
+    if (opengl_mode && strncmp(command, "load ", 5) == 0) {
+        char *filename = command + 5;
+        /* skip format if present, e.g. "load pdb filename" */
+        if (strncmp(filename, "pdb ", 4) == 0) filename += 4;
+
+#ifdef USE_VTK
+        VTK_LoadPDB(filename);
+#endif
+    }
+
     ExecuteIPCCommand((char __huge *)command);
 
-    /* If a new molecule was loaded and no redraw is pending, force a default view */
     if (Database && (Database != old_db)) {
         DefaultRepresentation();
         ReDrawFlag |= RFRefresh | RFApply;
@@ -58,6 +76,29 @@ static int RasMol_RegisterPhotoObjCmd(ClientData clientData, Tcl_Interp *interp,
         return TCL_ERROR;
     }
 
+    return TCL_OK;
+}
+
+/* Tcl command to toggle OpenGL mode */
+static int RasMol_OpenGLModeObjCmd(ClientData clientData, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[]) {
+    if (objc > 2) {
+        Tcl_WrongNumArgs(interp, 1, objv, "?bool?");
+        return TCL_ERROR;
+    }
+
+    if (objc == 2) {
+        if (Tcl_GetBooleanFromObj(interp, objv[1], &opengl_mode) != TCL_OK) return TCL_ERROR;
+#ifdef USE_VTK
+        if (opengl_mode) {
+            VTK_Initialize();
+            if (DataFileName[0]) VTK_LoadPDB(DataFileName);
+        }
+#endif
+        ReDrawFlag |= RFRefresh;
+        RefreshScreen();
+    }
+
+    Tcl_SetObjResult(interp, Tcl_NewBooleanObj(opengl_mode));
     return TCL_OK;
 }
 
@@ -127,13 +168,13 @@ int Tcl_AppInit(Tcl_Interp *interp) {
     InitialiseRepres();
     InitHelpFile();
 
-    /* Ensure initial resize to allocate buffer */
     ReDrawFlag |= RFReSize;
 
     Tcl_CreateObjCommand(interp, "rasmol_command", RasMol_CommandObjCmd, NULL, NULL);
     Tcl_CreateObjCommand(interp, "rasmol_register_photo", RasMol_RegisterPhotoObjCmd, NULL, NULL);
     Tcl_CreateObjCommand(interp, "rasmol_handle_menu", RasMol_HandleMenuObjCmd, NULL, NULL);
     Tcl_CreateObjCommand(interp, "rasmol_resize", RasMol_ResizeObjCmd, NULL, NULL);
+    Tcl_CreateObjCommand(interp, "rasmol_opengl_mode", RasMol_OpenGLModeObjCmd, NULL, NULL);
 
     /* Search for the UI script in multiple locations */
     const char *script_name = "rasmol_ui.tcl";
@@ -206,24 +247,30 @@ void RasMolFatalExit( char *ptr ) { fprintf(stderr, "Fatal Error: %s\n", ptr); e
 void AdviseUpdate( int item ) { (void)item; }
 
 void RefreshScreen( void ) {
-    if( !UseSlabPlane ) {
-        ReDrawFlag &= ~RFTransZ|RFSlab;
+    if (opengl_mode) {
+#ifdef USE_VTK
+        VTK_RenderToBuffer((unsigned char*)FBuffer, XRange, YRange);
+#endif
     } else {
-        ReDrawFlag &= ~RFTransZ;
-    }
+        if( !UseSlabPlane ) {
+            ReDrawFlag &= ~RFTransZ|RFSlab;
+        } else {
+            ReDrawFlag &= ~RFTransZ;
+        }
 
-    if( ReDrawFlag ) {
-        if( ReDrawFlag & RFReSize )
-            ReSizeScreen();
+        if( ReDrawFlag ) {
+            if( ReDrawFlag & RFReSize )
+                ReSizeScreen();
 
-        if( ReDrawFlag & RFColour )
-            DefineColourMap();
+            if( ReDrawFlag & RFColour )
+                DefineColourMap();
 
-        NextReDrawFlag = 0;
-        if( Database ) {
-            if( ReDrawFlag & RFApply )
-                ApplyTransform();
-            DrawFrame();
+            NextReDrawFlag = 0;
+            if( Database ) {
+                if( ReDrawFlag & RFApply )
+                    ApplyTransform();
+                DrawFrame();
+            }
         }
     }
 
@@ -243,9 +290,6 @@ void RefreshScreen( void ) {
     block.pixelSize = 4;
     block.pixelPtr = (unsigned char *)FBuffer;
 
-    /* Tk photo expects RGB usually, but let's check RasMol's mapping.
-       Most systems use 0x00RRGGBB or 0x00BBGGRR.
-       On many modern Linux/macOS systems, it's RGBA. */
     block.offset[0] = 0; /* Red */
     block.offset[1] = 1; /* Green */
     block.offset[2] = 2; /* Blue */
