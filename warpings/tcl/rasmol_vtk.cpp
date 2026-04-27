@@ -7,6 +7,7 @@
 #include <vtkRenderer.h>
 #include <vtkRenderWindow.h>
 #include <vtkWindowToImageFilter.h>
+#include <vtkImageExport.h>
 #include <vtkSmartPointer.h>
 #include <vtkProperty.h>
 #include <vtkPolyData.h>

@@ -117,6 +117,7 @@ ttk::frame .pw.right
 .pw add .pw.right
 
 # RasMol Canvas Area
+puts "Creating photo image..."
 set rasmol_img [image create photo rasmol_view -width 576 -height 576]
 ttk::frame .pw.right.f -relief sunken -borderwidth 2
 pack .pw.right.f -fill both -expand yes -padx 5 -pady 5
