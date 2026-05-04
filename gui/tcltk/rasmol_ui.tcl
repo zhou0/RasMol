@@ -56,7 +56,10 @@ menu .menubar.options -tearoff 0
 
 set has_vtk [rasmol_info vtk]
 if {$has_vtk} {
-    .menubar.options add checkbutton -label "OpenGL mode" -variable opengl_mode -command {toggle_opengl}
+    menu .menubar.options.rendering -tearoff 0
+    .menubar.options add cascade -label "Rendering" -menu .menubar.options.rendering
+    .menubar.options.rendering add radiobutton -label "OpenGL Mode" -variable opengl_mode -value 1 -command {toggle_opengl}
+    .menubar.options add radiobutton -label "Raster Mode" -variable opengl_mode -value 0 -command {toggle_opengl}
     .menubar.options add separator
 }
 
@@ -212,7 +215,11 @@ proc update_status {} {
 proc toggle_opengl {} {
     global opengl_mode
     if {[info commands rasmol_opengl_mode] ne ""} {
-        .status.lbl configure -text "Switching to OpenGL mode..."
+        if {$opengl_mode} {
+            .status.lbl configure -text "Switching to OpenGL mode..."
+        } else {
+            .status.lbl configure -text "Switching to Raster mode..."
+        }
         update
         rasmol_opengl_mode $opengl_mode
         update_status
