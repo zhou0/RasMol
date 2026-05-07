@@ -36,7 +36,10 @@ include(FetchContent)
 
 if(NOT CQRLIB_LIBRARY)
     message(STATUS "CQRlib not found. Fetching from GitHub...")
-    fetchcontent_declare(cqrlib URL https://github.com/zhou0/cqrlib/archive/73cd0aad2b7240b7fbe8ad928cc67015cc6579d1.tar.gz)
+    fetchcontent_declare(cqrlib
+        GIT_REPOSITORY https://github.com/zhou0/cqrlib.git
+        GIT_TAG 73cd0aad2b7240b7fbe8ad928cc67015cc6579d1
+    )
     fetchcontent_makeavailable(cqrlib)
     set(CQRLIB_LIBRARY CQRlib)
     set(CQRLIB_INCLUDE_DIR ${cqrlib_SOURCE_DIR})
@@ -44,7 +47,10 @@ endif()
 
 if(NOT CVECTOR_LIBRARY)
     message(STATUS "CVector not found. Fetching from GitHub...")
-    fetchcontent_declare(cvector URL https://github.com/zhou0/CVector/archive/refs/heads/master.tar.gz)
+    fetchcontent_declare(cvector
+        GIT_REPOSITORY https://github.com/zhou0/CVector.git
+        GIT_TAG master
+    )
     fetchcontent_makeavailable(cvector)
     set(CVECTOR_LIBRARY CV_static)
     set(CVECTOR_INCLUDE_DIR ${cvector_SOURCE_DIR})
@@ -54,7 +60,10 @@ endif()
 
 if(NOT NEARTREE_LIBRARY)
     message(STATUS "NearTree not found. Fetching from GitHub...")
-    fetchcontent_declare(neartree URL https://github.com/zhou0/NearTree/archive/refs/heads/master.tar.gz)
+    fetchcontent_declare(neartree
+        GIT_REPOSITORY https://github.com/zhou0/NearTree.git
+        GIT_TAG main
+    )
     # Pass CVector target/dirs to NearTree project
     set(CVECTOR_INCLUDE_DIR ${CVECTOR_INCLUDE_DIR} CACHE PATH "" FORCE)
     set(CVECTOR_LIBRARY ${CVECTOR_LIBRARY} CACHE STRING "" FORCE)
@@ -65,7 +74,10 @@ endif()
 
 if(NOT CBF_LIBRARY)
     message(STATUS "CBFlib not found. Fetching from GitHub...")
-    fetchcontent_declare(cbflib URL https://github.com/yayahjb/cbflib/archive/refs/heads/master.tar.gz)
+    fetchcontent_declare(cbflib
+        GIT_REPOSITORY https://github.com/yayahjb/cbflib.git
+        GIT_TAG main
+    )
     set(CBF_ENABLE_FORTRAN OFF CACHE BOOL "" FORCE)
     set(CBF_ENABLE_JAVA OFF CACHE BOOL "" FORCE)
     set(CBF_ENABLE_PYTHON OFF CACHE BOOL "" FORCE)

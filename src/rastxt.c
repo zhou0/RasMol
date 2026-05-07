@@ -387,15 +387,15 @@ int LookUpColour( char *name, int *r, int *g, int *b )
 }
 
 
-void SetMouseUpdateStatus( int bool )
+void SetMouseUpdateStatus( int status )
 {
-    MouseUpdateStatus = bool;
+    MouseUpdateStatus = status;
 }
                          
                          
-void SetMouseCaptureStatus( int bool )
+void SetMouseCaptureStatus( int status )
 {
-    MouseCaptureStatus = bool;
+    MouseCaptureStatus = status;
 }
                          
 
