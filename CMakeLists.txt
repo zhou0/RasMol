@@ -54,7 +54,7 @@ if(NOT CVECTOR_LIBRARY)
         GIT_REPOSITORY https://github.com/zhou0/CVector.git
         GIT_TAG master
     )
-        fetchcontent_makeavailable(cvector)
+    fetchcontent_makeavailable(cvector)
     set(CVECTOR_LIBRARY CV_static)
     set(CVECTOR_INCLUDE_DIR ${cvector_SOURCE_DIR})
     # Ensure the target produces libCV_static.a/lib so that -lCV_static works
@@ -67,7 +67,7 @@ if(NOT NEARTREE_LIBRARY)
         GIT_REPOSITORY https://github.com/zhou0/NearTree.git
         GIT_TAG main
     )
-        # Pass CVector target/dirs to NearTree project
+    # Pass CVector target/dirs to NearTree project
     set(CVECTOR_INCLUDE_DIR ${CVECTOR_INCLUDE_DIR} CACHE PATH "" FORCE)
     set(CVECTOR_LIBRARY CV_static)
     fetchcontent_makeavailable(neartree)
