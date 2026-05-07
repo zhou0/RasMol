@@ -355,7 +355,6 @@ int invxfrm(double __far mato2f[3][3], double __far veco2f[3],
     static int ii, jj;
     register double newvol, xdet;
     
-    extern double det();
 
 
 
