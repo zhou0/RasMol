@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.11)
 project(RasMol C CXX)
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin CACHE PATH "Runtime output directory")
-set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib CACHE PATH "Archive output directory")
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib CACHE PATH "Library output directory")
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin CACHE PATH "Runtime output directory" FORCE)
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib CACHE PATH "Archive output directory" FORCE)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib CACHE PATH "Library output directory" FORCE)
 
 if(POLICY CMP0135)
   cmake_policy(SET CMP0135 NEW)
@@ -48,18 +48,28 @@ if(NOT CQRLIB_LIBRARY)
     set(CQRLIB_INCLUDE_DIR ${cqrlib_SOURCE_DIR})
 endif()
 
+
 if(NOT CVECTOR_LIBRARY)
     message(STATUS "CVector not found. Fetching from GitHub...")
     fetchcontent_declare(cvector
         GIT_REPOSITORY https://github.com/zhou0/CVector.git
         GIT_TAG master
     )
-        fetchcontent_makeavailable(cvector)
-    set(CVECTOR_LIBRARY CV_shared CACHE STRING "CVector library target" FORCE)
-    set(CVECTOR_INCLUDE_DIR ${cvector_SOURCE_DIR})
-    # Ensure the target produces libCV_static.a/lib so that -lCV_static works
-    set_target_properties(CV_static PROPERTIES OUTPUT_NAME "CVector")
+    fetchcontent_getproperties(cvector)
+    if(NOT cvector_POPULATED)
+        fetchcontent_populate(cvector)
+        # Patch CVector/CMakeLists.txt to remove its own output directory overrides
+        file(READ ${cvector_SOURCE_DIR}/CMakeLists.txt CV_CMAKE)
+        string(REPLACE "set(CMAKE_RUNTIME_OUTPUT_DIRECTORY" "#set(CMAKE_RUNTIME_OUTPUT_DIRECTORY" CV_CMAKE "${CV_CMAKE}")
+        string(REPLACE "set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY" "#set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY" CV_CMAKE "${CV_CMAKE}")
+        string(REPLACE "set(CMAKE_LIBRARY_OUTPUT_DIRECTORY" "#set(CMAKE_LIBRARY_OUTPUT_DIRECTORY" CV_CMAKE "${CV_CMAKE}")
+        file(WRITE ${cvector_SOURCE_DIR}/CMakeLists.txt "${CV_CMAKE}")
+        add_subdirectory(${cvector_SOURCE_DIR} ${cvector_BINARY_DIR})
+    endif()
+    set(CVECTOR_LIBRARY CV_shared CACHE STRING "" FORCE)
+    set(CVECTOR_INCLUDE_DIR ${cvector_SOURCE_DIR} CACHE PATH "" FORCE)
 endif()
+
 
 if(NOT NEARTREE_LIBRARY)
     message(STATUS "NearTree not found. Fetching from GitHub...")
@@ -67,12 +77,18 @@ if(NOT NEARTREE_LIBRARY)
         GIT_REPOSITORY https://github.com/zhou0/NearTree.git
         GIT_TAG main
     )
-        # Pass CVector target/dirs to NearTree project
-    set(CVECTOR_INCLUDE_DIR ${CVECTOR_INCLUDE_DIR} CACHE PATH "" FORCE)
-    set(CVECTOR_LIBRARY CV_shared CACHE STRING "CVector library target" FORCE)
-    fetchcontent_makeavailable(neartree)
-    set(NEARTREE_LIBRARY CNearTree)
-    set(NEARTREE_INCLUDE_DIR ${neartree_SOURCE_DIR})
+    fetchcontent_getproperties(neartree)
+    if(NOT neartree_POPULATED)
+        fetchcontent_populate(neartree)
+        # Patch NearTree/CMakeLists.txt to use the CVECTOR variables we provide
+        file(READ ${neartree_SOURCE_DIR}/CMakeLists.txt NT_CMAKE)
+        string(REPLACE "find_path(CVECTOR_INCLUDE_DIR CVector.h)" "set(CVECTOR_INCLUDE_DIR \"${CVECTOR_INCLUDE_DIR}\")" NT_CMAKE "${NT_CMAKE}")
+        string(REPLACE "find_library(CVECTOR_LIBRARY CVector)" "set(CVECTOR_LIBRARY \"${CVECTOR_LIBRARY}\")" NT_CMAKE "${NT_CMAKE}")
+        file(WRITE ${neartree_SOURCE_DIR}/CMakeLists.txt "${NT_CMAKE}")
+        add_subdirectory(${neartree_SOURCE_DIR} ${neartree_BINARY_DIR})
+    endif()
+    set(NEARTREE_LIBRARY CNearTree CACHE STRING "" FORCE)
+    set(NEARTREE_INCLUDE_DIR ${neartree_SOURCE_DIR} CACHE PATH "" FORCE)
 endif()
 
 if(NOT CBF_LIBRARY)
