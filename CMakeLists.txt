@@ -54,6 +54,7 @@ if(NOT CQRLIB_LIBRARY)
     set(CQRLIB_INCLUDE_DIR ${cqrlib_SOURCE_DIR} CACHE PATH "" FORCE)
 endif()
 
+
 if(NOT CVECTOR_LIBRARY)
     message(STATUS "CVector not found. Fetching from GitHub...")
     fetchcontent_declare(cvector
@@ -74,6 +75,7 @@ if(NOT CVECTOR_LIBRARY)
     set(CVECTOR_LIBRARY CV_shared CACHE STRING "" FORCE)
     set(CVECTOR_INCLUDE_DIR ${cvector_SOURCE_DIR} CACHE PATH "" FORCE)
 endif()
+
 
 if(NOT NEARTREE_LIBRARY)
     message(STATUS "NearTree not found. Fetching from GitHub...")
