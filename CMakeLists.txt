@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 3.11)
 project(RasMol C CXX)
+set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin CACHE PATH "Runtime output directory" FORCE)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib CACHE PATH "Archive output directory" FORCE)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib CACHE PATH "Library output directory" FORCE)
@@ -35,6 +36,7 @@ find_library(NEARTREE_LIBRARY NAMES CNearTree neartree)
 find_library(CQRLIB_LIBRARY NAMES CQRlib cqrlib)
 find_library(CVECTOR_LIBRARY NAMES CVector cvector)
 
+
 include(FetchContent)
 
 if(NOT CQRLIB_LIBRARY)
@@ -44,8 +46,8 @@ if(NOT CQRLIB_LIBRARY)
         GIT_TAG 73cd0aad2b7240b7fbe8ad928cc67015cc6579d1
     )
     fetchcontent_makeavailable(cqrlib)
-    set(CQRLIB_LIBRARY CQRlib)
-    set(CQRLIB_INCLUDE_DIR ${cqrlib_SOURCE_DIR})
+    set(CQRLIB_LIBRARY CQRlib CACHE STRING "" FORCE)
+    set(CQRLIB_INCLUDE_DIR ${cqrlib_SOURCE_DIR} CACHE PATH "" FORCE)
 endif()
 
 
@@ -103,16 +105,25 @@ if(NOT CBF_LIBRARY)
     set(CBF_ENABLE_DOC OFF CACHE BOOL "" FORCE)
     find_package(BISON)
     if(BISON_FOUND)
-        fetchcontent_makeavailable(cbflib)
-        set(CBF_LIBRARY cbf)
-        set(CBF_INCLUDE_DIR ${cbflib_SOURCE_DIR}/include)
+        fetchcontent_getproperties(cbflib)
+        if(NOT cbflib_POPULATED)
+            fetchcontent_populate(cbflib)
+            # Patch CBFlib/CMakeLists.txt to find CQRlib
+            file(READ ${cbflib_SOURCE_DIR}/CMakeLists.txt CBF_CMAKE)
+            string(REPLACE "find_path(CQRLIB_INCLUDE_DIR cqrlib.h)" "set(CQRLIB_INCLUDE_DIR \"${CQRLIB_INCLUDE_DIR}\")" CBF_CMAKE "${CBF_CMAKE}")
+            string(REPLACE "find_library(CQRLIB_LIBRARY CQRlib)" "set(CQRLIB_LIBRARY \"${CQRLIB_LIBRARY}\")" CBF_CMAKE "${CBF_CMAKE}")
+            string(PREPEND CBF_CMAKE "include_directories(\"${CQRLIB_INCLUDE_DIR}\")\n")
+            file(WRITE ${cbflib_SOURCE_DIR}/CMakeLists.txt "${CBF_CMAKE}")
+            add_subdirectory(${cbflib_SOURCE_DIR} ${cbflib_BINARY_DIR})
+        endif()
+        set(CBF_LIBRARY cbf CACHE STRING "" FORCE)
+        set(CBF_INCLUDE_DIR ${cbflib_SOURCE_DIR}/include CACHE PATH "" FORCE)
     else()
         message(WARNING "Bison not found. Cannot build external CBFlib fallback. CIF support will use internal code.")
-        set(CBF_LIBRARY "")
-        set(CBF_INCLUDE_DIR "")
+        set(CBF_LIBRARY "" CACHE STRING "" FORCE)
+        set(CBF_INCLUDE_DIR "" CACHE PATH "" FORCE)
     endif()
 endif()
-
 # VTK Support
 set(VTK_COMPONENTS
     CommonCore
