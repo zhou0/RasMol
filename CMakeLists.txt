@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 3.11)
 project(RasMol C CXX)
+set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin CACHE PATH "Runtime output directory" FORCE)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib CACHE PATH "Archive output directory" FORCE)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib CACHE PATH "Library output directory" FORCE)
@@ -35,6 +36,7 @@ find_library(NEARTREE_LIBRARY NAMES CNearTree neartree)
 find_library(CQRLIB_LIBRARY NAMES CQRlib cqrlib)
 find_library(CVECTOR_LIBRARY NAMES CVector cvector)
 
+
 include(FetchContent)
 
 if(NOT CQRLIB_LIBRARY)
@@ -47,7 +49,6 @@ if(NOT CQRLIB_LIBRARY)
     set(CQRLIB_LIBRARY CQRlib CACHE STRING "" FORCE)
     set(CQRLIB_INCLUDE_DIR ${cqrlib_SOURCE_DIR} CACHE PATH "" FORCE)
 endif()
-
 
 if(NOT CVECTOR_LIBRARY)
     message(STATUS "CVector not found. Fetching from GitHub...")
@@ -70,7 +71,6 @@ if(NOT CVECTOR_LIBRARY)
     set(CVECTOR_INCLUDE_DIR ${cvector_SOURCE_DIR} CACHE PATH "" FORCE)
 endif()
 
-
 if(NOT NEARTREE_LIBRARY)
     message(STATUS "NearTree not found. Fetching from GitHub...")
     fetchcontent_declare(neartree
@@ -90,7 +90,6 @@ if(NOT NEARTREE_LIBRARY)
     set(NEARTREE_LIBRARY CNearTree CACHE STRING "" FORCE)
     set(NEARTREE_INCLUDE_DIR ${neartree_SOURCE_DIR} CACHE PATH "" FORCE)
 endif()
-
 
 if(NOT CBF_LIBRARY)
     message(STATUS "CBFlib not found. Fetching from GitHub...")
@@ -119,11 +118,10 @@ if(NOT CBF_LIBRARY)
         set(CBF_INCLUDE_DIR ${cbflib_SOURCE_DIR}/include CACHE PATH "" FORCE)
     else()
         message(WARNING "Bison not found. Cannot build external CBFlib fallback. CIF support will use internal code.")
-        set(CBF_LIBRARY "")
-        set(CBF_INCLUDE_DIR "")
+        set(CBF_LIBRARY "" CACHE STRING "" FORCE)
+        set(CBF_INCLUDE_DIR "" CACHE PATH "" FORCE)
     endif()
 endif()
-
 # VTK Support
 set(VTK_COMPONENTS
     CommonCore
