@@ -59,7 +59,7 @@ if(NOT CVECTOR_LIBRARY)
     message(STATUS "CVector not found. Fetching from GitHub...")
     fetchcontent_declare(cvector
         GIT_REPOSITORY https://github.com/zhou0/CVector.git
-        GIT_TAG master
+        GIT_TAG 2daaf18bffc1b2dcb332f0867c83c0134cfd04da
     )
     fetchcontent_getproperties(cvector)
     if(NOT cvector_POPULATED)
@@ -81,7 +81,7 @@ if(NOT NEARTREE_LIBRARY)
     message(STATUS "NearTree not found. Fetching from GitHub...")
     fetchcontent_declare(neartree
         GIT_REPOSITORY https://github.com/zhou0/NearTree.git
-        GIT_TAG main
+        GIT_TAG 6766128a8d1d7ed5f06cb80bf1fa2553ca3b7bf5
     )
     fetchcontent_getproperties(neartree)
     if(NOT neartree_POPULATED)
@@ -101,7 +101,7 @@ if(NOT CBF_LIBRARY)
     message(STATUS "CBFlib not found. Fetching from GitHub...")
     fetchcontent_declare(cbflib
         GIT_REPOSITORY https://github.com/yayahjb/cbflib.git
-        GIT_TAG main
+        GIT_TAG ebe2164f6cc356e9c44c0ee1a7fda8631c3bfc6a
     )
     set(CBF_ENABLE_FORTRAN OFF CACHE BOOL "" FORCE)
     set(CBF_ENABLE_JAVA OFF CACHE BOOL "" FORCE)
