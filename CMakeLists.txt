@@ -1,5 +1,13 @@
 cmake_minimum_required(VERSION 3.11)
 project(RasMol C CXX)
+set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin CACHE PATH "Runtime output directory" FORCE)
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib CACHE PATH "Archive output directory" FORCE)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib CACHE PATH "Library output directory" FORCE)
+
+if(POLICY CMP0169)
+  cmake_policy(SET CMP0169 OLD)
+endif()
 
 if(POLICY CMP0135)
   cmake_policy(SET CMP0135 NEW)
@@ -32,56 +40,92 @@ find_library(NEARTREE_LIBRARY NAMES CNearTree neartree)
 find_library(CQRLIB_LIBRARY NAMES CQRlib cqrlib)
 find_library(CVECTOR_LIBRARY NAMES CVector cvector)
 
+
 include(FetchContent)
 
 if(NOT CQRLIB_LIBRARY)
     message(STATUS "CQRlib not found. Fetching from GitHub...")
-    fetchcontent_declare(cqrlib URL https://github.com/zhou0/cqrlib/archive/73cd0aad2b7240b7fbe8ad928cc67015cc6579d1.tar.gz)
+    fetchcontent_declare(cqrlib
+        GIT_REPOSITORY https://github.com/zhou0/cqrlib.git
+        GIT_TAG 73cd0aad2b7240b7fbe8ad928cc67015cc6579d1
+    )
     fetchcontent_makeavailable(cqrlib)
-    set(CQRLIB_LIBRARY CQRlib)
-    set(CQRLIB_INCLUDE_DIR ${cqrlib_SOURCE_DIR})
+    set(CQRLIB_LIBRARY CQRlib CACHE STRING "" FORCE)
+    set(CQRLIB_INCLUDE_DIR ${cqrlib_SOURCE_DIR} CACHE PATH "" FORCE)
 endif()
 
 if(NOT CVECTOR_LIBRARY)
     message(STATUS "CVector not found. Fetching from GitHub...")
-    fetchcontent_declare(cvector URL https://github.com/zhou0/CVector/archive/refs/heads/master.tar.gz)
-    fetchcontent_makeavailable(cvector)
-    set(CVECTOR_LIBRARY CV_static)
-    set(CVECTOR_INCLUDE_DIR ${cvector_SOURCE_DIR})
-    # Ensure the target produces libCV_static.a/lib so that -lCV_static works
-    set_target_properties(CV_static PROPERTIES OUTPUT_NAME "CV_static")
+    fetchcontent_declare(cvector
+        GIT_REPOSITORY https://github.com/zhou0/CVector.git
+        GIT_TAG master
+    )
+    fetchcontent_getproperties(cvector)
+    if(NOT cvector_POPULATED)
+        fetchcontent_populate(cvector)
+        # Patch CVector/CMakeLists.txt to remove its own output directory overrides
+        file(READ ${cvector_SOURCE_DIR}/CMakeLists.txt CV_CMAKE)
+        string(REPLACE "set(CMAKE_RUNTIME_OUTPUT_DIRECTORY" "#set(CMAKE_RUNTIME_OUTPUT_DIRECTORY" CV_CMAKE "${CV_CMAKE}")
+        string(REPLACE "set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY" "#set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY" CV_CMAKE "${CV_CMAKE}")
+        string(REPLACE "set(CMAKE_LIBRARY_OUTPUT_DIRECTORY" "#set(CMAKE_LIBRARY_OUTPUT_DIRECTORY" CV_CMAKE "${CV_CMAKE}")
+        file(WRITE ${cvector_SOURCE_DIR}/CMakeLists.txt "${CV_CMAKE}")
+        add_subdirectory(${cvector_SOURCE_DIR} ${cvector_BINARY_DIR})
+    endif()
+    set(CVECTOR_LIBRARY CV_shared CACHE STRING "" FORCE)
+    set(CVECTOR_INCLUDE_DIR ${cvector_SOURCE_DIR} CACHE PATH "" FORCE)
 endif()
 
 if(NOT NEARTREE_LIBRARY)
     message(STATUS "NearTree not found. Fetching from GitHub...")
-    fetchcontent_declare(neartree URL https://github.com/zhou0/NearTree/archive/refs/heads/master.tar.gz)
-    # Pass CVector target/dirs to NearTree project
-    set(CVECTOR_INCLUDE_DIR ${CVECTOR_INCLUDE_DIR} CACHE PATH "" FORCE)
-    set(CVECTOR_LIBRARY ${CVECTOR_LIBRARY} CACHE STRING "" FORCE)
-    fetchcontent_makeavailable(neartree)
-    set(NEARTREE_LIBRARY CNearTree)
-    set(NEARTREE_INCLUDE_DIR ${neartree_SOURCE_DIR})
+    fetchcontent_declare(neartree
+        GIT_REPOSITORY https://github.com/zhou0/NearTree.git
+        GIT_TAG main
+    )
+    fetchcontent_getproperties(neartree)
+    if(NOT neartree_POPULATED)
+        fetchcontent_populate(neartree)
+        # Patch NearTree/CMakeLists.txt to use the CVECTOR variables we provide
+        file(READ ${neartree_SOURCE_DIR}/CMakeLists.txt NT_CMAKE)
+        string(REPLACE "find_path(CVECTOR_INCLUDE_DIR CVector.h)" "set(CVECTOR_INCLUDE_DIR \"${CVECTOR_INCLUDE_DIR}\")" NT_CMAKE "${NT_CMAKE}")
+        string(REPLACE "find_library(CVECTOR_LIBRARY CVector)" "set(CVECTOR_LIBRARY \"${CVECTOR_LIBRARY}\")" NT_CMAKE "${NT_CMAKE}")
+        file(WRITE ${neartree_SOURCE_DIR}/CMakeLists.txt "${NT_CMAKE}")
+        add_subdirectory(${neartree_SOURCE_DIR} ${neartree_BINARY_DIR})
+    endif()
+    set(NEARTREE_LIBRARY CNearTree CACHE STRING "" FORCE)
+    set(NEARTREE_INCLUDE_DIR ${neartree_SOURCE_DIR} CACHE PATH "" FORCE)
 endif()
 
 if(NOT CBF_LIBRARY)
     message(STATUS "CBFlib not found. Fetching from GitHub...")
-    fetchcontent_declare(cbflib URL https://github.com/yayahjb/cbflib/archive/refs/heads/master.tar.gz)
+    fetchcontent_declare(cbflib
+        GIT_REPOSITORY https://github.com/yayahjb/cbflib.git
+        GIT_TAG main
+    )
     set(CBF_ENABLE_FORTRAN OFF CACHE BOOL "" FORCE)
     set(CBF_ENABLE_JAVA OFF CACHE BOOL "" FORCE)
     set(CBF_ENABLE_PYTHON OFF CACHE BOOL "" FORCE)
     set(CBF_ENABLE_DOC OFF CACHE BOOL "" FORCE)
     find_package(BISON)
     if(BISON_FOUND)
-        fetchcontent_makeavailable(cbflib)
-        set(CBF_LIBRARY cbf)
-        set(CBF_INCLUDE_DIR ${cbflib_SOURCE_DIR}/include)
+        fetchcontent_getproperties(cbflib)
+        if(NOT cbflib_POPULATED)
+            fetchcontent_populate(cbflib)
+            # Patch CBFlib/CMakeLists.txt to find CQRlib
+            file(READ ${cbflib_SOURCE_DIR}/CMakeLists.txt CBF_CMAKE)
+            string(REPLACE "find_path(CQRLIB_INCLUDE_DIR cqrlib.h)" "set(CQRLIB_INCLUDE_DIR \"${CQRLIB_INCLUDE_DIR}\")" CBF_CMAKE "${CBF_CMAKE}")
+            string(REPLACE "find_library(CQRLIB_LIBRARY CQRlib)" "set(CQRLIB_LIBRARY \"${CQRLIB_LIBRARY}\")" CBF_CMAKE "${CBF_CMAKE}")
+            string(PREPEND CBF_CMAKE "include_directories(\"${CQRLIB_INCLUDE_DIR}\")\n")
+            file(WRITE ${cbflib_SOURCE_DIR}/CMakeLists.txt "${CBF_CMAKE}")
+            add_subdirectory(${cbflib_SOURCE_DIR} ${cbflib_BINARY_DIR})
+        endif()
+        set(CBF_LIBRARY cbf CACHE STRING "" FORCE)
+        set(CBF_INCLUDE_DIR ${cbflib_SOURCE_DIR}/include CACHE PATH "" FORCE)
     else()
         message(WARNING "Bison not found. Cannot build external CBFlib fallback. CIF support will use internal code.")
-        set(CBF_LIBRARY "")
-        set(CBF_INCLUDE_DIR "")
+        set(CBF_LIBRARY "" CACHE STRING "" FORCE)
+        set(CBF_INCLUDE_DIR "" CACHE PATH "" FORCE)
     endif()
 endif()
-
 # VTK Support
 set(VTK_COMPONENTS
     CommonCore
@@ -112,11 +156,8 @@ if(VTK_FOUND)
 endif()
 
 # Set default output directories EARLY to prevent subprojects from overriding them
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
-set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 
-add_definitions(-D_USE_RASMOL_H_)
+add_definitions(-D_USE_RASMOL_H_ -DFUNCPROTO)
 if(NOT WIN32)
     add_definitions(-DUNIX)
 endif()
