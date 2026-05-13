@@ -1,0 +1,19 @@
+# Doxyfile for RasMol project
+PROJECT_NAME           = "RasMol"
+OUTPUT_DIRECTORY       = doc
+CREATE_SUBDIRS         = NO
+OUTPUT_LANGUAGE        = English
+EXTRACT_ALL            = YES
+EXTRACT_PRIVATE        = NO
+EXTRACT_STATIC         = YES
+CASE_SENSE_NAMES       = YES
+INPUT                  = .
+FILE_PATTERNS          = *.c *.cpp *.h *.hpp *.cc *.hh *.cxx *.hxx
+RECURSIVE              = YES
+EXCLUDE                = build
+HAVE_DOT               = YES
+CALL_GRAPH             = YES
+CALLER_GRAPH           = YES
+GENERATE_LATEX         = NO
+GENERATE_MAN           = NO
+GENERATE_RTF           = NO
