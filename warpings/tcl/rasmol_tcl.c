@@ -141,6 +141,8 @@ static int RasMol_ResizeObjCmd(ClientData clientData, Tcl_Interp *interp, int ob
         HRange = YRange >> 1;
         Range = MinFun(XRange, YRange);
 
+        XOffset = WRange;
+        YOffset = HRange;
         ReDrawFlag |= RFReSize | RFRefresh | RFApply;
         RefreshScreen();
     }
@@ -351,6 +353,7 @@ void RefreshScreen( void ) {
     }
 
     if (rasmol_photo_handle == NULL || FBuffer == NULL) return;
+    Tk_PhotoSetSize(NULL, rasmol_photo_handle, XRange, YRange);
 
     /* Set Alpha channel to 255 for visibility */
     int i;
@@ -366,9 +369,9 @@ void RefreshScreen( void ) {
     block.pixelSize = 4;
     block.pixelPtr = (unsigned char *)FBuffer;
 
-    block.offset[0] = 0; /* Red */
+    block.offset[0] = 2; /* Red */
     block.offset[1] = 1; /* Green */
-    block.offset[2] = 2; /* Blue */
+    block.offset[2] = 0; /* Blue */
     block.offset[3] = 3; /* Alpha */
 
     Tk_PhotoPutBlock(NULL, rasmol_photo_handle, &block, 0, 0, XRange, YRange, TK_PHOTO_COMPOSITE_SET);
@@ -441,13 +444,13 @@ void HandleMenu( int hand ) {
             switch(item) {
                 case 1: ExecuteIPCCommand("wireframe"); break;
                 case 2: ExecuteIPCCommand("backbone"); break;
-                case 3: ExecuteIPCCommand("sticks"); break;
+                case 3: ExecuteIPCCommand("wireframe 40"); break;
                 case 4: ExecuteIPCCommand("spacefill"); break;
-                case 5: ExecuteIPCCommand("ballstick"); break;
+                case 5: ExecuteIPCCommand("wireframe 40; spacefill 120"); break;
                 case 6: ExecuteIPCCommand("ribbons"); break;
                 case 7: ExecuteIPCCommand("strands"); break;
                 case 8: ExecuteIPCCommand("cartoons"); break;
-                case 9: ExecuteIPCCommand("surface"); break;
+                case 9: ExecuteIPCCommand("molsurf"); break;
             }
             break;
         case 2: /* Colours */
@@ -466,13 +469,13 @@ void HandleMenu( int hand ) {
             break;
         case 3: /* Options */
             switch(item) {
-                case 1: ExecuteIPCCommand("slab"); break;
-                case 2: ExecuteIPCCommand("set hydrogens"); break;
-                case 3: ExecuteIPCCommand("set hetero"); break;
-                case 4: ExecuteIPCCommand("set specular"); break;
-                case 5: ExecuteIPCCommand("set shadows"); break;
-                case 6: ExecuteIPCCommand("stereo"); break;
-                case 7: ExecuteIPCCommand("set labels"); break;
+                case 1: ExecuteIPCCommand(UseSlabPlane ? "slab off" : "slab on"); break;
+                case 2: ExecuteIPCCommand(Hydrogens ? "set hydrogen off" : "set hydrogen on"); break;
+                case 3: ExecuteIPCCommand(HetaGroups ? "set hetero off" : "set hetero on"); break;
+                case 4: ExecuteIPCCommand(FakeSpecular ? "set specular off" : "set specular on"); break;
+                case 5: ExecuteIPCCommand(UseShadow ? "set shadows off" : "set shadows on"); break;
+                case 6: ExecuteIPCCommand(UseStereo ? "stereo off" : "stereo on"); break;
+                case 7: ExecuteIPCCommand(LabelOptFlag ? "labels off" : "labels on"); break;
             }
             break;
         case 4: /* Settings */
