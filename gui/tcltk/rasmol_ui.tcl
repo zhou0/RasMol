@@ -120,11 +120,11 @@ ttk::frame .pw.right
 .pw add .pw.right
 
 # RasMol Canvas Area
-set rasmol_img [image create photo rasmol_view -width 576 -height 576]
+set rasmol_img [image create photo rasmol_view]
 ttk::frame .pw.right.f -relief sunken -borderwidth 2
 pack .pw.right.f -fill both -expand yes -padx 5 -pady 5
 
-canvas .pw.right.f.c -width 576 -height 576 -highlightthickness 0 -bg black
+canvas .pw.right.f.c -highlightthickness 0 -bg black
 pack .pw.right.f.c -fill both -expand yes
 .pw.right.f.c create image 0 0 -image $rasmol_img -anchor nw -tags rasmol_image
 

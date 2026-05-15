@@ -141,6 +141,8 @@ static int RasMol_ResizeObjCmd(ClientData clientData, Tcl_Interp *interp, int ob
         HRange = YRange >> 1;
         Range = MinFun(XRange, YRange);
 
+        XOffset = WRange;
+        YOffset = HRange;
         ReDrawFlag |= RFReSize | RFRefresh | RFApply;
         RefreshScreen();
     }
@@ -351,6 +353,7 @@ void RefreshScreen( void ) {
     }
 
     if (rasmol_photo_handle == NULL || FBuffer == NULL) return;
+    Tk_PhotoSetSize(NULL, rasmol_photo_handle, XRange, YRange);
 
     /* Set Alpha channel to 255 for visibility */
     int i;
@@ -366,9 +369,9 @@ void RefreshScreen( void ) {
     block.pixelSize = 4;
     block.pixelPtr = (unsigned char *)FBuffer;
 
-    block.offset[0] = 0; /* Red */
+    block.offset[0] = 2; /* Red */
     block.offset[1] = 1; /* Green */
-    block.offset[2] = 2; /* Blue */
+    block.offset[2] = 0; /* Blue */
     block.offset[3] = 3; /* Alpha */
 
     Tk_PhotoPutBlock(NULL, rasmol_photo_handle, &block, 0, 0, XRange, YRange, TK_PHOTO_COMPOSITE_SET);
