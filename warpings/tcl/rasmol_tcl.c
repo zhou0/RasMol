@@ -441,13 +441,13 @@ void HandleMenu( int hand ) {
             switch(item) {
                 case 1: ExecuteIPCCommand("wireframe"); break;
                 case 2: ExecuteIPCCommand("backbone"); break;
-                case 3: ExecuteIPCCommand("sticks"); break;
+                case 3: ExecuteIPCCommand("wireframe 40"); break;
                 case 4: ExecuteIPCCommand("spacefill"); break;
-                case 5: ExecuteIPCCommand("ballstick"); break;
+                case 5: ExecuteIPCCommand("wireframe 40; spacefill 120"); break;
                 case 6: ExecuteIPCCommand("ribbons"); break;
                 case 7: ExecuteIPCCommand("strands"); break;
                 case 8: ExecuteIPCCommand("cartoons"); break;
-                case 9: ExecuteIPCCommand("surface"); break;
+                case 9: ExecuteIPCCommand("molsurf"); break;
             }
             break;
         case 2: /* Colours */
@@ -466,13 +466,13 @@ void HandleMenu( int hand ) {
             break;
         case 3: /* Options */
             switch(item) {
-                case 1: ExecuteIPCCommand("slab"); break;
-                case 2: ExecuteIPCCommand("set hydrogens"); break;
-                case 3: ExecuteIPCCommand("set hetero"); break;
-                case 4: ExecuteIPCCommand("set specular"); break;
-                case 5: ExecuteIPCCommand("set shadows"); break;
-                case 6: ExecuteIPCCommand("stereo"); break;
-                case 7: ExecuteIPCCommand("set labels"); break;
+                case 1: ExecuteIPCCommand(UseSlabPlane ? "slab off" : "slab on"); break;
+                case 2: ExecuteIPCCommand(Hydrogens ? "set hydrogen off" : "set hydrogen on"); break;
+                case 3: ExecuteIPCCommand(HetaGroups ? "set hetero off" : "set hetero on"); break;
+                case 4: ExecuteIPCCommand(FakeSpecular ? "set specular off" : "set specular on"); break;
+                case 5: ExecuteIPCCommand(UseShadow ? "set shadows off" : "set shadows on"); break;
+                case 6: ExecuteIPCCommand(UseStereo ? "stereo off" : "stereo on"); break;
+                case 7: ExecuteIPCCommand(LabelOptFlag ? "labels off" : "labels on"); break;
             }
             break;
         case 4: /* Settings */
