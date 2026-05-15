@@ -467,7 +467,7 @@ void HandleMenu( int hand ) {
         case 3: /* Options */
             switch(item) {
                 case 1: ExecuteIPCCommand(UseSlabPlane ? "slab off" : "slab on"); break;
-                case 2: ExecuteIPCCommand(Hydrogens ? "set hydrogens off" : "set hydrogens on"); break;
+                case 2: ExecuteIPCCommand(Hydrogens ? "set hydrogen off" : "set hydrogen on"); break;
                 case 3: ExecuteIPCCommand(HetaGroups ? "set hetero off" : "set hetero on"); break;
                 case 4: ExecuteIPCCommand(FakeSpecular ? "set specular off" : "set specular on"); break;
                 case 5: ExecuteIPCCommand(UseShadow ? "set shadows off" : "set shadows on"); break;
