@@ -63,13 +63,13 @@ if {$has_vtk} {
     .menubar.options add separator
 }
 
-.menubar.options add checkbutton -label "Slab Mode" -variable use_slab -command {send_rasmol_menu 3 1}
-.menubar.options add checkbutton -label "Hydrogens" -variable show_h -command {send_rasmol_menu 3 2}
-.menubar.options add checkbutton -label "Hetero Atoms" -variable show_het -command {send_rasmol_menu 3 3}
-.menubar.options add checkbutton -label "Specular" -variable use_spec -command {send_rasmol_menu 3 4}
-.menubar.options add checkbutton -label "Shadows" -variable use_shadow -command {send_rasmol_menu 3 5}
-.menubar.options add checkbutton -label "Stereo" -variable use_stereo -command {send_rasmol_menu 3 6}
-.menubar.options add checkbutton -label "Labels" -variable show_labels -command {send_rasmol_menu 3 7}
+.menubar.options add checkbutton -label "Slab Mode" -variable use_slab -command {global use_slab; send_rasmol_menu 3 1 $use_slab}
+.menubar.options add checkbutton -label "Hydrogens" -variable show_h -command {global show_h; send_rasmol_menu 3 2 $show_h}
+.menubar.options add checkbutton -label "Hetero Atoms" -variable show_het -command {global show_het; send_rasmol_menu 3 3 $show_het}
+.menubar.options add checkbutton -label "Specular" -variable use_spec -command {global use_spec; send_rasmol_menu 3 4 $use_spec}
+.menubar.options add checkbutton -label "Shadows" -variable use_shadow -command {global use_shadow; send_rasmol_menu 3 5 $use_shadow}
+.menubar.options add checkbutton -label "Stereo" -variable use_stereo -command {global use_stereo; send_rasmol_menu 3 6 $use_stereo}
+.menubar.options add checkbutton -label "Labels" -variable show_labels -command {global show_labels; send_rasmol_menu 3 7 $show_labels}
 
 # Settings Menu
 menu .menubar.settings -tearoff 0
@@ -195,9 +195,13 @@ proc send_rasmol {cmd} {
     }
 }
 
-proc send_rasmol_menu {menu item} {
+proc send_rasmol_menu {menu item {state ""}} {
     if {[info commands rasmol_handle_menu] ne ""} {
-        rasmol_handle_menu $menu $item
+        if {$state ne ""} {
+            rasmol_handle_menu $menu $item $state
+        } else {
+            rasmol_handle_menu $menu $item
+        }
     } else {
         puts "RasMol Menu: $menu $item"
     }
