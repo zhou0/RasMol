@@ -129,7 +129,7 @@ set rasmol_img [image create photo rasmol_view]
 ttk::frame .pw.right.f -relief sunken -borderwidth 2
 pack .pw.right.f -fill both -expand yes -padx 5 -pady 5
 
-canvas .pw.right.f.c -highlightthickness 0 -bg black
+canvas .pw.right.f.c -highlightthickness 0 -bg black -cursor crosshair
 ttk::scrollbar .pw.right.f.vsb -orient vertical -command {rotate_molecule v}
 ttk::scrollbar .pw.right.f.hsb -orient horizontal -command {rotate_molecule h}
 
