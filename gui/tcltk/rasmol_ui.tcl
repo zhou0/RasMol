@@ -63,13 +63,13 @@ if {$has_vtk} {
     .menubar.options add separator
 }
 
-.menubar.options add checkbutton -label "Slab Mode" -variable use_slab -command {send_rasmol_menu 3 1}
-.menubar.options add checkbutton -label "Hydrogens" -variable show_h -command {send_rasmol_menu 3 2}
-.menubar.options add checkbutton -label "Hetero Atoms" -variable show_het -command {send_rasmol_menu 3 3}
-.menubar.options add checkbutton -label "Specular" -variable use_spec -command {send_rasmol_menu 3 4}
-.menubar.options add checkbutton -label "Shadows" -variable use_shadow -command {send_rasmol_menu 3 5}
-.menubar.options add checkbutton -label "Stereo" -variable use_stereo -command {send_rasmol_menu 3 6}
-.menubar.options add checkbutton -label "Labels" -variable show_labels -command {send_rasmol_menu 3 7}
+.menubar.options add checkbutton -label "Slab Mode" -variable use_slab -command {global use_slab; send_rasmol_menu 3 1 $use_slab}
+.menubar.options add checkbutton -label "Hydrogens" -variable show_h -command {global show_h; send_rasmol_menu 3 2 $show_h}
+.menubar.options add checkbutton -label "Hetero Atoms" -variable show_het -command {global show_het; send_rasmol_menu 3 3 $show_het}
+.menubar.options add checkbutton -label "Specular" -variable use_spec -command {global use_spec; send_rasmol_menu 3 4 $use_spec}
+.menubar.options add checkbutton -label "Shadows" -variable use_shadow -command {global use_shadow; send_rasmol_menu 3 5 $use_shadow}
+.menubar.options add checkbutton -label "Stereo" -variable use_stereo -command {global use_stereo; send_rasmol_menu 3 6 $use_stereo}
+.menubar.options add checkbutton -label "Labels" -variable show_labels -command {global show_labels; send_rasmol_menu 3 7 $show_labels}
 
 # Settings Menu
 menu .menubar.settings -tearoff 0
@@ -92,7 +92,7 @@ menu .menubar.settings -tearoff 0
 # Help Menu
 menu .menubar.help -tearoff 0
 .menubar add cascade -label "Help" -menu .menubar.help
-.menubar.help add command -label "About RasMol" -command {send_rasmol_menu 6 1}
+.menubar.help add command -label "About RasMol" -command {show_about}
 .menubar.help add command -label "User Manual" -command {send_rasmol_menu 6 2}
 
 # Main layout using ttk::panedwindow
@@ -195,9 +195,13 @@ proc send_rasmol {cmd} {
     }
 }
 
-proc send_rasmol_menu {menu item} {
+proc send_rasmol_menu {menu item {state ""}} {
     if {[info commands rasmol_handle_menu] ne ""} {
-        rasmol_handle_menu $menu $item
+        if {$state ne ""} {
+            rasmol_handle_menu $menu $item $state
+        } else {
+            rasmol_handle_menu $menu $item
+        }
     } else {
         puts "RasMol Menu: $menu $item"
     }
@@ -262,3 +266,53 @@ set use_slab 0
 set opengl_mode 0
 
 puts "UI initialized."
+
+proc show_about {} {
+    set w .about
+    if {[winfo exists $w]} {
+        raise $w
+        return
+    }
+    toplevel $w
+    wm title $w "About RasMol"
+    wm resizable $w 0 0
+
+    # Main frame
+    ttk::frame $w.f -padding 10
+    pack $w.f -fill both -expand yes
+
+    # Logo
+    set img_path "html_graphics/rasmollogo_22Jun99.jpg"
+    if {[file exists $img_path]} {
+        if {[catch {image create photo about_logo -file $img_path} err]} {
+             label $w.f.logo -text "RasMol" -font {Helvetica 24 bold}
+        } else {
+             label $w.f.logo -image about_logo
+        }
+    } else {
+        label $w.f.logo -text "RasMol" -font {Helvetica 24 bold}
+    }
+    pack $w.f.logo -pady 10
+
+    # Version
+    label $w.f.version -text "RasMol Version 2.7.5.2" -font {Helvetica 12 bold}
+    pack $w.f.version -pady 2
+
+    # Author Information
+    set current_author "Current Maintainer:\nLi ZHOU (zhouesq@hotmail.com)"
+    label $w.f.current -text $current_author -justify center -font {Helvetica 10 bold}
+    pack $w.f.current -pady 5
+
+    set historical_authors "Original Author:\nRoger Sayle (1992-1999)\n\nMajor Contributors:\nHerbert J. Bernstein (1998-2011)\nArne Mueller (1998)\nGary Grossman & Marco Molinaro (1995-1996)\nPhilippe Valadon (2000)\nTeemu Ikonen (2009)"
+    label $w.f.hist -text $historical_authors -justify center -font {Helvetica 9}
+    pack $w.f.hist -pady 5
+
+    # License
+    set license_info "Licensed under the GNU General Public License (GPL)\nor the RASMOL License."
+    label $w.f.license -text $license_info -justify center -font {Helvetica 9 italic}
+    pack $w.f.license -pady 10
+
+    # Close button
+    ttk::button $w.f.close -text "Close" -command [list destroy $w]
+    pack $w.f.close -pady 5
+}
