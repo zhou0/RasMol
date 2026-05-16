@@ -330,7 +330,7 @@ void RasMolFatalExit( char* );
 void AdviseUpdate( int );
 void RefreshScreen( void );
 void RasMolExit( void );
-void HandleMenu( int hand );
+void HandleMenu( int hand, int state );
 
 #ifdef APPLEMAC
 #include "rasmac.h"
