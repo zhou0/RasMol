@@ -205,21 +205,21 @@ static int RasMol_KeyPressObjCmd(ClientData clientData, Tcl_Interp *interp, int 
     return TCL_OK;
 }
 
-/* Forward declaration for HandleMenu */
-void HandleMenu( int hand );
-
-/* Tcl command to handle RasMol menu actions */
+void HandleMenuWithState( int hand, int state );
 static int RasMol_HandleMenuObjCmd(ClientData clientData, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[]) {
-    int menu, item;
-    if (objc != 3) {
-        Tcl_WrongNumArgs(interp, 1, objv, "menu item");
+    int menu, item, state = -1;
+    if (objc < 3 || objc > 4) {
+        Tcl_WrongNumArgs(interp, 1, objv, "menu item ?state?");
         return TCL_ERROR;
     }
 
     if (Tcl_GetIntFromObj(interp, objv[1], &menu) != TCL_OK) return TCL_ERROR;
     if (Tcl_GetIntFromObj(interp, objv[2], &item) != TCL_OK) return TCL_ERROR;
+    if (objc == 4) {
+        if (Tcl_GetIntFromObj(interp, objv[3], &state) != TCL_OK) return TCL_ERROR;
+    }
 
-    HandleMenu((menu << 8) | item);
+    HandleMenuWithState((menu << 8) | item, state);
 
     if (ReDrawFlag) {
         RefreshScreen();
@@ -228,7 +228,6 @@ static int RasMol_HandleMenuObjCmd(ClientData clientData, Tcl_Interp *interp, in
 
     return TCL_OK;
 }
-
 int Tcl_AppInit(Tcl_Interp *interp) {
     if (Tcl_Init(interp) == TCL_ERROR) return TCL_ERROR;
     if (Tk_Init(interp) == TCL_ERROR) return TCL_ERROR;
@@ -429,7 +428,7 @@ int CheckInterpName (char __huge *name , unsigned long __huge *id) { (void)name;
 int SendInterpCommand( char __huge *name, unsigned long id, char __huge *cmd) { (void)name; (void)id; (void)cmd; return False; }
 
 /* Placeholder for HandleMenu if not linked from rasmol.c */
-void HandleMenu( int hand ) {
+void HandleMenuWithState( int hand, int state ) {
     int menu = hand >> 8;
     int item = hand & 0xff;
 
@@ -469,13 +468,21 @@ void HandleMenu( int hand ) {
             break;
         case 3: /* Options */
             switch(item) {
-                case 1: ExecuteIPCCommand(UseSlabPlane ? "slab off" : "slab on"); break;
-                case 2: ExecuteIPCCommand(Hydrogens ? "set hydrogen off" : "set hydrogen on"); break;
-                case 3: ExecuteIPCCommand(HetaGroups ? "set hetero off" : "set hetero on"); break;
-                case 4: ExecuteIPCCommand(FakeSpecular ? "set specular off" : "set specular on"); break;
-                case 5: ExecuteIPCCommand(UseShadow ? "set shadows off" : "set shadows on"); break;
-                case 6: ExecuteIPCCommand(UseStereo ? "stereo off" : "stereo on"); break;
-                case 7: ExecuteIPCCommand(LabelOptFlag ? "labels off" : "labels on"); break;
+                case 1: ExecuteIPCCommand((state == 1 || (state == -1 && !UseSlabPlane)) ? "slab on" : "slab off"); break;
+                case 2: if (state == 1 || (state == -1 && !Hydrogens)) {
+                            ExecuteIPCCommand("define _tmp selected; select _tmp and hydrogen; wireframe on; select _tmp");
+                        } else {
+                            ExecuteIPCCommand("define _tmp selected; select _tmp and hydrogen; wireframe off; select _tmp");
+                        } break;
+                case 3: if (state == 1 || (state == -1 && !HetaGroups)) {
+                            ExecuteIPCCommand("define _tmp selected; select _tmp and hetero; wireframe on; select _tmp");
+                        } else {
+                            ExecuteIPCCommand("define _tmp selected; select _tmp and hetero; wireframe off; select _tmp");
+                        } break;
+                case 4: ExecuteIPCCommand((state == 1 || (state == -1 && !FakeSpecular)) ? "set specular on" : "set specular off"); break;
+                case 5: ExecuteIPCCommand((state == 1 || (state == -1 && !UseShadow)) ? "set shadows on" : "set shadows off"); break;
+                case 6: ExecuteIPCCommand((state == 1 || (state == -1 && !UseStereo)) ? "stereo on" : "stereo off"); break;
+                case 7: ExecuteIPCCommand((state == 1 || (state == -1 && !LabelOptFlag)) ? "labels on" : "labels off"); break;
             }
             break;
         case 4: /* Settings */
