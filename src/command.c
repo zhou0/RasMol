@@ -3526,7 +3526,9 @@ static void OldExecuteColourCommand( void )
             FetchToken();
         default:
             switch( CurToken )
-        {   case(CPKTok):         CPKColourAttrib();
+        {   case(MonoTok):        MonoColourAttrib(255,255,255);
+                ReDrawFlag |= RFColour; break;
+            case(CPKTok):         CPKColourAttrib();
                 ReDrawFlag |= RFColour; break;
 
             case(CpkNewTok):      CpkNewColourAttrib();
@@ -3745,7 +3747,9 @@ static void ExecuteColourCommand( void )
             FetchToken();
         default:
             switch( CurToken )
-        {   case(CPKTok):         CPKColourAttrib();
+        {   case(MonoTok):        MonoColourAttrib(255,255,255);
+                ReDrawFlag |= RFColour; break;
+            case(CPKTok):         CPKColourAttrib();
                 ReDrawFlag |= RFColour; break;
 
             case(CpkNewTok):      CpkNewColourAttrib();
