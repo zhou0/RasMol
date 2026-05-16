@@ -63,13 +63,13 @@ if {$has_vtk} {
     .menubar.options add separator
 }
 
-.menubar.options add checkbutton -label "Slab Mode" -variable use_slab -command {send_rasmol_menu 3 1}
-.menubar.options add checkbutton -label "Hydrogens" -variable show_h -command {send_rasmol_menu 3 2}
-.menubar.options add checkbutton -label "Hetero Atoms" -variable show_het -command {send_rasmol_menu 3 3}
-.menubar.options add checkbutton -label "Specular" -variable use_spec -command {send_rasmol_menu 3 4}
-.menubar.options add checkbutton -label "Shadows" -variable use_shadow -command {send_rasmol_menu 3 5}
-.menubar.options add checkbutton -label "Stereo" -variable use_stereo -command {send_rasmol_menu 3 6}
-.menubar.options add checkbutton -label "Labels" -variable show_labels -command {send_rasmol_menu 3 7}
+.menubar.options add checkbutton -label "Slab Mode" -variable use_slab -command {global use_slab; send_rasmol_menu 3 1 $use_slab}
+.menubar.options add checkbutton -label "Hydrogens" -variable show_h -command {global show_h; send_rasmol_menu 3 2 $show_h}
+.menubar.options add checkbutton -label "Hetero Atoms" -variable show_het -command {global show_het; send_rasmol_menu 3 3 $show_het}
+.menubar.options add checkbutton -label "Specular" -variable use_spec -command {global use_spec; send_rasmol_menu 3 4 $use_spec}
+.menubar.options add checkbutton -label "Shadows" -variable use_shadow -command {global use_shadow; send_rasmol_menu 3 5 $use_shadow}
+.menubar.options add checkbutton -label "Stereo" -variable use_stereo -command {global use_stereo; send_rasmol_menu 3 6 $use_stereo}
+.menubar.options add checkbutton -label "Labels" -variable show_labels -command {global show_labels; send_rasmol_menu 3 7 $show_labels}
 
 # Settings Menu
 menu .menubar.settings -tearoff 0
@@ -92,7 +92,7 @@ menu .menubar.settings -tearoff 0
 # Help Menu
 menu .menubar.help -tearoff 0
 .menubar add cascade -label "Help" -menu .menubar.help
-.menubar.help add command -label "About RasMol" -command {send_rasmol_menu 6 1}
+.menubar.help add command -label "About RasMol" -command {show_about}
 .menubar.help add command -label "User Manual" -command {send_rasmol_menu 6 2}
 
 # Main layout using ttk::panedwindow
@@ -119,14 +119,27 @@ pack .pw.left.opts.default -pady 2 -fill x
 ttk::frame .pw.right
 .pw add .pw.right
 
-# RasMol Canvas Area
+# RasMol Canvas Area with Rotation Scrollbars
 set rasmol_img [image create photo rasmol_view]
 ttk::frame .pw.right.f -relief sunken -borderwidth 2
 pack .pw.right.f -fill both -expand yes -padx 5 -pady 5
 
 canvas .pw.right.f.c -highlightthickness 0 -bg black
-pack .pw.right.f.c -fill both -expand yes
+ttk::scrollbar .pw.right.f.vsb -orient vertical -command {rotate_molecule v}
+ttk::scrollbar .pw.right.f.hsb -orient horizontal -command {rotate_molecule h}
+
+grid .pw.right.f.c -row 0 -column 0 -sticky nsew
+grid .pw.right.f.vsb -row 0 -column 1 -sticky ns
+grid .pw.right.f.hsb -row 1 -column 0 -sticky ew
+
+grid rowconfigure .pw.right.f 0 -weight 1
+grid columnconfigure .pw.right.f 0 -weight 1
+
 .pw.right.f.c create image 0 0 -image $rasmol_img -anchor nw -tags rasmol_image
+
+# Set initial thumb position to center (0.5)
+.pw.right.f.vsb set 0.45 0.55
+.pw.right.f.hsb set 0.45 0.55
 
 # Register the photo image with the C bridge
 if {[info commands rasmol_register_photo] ne ""} {
@@ -195,13 +208,134 @@ proc send_rasmol {cmd} {
     }
 }
 
-proc send_rasmol_menu {menu item} {
+proc send_rasmol_menu {menu item {state ""}} {
     if {[info commands rasmol_handle_menu] ne ""} {
-        rasmol_handle_menu $menu $item
+        if {$state ne ""} {
+            rasmol_handle_menu $menu $item $state
+        } else {
+            rasmol_handle_menu $menu $item
+        }
     } else {
         puts "RasMol Menu: $menu $item"
     }
     update_status
+}
+
+
+
+set last_sb_v 0.5
+set last_sb_h 0.5
+
+proc rotate_molecule {axis args} {
+    global last_sb_v last_sb_h
+    set sb .pw.right.f.${axis}sb
+
+    set type [lindex $args 0]
+    if {$type eq "moveto"} {
+        set fraction [lindex $args 1]
+    } else {
+        set amount [lindex $args 1]
+        set units [lindex $args 2]
+        set cur [$sb get]
+        set center [expr {([lindex $cur 0] + [lindex $cur 1]) / 2.0}]
+        if {$units eq "units"} {
+            set fraction [expr {$center + $amount * 0.02}]
+        } else {
+            set fraction [expr {$center + $amount * 0.05}]
+        }
+    }
+
+    if {$fraction < 0} {set fraction 0}
+    if {$fraction > 1} {set fraction 1}
+
+    if {$axis eq "v"} {
+        set delta [expr {($fraction - $last_sb_v) * 360.0}]
+        send_rasmol "rotate x $delta"
+        set last_sb_v $fraction
+    } else {
+        set delta [expr {($fraction - $last_sb_h) * 360.0}]
+        send_rasmol "rotate y $delta"
+        set last_sb_h $fraction
+    }
+
+    $sb set [expr {$fraction - 0.05}] [expr {$fraction + 0.05}]
+
+    if {$fraction < 0.1 || $fraction > 0.9} {
+        if {$axis eq "v"} {set last_sb_v 0.5} else {set last_sb_h 0.5}
+        $sb set 0.45 0.55
+    }
+}
+
+    }
+
+    # Clamp fraction
+    if {$fraction < 0} {set fraction 0}
+    if {$fraction > 1} {set fraction 1}
+
+    # Calculate rotation angle (delta * multiplier)
+    if {$axis eq "x"} {
+        set delta [expr {($fraction - $last_sb_x) * 360.0}]
+        send_rasmol "rotate x $delta"
+        set last_sb_x $fraction
+    } else {
+        set delta [expr {($fraction - $last_sb_y) * 360.0}]
+        send_rasmol "rotate y $delta"
+        set last_sb_y $fraction
+    }
+
+    # Update scrollbar thumb position to stay centered around the "current" virtual position
+    # but for simple rotation we can just let it move and then reset it if it hits edges,
+    # OR better: treat it as a relative controller and always reset to center after action.
+    $sb set [expr {$fraction - 0.05}] [expr {$fraction + 0.05}]
+
+    # Optional: if we want infinite rotation, reset to center when we get far from it
+    if {$fraction < 0.1 || $fraction > 0.9} {
+        if {$axis eq "x"} {
+set last_sb_v 0.5
+set last_sb_h 0.5
+
+proc rotate_molecule {axis args} {
+    global last_sb_v last_sb_h
+    set sb .pw.right.f.${axis}sb
+
+    set type [lindex $args 0]
+    if {$type eq "moveto"} {
+        set fraction [lindex $args 1]
+    } else {
+        set amount [lindex $args 1]
+        set units [lindex $args 2]
+        set cur [$sb get]
+        set center [expr {([lindex $cur 0] + [lindex $cur 1]) / 2.0}]
+        if {$units eq "units"} {
+            set fraction [expr {$center + $amount * 0.02}]
+        } else {
+            set fraction [expr {$center + $amount * 0.05}]
+        }
+    }
+
+    if {$fraction < 0} {set fraction 0}
+    if {$fraction > 1} {set fraction 1}
+
+    if {$axis eq "v"} {
+        set delta [expr {($fraction - $last_sb_v) * 360.0}]
+        send_rasmol "rotate x $delta"
+        set last_sb_v $fraction
+    } else {
+        set delta [expr {($fraction - $last_sb_h) * 360.0}]
+        send_rasmol "rotate y $delta"
+        set last_sb_h $fraction
+    }
+
+    $sb set [expr {$fraction - 0.05}] [expr {$fraction + 0.05}]
+
+    if {$fraction < 0.1 || $fraction > 0.9} {
+        if {$axis eq "v"} {set last_sb_v 0.5} else {set last_sb_h 0.5}
+        $sb set 0.45 0.55
+    }
+}
+
+        $sb set 0.45 0.55
+    }
 }
 
 proc update_status {} {
@@ -262,3 +396,53 @@ set use_slab 0
 set opengl_mode 0
 
 puts "UI initialized."
+
+proc show_about {} {
+    set w .about
+    if {[winfo exists $w]} {
+        raise $w
+        return
+    }
+    toplevel $w
+    wm title $w "About RasMol"
+    wm resizable $w 0 0
+
+    # Main frame
+    ttk::frame $w.f -padding 10
+    pack $w.f -fill both -expand yes
+
+    # Logo
+    set img_path "html_graphics/rasmollogo_22Jun99.jpg"
+    if {[file exists $img_path]} {
+        if {[catch {image create photo about_logo -file $img_path} err]} {
+             label $w.f.logo -text "RasMol" -font {Helvetica 24 bold}
+        } else {
+             label $w.f.logo -image about_logo
+        }
+    } else {
+        label $w.f.logo -text "RasMol" -font {Helvetica 24 bold}
+    }
+    pack $w.f.logo -pady 10
+
+    # Version
+    label $w.f.version -text "RasMol Version 2.7.5.2" -font {Helvetica 12 bold}
+    pack $w.f.version -pady 2
+
+    # Author Information
+    set current_author "Current Maintainer:\nLi ZHOU (zhouesq@hotmail.com)"
+    label $w.f.current -text $current_author -justify center -font {Helvetica 10 bold}
+    pack $w.f.current -pady 5
+
+    set historical_authors "Original Author:\nRoger Sayle (1992-1999)\n\nMajor Contributors:\nHerbert J. Bernstein (1998-2011)\nArne Mueller (1998)\nGary Grossman & Marco Molinaro (1995-1996)\nPhilippe Valadon (2000)\nTeemu Ikonen (2009)"
+    label $w.f.hist -text $historical_authors -justify center -font {Helvetica 9}
+    pack $w.f.hist -pady 5
+
+    # License
+    set license_info "Licensed under the GNU General Public License (GPL)\nor the RASMOL License."
+    label $w.f.license -text $license_info -justify center -font {Helvetica 9 italic}
+    pack $w.f.license -pady 10
+
+    # Close button
+    ttk::button $w.f.close -text "Close" -command [list destroy $w]
+    pack $w.f.close -pady 5
+}
