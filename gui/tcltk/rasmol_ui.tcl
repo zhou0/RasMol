@@ -119,14 +119,27 @@ pack .pw.left.opts.default -pady 2 -fill x
 ttk::frame .pw.right
 .pw add .pw.right
 
-# RasMol Canvas Area
+# RasMol Canvas Area with Rotation Scrollbars
 set rasmol_img [image create photo rasmol_view]
 ttk::frame .pw.right.f -relief sunken -borderwidth 2
 pack .pw.right.f -fill both -expand yes -padx 5 -pady 5
 
 canvas .pw.right.f.c -highlightthickness 0 -bg black
-pack .pw.right.f.c -fill both -expand yes
+ttk::scrollbar .pw.right.f.vsb -orient vertical -command {rotate_molecule v}
+ttk::scrollbar .pw.right.f.hsb -orient horizontal -command {rotate_molecule h}
+
+grid .pw.right.f.c -row 0 -column 0 -sticky nsew
+grid .pw.right.f.vsb -row 0 -column 1 -sticky ns
+grid .pw.right.f.hsb -row 1 -column 0 -sticky ew
+
+grid rowconfigure .pw.right.f 0 -weight 1
+grid columnconfigure .pw.right.f 0 -weight 1
+
 .pw.right.f.c create image 0 0 -image $rasmol_img -anchor nw -tags rasmol_image
+
+# Set initial thumb position to center (0.5)
+.pw.right.f.vsb set 0.45 0.55
+.pw.right.f.hsb set 0.45 0.55
 
 # Register the photo image with the C bridge
 if {[info commands rasmol_register_photo] ne ""} {
@@ -206,6 +219,123 @@ proc send_rasmol_menu {menu item {state ""}} {
         puts "RasMol Menu: $menu $item"
     }
     update_status
+}
+
+
+
+set last_sb_v 0.5
+set last_sb_h 0.5
+
+proc rotate_molecule {axis args} {
+    global last_sb_v last_sb_h
+    set sb .pw.right.f.${axis}sb
+
+    set type [lindex $args 0]
+    if {$type eq "moveto"} {
+        set fraction [lindex $args 1]
+    } else {
+        set amount [lindex $args 1]
+        set units [lindex $args 2]
+        set cur [$sb get]
+        set center [expr {([lindex $cur 0] + [lindex $cur 1]) / 2.0}]
+        if {$units eq "units"} {
+            set fraction [expr {$center + $amount * 0.02}]
+        } else {
+            set fraction [expr {$center + $amount * 0.05}]
+        }
+    }
+
+    if {$fraction < 0} {set fraction 0}
+    if {$fraction > 1} {set fraction 1}
+
+    if {$axis eq "v"} {
+        set delta [expr {($fraction - $last_sb_v) * 360.0}]
+        send_rasmol "rotate x $delta"
+        set last_sb_v $fraction
+    } else {
+        set delta [expr {($fraction - $last_sb_h) * 360.0}]
+        send_rasmol "rotate y $delta"
+        set last_sb_h $fraction
+    }
+
+    $sb set [expr {$fraction - 0.05}] [expr {$fraction + 0.05}]
+
+    if {$fraction < 0.1 || $fraction > 0.9} {
+        if {$axis eq "v"} {set last_sb_v 0.5} else {set last_sb_h 0.5}
+        $sb set 0.45 0.55
+    }
+}
+
+    }
+
+    # Clamp fraction
+    if {$fraction < 0} {set fraction 0}
+    if {$fraction > 1} {set fraction 1}
+
+    # Calculate rotation angle (delta * multiplier)
+    if {$axis eq "x"} {
+        set delta [expr {($fraction - $last_sb_x) * 360.0}]
+        send_rasmol "rotate x $delta"
+        set last_sb_x $fraction
+    } else {
+        set delta [expr {($fraction - $last_sb_y) * 360.0}]
+        send_rasmol "rotate y $delta"
+        set last_sb_y $fraction
+    }
+
+    # Update scrollbar thumb position to stay centered around the "current" virtual position
+    # but for simple rotation we can just let it move and then reset it if it hits edges,
+    # OR better: treat it as a relative controller and always reset to center after action.
+    $sb set [expr {$fraction - 0.05}] [expr {$fraction + 0.05}]
+
+    # Optional: if we want infinite rotation, reset to center when we get far from it
+    if {$fraction < 0.1 || $fraction > 0.9} {
+        if {$axis eq "x"} {
+set last_sb_v 0.5
+set last_sb_h 0.5
+
+proc rotate_molecule {axis args} {
+    global last_sb_v last_sb_h
+    set sb .pw.right.f.${axis}sb
+
+    set type [lindex $args 0]
+    if {$type eq "moveto"} {
+        set fraction [lindex $args 1]
+    } else {
+        set amount [lindex $args 1]
+        set units [lindex $args 2]
+        set cur [$sb get]
+        set center [expr {([lindex $cur 0] + [lindex $cur 1]) / 2.0}]
+        if {$units eq "units"} {
+            set fraction [expr {$center + $amount * 0.02}]
+        } else {
+            set fraction [expr {$center + $amount * 0.05}]
+        }
+    }
+
+    if {$fraction < 0} {set fraction 0}
+    if {$fraction > 1} {set fraction 1}
+
+    if {$axis eq "v"} {
+        set delta [expr {($fraction - $last_sb_v) * 360.0}]
+        send_rasmol "rotate x $delta"
+        set last_sb_v $fraction
+    } else {
+        set delta [expr {($fraction - $last_sb_h) * 360.0}]
+        send_rasmol "rotate y $delta"
+        set last_sb_h $fraction
+    }
+
+    $sb set [expr {$fraction - 0.05}] [expr {$fraction + 0.05}]
+
+    if {$fraction < 0.1 || $fraction > 0.9} {
+        if {$axis eq "v"} {set last_sb_v 0.5} else {set last_sb_h 0.5}
+        $sb set 0.45 0.55
+    }
+}
+
+        $sb set 0.45 0.55
+    }
 }
 
 proc update_status {} {
