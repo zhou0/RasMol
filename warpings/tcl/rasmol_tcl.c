@@ -205,7 +205,7 @@ static int RasMol_KeyPressObjCmd(ClientData clientData, Tcl_Interp *interp, int 
     return TCL_OK;
 }
 
-void HandleMenu( int hand, int state );
+void HandleMenuWithState( int hand, int state );
 static int RasMol_HandleMenuObjCmd(ClientData clientData, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[]) {
     int menu, item, state = -1;
     if (objc < 3 || objc > 4) {
@@ -219,7 +219,7 @@ static int RasMol_HandleMenuObjCmd(ClientData clientData, Tcl_Interp *interp, in
         if (Tcl_GetIntFromObj(interp, objv[3], &state) != TCL_OK) return TCL_ERROR;
     }
 
-    HandleMenu((menu << 8) | item, state);
+    HandleMenuWithState((menu << 8) | item, state);
 
     if (ReDrawFlag) {
         RefreshScreen();
@@ -428,7 +428,7 @@ int CheckInterpName (char __huge *name , unsigned long __huge *id) { (void)name;
 int SendInterpCommand( char __huge *name, unsigned long id, char __huge *cmd) { (void)name; (void)id; (void)cmd; return False; }
 
 /* Placeholder for HandleMenu if not linked from rasmol.c */
-void HandleMenu( int hand, int state ) {
+void HandleMenuWithState( int hand, int state ) {
     int menu = hand >> 8;
     int item = hand & 0xff;
 
