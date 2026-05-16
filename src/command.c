@@ -1336,27 +1336,7 @@ void ShowRecordCommand( void ) {
                 WriteString("EPSF "); break;
             case(MonoPSTok):
                 WriteString("MONOPS "); break;
-            case(RotateTok):
-            FetchToken();
-            if( CurToken==BondTok )
-            {   if( BondSelected )
-                {   RotMode = RotBond;
-                    ReDrawFlag |= RFRotBond;
-                } else CommandError(MsgStrs[ErrNoBond]);
-            } else if( CurToken==MoleculeTok )
-            {   RotMode = RotMol;
-                ReDrawFlag |= RFRotate;
-            } else if( CurToken==AllTok )
-            {   RotMode = RotAll;
-                ReDrawFlag |= RFRotate;
-            } else CommandError(MsgStrs[ErrBadOpt]);
-            break;
-
-        case(PickingTok):
-            ExecutePickingCommand();
-            break;
-
-        case(VectPSTok):
+            case(VectPSTok):
                 WriteString("VECTPS "); break;
             case(Raster3DTok):
                 WriteString("R3D "); break;
@@ -1451,27 +1431,7 @@ void ShowPlayCommand( void ) {
                 WriteString("EPSF "); break;
             case(MonoPSTok):
                 WriteString("MONOPS "); break;
-            case(RotateTok):
-            FetchToken();
-            if( CurToken==BondTok )
-            {   if( BondSelected )
-                {   RotMode = RotBond;
-                    ReDrawFlag |= RFRotBond;
-                } else CommandError(MsgStrs[ErrNoBond]);
-            } else if( CurToken==MoleculeTok )
-            {   RotMode = RotMol;
-                ReDrawFlag |= RFRotate;
-            } else if( CurToken==AllTok )
-            {   RotMode = RotAll;
-                ReDrawFlag |= RFRotate;
-            } else CommandError(MsgStrs[ErrBadOpt]);
-            break;
-
-        case(PickingTok):
-            ExecutePickingCommand();
-            break;
-
-        case(VectPSTok):
+            case(VectPSTok):
                 WriteString("VECTPS "); break;
             case(Raster3DTok):
                 WriteString("R3D "); break;
@@ -3137,10 +3097,6 @@ static void ExecuteSetCommand( void )
             } else CommandError(MsgStrs[ErrBadOpt]);
             break;
 
-        case(PickingTok):
-            ExecutePickingCommand();
-            break;
-
         case(VectPSTok):
             FetchToken();
             if( !CurToken || (CurToken==FalseTok) )
@@ -4637,25 +4593,8 @@ void WriteImageFile( char *name, int type, int subtype )
         case(IRISTok):     WriteIRISFile(name);            break;
         case(EPSFTok):     WriteEPSFFile(name,True,True);  break;
         case(MonoPSTok):   WriteEPSFFile(name,False,True); break;
-        case(RotateTok):
-            FetchToken();
-            if( CurToken==BondTok )
-            {   if( BondSelected )
-                {   RotMode = RotBond;
-                    ReDrawFlag |= RFRotBond;
-                } else CommandError(MsgStrs[ErrNoBond]);
-            } else if( CurToken==MoleculeTok )
-            {   RotMode = RotMol;
-                ReDrawFlag |= RFRotate;
-            } else if( CurToken==AllTok )
-            {   RotMode = RotAll;
-                ReDrawFlag |= RFRotate;
-            } else CommandError(MsgStrs[ErrBadOpt]);
-            break;
 
-        case(PickingTok):
-            ExecutePickingCommand();
-            break;
+
 
         case(VectPSTok):   WriteVectPSFile(name);          break;
         case(Raster3DTok): WriteR3DFile(name);             break;
