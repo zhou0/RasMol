@@ -3526,7 +3526,9 @@ static void OldExecuteColourCommand( void )
             FetchToken();
         default:
             switch( CurToken )
-        {   case(CPKTok):         CPKColourAttrib();
+        {   case(MonoTok):        MonoColourAttrib(255,255,255);
+                ReDrawFlag |= RFColour; break;
+            case(CPKTok):         CPKColourAttrib();
                 ReDrawFlag |= RFColour; break;
 
             case(CpkNewTok):      CpkNewColourAttrib();
@@ -3745,7 +3747,9 @@ static void ExecuteColourCommand( void )
             FetchToken();
         default:
             switch( CurToken )
-        {   case(CPKTok):         CPKColourAttrib();
+        {   case(MonoTok):        MonoColourAttrib(255,255,255);
+                ReDrawFlag |= RFColour; break;
+            case(CPKTok):         CPKColourAttrib();
                 ReDrawFlag |= RFColour; break;
 
             case(CpkNewTok):      CpkNewColourAttrib();
@@ -7657,16 +7661,22 @@ int ExecuteCommandOne( int * restore )
         case(LabelTok):   FetchToken();
             if( !CurToken || (CurToken==TrueTok) )
             {   if( Info.chaincount>1 )
-            {   DefineLabels("%n%r:%c.%a%A");
-            } else if( MainGroupCount>1 )
-            {   DefineLabels("%n%r.%a%A");
-            } else DefineLabels("%e%i%A");
+                {   DefineLabels("%n%r:%c.%a%A");
+                } else if( MainGroupCount>1 )
+                {   DefineLabels("%n%r.%a%A");
+                } else DefineLabels("%e%i%A");
+                LabelOptFlag = True;
             } else if( CurToken==FalseTok )
             {   DeleteLabels();
+                LabelOptFlag = False;
             } else if( CurToken!=StringTok )
             {   DefineLabels(TokenStart);
+                LabelOptFlag = True;
                 CurToken = 0;
-            } else DefineLabels(TokenIdent);
+            } else
+            {   DefineLabels(TokenIdent);
+                LabelOptFlag = True;
+            }
             ReDrawFlag |= RFRefresh;
             break;
 
