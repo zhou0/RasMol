@@ -50,11 +50,35 @@ menu .menubar.colours -tearoff 0
 .menubar.colours add radiobutton -label "Model" -variable colour_mode -value 9 -command {send_rasmol_menu 2 9}
 .menubar.colours add radiobutton -label "Alt" -variable colour_mode -value 10 -command {send_rasmol_menu 2 10}
 
+# Export Menu
+menu .menubar.export -tearoff 0
+.menubar add cascade -label "Export" -menu .menubar.export
+.menubar.export add command -label "BMP..." -command {send_rasmol_menu 5 1}
+.menubar.export add command -label "GIF..." -command {send_rasmol_menu 5 2}
+.menubar.export add command -label "IRIS..." -command {send_rasmol_menu 5 3}
+.menubar.export add command -label "PPM..." -command {send_rasmol_menu 5 4}
+.menubar.export add command -label "Sun Raster..." -command {send_rasmol_menu 5 5}
+.menubar.export add command -label "PostScript..." -command {send_rasmol_menu 5 6}
+.menubar.export add command -label "PICT..." -command {send_rasmol_menu 5 7}
+.menubar.export add command -label "Vector PS..." -command {send_rasmol_menu 5 8}
+.menubar.export add command -label "MolScript..." -command {send_rasmol_menu 5 9}
+.menubar.export add command -label "Kinemage..." -command {send_rasmol_menu 5 10}
+.menubar.export add command -label "POVRay 3..." -command {send_rasmol_menu 5 11}
+.menubar.export add command -label "VRML..." -command {send_rasmol_menu 5 12}
+.menubar.export add command -label "Ramachandran..." -command {send_rasmol_menu 5 13}
+.menubar.export add command -label "Render3D..." -command {send_rasmol_menu 5 14}
+.menubar.export add command -label "Script..." -command {send_rasmol_menu 5 15}
+
 # Options Menu
 menu .menubar.options -tearoff 0
 .menubar add cascade -label "Options" -menu .menubar.options
 
-set has_vtk [rasmol_info vtk]
+if {[info commands rasmol_info] ne ""} {
+    set has_vtk [rasmol_info vtk]
+} else {
+    set has_vtk 0
+}
+
 if {$has_vtk} {
     menu .menubar.options.rendering -tearoff 0
     .menubar.options add cascade -label "Rendering" -menu .menubar.options.rendering
@@ -124,7 +148,7 @@ set rasmol_img [image create photo rasmol_view]
 ttk::frame .pw.right.f -relief sunken -borderwidth 2
 pack .pw.right.f -fill both -expand yes -padx 5 -pady 5
 
-canvas .pw.right.f.c -highlightthickness 0 -bg black
+canvas .pw.right.f.c -highlightthickness 0 -bg black -cursor crosshair
 ttk::scrollbar .pw.right.f.vsb -orient vertical -command {rotate_molecule v}
 ttk::scrollbar .pw.right.f.hsb -orient horizontal -command {rotate_molecule h}
 
@@ -221,8 +245,6 @@ proc send_rasmol_menu {menu item {state ""}} {
     update_status
 }
 
-
-
 set last_sb_v 0.5
 set last_sb_h 0.5
 
@@ -262,78 +284,6 @@ proc rotate_molecule {axis args} {
 
     if {$fraction < 0.1 || $fraction > 0.9} {
         if {$axis eq "v"} {set last_sb_v 0.5} else {set last_sb_h 0.5}
-        $sb set 0.45 0.55
-    }
-}
-
-    }
-
-    # Clamp fraction
-    if {$fraction < 0} {set fraction 0}
-    if {$fraction > 1} {set fraction 1}
-
-    # Calculate rotation angle (delta * multiplier)
-    if {$axis eq "x"} {
-        set delta [expr {($fraction - $last_sb_x) * 360.0}]
-        send_rasmol "rotate x $delta"
-        set last_sb_x $fraction
-    } else {
-        set delta [expr {($fraction - $last_sb_y) * 360.0}]
-        send_rasmol "rotate y $delta"
-        set last_sb_y $fraction
-    }
-
-    # Update scrollbar thumb position to stay centered around the "current" virtual position
-    # but for simple rotation we can just let it move and then reset it if it hits edges,
-    # OR better: treat it as a relative controller and always reset to center after action.
-    $sb set [expr {$fraction - 0.05}] [expr {$fraction + 0.05}]
-
-    # Optional: if we want infinite rotation, reset to center when we get far from it
-    if {$fraction < 0.1 || $fraction > 0.9} {
-        if {$axis eq "x"} {
-set last_sb_v 0.5
-set last_sb_h 0.5
-
-proc rotate_molecule {axis args} {
-    global last_sb_v last_sb_h
-    set sb .pw.right.f.${axis}sb
-
-    set type [lindex $args 0]
-    if {$type eq "moveto"} {
-        set fraction [lindex $args 1]
-    } else {
-        set amount [lindex $args 1]
-        set units [lindex $args 2]
-        set cur [$sb get]
-        set center [expr {([lindex $cur 0] + [lindex $cur 1]) / 2.0}]
-        if {$units eq "units"} {
-            set fraction [expr {$center + $amount * 0.02}]
-        } else {
-            set fraction [expr {$center + $amount * 0.05}]
-        }
-    }
-
-    if {$fraction < 0} {set fraction 0}
-    if {$fraction > 1} {set fraction 1}
-
-    if {$axis eq "v"} {
-        set delta [expr {($fraction - $last_sb_v) * 360.0}]
-        send_rasmol "rotate x $delta"
-        set last_sb_v $fraction
-    } else {
-        set delta [expr {($fraction - $last_sb_h) * 360.0}]
-        send_rasmol "rotate y $delta"
-        set last_sb_h $fraction
-    }
-
-    $sb set [expr {$fraction - 0.05}] [expr {$fraction + 0.05}]
-
-    if {$fraction < 0.1 || $fraction > 0.9} {
-        if {$axis eq "v"} {set last_sb_v 0.5} else {set last_sb_h 0.5}
-        $sb set 0.45 0.55
-    }
-}
-
         $sb set 0.45 0.55
     }
 }
