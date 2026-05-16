@@ -54,7 +54,12 @@ menu .menubar.colours -tearoff 0
 menu .menubar.options -tearoff 0
 .menubar add cascade -label "Options" -menu .menubar.options
 
-set has_vtk [rasmol_info vtk]
+if {[info commands rasmol_info] ne ""} {
+    set has_vtk [rasmol_info vtk]
+} else {
+    set has_vtk 0
+}
+
 if {$has_vtk} {
     menu .menubar.options.rendering -tearoff 0
     .menubar.options add cascade -label "Rendering" -menu .menubar.options.rendering
@@ -221,8 +226,6 @@ proc send_rasmol_menu {menu item {state ""}} {
     update_status
 }
 
-
-
 set last_sb_v 0.5
 set last_sb_h 0.5
 
@@ -262,78 +265,6 @@ proc rotate_molecule {axis args} {
 
     if {$fraction < 0.1 || $fraction > 0.9} {
         if {$axis eq "v"} {set last_sb_v 0.5} else {set last_sb_h 0.5}
-        $sb set 0.45 0.55
-    }
-}
-
-    }
-
-    # Clamp fraction
-    if {$fraction < 0} {set fraction 0}
-    if {$fraction > 1} {set fraction 1}
-
-    # Calculate rotation angle (delta * multiplier)
-    if {$axis eq "x"} {
-        set delta [expr {($fraction - $last_sb_x) * 360.0}]
-        send_rasmol "rotate x $delta"
-        set last_sb_x $fraction
-    } else {
-        set delta [expr {($fraction - $last_sb_y) * 360.0}]
-        send_rasmol "rotate y $delta"
-        set last_sb_y $fraction
-    }
-
-    # Update scrollbar thumb position to stay centered around the "current" virtual position
-    # but for simple rotation we can just let it move and then reset it if it hits edges,
-    # OR better: treat it as a relative controller and always reset to center after action.
-    $sb set [expr {$fraction - 0.05}] [expr {$fraction + 0.05}]
-
-    # Optional: if we want infinite rotation, reset to center when we get far from it
-    if {$fraction < 0.1 || $fraction > 0.9} {
-        if {$axis eq "x"} {
-set last_sb_v 0.5
-set last_sb_h 0.5
-
-proc rotate_molecule {axis args} {
-    global last_sb_v last_sb_h
-    set sb .pw.right.f.${axis}sb
-
-    set type [lindex $args 0]
-    if {$type eq "moveto"} {
-        set fraction [lindex $args 1]
-    } else {
-        set amount [lindex $args 1]
-        set units [lindex $args 2]
-        set cur [$sb get]
-        set center [expr {([lindex $cur 0] + [lindex $cur 1]) / 2.0}]
-        if {$units eq "units"} {
-            set fraction [expr {$center + $amount * 0.02}]
-        } else {
-            set fraction [expr {$center + $amount * 0.05}]
-        }
-    }
-
-    if {$fraction < 0} {set fraction 0}
-    if {$fraction > 1} {set fraction 1}
-
-    if {$axis eq "v"} {
-        set delta [expr {($fraction - $last_sb_v) * 360.0}]
-        send_rasmol "rotate x $delta"
-        set last_sb_v $fraction
-    } else {
-        set delta [expr {($fraction - $last_sb_h) * 360.0}]
-        send_rasmol "rotate y $delta"
-        set last_sb_h $fraction
-    }
-
-    $sb set [expr {$fraction - 0.05}] [expr {$fraction + 0.05}]
-
-    if {$fraction < 0.1 || $fraction > 0.9} {
-        if {$axis eq "v"} {set last_sb_v 0.5} else {set last_sb_h 0.5}
-        $sb set 0.45 0.55
-    }
-}
-
         $sb set 0.45 0.55
     }
 }
