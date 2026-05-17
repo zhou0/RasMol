@@ -50,6 +50,25 @@ menu .menubar.colours -tearoff 0
 .menubar.colours add radiobutton -label "Model" -variable colour_mode -value 9 -command {send_rasmol_menu 2 9}
 .menubar.colours add radiobutton -label "Alt" -variable colour_mode -value 10 -command {send_rasmol_menu 2 10}
 
+# Export Menu
+menu .menubar.export -tearoff 0
+.menubar add cascade -label "Export" -menu .menubar.export
+.menubar.export add command -label "BMP..." -command {send_rasmol_menu 5 1}
+.menubar.export add command -label "GIF..." -command {send_rasmol_menu 5 2}
+.menubar.export add command -label "IRIS..." -command {send_rasmol_menu 5 3}
+.menubar.export add command -label "PPM..." -command {send_rasmol_menu 5 4}
+.menubar.export add command -label "Sun Raster..." -command {send_rasmol_menu 5 5}
+.menubar.export add command -label "PostScript..." -command {send_rasmol_menu 5 6}
+.menubar.export add command -label "PICT..." -command {send_rasmol_menu 5 7}
+.menubar.export add command -label "Vector PS..." -command {send_rasmol_menu 5 8}
+.menubar.export add command -label "MolScript..." -command {send_rasmol_menu 5 9}
+.menubar.export add command -label "Kinemage..." -command {send_rasmol_menu 5 10}
+.menubar.export add command -label "POVRay 3..." -command {send_rasmol_menu 5 11}
+.menubar.export add command -label "VRML..." -command {send_rasmol_menu 5 12}
+.menubar.export add command -label "Ramachandran..." -command {send_rasmol_menu 5 13}
+.menubar.export add command -label "Render3D..." -command {send_rasmol_menu 5 14}
+.menubar.export add command -label "Script..." -command {send_rasmol_menu 5 15}
+
 # Options Menu
 menu .menubar.options -tearoff 0
 .menubar add cascade -label "Options" -menu .menubar.options
