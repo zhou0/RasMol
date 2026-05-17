@@ -291,3 +291,23 @@ if(TCL_INCLUDE_PATH AND TK_INCLUDE_PATH AND TCL_LIBRARY AND TK_LIBRARY)
     endif()
     install(TARGETS rasmol_tcl DESTINATION bin)
 endif()
+
+# CPack Configuration for Installer Generation
+set(CPACK_PACKAGE_NAME "RasMol")
+set(CPACK_PACKAGE_VENDOR "RasMol Maintenance Team")
+set(CPACK_PACKAGE_VERSION "2.8.0")
+set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "RasMol Molecular Graphics Visualisation Tool")
+set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_SOURCE_DIR}/RASLIC")
+
+if(WIN32)
+    set(CPACK_GENERATOR "WIX")
+    set(CPACK_WIX_UPGRADE_GUID "D9A1B1C1-E2F3-4G5H-6I7J-8K9L0M1N2O3P") # Placeholder UUID
+
+    # Ensure compatibility with Windows 8.1 (Standard MSI features)
+    #set(CPACK_WIX_PRODUCT_ICON "${CMAKE_SOURCE_DIR}/assets/rasmol.ico")
+
+    # Optional: Add desktop shortcuts if supported by CPack WiX
+    set(CPACK_WIX_PROGRAM_MENU_FOLDER "RasMol")
+endif()
+
+include(CPack)
