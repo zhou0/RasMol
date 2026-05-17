@@ -1,0 +1,29 @@
+<<<<<<< SEARCH
+        case 1: /* Display */
+            switch(item) {
+                case 1: ExecuteIPCCommand("wireframe"); break;
+                case 2: ExecuteIPCCommand("backbone"); break;
+                case 3: ExecuteIPCCommand("wireframe 40"); break;
+                case 4: ExecuteIPCCommand("spacefill"); break;
+                case 5: ExecuteIPCCommand("wireframe 40; spacefill 120"); break;
+                case 6: ExecuteIPCCommand("ribbons"); break;
+                case 7: ExecuteIPCCommand("strands"); break;
+                case 8: ExecuteIPCCommand("cartoons"); break;
+                case 9: ExecuteIPCCommand("molsurf"); break;
+            }
+            break;
+=======
+        case 1: /* Display */
+            switch(item) {
+                case 1: ExecuteIPCCommand("molsurf off; wireframe"); break;
+                case 2: ExecuteIPCCommand("molsurf off; backbone"); break;
+                case 3: ExecuteIPCCommand("molsurf off; wireframe 40"); break;
+                case 4: ExecuteIPCCommand("molsurf off; spacefill"); break;
+                case 5: ExecuteIPCCommand("molsurf off; wireframe 40; spacefill 120"); break;
+                case 6: ExecuteIPCCommand("molsurf off; ribbons"); break;
+                case 7: ExecuteIPCCommand("molsurf off; strands"); break;
+                case 8: ExecuteIPCCommand("molsurf off; cartoons"); break;
+                case 9: ExecuteIPCCommand("molsurf"); break;
+            }
+            break;
+>>>>>>> REPLACE
