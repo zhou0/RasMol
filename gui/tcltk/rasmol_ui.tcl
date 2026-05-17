@@ -50,11 +50,35 @@ menu .menubar.colours -tearoff 0
 .menubar.colours add radiobutton -label "Model" -variable colour_mode -value 9 -command {send_rasmol_menu 2 9}
 .menubar.colours add radiobutton -label "Alt" -variable colour_mode -value 10 -command {send_rasmol_menu 2 10}
 
+# Export Menu
+menu .menubar.export -tearoff 0
+.menubar add cascade -label "Export" -menu .menubar.export
+.menubar.export add command -label "BMP..." -command {send_rasmol_menu 5 1}
+.menubar.export add command -label "GIF..." -command {send_rasmol_menu 5 2}
+.menubar.export add command -label "IRIS..." -command {send_rasmol_menu 5 3}
+.menubar.export add command -label "PPM..." -command {send_rasmol_menu 5 4}
+.menubar.export add command -label "Sun Raster..." -command {send_rasmol_menu 5 5}
+.menubar.export add command -label "PostScript..." -command {send_rasmol_menu 5 6}
+.menubar.export add command -label "PICT..." -command {send_rasmol_menu 5 7}
+.menubar.export add command -label "Vector PS..." -command {send_rasmol_menu 5 8}
+.menubar.export add command -label "MolScript..." -command {send_rasmol_menu 5 9}
+.menubar.export add command -label "Kinemage..." -command {send_rasmol_menu 5 10}
+.menubar.export add command -label "POVRay 3..." -command {send_rasmol_menu 5 11}
+.menubar.export add command -label "VRML..." -command {send_rasmol_menu 5 12}
+.menubar.export add command -label "Ramachandran..." -command {send_rasmol_menu 5 13}
+.menubar.export add command -label "Render3D..." -command {send_rasmol_menu 5 14}
+.menubar.export add command -label "Script..." -command {send_rasmol_menu 5 15}
+
 # Options Menu
 menu .menubar.options -tearoff 0
 .menubar add cascade -label "Options" -menu .menubar.options
 
-set has_vtk [rasmol_info vtk]
+if {[info commands rasmol_info] ne ""} {
+    set has_vtk [rasmol_info vtk]
+} else {
+    set has_vtk 0
+}
+
 if {$has_vtk} {
     menu .menubar.options.rendering -tearoff 0
     .menubar.options add cascade -label "Rendering" -menu .menubar.options.rendering
@@ -88,6 +112,13 @@ menu .menubar.settings -tearoff 0
 .menubar.settings add radiobutton -label "Rotate Bond" -variable rot_mode -value 11 -command {send_rasmol_menu 4 11}
 .menubar.settings add radiobutton -label "Rotate Molecule" -variable rot_mode -value 12 -command {send_rasmol_menu 4 12}
 .menubar.settings add radiobutton -label "Rotate All" -variable rot_mode -value 13 -command {send_rasmol_menu 4 13}
+
+.menubar.settings add separator
+menu .menubar.settings.mouse -tearoff 0
+.menubar.settings add cascade -label "Mouse Mode" -menu .menubar.settings.mouse
+.menubar.settings.mouse add radiobutton -label "RasMol" -variable mouse_mode -value rasmol -command {send_rasmol "set mouse rasmol"}
+.menubar.settings.mouse add radiobutton -label "Insight" -variable mouse_mode -value insight -command {send_rasmol "set mouse insight"}
+.menubar.settings.mouse add radiobutton -label "Quanta" -variable mouse_mode -value quanta -command {send_rasmol "set mouse quanta"}
 
 # Help Menu
 menu .menubar.help -tearoff 0
@@ -124,7 +155,7 @@ set rasmol_img [image create photo rasmol_view]
 ttk::frame .pw.right.f -relief sunken -borderwidth 2
 pack .pw.right.f -fill both -expand yes -padx 5 -pady 5
 
-canvas .pw.right.f.c -highlightthickness 0 -bg black
+canvas .pw.right.f.c -highlightthickness 0 -bg black -cursor crosshair
 ttk::scrollbar .pw.right.f.vsb -orient vertical -command {rotate_molecule v}
 ttk::scrollbar .pw.right.f.hsb -orient horizontal -command {rotate_molecule h}
 
@@ -147,29 +178,39 @@ if {[info commands rasmol_register_photo] ne ""} {
 }
 
 # Mouse and Keyboard Interaction
+proc get_rasmol_mask {s {b 0}} {
+    set m 0
+    if {$b == 1 || ($s & 0x100)} { set m [expr {$m | 0x01}] }
+    if {$b == 2 || ($s & 0x200)} { set m [expr {$m | 0x02}] }
+    if {$b == 3 || ($s & 0x400)} { set m [expr {$m | 0x04}] }
+    if {$s & 0x01} { set m [expr {$m | 0x08}] }
+    if {$s & 0x04} { set m [expr {$m | 0x10}] }
+    return $m
+}
+
 bind .pw.right.f.c <ButtonPress> {
     if {[info commands rasmol_mouse_down] ne ""} {
-        rasmol_mouse_down %x %y %s
+        rasmol_mouse_down %x %y [get_rasmol_mask %s %b]
     }
 }
 bind .pw.right.f.c <B1-Motion> {
     if {[info commands rasmol_mouse_move] ne ""} {
-        rasmol_mouse_move %x %y %s
+        rasmol_mouse_move %x %y [get_rasmol_mask %s 1]
     }
 }
 bind .pw.right.f.c <B2-Motion> {
     if {[info commands rasmol_mouse_move] ne ""} {
-        rasmol_mouse_move %x %y %s
+        rasmol_mouse_move %x %y [get_rasmol_mask %s 2]
     }
 }
 bind .pw.right.f.c <B3-Motion> {
     if {[info commands rasmol_mouse_move] ne ""} {
-        rasmol_mouse_move %x %y %s
+        rasmol_mouse_move %x %y [get_rasmol_mask %s 3]
     }
 }
 bind .pw.right.f.c <ButtonRelease> {
     if {[info commands rasmol_mouse_up] ne ""} {
-        rasmol_mouse_up %x %y %s
+        rasmol_mouse_up %x %y [get_rasmol_mask %s %b]
     }
 }
 bind . <KeyPress> {
@@ -221,8 +262,6 @@ proc send_rasmol_menu {menu item {state ""}} {
     update_status
 }
 
-
-
 set last_sb_v 0.5
 set last_sb_h 0.5
 
@@ -262,78 +301,6 @@ proc rotate_molecule {axis args} {
 
     if {$fraction < 0.1 || $fraction > 0.9} {
         if {$axis eq "v"} {set last_sb_v 0.5} else {set last_sb_h 0.5}
-        $sb set 0.45 0.55
-    }
-}
-
-    }
-
-    # Clamp fraction
-    if {$fraction < 0} {set fraction 0}
-    if {$fraction > 1} {set fraction 1}
-
-    # Calculate rotation angle (delta * multiplier)
-    if {$axis eq "x"} {
-        set delta [expr {($fraction - $last_sb_x) * 360.0}]
-        send_rasmol "rotate x $delta"
-        set last_sb_x $fraction
-    } else {
-        set delta [expr {($fraction - $last_sb_y) * 360.0}]
-        send_rasmol "rotate y $delta"
-        set last_sb_y $fraction
-    }
-
-    # Update scrollbar thumb position to stay centered around the "current" virtual position
-    # but for simple rotation we can just let it move and then reset it if it hits edges,
-    # OR better: treat it as a relative controller and always reset to center after action.
-    $sb set [expr {$fraction - 0.05}] [expr {$fraction + 0.05}]
-
-    # Optional: if we want infinite rotation, reset to center when we get far from it
-    if {$fraction < 0.1 || $fraction > 0.9} {
-        if {$axis eq "x"} {
-set last_sb_v 0.5
-set last_sb_h 0.5
-
-proc rotate_molecule {axis args} {
-    global last_sb_v last_sb_h
-    set sb .pw.right.f.${axis}sb
-
-    set type [lindex $args 0]
-    if {$type eq "moveto"} {
-        set fraction [lindex $args 1]
-    } else {
-        set amount [lindex $args 1]
-        set units [lindex $args 2]
-        set cur [$sb get]
-        set center [expr {([lindex $cur 0] + [lindex $cur 1]) / 2.0}]
-        if {$units eq "units"} {
-            set fraction [expr {$center + $amount * 0.02}]
-        } else {
-            set fraction [expr {$center + $amount * 0.05}]
-        }
-    }
-
-    if {$fraction < 0} {set fraction 0}
-    if {$fraction > 1} {set fraction 1}
-
-    if {$axis eq "v"} {
-        set delta [expr {($fraction - $last_sb_v) * 360.0}]
-        send_rasmol "rotate x $delta"
-        set last_sb_v $fraction
-    } else {
-        set delta [expr {($fraction - $last_sb_h) * 360.0}]
-        send_rasmol "rotate y $delta"
-        set last_sb_h $fraction
-    }
-
-    $sb set [expr {$fraction - 0.05}] [expr {$fraction + 0.05}]
-
-    if {$fraction < 0.1 || $fraction > 0.9} {
-        if {$axis eq "v"} {set last_sb_v 0.5} else {set last_sb_h 0.5}
-        $sb set 0.45 0.55
-    }
-}
-
         $sb set 0.45 0.55
     }
 }
@@ -394,6 +361,7 @@ set pick_mode 1
 set rot_mode 13
 set use_slab 0
 set opengl_mode 0
+set mouse_mode rasmol
 
 puts "UI initialized."
 
