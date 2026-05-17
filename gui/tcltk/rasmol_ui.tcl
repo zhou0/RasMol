@@ -417,7 +417,13 @@ proc show_about {} {
 
 # macOS specific menu handling
 if {[tk windowingsystem] eq "aqua"} {
-    proc ::tk::mac::ShowAbout {} {
+    proc tk::mac::ShowAbout {} {
         show_about
+    }
+    proc tk::mac::ShowHelp {} {
+        send_rasmol_menu 6 2
+    }
+    proc tk::mac::Quit {} {
+        exit
     }
 }
