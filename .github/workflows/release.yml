@@ -16,18 +16,19 @@ jobs:
       - name: Install WiX
         run: dotnet tool install --global WiX
 
-      - name: Install Dependencies (vcpkg)
+      - name: Install Dependencies (Choco)
         run: |
-          git -C $env:VCPKG_INSTALLATION_ROOT pull
-          vcpkg install tcl:x64-windows tk:x64-windows
+          choco install magicsplat-tcl-tk --version=1.16.0
 
       - name: Configure CMake
         run: |
           cmake -B build -S . `
             -DCMAKE_BUILD_TYPE=Release `
             -DPIXELDEPTH=32 `
-            -DCMAKE_TOOLCHAIN_FILE="$env:VCPKG_INSTALLATION_ROOT/scripts/buildsystems/vcpkg.cmake" `
-            -DVCPKG_TARGET_TRIPLET=x64-windows
+            -DTCL_INCLUDE_PATH="C:/Tcl/include" `
+            -DTK_INCLUDE_PATH="C:/Tcl/include" `
+            -DTCL_LIBRARY="C:/Tcl/lib/tcl86t.lib" `
+            -DTK_LIBRARY="C:/Tcl/lib/tk86t.lib"
 
       - name: Build
         run: cmake --build build --config Release --target rasmol_tcl
