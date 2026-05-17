@@ -94,6 +94,8 @@ static int RasMol_InfoObjCmd(ClientData clientData, Tcl_Interp *interp, int objc
         Tcl_SetObjResult(interp, Tcl_NewIntObj(NumMolecules));
     } else if (strcmp(topic, "atoms") == 0) {
         Tcl_SetObjResult(interp, Tcl_NewLongObj(MainAtomCount));
+    } else if (strcmp(topic, "rotmode") == 0) {
+        Tcl_SetObjResult(interp, Tcl_NewIntObj(RotMode));
     } else {
         Tcl_SetObjResult(interp, Tcl_NewStringObj("unknown topic", -1));
         return TCL_ERROR;
@@ -237,6 +239,7 @@ int Tcl_AppInit(Tcl_Interp *interp) {
 
     /* Initialize RasMol core */
     InitialiseCmndLine();
+    Interactive = True;
     InitialiseCommand();
     InitialiseTransform();
     InitialiseDatabase();
@@ -379,7 +382,6 @@ void RefreshScreen( void ) {
 void RasMolExit( void ) { exit(0); }
 void UpdateLanguage( void ) {}
 void ReDrawWindow( void ) {}
-void UpdateScrollBars( void ) {}
 int LookUpColour( char *name, int *r, int *g, int *b ) { (void)name; (void)r; (void)g; (void)b; return False; }
 void SetMouseUpdateStatus( int bool ) { MouseUpdateStatus = bool; }
 void SetMouseCaptureStatus( int bool ) { MouseCaptureStatus = bool; }
@@ -508,4 +510,8 @@ void HandleMenuWithState( int hand, int state ) {
 int main(int argc, char *argv[]) {
     Tk_Main(argc, argv, Tcl_AppInit);
     return 0;
+}
+
+void UpdateScrollBars(void) {
+    ReDrawFlag |= RFRefresh;
 }
