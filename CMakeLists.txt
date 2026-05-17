@@ -290,6 +290,7 @@ if(TCL_INCLUDE_PATH AND TK_INCLUDE_PATH AND TCL_LIBRARY AND TK_LIBRARY)
         target_link_libraries(rasmol_tcl ${X11_LIBRARIES})
     endif()
     install(TARGETS rasmol_tcl DESTINATION bin)
+    install(FILES gui/tcltk/rasmol_ui.tcl gui/tcltk/logo.tcl DESTINATION share/rasmol)
 endif()
 
 # CPack Configuration for Installer Generation
@@ -308,6 +309,10 @@ if(WIN32)
 
     # Optional: Add desktop shortcuts if supported by CPack WiX
     set(CPACK_WIX_PROGRAM_MENU_FOLDER "RasMol")
+elseif(APPLE)
+    set(CPACK_GENERATOR "DragNDrop")
+    set(CPACK_DMG_VOLUME_NAME "RasMol")
+    set(CPACK_PACKAGE_FILE_NAME "RasMol-${CPACK_PACKAGE_VERSION}-${CMAKE_SYSTEM_PROCESSOR}")
 endif()
 
 include(CPack)

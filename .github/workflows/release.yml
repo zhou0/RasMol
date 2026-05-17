@@ -1,0 +1,116 @@
+name: Release Build
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  windows-msi:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install WiX
+        run: dotnet tool install --global WiX
+
+      - name: Configure CMake
+        run: |
+          cmake -B build -S . `
+            -DCMAKE_BUILD_TYPE=Release `
+            -DPIXELDEPTH=32
+
+      - name: Build
+        run: cmake --build build --config Release --target rasmol_tcl
+
+      - name: Install
+        run: cmake --install build --config Release --prefix install_dir
+
+      - name: Package
+        run: |
+          cd build
+          cpack -C Release -G WIX
+
+      - name: Upload MSI
+        uses: actions/upload-artifact@v4
+        with:
+          name: RasMol-Windows-MSI
+          path: build/*.msi
+
+  linux-appimage:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libx11-dev libxext-dev libxi-dev libhdf5-dev tcl-dev tk-dev bison libxpm-dev
+
+      - name: Configure CMake
+        run: |
+          cmake -B build -S . \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DPIXELDEPTH=32
+
+      - name: Build
+        run: cmake --build build --config Release --target rasmol_tcl
+
+      - name: Install
+        run: cmake --install build --config Release --prefix AppDir/usr
+
+      - name: Prepare AppDir
+        run: |
+          mkdir -p AppDir/usr/share/icons/hicolor/48x48/apps
+          cp rasmol.desktop AppDir/
+          sudo apt-get install -y imagemagick
+          convert src/rasmol_48x48.xpm AppDir/rasmol.png
+          cp AppDir/rasmol.png AppDir/usr/share/icons/hicolor/48x48/apps/rasmol.png
+
+      - name: Install linuxdeploy
+        run: |
+          wget https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppRun
+          chmod +x linuxdeploy-x86_64.AppRun
+          wget https://github.com/linuxdeploy/linuxdeploy-plugin-appimage/releases/download/continuous/linuxdeploy-plugin-appimage-x86_64.AppRun
+          chmod +x linuxdeploy-plugin-appimage-x86_64.AppRun
+
+      - name: Build AppImage
+        run: |
+          export ARCH=x86_64
+          ./linuxdeploy-x86_64.AppRun --appdir AppDir --plugin appimage --output appimage
+
+      - name: Upload AppImage
+        uses: actions/upload-artifact@v4
+        with:
+          name: RasMol-Linux-AppImage
+          path: "*.AppImage"
+
+  macos-dmg:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure CMake
+        run: |
+          cmake -B build -S . \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DPIXELDEPTH=32 \
+            -DCMAKE_OSX_ARCHITECTURES="arm64;x86_64" \
+            -DCMAKE_OSX_DEPLOYMENT_TARGET="10.15" \
+            -DCMAKE_INSTALL_PREFIX=/usr/local
+
+      - name: Build
+        run: cmake --build build --config Release --target rasmol_tcl
+
+      - name: Package
+        run: |
+          cd build
+          cpack -C Release -G DragNDrop
+
+      - name: Upload DMG
+        uses: actions/upload-artifact@v4
+        with:
+          name: RasMol-MacOS-DMG
+          path: build/*.dmg

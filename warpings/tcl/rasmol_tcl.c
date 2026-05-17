@@ -268,6 +268,7 @@ int Tcl_AppInit(Tcl_Interp *interp) {
         "../gui/tcltk",
         "../../gui/tcltk",
         "../../../gui/tcltk",
+        "../share/rasmol",
         "./",
         "/usr/local/share/rasmol",
         "/usr/share/rasmol",
