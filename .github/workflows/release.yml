@@ -16,15 +16,18 @@ jobs:
       - name: Install WiX
         run: dotnet tool install --global WiX
 
-      - name: Install Dependencies (Choco)
+      - name: Install Dependencies (vcpkg)
         run: |
-          choco install active-tcl
+          git -C $env:VCPKG_INSTALLATION_ROOT pull
+          vcpkg install tcl:x64-windows tk:x64-windows
 
       - name: Configure CMake
         run: |
           cmake -B build -S . `
             -DCMAKE_BUILD_TYPE=Release `
-            -DPIXELDEPTH=32
+            -DPIXELDEPTH=32 `
+            -DCMAKE_TOOLCHAIN_FILE="$env:VCPKG_INSTALLATION_ROOT/scripts/buildsystems/vcpkg.cmake" `
+            -DVCPKG_TARGET_TRIPLET=x64-windows
 
       - name: Build
         run: cmake --build build --config Release --target rasmol_tcl
