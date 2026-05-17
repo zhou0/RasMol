@@ -436,49 +436,49 @@ void HandleMenuWithState( int hand, int state ) {
     switch(menu) {
         case 0: /* File */
             switch(item) {
-                case 3: ExecuteIPCCommand("zap"); break;
+                case 3: ExecuteIPCCommand("[zap]"); break;
                 case 5: exit(0); break;
             }
             break;
         case 1: /* Display */
             switch(item) {
-                case 1: ExecuteIPCCommand("backbone off; spacefill off; ribbons off; strands off; cartoons off; molsurf off; wireframe"); break;
-                case 2: ExecuteIPCCommand("wireframe off; spacefill off; ribbons off; strands off; cartoons off; molsurf off; backbone"); break;
-                case 3: ExecuteIPCCommand("backbone off; spacefill off; ribbons off; strands off; cartoons off; molsurf off; wireframe 40"); break;
-                case 4: ExecuteIPCCommand("wireframe off; backbone off; ribbons off; strands off; cartoons off; molsurf off; spacefill"); break;
-                case 5: ExecuteIPCCommand("backbone off; ribbons off; strands off; cartoons off; molsurf off; wireframe 40; spacefill 120"); break;
-                case 6: ExecuteIPCCommand("wireframe off; backbone off; spacefill off; strands off; cartoons off; molsurf off; ribbons"); break;
-                case 7: ExecuteIPCCommand("wireframe off; backbone off; spacefill off; ribbons off; cartoons off; molsurf off; strands"); break;
-                case 8: ExecuteIPCCommand("wireframe off; backbone off; spacefill off; ribbons off; strands off; molsurf off; cartoons"); break;
-                case 9: ExecuteIPCCommand("wireframe off; backbone off; spacefill off; ribbons off; strands off; cartoons off; molsurf"); break;
+                case 1: ExecuteIPCCommand("[select all][backbone off][spacefill off][ribbons off][strands off][cartoons off][molsurf off][wireframe]"); break;
+                case 2: ExecuteIPCCommand("[select all][wireframe off][spacefill off][ribbons off][strands off][cartoons off][molsurf off][backbone]"); break;
+                case 3: ExecuteIPCCommand("[select all][backbone off][spacefill off][ribbons off][strands off][cartoons off][molsurf off][wireframe 40]"); break;
+                case 4: ExecuteIPCCommand("[select all][wireframe off][backbone off][ribbons off][strands off][cartoons off][molsurf off][spacefill]"); break;
+                case 5: ExecuteIPCCommand("[select all][backbone off][ribbons off][strands off][cartoons off][molsurf off][wireframe 40][spacefill 120]"); break;
+                case 6: ExecuteIPCCommand("[select all][wireframe off][backbone off][spacefill off][strands off][cartoons off][molsurf off][ribbons]"); break;
+                case 7: ExecuteIPCCommand("[select all][wireframe off][backbone off][spacefill off][ribbons off][cartoons off][molsurf off][strands]"); break;
+                case 8: ExecuteIPCCommand("[select all][wireframe off][backbone off][spacefill off][ribbons off][strands off][molsurf off][cartoons]"); break;
+                case 9: ExecuteIPCCommand("[select all][wireframe off][backbone off][spacefill off][ribbons off][strands off][cartoons off][molsurf]"); break;
             }
             break;
         case 2: /* Colours */
             switch(item) {
-                case 1: ExecuteIPCCommand("colour monochrome"); break;
-                case 2: ExecuteIPCCommand("colour cpk"); break;
-                case 3: ExecuteIPCCommand("colour shapely"); break;
-                case 4: ExecuteIPCCommand("colour group"); break;
-                case 5: ExecuteIPCCommand("colour chain"); break;
-                case 6: ExecuteIPCCommand("colour temperature"); break;
-                case 7: ExecuteIPCCommand("colour structure"); break;
-                case 8: ExecuteIPCCommand("colour user"); break;
-                case 9: ExecuteIPCCommand("colour model"); break;
-                case 10: ExecuteIPCCommand("colour alt"); break;
+                case 1: ExecuteIPCCommand("[colour monochrome]"); break;
+                case 2: ExecuteIPCCommand("[colour cpk]"); break;
+                case 3: ExecuteIPCCommand("[colour shapely]"); break;
+                case 4: ExecuteIPCCommand("[colour group]"); break;
+                case 5: ExecuteIPCCommand("[colour chain]"); break;
+                case 6: ExecuteIPCCommand("[colour temperature]"); break;
+                case 7: ExecuteIPCCommand("[colour structure]"); break;
+                case 8: ExecuteIPCCommand("[colour user]"); break;
+                case 9: ExecuteIPCCommand("[colour model]"); break;
+                case 10: ExecuteIPCCommand("[colour alt]"); break;
             }
             break;
         case 3: /* Options */
             switch(item) {
                 case 1: ExecuteIPCCommand((state == 1 || (state == -1 && !UseSlabPlane)) ? "slab on" : "slab off"); break;
                 case 2: if (state == 1 || (state == -1 && !Hydrogens)) {
-                            ExecuteIPCCommand("define _tmp selected; select _tmp and hydrogen; wireframe on; select _tmp");
+                            ExecuteIPCCommand("[define _tmp selected][select _tmp and hydrogen][wireframe on][select _tmp]");
                         } else {
-                            ExecuteIPCCommand("define _tmp selected; select _tmp and hydrogen; wireframe off; select _tmp");
+                            ExecuteIPCCommand("[define _tmp selected][select _tmp and hydrogen][wireframe off][select _tmp]");
                         } break;
                 case 3: if (state == 1 || (state == -1 && !HetaGroups)) {
-                            ExecuteIPCCommand("define _tmp selected; select _tmp and hetero; wireframe on; select _tmp");
+                            ExecuteIPCCommand("[define _tmp selected][select _tmp and hetero][wireframe on][select _tmp]");
                         } else {
-                            ExecuteIPCCommand("define _tmp selected; select _tmp and hetero; wireframe off; select _tmp");
+                            ExecuteIPCCommand("[define _tmp selected][select _tmp and hetero][wireframe off][select _tmp]");
                         } break;
                 case 4: ExecuteIPCCommand((state == 1 || (state == -1 && !FakeSpecular)) ? "set specular on" : "set specular off"); break;
                 case 5: ExecuteIPCCommand((state == 1 || (state == -1 && !UseShadow)) ? "set shadows on" : "set shadows off"); break;
@@ -488,19 +488,19 @@ void HandleMenuWithState( int hand, int state ) {
             break;
         case 4: /* Settings */
             switch(item) {
-                case 1: ExecuteIPCCommand("set picking off"); break;
-                case 2: ExecuteIPCCommand("set picking ident"); break;
-                case 3: ExecuteIPCCommand("set picking distance"); break;
-                case 4: ExecuteIPCCommand("set picking monitor"); break;
-                case 5: ExecuteIPCCommand("set picking angle"); break;
-                case 6: ExecuteIPCCommand("set picking torsion"); break;
-                case 7: ExecuteIPCCommand("set picking label"); break;
-                case 8: ExecuteIPCCommand("set picking centre"); break;
-                case 9: ExecuteIPCCommand("set picking coord"); break;
-                case 10: ExecuteIPCCommand("set picking bond"); break;
-                case 11: ExecuteIPCCommand("rotate bond"); break;
-                case 12: ExecuteIPCCommand("rotate molecule"); break;
-                case 13: ExecuteIPCCommand("rotate all"); break;
+                case 1: ExecuteIPCCommand("[set picking off]"); break;
+                case 2: ExecuteIPCCommand("[set picking ident]"); break;
+                case 3: ExecuteIPCCommand("[set picking distance]"); break;
+                case 4: ExecuteIPCCommand("[set picking monitor]"); break;
+                case 5: ExecuteIPCCommand("[set picking angle]"); break;
+                case 6: ExecuteIPCCommand("[set picking torsion]"); break;
+                case 7: ExecuteIPCCommand("[set picking label]"); break;
+                case 8: ExecuteIPCCommand("[set picking centre]"); break;
+                case 9: ExecuteIPCCommand("[set picking coord]"); break;
+                case 10: ExecuteIPCCommand("[set picking bond]"); break;
+                case 11: ExecuteIPCCommand("[rotate bond]"); break;
+                case 12: ExecuteIPCCommand("[rotate molecule]"); break;
+                case 13: ExecuteIPCCommand("[rotate all]"); break;
             }
             break;
     }
