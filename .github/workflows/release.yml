@@ -16,11 +16,17 @@ jobs:
       - name: Install WiX
         run: dotnet tool install --global WiX
 
+      - name: Install Dependencies (vcpkg)
+        run: |
+          vcpkg install tcl:x64-windows tk:x64-windows
+
       - name: Configure CMake
         run: |
           cmake -B build -S . `
             -DCMAKE_BUILD_TYPE=Release `
-            -DPIXELDEPTH=32
+            -DPIXELDEPTH=32 `
+            -DCMAKE_TOOLCHAIN_FILE="$env:VCPKG_INSTALLATION_ROOT/scripts/buildsystems/vcpkg.cmake" `
+            -DVCPKG_TARGET_TRIPLET=x64-windows
 
       - name: Build
         run: cmake --build build --config Release --target rasmol_tcl
@@ -80,6 +86,8 @@ jobs:
         run: |
           export ARCH=x86_64
           ./linuxdeploy-x86_64.AppRun --appdir AppDir --plugin appimage --output appimage
+        env:
+          OUTPUT: RasMol-x86_64.AppImage
 
       - name: Upload AppImage
         uses: actions/upload-artifact@v4
@@ -99,7 +107,8 @@ jobs:
             -DPIXELDEPTH=32 \
             -DCMAKE_OSX_ARCHITECTURES="arm64;x86_64" \
             -DCMAKE_OSX_DEPLOYMENT_TARGET="10.15" \
-            -DCMAKE_INSTALL_PREFIX=/usr/local
+            -DCMAKE_INSTALL_PREFIX=/usr/local \
+            -DVTK_DIR=""
 
       - name: Build
         run: cmake --build build --config Release --target rasmol_tcl
