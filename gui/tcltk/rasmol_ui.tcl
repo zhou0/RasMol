@@ -1,10 +1,10 @@
 package require Tk
 package require Ttk
 
-puts "Starting RasMol Themed UI..."
+puts "Starting RasMol ..."
 
 # Main Window setup
-wm title . "RasMol Themed UI"
+wm title . "RasMol"
 wm geometry . 1024x768
 
 # Theme selection (Tile/Ttk)
@@ -392,7 +392,7 @@ proc show_about {} {
     pack $w.f.logo -pady 10
 
     # Version
-    label $w.f.version -text "RasMol Version 2.7.5.2" -font {Helvetica 12 bold}
+    label $w.f.version -text "RasMol Version 2.8.0" -font {Helvetica 12 bold}
     pack $w.f.version -pady 2
 
     # Author Information
