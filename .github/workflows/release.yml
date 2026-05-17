@@ -24,8 +24,8 @@ jobs:
         id: tcl-paths
         shell: pwsh
         run: |
-          # Search for tcl.h excluding MinGW paths
-          $tclHeader = Get-ChildItem -Path C:\ -Filter tcl.h -Recurse -ErrorAction SilentlyContinue | Where-Object { $_.FullName -notmatch "mingw" } | Select-Object -First 1
+          # Search for tcl.h excluding MinGW and Miniconda paths
+          $tclHeader = Get-ChildItem -Path C:\ -Filter tcl.h -Recurse -ErrorAction SilentlyContinue | Where-Object { $_.FullName -notmatch "mingw" -and $_.FullName -notmatch "Miniconda" } | Select-Object -First 1
           if ($null -eq $tclHeader) { throw "tcl.h not found" }
           $tclRoot = $tclHeader.Directory.Parent.FullName
           $tclInclude = $tclHeader.DirectoryName
