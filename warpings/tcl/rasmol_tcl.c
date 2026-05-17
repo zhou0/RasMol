@@ -2,7 +2,11 @@
 #include <tk.h>
 #include <stdlib.h>
 #include <string.h>
-#ifndef _WIN32
+#ifdef _WIN32
+#include <io.h>
+#define access _access
+#define R_OK 4
+#else
 #include <unistd.h>
 #endif
 #include <cqrlib.h>
