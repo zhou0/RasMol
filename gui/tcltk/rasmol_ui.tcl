@@ -266,7 +266,7 @@ set last_sb_v 0.5
 set last_sb_h 0.5
 
 proc rotate_molecule {axis args} {
-    global last_sb_v last_sb_h
+    global last_sb_v last_sb_h rot_mode
     set sb .pw.right.f.${axis}sb
 
     set type [lindex $args 0]
@@ -293,16 +293,15 @@ proc rotate_molecule {axis args} {
         set last_sb_v $fraction
     } else {
         set delta [expr {($fraction - $last_sb_h) * 360.0}]
-        send_rasmol "rotate y $delta"
+        if {$rot_mode == 11} {
+            send_rasmol "rotate bond $delta"
+        } else {
+            send_rasmol "rotate y $delta"
+        }
         set last_sb_h $fraction
     }
 
     $sb set [expr {$fraction - 0.05}] [expr {$fraction + 0.05}]
-
-    if {$fraction < 0.1 || $fraction > 0.9} {
-        if {$axis eq "v"} {set last_sb_v 0.5} else {set last_sb_h 0.5}
-        $sb set 0.45 0.55
-    }
 }
 
 proc update_status {} {
