@@ -442,15 +442,15 @@ void HandleMenuWithState( int hand, int state ) {
             break;
         case 1: /* Display */
             switch(item) {
-                case 1: ExecuteIPCCommand("wireframe"); break;
-                case 2: ExecuteIPCCommand("backbone"); break;
-                case 3: ExecuteIPCCommand("wireframe 40"); break;
-                case 4: ExecuteIPCCommand("spacefill"); break;
-                case 5: ExecuteIPCCommand("wireframe 40; spacefill 120"); break;
-                case 6: ExecuteIPCCommand("ribbons"); break;
-                case 7: ExecuteIPCCommand("strands"); break;
-                case 8: ExecuteIPCCommand("cartoons"); break;
-                case 9: ExecuteIPCCommand("molsurf"); break;
+                case 1: ExecuteIPCCommand("backbone off; spacefill off; ribbons off; strands off; cartoons off; molsurf off; wireframe"); break;
+                case 2: ExecuteIPCCommand("wireframe off; spacefill off; ribbons off; strands off; cartoons off; molsurf off; backbone"); break;
+                case 3: ExecuteIPCCommand("backbone off; spacefill off; ribbons off; strands off; cartoons off; molsurf off; wireframe 40"); break;
+                case 4: ExecuteIPCCommand("wireframe off; backbone off; ribbons off; strands off; cartoons off; molsurf off; spacefill"); break;
+                case 5: ExecuteIPCCommand("backbone off; ribbons off; strands off; cartoons off; molsurf off; wireframe 40; spacefill 120"); break;
+                case 6: ExecuteIPCCommand("wireframe off; backbone off; spacefill off; strands off; cartoons off; molsurf off; ribbons"); break;
+                case 7: ExecuteIPCCommand("wireframe off; backbone off; spacefill off; ribbons off; cartoons off; molsurf off; strands"); break;
+                case 8: ExecuteIPCCommand("wireframe off; backbone off; spacefill off; ribbons off; strands off; molsurf off; cartoons"); break;
+                case 9: ExecuteIPCCommand("wireframe off; backbone off; spacefill off; ribbons off; strands off; cartoons off; molsurf"); break;
             }
             break;
         case 2: /* Colours */
