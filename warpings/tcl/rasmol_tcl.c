@@ -2,7 +2,9 @@
 #include <tk.h>
 #include <stdlib.h>
 #include <string.h>
+#ifndef _WIN32
 #include <unistd.h>
+#endif
 #include <cqrlib.h>
 #include "rasmol.h"
 #include "molecule.h"
