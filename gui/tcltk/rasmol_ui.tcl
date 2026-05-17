@@ -132,20 +132,20 @@ ttk::panedwindow .pw -orient horizontal
 pack .pw -fill both -expand yes
 
 # Left control panel
-ttk::frame .pw.left -padding 5 -width 200
-.pw add .pw.left
-
-ttk::labelframe .pw.left.opts -text "Quick Controls" -padding 5
-pack .pw.left.opts -fill x -side top
-
-ttk::button .pw.left.opts.reset -text "Reset View" -command {send_rasmol "reset"}
-pack .pw.left.opts.reset -pady 2 -fill x
-
-ttk::button .pw.left.opts.default -text "Default View" -command {
-    send_rasmol "backbone"
-    send_rasmol "colour chain"
-}
-pack .pw.left.opts.default -pady 2 -fill x
+#ttk::frame .pw.left -padding 5 -width 200
+#.pw add .pw.left
+#
+#ttk::labelframe .pw.left.opts -text "Quick Controls" -padding 5
+#pack .pw.left.opts -fill x -side top
+#
+#ttk::button .pw.left.opts.reset -text "Reset View" -command {send_rasmol "reset"}
+#pack .pw.left.opts.reset -pady 2 -fill x
+#
+#ttk::button .pw.left.opts.default -text "Default View" -command {
+#    send_rasmol "backbone"
+#    send_rasmol "colour chain"
+#}
+#pack .pw.left.opts.default -pady 2 -fill x
 
 # Right side: Visualization and Command entry
 ttk::frame .pw.right
