@@ -237,6 +237,7 @@ int Tcl_AppInit(Tcl_Interp *interp) {
 
     /* Initialize RasMol core */
     InitialiseCmndLine();
+    Interactive = True;
     InitialiseCommand();
     InitialiseTransform();
     InitialiseDatabase();

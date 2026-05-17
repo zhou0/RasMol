@@ -113,6 +113,13 @@ menu .menubar.settings -tearoff 0
 .menubar.settings add radiobutton -label "Rotate Molecule" -variable rot_mode -value 12 -command {send_rasmol_menu 4 12}
 .menubar.settings add radiobutton -label "Rotate All" -variable rot_mode -value 13 -command {send_rasmol_menu 4 13}
 
+.menubar.settings add separator
+menu .menubar.settings.mouse -tearoff 0
+.menubar.settings add cascade -label "Mouse Mode" -menu .menubar.settings.mouse
+.menubar.settings.mouse add radiobutton -label "RasMol" -variable mouse_mode -value rasmol -command {send_rasmol "set mouse rasmol"}
+.menubar.settings.mouse add radiobutton -label "Insight" -variable mouse_mode -value insight -command {send_rasmol "set mouse insight"}
+.menubar.settings.mouse add radiobutton -label "Quanta" -variable mouse_mode -value quanta -command {send_rasmol "set mouse quanta"}
+
 # Help Menu
 menu .menubar.help -tearoff 0
 .menubar add cascade -label "Help" -menu .menubar.help
@@ -171,29 +178,39 @@ if {[info commands rasmol_register_photo] ne ""} {
 }
 
 # Mouse and Keyboard Interaction
+proc get_rasmol_mask {s {b 0}} {
+    set m 0
+    if {$b == 1 || ($s & 0x100)} { set m [expr {$m | 0x01}] }
+    if {$b == 2 || ($s & 0x200)} { set m [expr {$m | 0x02}] }
+    if {$b == 3 || ($s & 0x400)} { set m [expr {$m | 0x04}] }
+    if {$s & 0x01} { set m [expr {$m | 0x08}] }
+    if {$s & 0x04} { set m [expr {$m | 0x10}] }
+    return $m
+}
+
 bind .pw.right.f.c <ButtonPress> {
     if {[info commands rasmol_mouse_down] ne ""} {
-        rasmol_mouse_down %x %y %s
+        rasmol_mouse_down %x %y [get_rasmol_mask %s %b]
     }
 }
 bind .pw.right.f.c <B1-Motion> {
     if {[info commands rasmol_mouse_move] ne ""} {
-        rasmol_mouse_move %x %y %s
+        rasmol_mouse_move %x %y [get_rasmol_mask %s 1]
     }
 }
 bind .pw.right.f.c <B2-Motion> {
     if {[info commands rasmol_mouse_move] ne ""} {
-        rasmol_mouse_move %x %y %s
+        rasmol_mouse_move %x %y [get_rasmol_mask %s 2]
     }
 }
 bind .pw.right.f.c <B3-Motion> {
     if {[info commands rasmol_mouse_move] ne ""} {
-        rasmol_mouse_move %x %y %s
+        rasmol_mouse_move %x %y [get_rasmol_mask %s 3]
     }
 }
 bind .pw.right.f.c <ButtonRelease> {
     if {[info commands rasmol_mouse_up] ne ""} {
-        rasmol_mouse_up %x %y %s
+        rasmol_mouse_up %x %y [get_rasmol_mask %s %b]
     }
 }
 bind . <KeyPress> {
@@ -344,6 +361,7 @@ set pick_mode 1
 set rot_mode 13
 set use_slab 0
 set opengl_mode 0
+set mouse_mode rasmol
 
 puts "UI initialized."
 
