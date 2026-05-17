@@ -498,9 +498,9 @@ void HandleMenuWithState( int hand, int state ) {
                 case 8: ExecuteIPCCommand("set picking centre"); break;
                 case 9: ExecuteIPCCommand("set picking coord"); break;
                 case 10: ExecuteIPCCommand("set picking bond"); break;
-                case 11: ExecuteIPCCommand("set rotation bond"); break;
-                case 12: ExecuteIPCCommand("set rotation molecule"); break;
-                case 13: ExecuteIPCCommand("set rotation all"); break;
+                case 11: ExecuteIPCCommand("rotate bond"); break;
+                case 12: ExecuteIPCCommand("rotate molecule"); break;
+                case 13: ExecuteIPCCommand("rotate all"); break;
             }
             break;
     }
