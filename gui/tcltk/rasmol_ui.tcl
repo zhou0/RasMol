@@ -414,3 +414,10 @@ proc show_about {} {
     ttk::button $w.f.close -text "Close" -command [list destroy $w]
     pack $w.f.close -pady 5
 }
+
+# macOS specific menu handling
+if {[tk windowingsystem] eq "aqua"} {
+    proc ::tk::mac::ShowAbout {} {
+        show_about
+    }
+}
