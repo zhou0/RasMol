@@ -24,17 +24,26 @@ jobs:
         id: tcl-paths
         shell: pwsh
         run: |
-          $tclHeader = Get-ChildItem -Path C:\ -Filter tcl.h -Recurse -ErrorAction SilentlyContinue | Select-Object -First 1
+          # Search for tcl.h excluding MinGW paths
+          $tclHeader = Get-ChildItem -Path C:\ -Filter tcl.h -Recurse -ErrorAction SilentlyContinue | Where-Object { $_.FullName -notmatch "mingw" } | Select-Object -First 1
           if ($null -eq $tclHeader) { throw "tcl.h not found" }
           $tclRoot = $tclHeader.Directory.Parent.FullName
           $tclInclude = $tclHeader.DirectoryName
-          $tclLib = Join-Path $tclRoot "lib" "tcl86t.lib"
-          $tkLib = Join-Path $tclRoot "lib" "tk86t.lib"
+
+          # Find lib files, specifically targeting the same root as the header
+          $tclLib = Get-ChildItem -Path $tclRoot -Filter tcl86t.lib -Recurse -ErrorAction SilentlyContinue | Select-Object -First 1
+          $tkLib = Get-ChildItem -Path $tclRoot -Filter tk86t.lib -Recurse -ErrorAction SilentlyContinue | Select-Object -First 1
+
+          if ($null -eq $tclLib) { throw "tcl86t.lib not found in $tclRoot" }
+          if ($null -eq $tkLib) { throw "tk86t.lib not found in $tclRoot" }
+
+          $tclLibPath = $tclLib.FullName
+          $tkLibPath = $tkLib.FullName
 
           echo "TCL_ROOT=$tclRoot" >> $env:GITHUB_ENV
           echo "TCL_INCLUDE=$tclInclude" >> $env:GITHUB_ENV
-          echo "TCL_LIB_PATH=$tclLib" >> $env:GITHUB_ENV
-          echo "TK_LIB_PATH=$tkLib" >> $env:GITHUB_ENV
+          echo "TCL_LIB_PATH=$tclLibPath" >> $env:GITHUB_ENV
+          echo "TK_LIB_PATH=$tkLibPath" >> $env:GITHUB_ENV
 
           Write-Host "Found Tcl at $tclRoot"
 
