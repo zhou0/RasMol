@@ -1,3 +1,4 @@
+source [file join [file dirname [info script]] logo.tcl]
 package require Tk
 package require Ttk
 
@@ -379,9 +380,9 @@ proc show_about {} {
     pack $w.f -fill both -expand yes
 
     # Logo
-    set img_path "html_graphics/rasmollogo_22Jun99.jpg"
-    if {[file exists $img_path]} {
-        if {[catch {image create photo about_logo -file $img_path} err]} {
+    global logo_data
+    if {[info exists logo_data]} {
+        if {[catch {image create photo about_logo -data $logo_data} err]} {
              label $w.f.logo -text "RasMol" -font {Helvetica 24 bold}
         } else {
              label $w.f.logo -image about_logo
@@ -412,4 +413,11 @@ proc show_about {} {
     # Close button
     ttk::button $w.f.close -text "Close" -command [list destroy $w]
     pack $w.f.close -pady 5
+}
+
+# macOS specific menu handling
+if {[tk windowingsystem] eq "aqua"} {
+    proc ::tk::mac::ShowAbout {} {
+        show_about
+    }
 }
