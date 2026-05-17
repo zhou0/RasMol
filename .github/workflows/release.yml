@@ -19,18 +19,34 @@ jobs:
       - name: Install Dependencies (Choco)
         run: |
           choco install magicsplat-tcl-tk --version=1.16.0
-          ls C:\
-          ls C:\Tcl
+
+      - name: Locate Tcl/Tk
+        id: tcl-paths
+        shell: pwsh
+        run: |
+          $tclHeader = Get-ChildItem -Path C:\ -Filter tcl.h -Recurse -ErrorAction SilentlyContinue | Select-Object -First 1
+          if ($null -eq $tclHeader) { throw "tcl.h not found" }
+          $tclRoot = $tclHeader.Directory.Parent.FullName
+          $tclInclude = $tclHeader.DirectoryName
+          $tclLib = Join-Path $tclRoot "lib" "tcl86t.lib"
+          $tkLib = Join-Path $tclRoot "lib" "tk86t.lib"
+
+          echo "TCL_ROOT=$tclRoot" >> $env:GITHUB_ENV
+          echo "TCL_INCLUDE=$tclInclude" >> $env:GITHUB_ENV
+          echo "TCL_LIB_PATH=$tclLib" >> $env:GITHUB_ENV
+          echo "TK_LIB_PATH=$tkLib" >> $env:GITHUB_ENV
+
+          Write-Host "Found Tcl at $tclRoot"
 
       - name: Configure CMake
         run: |
           cmake -B build -S . `
             -DCMAKE_BUILD_TYPE=Release `
             -DPIXELDEPTH=32 `
-            -DTCL_INCLUDE_PATH="C:/Tcl/include" `
-            -DTK_INCLUDE_PATH="C:/Tcl/include" `
-            -DTCL_LIBRARY="C:/Tcl/lib/tcl86t.lib" `
-            -DTK_LIBRARY="C:/Tcl/lib/tk86t.lib"
+            -DTCL_INCLUDE_PATH="$env:TCL_INCLUDE" `
+            -DTK_INCLUDE_PATH="$env:TCL_INCLUDE" `
+            -DTCL_LIBRARY="$env:TCL_LIB_PATH" `
+            -DTK_LIBRARY="$env:TK_LIB_PATH"
 
       - name: Build
         run: cmake --build build --config Release --target rasmol_tcl
