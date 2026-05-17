@@ -19,6 +19,8 @@ jobs:
       - name: Install Dependencies (Choco)
         run: |
           choco install magicsplat-tcl-tk --version=1.16.0
+          ls C:\
+          ls C:\Tcl
 
       - name: Configure CMake
         run: |
