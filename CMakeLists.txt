@@ -63,23 +63,9 @@ if(NOT CVECTOR_LIBRARY)
     message(STATUS "CVector not found. Fetching from GitHub...")
     fetchcontent_declare(cvector
         GIT_REPOSITORY https://github.com/zhou0/CVector.git
-        GIT_TAG 2daaf18bffc1b2dcb332f0867c83c0134cfd04da
+        GIT_TAG master
     )
-    fetchcontent_getproperties(cvector)
-    if(NOT cvector_POPULATED)
-        fetchcontent_populate(cvector)
-        # Patch CVector/CMakeLists.txt to remove its own output directory overrides
-        file(READ ${cvector_SOURCE_DIR}/CMakeLists.txt CV_CMAKE)
-        # Completely disable output directory overrides in CVector
-        string(REPLACE "set(CMAKE_RUNTIME_OUTPUT_DIRECTORY" "#set(CMAKE_RUNTIME_OUTPUT_DIRECTORY" CV_CMAKE "${CV_CMAKE}")
-        string(REPLACE "set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY" "#set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY" CV_CMAKE "${CV_CMAKE}")
-        string(REPLACE "set(CMAKE_LIBRARY_OUTPUT_DIRECTORY" "#set(CMAKE_LIBRARY_OUTPUT_DIRECTORY" CV_CMAKE "${CV_CMAKE}")
-        # Ensure static and shared targets have unique output names on Windows to avoid rule conflicts
-        string(REPLACE "set_target_properties(CV_static PROPERTIES OUTPUT_NAME CVector)" "set_target_properties(CV_static PROPERTIES OUTPUT_NAME CVectorStatic)" CV_CMAKE "${CV_CMAKE}")
-        string(REPLACE "set_target_properties(CV_static PROPERTIES OUTPUT_NAME \"CVector\")" "set_target_properties(CV_static PROPERTIES OUTPUT_NAME \"CVectorStatic\")" CV_CMAKE "${CV_CMAKE}")
-        file(WRITE ${cvector_SOURCE_DIR}/CMakeLists.txt "${CV_CMAKE}")
-        add_subdirectory(${cvector_SOURCE_DIR} ${cvector_BINARY_DIR})
-    endif()
+    fetchcontent_makeavailable(cvector)
     set(CVECTOR_LIBRARY CV_shared CACHE STRING "" FORCE)
     set(CVECTOR_INCLUDE_DIR ${cvector_SOURCE_DIR} CACHE PATH "" FORCE)
 endif()
@@ -89,18 +75,9 @@ if(NOT NEARTREE_LIBRARY)
     message(STATUS "NearTree not found. Fetching from GitHub...")
     fetchcontent_declare(neartree
         GIT_REPOSITORY https://github.com/zhou0/NearTree.git
-        GIT_TAG 6766128a8d1d7ed5f06cb80bf1fa2553ca3b7bf5
+        GIT_TAG main
     )
-    fetchcontent_getproperties(neartree)
-    if(NOT neartree_POPULATED)
-        fetchcontent_populate(neartree)
-        # Patch NearTree/CMakeLists.txt to use the CVECTOR variables we provide
-        file(READ ${neartree_SOURCE_DIR}/CMakeLists.txt NT_CMAKE)
-        string(REPLACE "find_path(CVECTOR_INCLUDE_DIR CVector.h)" "set(CVECTOR_INCLUDE_DIR \"${CVECTOR_INCLUDE_DIR}\")" NT_CMAKE "${NT_CMAKE}")
-        string(REPLACE "find_library(CVECTOR_LIBRARY CVector)" "set(CVECTOR_LIBRARY \"${CVECTOR_LIBRARY}\")" NT_CMAKE "${NT_CMAKE}")
-        file(WRITE ${neartree_SOURCE_DIR}/CMakeLists.txt "${NT_CMAKE}")
-        add_subdirectory(${neartree_SOURCE_DIR} ${neartree_BINARY_DIR})
-    endif()
+    fetchcontent_makeavailable(neartree)
     set(NEARTREE_LIBRARY CNearTree CACHE STRING "" FORCE)
     set(NEARTREE_INCLUDE_DIR ${neartree_SOURCE_DIR} CACHE PATH "" FORCE)
 endif()
