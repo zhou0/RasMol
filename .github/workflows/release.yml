@@ -157,8 +157,8 @@ jobs:
             -DVTK_DIR="" \
             -DTCL_INCLUDE_PATH="$TCL_ROOT/include" \
             -DTK_INCLUDE_PATH="$TCL_ROOT/include" \
-            -DTCL_LIBRARY="$TCL_ROOT/lib/libtcl8.6.dylib" \
-            -DTK_LIBRARY="$TCL_ROOT/lib/libtk8.6.dylib"
+            -DTCL_LIBRARY="$(find $TCL_ROOT/lib -name 'libtcl8.6*' | head -n 1)" \
+            -DTK_LIBRARY="$(find $TCL_ROOT/lib -name 'libtk8.6*' | head -n 1)"
 
       - name: Build
         run: cmake --build build --config Release

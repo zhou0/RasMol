@@ -73,8 +73,12 @@ if(NOT CVECTOR_LIBRARY)
         string(REPLACE "set(CMAKE_RUNTIME_OUTPUT_DIRECTORY" "#set(CMAKE_RUNTIME_OUTPUT_DIRECTORY" CV_CMAKE "${CV_CMAKE}")
         string(REPLACE "set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY" "#set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY" CV_CMAKE "${CV_CMAKE}")
         string(REPLACE "set(CMAKE_LIBRARY_OUTPUT_DIRECTORY" "#set(CMAKE_LIBRARY_OUTPUT_DIRECTORY" CV_CMAKE "${CV_CMAKE}")
-        # Rename static library to avoid conflict with shared library on Windows
-        string(REPLACE "set_target_properties(CV_static PROPERTIES OUTPUT_NAME CVector)" "set_target_properties(CV_static PROPERTIES OUTPUT_NAME CVector_static)" CV_CMAKE "${CV_CMAKE}")
+        # Rename static library to avoid conflict with shared library on Windows.
+        # Use a regex or multiple replacements to be safe.
+        string(REPLACE "OUTPUT_NAME CVector" "OUTPUT_NAME CVector_static" CV_CMAKE "${CV_CMAKE}")
+        string(REPLACE "OUTPUT_NAME \"CVector\"" "OUTPUT_NAME \"CVector_static\"" CV_CMAKE "${CV_CMAKE}")
+        # Restore shared library name
+        string(REPLACE "set_target_properties(CV_shared PROPERTIES OUTPUT_NAME CVector_static)" "set_target_properties(CV_shared PROPERTIES OUTPUT_NAME CVector)" CV_CMAKE "${CV_CMAKE}")
         file(WRITE ${cvector_SOURCE_DIR}/CMakeLists.txt "${CV_CMAKE}")
         add_subdirectory(${cvector_SOURCE_DIR} ${cvector_BINARY_DIR})
     endif()
@@ -267,11 +271,12 @@ endif()
 
 # Tcl/Tk Support
 if(APPLE)
-    # macOS framework logic
+    # macOS framework logic hints
+    set(CMAKE_FRAMEWORK_PATH /Library/Frameworks /System/Library/Frameworks)
     find_library(TCL_LIBRARY Tcl)
     find_library(TK_LIBRARY Tk)
-    find_path(TCL_INCLUDE_PATH tcl.h)
-    find_path(TK_INCLUDE_PATH tk.h)
+    find_path(TCL_INCLUDE_PATH tcl.h PATH_SUFFIXES Tcl.framework/Headers)
+    find_path(TK_INCLUDE_PATH tk.h PATH_SUFFIXES Tk.framework/Headers)
 endif()
 
 if(NOT TCL_LIBRARY OR NOT TK_LIBRARY)
