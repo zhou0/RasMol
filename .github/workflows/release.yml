@@ -133,11 +133,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install Bison (macOS)
+      - name: Install Build Dependencies (macOS)
         run: |
-          brew install bison
+          brew install bison tcl-tk
           echo "/usr/local/opt/bison/bin" >> $GITHUB_PATH
           echo "/opt/homebrew/opt/bison/bin" >> $GITHUB_PATH
+          echo "/usr/local/opt/tcl-tk/bin" >> $GITHUB_PATH
+          echo "/opt/homebrew/opt/tcl-tk/bin" >> $GITHUB_PATH
 
       - name: Configure CMake
         run: |
