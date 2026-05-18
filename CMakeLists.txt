@@ -1,7 +1,9 @@
 cmake_minimum_required(VERSION 3.11)
 project(RasMol C CXX)
 set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
-# Output directory overrides removed to avoid installation conflicts on Windows
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 
 if(POLICY CMP0169)
   cmake_policy(SET CMP0169 OLD)
