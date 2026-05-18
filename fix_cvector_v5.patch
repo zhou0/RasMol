@@ -1,0 +1,35 @@
+<<<<<<< SEARCH
+        # Patch CVector/CMakeLists.txt to remove its own output directory overrides
+        file(READ ${cvector_SOURCE_DIR}/CMakeLists.txt CV_CMAKE)
+        string(REPLACE "set(CMAKE_RUNTIME_OUTPUT_DIRECTORY" "#set(CMAKE_RUNTIME_OUTPUT_DIRECTORY" CV_CMAKE "${CV_CMAKE}")
+        string(REPLACE "set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY" "#set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY" CV_CMAKE "${CV_CMAKE}")
+        string(REPLACE "set(CMAKE_LIBRARY_OUTPUT_DIRECTORY" "#set(CMAKE_LIBRARY_OUTPUT_DIRECTORY" CV_CMAKE "${CV_CMAKE}")
+        # Rename static library target completely in properties to avoid conflict
+        string(REPLACE "set_target_properties(CV_static PROPERTIES OUTPUT_NAME CVector)" "set_target_properties(CV_static PROPERTIES OUTPUT_NAME CVectorStatic)" CV_CMAKE "${CV_CMAKE}")
+        string(REPLACE "set_target_properties(CV_static PROPERTIES OUTPUT_NAME \"CVector\")" "set_target_properties(CV_static PROPERTIES OUTPUT_NAME \"CVectorStatic\")" CV_CMAKE "${CV_CMAKE}")
+        # Remove any other problematic target property overrides if they exist
+        string(REPLACE "ARCHIVE_OUTPUT_DIRECTORY" "DISABLED_ARCHIVE_OUTPUT_DIRECTORY" CV_CMAKE "${CV_CMAKE}")
+        string(REPLACE "LIBRARY_OUTPUT_DIRECTORY" "DISABLED_LIBRARY_OUTPUT_DIRECTORY" CV_CMAKE "${CV_CMAKE}")
+        string(REPLACE "RUNTIME_OUTPUT_DIRECTORY" "DISABLED_RUNTIME_OUTPUT_DIRECTORY" CV_CMAKE "${CV_CMAKE}")
+        file(WRITE ${cvector_SOURCE_DIR}/CMakeLists.txt "${CV_CMAKE}")
+        add_subdirectory(${cvector_SOURCE_DIR} ${cvector_BINARY_DIR})
+=======
+        # Patch CVector/CMakeLists.txt to remove its own output directory overrides
+        file(READ ${cvector_SOURCE_DIR}/CMakeLists.txt CV_CMAKE)
+        # Completely disable output directory overrides in CVector
+        string(REPLACE "set(CMAKE_RUNTIME_OUTPUT_DIRECTORY" "#set(CMAKE_RUNTIME_OUTPUT_DIRECTORY" CV_CMAKE "${CV_CMAKE}")
+        string(REPLACE "set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY" "#set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY" CV_CMAKE "${CV_CMAKE}")
+        string(REPLACE "set(CMAKE_LIBRARY_OUTPUT_DIRECTORY" "#set(CMAKE_LIBRARY_OUTPUT_DIRECTORY" CV_CMAKE "${CV_CMAKE}")
+        # Remove target-specific output directory overrides
+        string(REPLACE "ARCHIVE_OUTPUT_DIRECTORY" "DISABLED_ARCHIVE_OUTPUT_DIRECTORY" CV_CMAKE "${CV_CMAKE}")
+        string(REPLACE "LIBRARY_OUTPUT_DIRECTORY" "DISABLED_LIBRARY_OUTPUT_DIRECTORY" CV_CMAKE "${CV_CMAKE}")
+        string(REPLACE "RUNTIME_OUTPUT_DIRECTORY" "DISABLED_RUNTIME_OUTPUT_DIRECTORY" CV_CMAKE "${CV_CMAKE}")
+        # Rename targets' output names to ensure uniqueness
+        string(REPLACE "OUTPUT_NAME CVector" "OUTPUT_NAME CVector_out" CV_CMAKE "${CV_CMAKE}")
+        string(REPLACE "OUTPUT_NAME \"CVector\"" "OUTPUT_NAME \"CVector_out\"" CV_CMAKE "${CV_CMAKE}")
+        # Restore target-specific output names for the ones we care about
+        string(REPLACE "set_target_properties(CV_static PROPERTIES OUTPUT_NAME CVector_out)" "set_target_properties(CV_static PROPERTIES OUTPUT_NAME CVectorStatic)" CV_CMAKE "${CV_CMAKE}")
+        string(REPLACE "set_target_properties(CV_shared PROPERTIES OUTPUT_NAME CVector_out)" "set_target_properties(CV_shared PROPERTIES OUTPUT_NAME CVector)" CV_CMAKE "${CV_CMAKE}")
+        file(WRITE ${cvector_SOURCE_DIR}/CMakeLists.txt "${CV_CMAKE}")
+        add_subdirectory(${cvector_SOURCE_DIR} ${cvector_BINARY_DIR})
+>>>>>>> REPLACE
