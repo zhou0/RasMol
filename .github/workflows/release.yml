@@ -133,6 +133,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Install Bison (macOS)
+        run: |
+          brew install bison
+          echo "/usr/local/opt/bison/bin" >> $GITHUB_PATH
+          echo "/opt/homebrew/opt/bison/bin" >> $GITHUB_PATH
+
       - name: Configure CMake
         run: |
           cmake -B build -S . \
