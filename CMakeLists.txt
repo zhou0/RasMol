@@ -74,8 +74,9 @@ if(NOT CVECTOR_LIBRARY)
         string(REPLACE "set(CMAKE_RUNTIME_OUTPUT_DIRECTORY" "#set(CMAKE_RUNTIME_OUTPUT_DIRECTORY" CV_CMAKE "${CV_CMAKE}")
         string(REPLACE "set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY" "#set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY" CV_CMAKE "${CV_CMAKE}")
         string(REPLACE "set(CMAKE_LIBRARY_OUTPUT_DIRECTORY" "#set(CMAKE_LIBRARY_OUTPUT_DIRECTORY" CV_CMAKE "${CV_CMAKE}")
-        # Use a more generic replacement for target properties
-        string(REPLACE "set_target_properties(" "set_target_properties_disabled(" CV_CMAKE "${CV_CMAKE}")
+        # Ensure static and shared targets have unique output names on Windows to avoid rule conflicts
+        string(REPLACE "set_target_properties(CV_static PROPERTIES OUTPUT_NAME CVector)" "set_target_properties(CV_static PROPERTIES OUTPUT_NAME CVectorStatic)" CV_CMAKE "${CV_CMAKE}")
+        string(REPLACE "set_target_properties(CV_static PROPERTIES OUTPUT_NAME \"CVector\")" "set_target_properties(CV_static PROPERTIES OUTPUT_NAME \"CVectorStatic\")" CV_CMAKE "${CV_CMAKE}")
         file(WRITE ${cvector_SOURCE_DIR}/CMakeLists.txt "${CV_CMAKE}")
         add_subdirectory(${cvector_SOURCE_DIR} ${cvector_BINARY_DIR})
     endif()
