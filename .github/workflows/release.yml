@@ -134,7 +134,7 @@ jobs:
 
       - name: Install Build Dependencies (macOS)
         run: |
-          brew install bison tcl-tk
+          brew install bison tcl-tk jpeg
           echo "/usr/local/opt/bison/bin" >> $GITHUB_PATH
           echo "/opt/homebrew/opt/bison/bin" >> $GITHUB_PATH
           echo "/usr/local/opt/tcl-tk/bin" >> $GITHUB_PATH
