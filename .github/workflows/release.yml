@@ -127,30 +127,34 @@ jobs:
           name: RasMol-Linux-AppImage
           path: "*.AppImage"
 
-  macos-dmg:
-    runs-on: macos-latest
+  macos-release:
+    strategy:
+      matrix:
+        arch: [x86_64, arm64]
+        include:
+          - arch: x86_64
+            os: macos-13
+            brew_prefix: /usr/local
+          - arch: arm64
+            os: macos-latest
+            brew_prefix: /opt/homebrew
+    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
 
       - name: Install Build Dependencies (macOS)
         run: |
           brew install bison tcl-tk jpeg
-          echo "/usr/local/opt/bison/bin" >> $GITHUB_PATH
-          echo "/opt/homebrew/opt/bison/bin" >> $GITHUB_PATH
-          echo "/usr/local/opt/tcl-tk/bin" >> $GITHUB_PATH
-          echo "/opt/homebrew/opt/tcl-tk/bin" >> $GITHUB_PATH
+          echo "${{ matrix.brew_prefix }}/opt/bison/bin" >> $GITHUB_PATH
+          echo "${{ matrix.brew_prefix }}/opt/tcl-tk/bin" >> $GITHUB_PATH
 
       - name: Configure CMake
         run: |
-          if [ -d "/opt/homebrew/opt/tcl-tk" ]; then
-            TCL_ROOT="/opt/homebrew/opt/tcl-tk"
-          else
-            TCL_ROOT="/usr/local/opt/tcl-tk"
-          fi
+          TCL_ROOT="${{ matrix.brew_prefix }}/opt/tcl-tk"
           cmake -B build -S . \
             -DCMAKE_BUILD_TYPE=Release \
             -DPIXELDEPTH=32 \
-            -DCMAKE_OSX_ARCHITECTURES="arm64;x86_64" \
+            -DCMAKE_OSX_ARCHITECTURES="${{ matrix.arch }}" \
             -DCMAKE_OSX_DEPLOYMENT_TARGET="10.15" \
             -DCMAKE_INSTALL_PREFIX=/usr/local \
             -DVTK_DIR="" \
@@ -162,10 +166,69 @@ jobs:
       - name: Build
         run: cmake --build build --config Release
 
-      - name: Package
+      - name: Install to AppDir
+        run: cmake --install build --prefix AppDir
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: RasMol-macOS-${{ matrix.arch }}
+          path: AppDir
+
+  macos-dmg:
+    needs: macos-release
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download x86_64 Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: RasMol-macOS-x86_64
+          path: AppDir-x86_64
+
+      - name: Download arm64 Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: RasMol-macOS-arm64
+          path: AppDir-arm64
+
+      - name: Create Universal Binaries
         run: |
-          cd build
-          cpack -C Release -G DragNDrop
+          mkdir -p AppDir-Universal/bin
+          mkdir -p AppDir-Universal/share/rasmol
+
+          # Create universal binaries for each executable
+          for bin in AppDir-x86_64/bin/*; do
+            if [ -f "$bin" ]; then
+              name=$(basename "$bin")
+              if [ -f "AppDir-arm64/bin/$name" ]; then
+                lipo -create "AppDir-x86_64/bin/$name" "AppDir-arm64/bin/$name" -output "AppDir-Universal/bin/$name"
+              else
+                cp "$bin" "AppDir-Universal/bin/$name"
+              fi
+            fi
+          done
+
+          # Copy shared resources
+          cp -R AppDir-x86_64/share/rasmol/* AppDir-Universal/share/rasmol/
+
+      - name: Configure CPack
+        run: |
+          cmake -B build-dmg -S . \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DPIXELDEPTH=32
+
+      - name: Package DMG
+        run: |
+          # Use CPack to generate DMG from the Universal AppDir
+          # We need to trick CPack into using our combined AppDir.
+          # Alternatively, just use hdiutil if CPack is too complex here.
+          # For simplicity with the existing setup, I'll try to re-run install with the combined files
+          mkdir -p build-dmg/install
+          cp -R AppDir-Universal/* build-dmg/install/
+          cd build-dmg
+          cpack -C Release -G DragNDrop -D CPACK_INSTALL_DIRECTORY="install"
 
       - name: Upload DMG
         uses: actions/upload-artifact@v4
