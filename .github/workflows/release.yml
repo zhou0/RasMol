@@ -16,8 +16,6 @@ jobs:
       - name: Set up MSVC
         uses: ilammy/msvc-dev-cmd@v1
 
-
-
       - name: Install WiX
         run: dotnet tool install --global WiX
 
@@ -29,7 +27,6 @@ jobs:
         id: tcl-paths
         shell: pwsh
         run: |
-          # Search for tcl.h excluding MinGW, Miniconda, and R paths
           $tclHeaders = Get-ChildItem -Path C:\ -Filter tcl.h -Recurse -ErrorAction SilentlyContinue | Where-Object { $_.FullName -notmatch "mingw" -and $_.FullName -notmatch "Miniconda" -and $_.FullName -notmatch "R-" }
 
           $found = $false
@@ -48,11 +45,11 @@ jobs:
                   break
               }
           }
-          if (-not $found) { throw "Compatible MagicSplat Tcl/Tk not found (checked headers, tcl86t.lib, and tk86t.lib)" }
+          if (-not $found) { throw "Compatible MagicSplat Tcl/Tk not found" }
 
       - name: Configure CMake
         run: |
-          cmake -B build -S . `
+          cmake -B build -S . -G Ninja `
             -DCMAKE_BUILD_TYPE=Release `
             -DPIXELDEPTH=32 `
             -DTCL_INCLUDE_PATH="$env:TCL_INCLUDE" `
@@ -146,11 +143,11 @@ jobs:
         run: |
           brew install bison tcl-tk jpeg
           echo "${{ matrix.brew_prefix }}/opt/bison/bin" >> $GITHUB_PATH
-          echo "${{ matrix.brew_prefix }}/opt/tcl-tk/bin" >> $GITHUB_PATH
 
       - name: Configure CMake
         run: |
           TCL_ROOT="${{ matrix.brew_prefix }}/opt/tcl-tk"
+          BISON_BIN="${{ matrix.brew_prefix }}/opt/bison/bin/bison"
           cmake -B build -S . \
             -DCMAKE_BUILD_TYPE=Release \
             -DPIXELDEPTH=32 \
@@ -158,6 +155,7 @@ jobs:
             -DCMAKE_OSX_DEPLOYMENT_TARGET="10.15" \
             -DCMAKE_INSTALL_PREFIX=/usr/local \
             -DVTK_DIR="" \
+            -DBISON_EXECUTABLE="$BISON_BIN" \
             -DTCL_INCLUDE_PATH="$TCL_ROOT/include" \
             -DTK_INCLUDE_PATH="$TCL_ROOT/include" \
             -DTCL_LIBRARY="$(find $TCL_ROOT/lib -name 'libtcl8.6*' | head -n 1)" \
@@ -181,6 +179,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Install Build Dependencies (macOS)
+        run: |
+          brew install bison
+          echo "/opt/homebrew/opt/bison/bin" >> $GITHUB_PATH
+
       - name: Download x86_64 Artifact
         uses: actions/download-artifact@v4
         with:
@@ -197,8 +200,6 @@ jobs:
         run: |
           mkdir -p AppDir-Universal/bin
           mkdir -p AppDir-Universal/share/rasmol
-
-          # Create universal binaries for each executable
           for bin in AppDir-x86_64/bin/*; do
             if [ -f "$bin" ]; then
               name=$(basename "$bin")
@@ -209,22 +210,17 @@ jobs:
               fi
             fi
           done
-
-          # Copy shared resources
           cp -R AppDir-x86_64/share/rasmol/* AppDir-Universal/share/rasmol/
 
       - name: Configure CPack
         run: |
           cmake -B build-dmg -S . \
             -DCMAKE_BUILD_TYPE=Release \
-            -DPIXELDEPTH=32
+            -DPIXELDEPTH=32 \
+            -DBISON_EXECUTABLE="/opt/homebrew/opt/bison/bin/bison"
 
       - name: Package DMG
         run: |
-          # Use CPack to generate DMG from the Universal AppDir
-          # We need to trick CPack into using our combined AppDir.
-          # Alternatively, just use hdiutil if CPack is too complex here.
-          # For simplicity with the existing setup, I'll try to re-run install with the combined files
           mkdir -p build-dmg/install
           cp -R AppDir-Universal/* build-dmg/install/
           cd build-dmg
@@ -234,4 +230,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: RasMol-MacOS-DMG
-          path: build/*.dmg
+          path: build-dmg/*.dmg
