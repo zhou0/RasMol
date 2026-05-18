@@ -16,8 +16,7 @@ jobs:
       - name: Set up MSVC
         uses: ilammy/msvc-dev-cmd@v1
 
-      - name: Install Ninja
-        run: choco install ninja
+
 
       - name: Install WiX
         run: dotnet tool install --global WiX
@@ -53,7 +52,7 @@ jobs:
 
       - name: Configure CMake
         run: |
-          cmake -G Ninja -B build -S . `
+          cmake -B build -S . `
             -DCMAKE_BUILD_TYPE=Release `
             -DPIXELDEPTH=32 `
             -DTCL_INCLUDE_PATH="$env:TCL_INCLUDE" `
@@ -62,10 +61,10 @@ jobs:
             -DTK_LIBRARY="$env:TK_LIB_PATH"
 
       - name: Build
-        run: cmake --build build --target rasmol_tcl
+        run: cmake --build build --config Release --target rasmol_tcl
 
       - name: Install
-        run: cmake --install build --prefix "${{ github.workspace }}/install_dir"
+        run: cmake --install build --config Release --prefix "${{ github.workspace }}/install_dir"
 
       - name: Package
         run: |

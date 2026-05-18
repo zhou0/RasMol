@@ -1,0 +1,7 @@
+<<<<<<< SEARCH
+      - name: Install
+        run: cmake --install build --prefix "install_dir"
+=======
+      - name: Install
+        run: cmake --install build --config Release --prefix install_dir
+>>>>>>> REPLACE

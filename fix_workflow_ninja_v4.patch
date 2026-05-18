@@ -1,0 +1,7 @@
+<<<<<<< SEARCH
+      - name: Build
+        run: cmake --build build --target rasmol_tcl
+=======
+      - name: Build
+        run: cmake --build build --config Release --target rasmol_tcl
+>>>>>>> REPLACE
