@@ -1,0 +1,25 @@
+<<<<<<< SEARCH
+      - name: Configure CMake
+        run: |
+          cmake -B build -S . \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DPIXELDEPTH=32 \
+            -DCMAKE_OSX_ARCHITECTURES="arm64;x86_64" \
+            -DCMAKE_OSX_DEPLOYMENT_TARGET="10.15" \
+            -DCMAKE_INSTALL_PREFIX=/usr/local \
+            -DVTK_DIR=""
+=======
+      - name: Configure CMake
+        run: |
+          cmake -B build -S . \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DPIXELDEPTH=32 \
+            -DCMAKE_OSX_ARCHITECTURES="arm64;x86_64" \
+            -DCMAKE_OSX_DEPLOYMENT_TARGET="10.15" \
+            -DCMAKE_INSTALL_PREFIX=/usr/local \
+            -DVTK_DIR="" \
+            -DTCL_INCLUDE_PATH="/opt/homebrew/opt/tcl-tk/include" \
+            -DTK_INCLUDE_PATH="/opt/homebrew/opt/tcl-tk/include" \
+            -DTCL_LIBRARY="/opt/homebrew/opt/tcl-tk/lib/libtcl8.6.dylib" \
+            -DTK_LIBRARY="/opt/homebrew/opt/tcl-tk/lib/libtk8.6.dylib"
+>>>>>>> REPLACE

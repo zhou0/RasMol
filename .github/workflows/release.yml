@@ -143,16 +143,25 @@ jobs:
 
       - name: Configure CMake
         run: |
+          if [ -d "/opt/homebrew/opt/tcl-tk" ]; then
+            TCL_ROOT="/opt/homebrew/opt/tcl-tk"
+          else
+            TCL_ROOT="/usr/local/opt/tcl-tk"
+          fi
           cmake -B build -S . \
             -DCMAKE_BUILD_TYPE=Release \
             -DPIXELDEPTH=32 \
             -DCMAKE_OSX_ARCHITECTURES="arm64;x86_64" \
             -DCMAKE_OSX_DEPLOYMENT_TARGET="10.15" \
             -DCMAKE_INSTALL_PREFIX=/usr/local \
-            -DVTK_DIR=""
+            -DVTK_DIR="" \
+            -DTCL_INCLUDE_PATH="$TCL_ROOT/include" \
+            -DTK_INCLUDE_PATH="$TCL_ROOT/include" \
+            -DTCL_LIBRARY="$TCL_ROOT/lib/libtcl8.6.dylib" \
+            -DTK_LIBRARY="$TCL_ROOT/lib/libtk8.6.dylib"
 
       - name: Build
-        run: cmake --build build --config Release --target rasmol_tcl
+        run: cmake --build build --config Release
 
       - name: Package
         run: |

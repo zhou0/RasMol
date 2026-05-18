@@ -262,6 +262,14 @@ if(EXISTS "${CMAKE_SOURCE_DIR}/doc/rasmol.hlp")
 endif()
 
 # Tcl/Tk Support
+if(APPLE)
+    # macOS framework logic
+    find_library(TCL_LIBRARY Tcl)
+    find_library(TK_LIBRARY Tk)
+    find_path(TCL_INCLUDE_PATH tcl.h)
+    find_path(TK_INCLUDE_PATH tk.h)
+endif()
+
 if(NOT TCL_LIBRARY OR NOT TK_LIBRARY)
     find_package(TCL QUIET)
     find_package(TK QUIET)
@@ -299,6 +307,12 @@ if(TCL_INCLUDE_PATH AND TK_INCLUDE_PATH AND TCL_LIBRARY AND TK_LIBRARY)
     endif()
     install(TARGETS rasmol_tcl DESTINATION bin)
     install(FILES gui/tcltk/rasmol_ui.tcl gui/tcltk/logo.tcl DESTINATION share/rasmol)
+else()
+    message(WARNING "Tcl/Tk dependencies not fully found. rasmol_tcl target will not be created.")
+    message(STATUS "TCL_INCLUDE_PATH: ${TCL_INCLUDE_PATH}")
+    message(STATUS "TK_INCLUDE_PATH: ${TK_INCLUDE_PATH}")
+    message(STATUS "TCL_LIBRARY: ${TCL_LIBRARY}")
+    message(STATUS "TK_LIBRARY: ${TK_LIBRARY}")
 endif()
 
 # CPack Configuration for Installer Generation
