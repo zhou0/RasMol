@@ -1,4 +1,7 @@
+
 # RasMol: Molecular Graphics Visualization
+
+[![CMake on multiple platforms](https://github.com/zhou0/RasMol/actions/workflows/cmake-multi-platform.yml/badge.svg)](https://github.com/zhou0/RasMol/actions/workflows/cmake-multi-platform.yml)
 
 RasMol is a molecular graphics program for visualizing proteins, nucleic acids, and small molecules. Originally developed at the University of Edinburgh, it supports numerous formats like PDB, CIF, and MDL Mol.
 
