@@ -536,7 +536,7 @@ int SetPreferenceString (Str255 buffer, int sid, int sind) {
     int pfresult;
     short oldresfile;
     short strllen;
-    short strlcur;
+    int strlcur;
     int pfclose;
     Handle oldresm;
     Handle strlres;
