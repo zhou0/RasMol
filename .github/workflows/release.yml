@@ -1,0 +1,233 @@
+name: Release Build
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  windows-msi:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up MSVC
+        uses: ilammy/msvc-dev-cmd@v1
+
+      - name: Install WiX
+        run: dotnet tool install --global WiX
+
+      - name: Install Dependencies (Choco)
+        run: |
+          choco install magicsplat-tcl-tk --version=1.16.0
+
+      - name: Locate Tcl/Tk
+        id: tcl-paths
+        shell: pwsh
+        run: |
+          $tclHeaders = Get-ChildItem -Path C:\ -Filter tcl.h -Recurse -ErrorAction SilentlyContinue | Where-Object { $_.FullName -notmatch "mingw" -and $_.FullName -notmatch "Miniconda" -and $_.FullName -notmatch "R-" }
+
+          $found = $false
+          foreach ($header in $tclHeaders) {
+              $root = $header.Directory.Parent.FullName
+              $tclLib = Get-ChildItem -Path $root -Filter tcl86t.lib -Recurse -ErrorAction SilentlyContinue | Select-Object -First 1
+              $tkLib = Get-ChildItem -Path $root -Filter tk86t.lib -Recurse -ErrorAction SilentlyContinue | Select-Object -First 1
+
+              if ($null -ne $tclLib -and $null -ne $tkLib) {
+                  echo "TCL_ROOT=$root" >> $env:GITHUB_ENV
+                  echo "TCL_INCLUDE=$($header.DirectoryName)" >> $env:GITHUB_ENV
+                  echo "TCL_LIB_PATH=$($tclLib.FullName)" >> $env:GITHUB_ENV
+                  echo "TK_LIB_PATH=$($tkLib.FullName)" >> $env:GITHUB_ENV
+                  $found = $true
+                  Write-Host "Found Tcl at $root"
+                  break
+              }
+          }
+          if (-not $found) { throw "Compatible MagicSplat Tcl/Tk not found" }
+
+      - name: Configure CMake
+        run: |
+          cmake -B build -S . -G Ninja `
+            -DCMAKE_BUILD_TYPE=Release `
+            -DPIXELDEPTH=32 `
+            -DTCL_INCLUDE_PATH="$env:TCL_INCLUDE" `
+            -DTK_INCLUDE_PATH="$env:TCL_INCLUDE" `
+            -DTCL_LIBRARY="$env:TCL_LIB_PATH" `
+            -DTK_LIBRARY="$env:TK_LIB_PATH"
+
+      - name: Build
+        run: cmake --build build --config Release --target rasmol_tcl
+
+      - name: Install
+        run: cmake --install build --config Release --prefix "${{ github.workspace }}/install_dir"
+
+      - name: Package
+        run: |
+          cd build
+          cpack -C Release -G WIX
+
+      - name: Upload MSI
+        uses: actions/upload-artifact@v4
+        with:
+          name: RasMol-Windows-MSI
+          path: build/*.msi
+
+  linux-appimage:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libx11-dev libxext-dev libxi-dev libhdf5-dev tcl-dev tk-dev bison libxpm-dev
+
+      - name: Configure CMake
+        run: |
+          cmake -B build -S . \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DPIXELDEPTH=32
+
+      - name: Build
+        run: cmake --build build --config Release --target rasmol_tcl
+
+      - name: Install
+        run: cmake --install build --config Release --prefix AppDir/usr
+
+      - name: Prepare AppDir
+        run: |
+          mkdir -p AppDir/usr/share/icons/hicolor/48x48/apps
+          cp rasmol.desktop AppDir/
+          sudo apt-get install -y imagemagick
+          convert src/rasmol_48x48.xpm AppDir/rasmol.png
+          cp AppDir/rasmol.png AppDir/usr/share/icons/hicolor/48x48/apps/rasmol.png
+
+      - name: Install linuxdeploy
+        run: |
+          wget https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppRun
+          chmod +x linuxdeploy-x86_64.AppRun
+          wget https://github.com/linuxdeploy/linuxdeploy-plugin-appimage/releases/download/continuous/linuxdeploy-plugin-appimage-x86_64.AppRun
+          chmod +x linuxdeploy-plugin-appimage-x86_64.AppRun
+
+      - name: Build AppImage
+        run: |
+          export ARCH=x86_64
+          ./linuxdeploy-x86_64.AppRun --appdir AppDir --plugin appimage --output appimage
+        env:
+          OUTPUT: RasMol-x86_64.AppImage
+
+      - name: Upload AppImage
+        uses: actions/upload-artifact@v4
+        with:
+          name: RasMol-Linux-AppImage
+          path: "*.AppImage"
+
+  macos-release:
+    strategy:
+      matrix:
+        arch: [x86_64, arm64]
+        include:
+          - arch: x86_64
+            os: macos-13
+            brew_prefix: /usr/local
+          - arch: arm64
+            os: macos-latest
+            brew_prefix: /opt/homebrew
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Build Dependencies (macOS)
+        run: |
+          brew install bison tcl-tk jpeg
+          echo "${{ matrix.brew_prefix }}/opt/bison/bin" >> $GITHUB_PATH
+
+      - name: Configure CMake
+        run: |
+          TCL_ROOT="${{ matrix.brew_prefix }}/opt/tcl-tk"
+          BISON_BIN="${{ matrix.brew_prefix }}/opt/bison/bin/bison"
+          cmake -B build -S . \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DPIXELDEPTH=32 \
+            -DCMAKE_OSX_ARCHITECTURES="${{ matrix.arch }}" \
+            -DCMAKE_OSX_DEPLOYMENT_TARGET="10.15" \
+            -DCMAKE_INSTALL_PREFIX=/usr/local \
+            -DVTK_DIR="" \
+            -DBISON_EXECUTABLE="$BISON_BIN" \
+            -DTCL_INCLUDE_PATH="$TCL_ROOT/include" \
+            -DTK_INCLUDE_PATH="$TCL_ROOT/include" \
+            -DTCL_LIBRARY="$(find $TCL_ROOT/lib -name 'libtcl8.6*' | head -n 1)" \
+            -DTK_LIBRARY="$(find $TCL_ROOT/lib -name 'libtk8.6*' | head -n 1)"
+
+      - name: Build
+        run: cmake --build build --config Release
+
+      - name: Install to AppDir
+        run: cmake --install build --prefix AppDir
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: RasMol-macOS-${{ matrix.arch }}
+          path: AppDir
+
+  macos-dmg:
+    needs: macos-release
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Build Dependencies (macOS)
+        run: |
+          brew install bison
+          echo "/opt/homebrew/opt/bison/bin" >> $GITHUB_PATH
+
+      - name: Download x86_64 Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: RasMol-macOS-x86_64
+          path: AppDir-x86_64
+
+      - name: Download arm64 Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: RasMol-macOS-arm64
+          path: AppDir-arm64
+
+      - name: Create Universal Binaries
+        run: |
+          mkdir -p AppDir-Universal/bin
+          mkdir -p AppDir-Universal/share/rasmol
+          for bin in AppDir-x86_64/bin/*; do
+            if [ -f "$bin" ]; then
+              name=$(basename "$bin")
+              if [ -f "AppDir-arm64/bin/$name" ]; then
+                lipo -create "AppDir-x86_64/bin/$name" "AppDir-arm64/bin/$name" -output "AppDir-Universal/bin/$name"
+              else
+                cp "$bin" "AppDir-Universal/bin/$name"
+              fi
+            fi
+          done
+          cp -R AppDir-x86_64/share/rasmol/* AppDir-Universal/share/rasmol/
+
+      - name: Configure CPack
+        run: |
+          cmake -B build-dmg -S . \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DPIXELDEPTH=32 \
+            -DBISON_EXECUTABLE="/opt/homebrew/opt/bison/bin/bison"
+
+      - name: Package DMG
+        run: |
+          mkdir -p build-dmg/install
+          cp -R AppDir-Universal/* build-dmg/install/
+          cd build-dmg
+          cpack -C Release -G DragNDrop -D CPACK_INSTALL_DIRECTORY="install"
+
+      - name: Upload DMG
+        uses: actions/upload-artifact@v4
+        with:
+          name: RasMol-MacOS-DMG
+          path: build-dmg/*.dmg

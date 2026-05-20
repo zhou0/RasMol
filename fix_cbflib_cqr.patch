@@ -1,0 +1,8 @@
+<<<<<<< SEARCH
+            string(REPLACE "find_library(CQRLIB_LIBRARY CQRlib)" "set(CQRLIB_LIBRARY \"${CQRLIB_LIBRARY}\")" CBF_CMAKE "${CBF_CMAKE}")
+=======
+            string(REPLACE "find_library(CQRLIB_LIBRARY CQRlib)" "set(CQRLIB_LIBRARY \"${CQRLIB_LIBRARY}\")" CBF_CMAKE "${CBF_CMAKE}")
+            # Specifically fix hardcoded 'CQR' if it exists in CBFlib
+            string(REPLACE " -lCQR " " ${CQRLIB_LIBRARY} " CBF_CMAKE "${CBF_CMAKE}")
+            string(REPLACE "CQR" "${CQRLIB_LIBRARY}" CBF_CMAKE "${CBF_CMAKE}")
+>>>>>>> REPLACE

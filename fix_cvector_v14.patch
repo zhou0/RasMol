@@ -1,0 +1,36 @@
+<<<<<<< SEARCH
+if(NOT CVECTOR_LIBRARY)
+    message(STATUS "CVector not found. Fetching from GitHub...")
+    fetchcontent_declare(cvector
+        GIT_REPOSITORY https://github.com/zhou0/CVector.git
+        GIT_TAG master
+    )
+    fetchcontent_makeavailable(cvector)
+    set(CVECTOR_LIBRARY CV_shared CACHE STRING "" FORCE)
+    set(CVECTOR_INCLUDE_DIR ${cvector_SOURCE_DIR} CACHE PATH "" FORCE)
+endif()
+=======
+if(NOT CVECTOR_LIBRARY)
+    message(STATUS "CVector not found. Fetching from GitHub...")
+    fetchcontent_declare(cvector
+        GIT_REPOSITORY https://github.com/zhou0/CVector.git
+        GIT_TAG master
+    )
+    fetchcontent_getproperties(cvector)
+    if(NOT cvector_POPULATED)
+        fetchcontent_populate(cvector)
+        # Patch CVector/CMakeLists.txt to remove its own output directory overrides
+        file(READ ${cvector_SOURCE_DIR}/CMakeLists.txt CV_CMAKE)
+        string(REPLACE "set(CMAKE_RUNTIME_OUTPUT_DIRECTORY" "#set(CMAKE_RUNTIME_OUTPUT_DIRECTORY" CV_CMAKE "${CV_CMAKE}")
+        string(REPLACE "set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY" "#set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY" CV_CMAKE "${CV_CMAKE}")
+        string(REPLACE "set(CMAKE_LIBRARY_OUTPUT_DIRECTORY" "#set(CMAKE_LIBRARY_OUTPUT_DIRECTORY" CV_CMAKE "${CV_CMAKE}")
+        # Ensure static and shared targets have unique output names on Windows to avoid rule conflicts
+        string(REPLACE "set_target_properties(CV_static PROPERTIES OUTPUT_NAME CVector)" "set_target_properties(CV_static PROPERTIES OUTPUT_NAME CVectorStatic)" CV_CMAKE "${CV_CMAKE}")
+        string(REPLACE "set_target_properties(CV_static PROPERTIES OUTPUT_NAME \"CVector\")" "set_target_properties(CV_static PROPERTIES OUTPUT_NAME \"CVectorStatic\")" CV_CMAKE "${CV_CMAKE}")
+        file(WRITE ${cvector_SOURCE_DIR}/CMakeLists.txt "${CV_CMAKE}")
+        add_subdirectory(${cvector_SOURCE_DIR} ${cvector_BINARY_DIR})
+    endif()
+    set(CVECTOR_LIBRARY CV_shared CACHE STRING "" FORCE)
+    set(CVECTOR_INCLUDE_DIR ${cvector_SOURCE_DIR} CACHE PATH "" FORCE)
+endif()
+>>>>>>> REPLACE

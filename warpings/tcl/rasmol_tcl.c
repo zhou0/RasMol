@@ -1,8 +1,17 @@
 #include <tcl.h>
+#ifdef __APPLE__
+#define MAC_OSX_TK
+#endif
 #include <tk.h>
 #include <stdlib.h>
 #include <string.h>
+#ifdef _WIN32
+#include <io.h>
+#define access _access
+#define R_OK 4
+#else
 #include <unistd.h>
+#endif
 #include <cqrlib.h>
 #include "rasmol.h"
 #include "molecule.h"
@@ -268,6 +277,7 @@ int Tcl_AppInit(Tcl_Interp *interp) {
         "../gui/tcltk",
         "../../gui/tcltk",
         "../../../gui/tcltk",
+        "../share/rasmol",
         "./",
         "/usr/local/share/rasmol",
         "/usr/share/rasmol",

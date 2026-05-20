@@ -1,0 +1,9 @@
+<<<<<<< SEARCH
+      - name: Configure CMake
+        run: |
+          cmake -G Ninja -B build -S . `
+=======
+      - name: Configure CMake
+        run: |
+          cmake -B build -S . `
+>>>>>>> REPLACE
