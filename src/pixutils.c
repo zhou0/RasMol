@@ -2885,8 +2885,8 @@ void DrawTorus( int x1, int y1, int z1,
       if (ClipStatus) {
           oClipStatus = ClipStatus;
           rada = (int)(.99+sqrt(
-                (double)(rad*rad+
-                (Cnext[0]-A[0])*(Cnext[0]-A[0])+
+                ((double)rad)*((double)rad)+
+                (double)((Cnext[0]-A[0])*(Cnext[0]-A[0])+
                 (Cnext[1]-A[1])*(Cnext[1]-A[1])+
                 (Cnext[2]-A[2])*(Cnext[2]-A[2]))));
           if (TestSphere(A[0],A[1],A[2],rada)) {
