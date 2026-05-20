@@ -1,3 +1,4 @@
+[![CMake on multiple platforms](https://github.com/zhou0/RasMol/actions/workflows/cmake-multi-platform.yml/badge.svg)](https://github.com/zhou0/RasMol/actions/workflows/cmake-multi-platform.yml)
 
 # RasMol: Molecular Graphics Visualization
 
