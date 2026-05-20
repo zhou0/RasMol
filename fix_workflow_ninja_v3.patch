@@ -1,5 +1,0 @@
-<<<<<<< SEARCH
-      - name: Install Ninja
-        run: choco install ninja
-=======
->>>>>>> REPLACE
