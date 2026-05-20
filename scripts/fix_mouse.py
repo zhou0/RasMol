@@ -17,7 +17,7 @@ for line in lines:
         new_lines.append("    if {$b == 2 || ($s & 0x200)} { set m [expr {$m | 0x02}] }\n")
         new_lines.append("    if {$b == 3 || ($s & 0x400)} { set m [expr {$m | 0x04}] }\n")
         new_lines.append("    if {$s & 0x01} { set m [expr {$m | 0x08}] }\n")
-        new_lines.append("    if {$s & 0x04} { set m [expr {$m | 0x10}] }\n")
+        new_lines.append("    if {$s & 0x04} { set m [expr {$m | 0x10}] }\
         new_lines.append("    return $m\n")
         new_lines.append("}\n")
         continue
