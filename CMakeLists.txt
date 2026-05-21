@@ -134,6 +134,8 @@ if(NOT CBF_LIBRARY)
         set(CBF_INCLUDE_DIR "" CACHE PATH "" FORCE)
     endif()
 endif()
+find_package(OpenGL)
+
 # VTK Support
 set(VTK_COMPONENTS
     CommonCore
@@ -265,6 +267,7 @@ endif()
 
 install(DIRECTORY data/ DESTINATION share/rasmol/data)
 install(DIRECTORY doc/ DESTINATION share/rasmol/doc)
+install(DIRECTORY src/shaders/ DESTINATION share/rasmol/shaders)
 if(EXISTS "${CMAKE_SOURCE_DIR}/doc/rasmol.hlp")
     install(FILES doc/rasmol.hlp DESTINATION share/rasmol)
 endif()
