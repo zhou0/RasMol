@@ -58,7 +58,7 @@ jobs:
             -DTK_LIBRARY="$env:TK_LIB_PATH"
 
       - name: Build
-        run: cmake --build build --config Release --target rasmol_tcl
+        run: cmake --build build --config Release
 
       - name: Install
         run: cmake --install build --config Release --prefix "${{ github.workspace }}/install_dir"
@@ -91,7 +91,7 @@ jobs:
             -DPIXELDEPTH=32
 
       - name: Build
-        run: cmake --build build --config Release --target rasmol_tcl
+        run: cmake --build build --config Release
 
       - name: Install
         run: cmake --install build --config Release --prefix AppDir/usr
