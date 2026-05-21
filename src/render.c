@@ -2392,7 +2392,7 @@ void ResetRenderer( void )
 }
 
 
-static void InitialiseTables( void )
+/*static void InitialiseTables( void )
 {
     register Byte __far *ptr;
     register unsigned int root,root2;
@@ -2405,7 +2405,7 @@ static void InitialiseTables( void )
     for( rad=2; rad<MAXRAD; rad++ )
     {   LookUp[rad] = ptr;
 
-        /* i == 0 */
+        / * i == 0 * /
         *ptr++ = (Byte)rad;  
 
         root = rad-1;
@@ -2413,22 +2413,22 @@ static void InitialiseTables( void )
 
         arg = rad*rad;
 	for( i=1; i<rad; i++ )
-        {   /* arg = rad*rad - i*i */
+        {   / * arg = rad*rad - i*i * /
             arg -= (i<<1)-1;
 
-            /* root = isqrt(arg)   */
+            / * root = isqrt(arg)   * /
             while( arg < root2 )
             {   root2 -= (root<<1)-1;
                 root--;
             }
-            /* Thanks to James Crook */
+            / * Thanks to James Crook * /
             *ptr++ = ((arg-root2)<i)? root : root+1;
         }
 
-        /* i == rad */
+        / * i == rad * /
         *ptr++ = 0;    
     }
-}
+}*/
 
 
 void InitialiseRenderer( void )
@@ -2449,18 +2449,19 @@ void InitialiseRenderer( void )
 
 #if defined(IBMPC) || defined(APPLEMAC)
     /* Allocate tables on FAR heaps */ 
-    Array = (Byte __far*)_fmalloc(MAXTABLE*sizeof(Byte));
-    LookUp = (Byte __far* __far*)_fmalloc(MAXRAD*sizeof(Byte __far*));
+    /* Array = (Byte __far*)_fmalloc(MAXTABLE*sizeof(Byte)); */
+    /* LookUp = (Byte __far* __far*)_fmalloc(MAXRAD*sizeof(Byte __far*)); */
     HashTable = (void __far* __far*)_fmalloc(VOXSIZE*sizeof(void __far*));
     ColConst = (Card __far*)_fmalloc(MAXRAD*sizeof(Card));
     
-    if( !Array || !LookUp || !HashTable || !ColConst )
+    /* if( !Array || !LookUp || !HashTable || !ColConst ) */
+    if( !HashTable || !ColConst )
 	FatalRenderError("tables");
 #else
     ColConst = ColConstTable;
 #endif
 
-    InitialiseTables();
+    /* InitialiseTables(); */
 
     /* Initialise ColConst! */
     for( rad=0; rad<MAXRAD; rad++ )
