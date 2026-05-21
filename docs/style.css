@@ -50,28 +50,8 @@ pre {
     overflow: auto;
 }
 
-table {
-    border-collapse: collapse;
-    margin: 1em 0;
-    width: 100%;
-}
-
-table, th, td {
-    border: 1px solid #ccc;
-    padding: 0.5em;
-}
-
-th {
-    background-color: #eee;
-    text-align: left;
-}
-
 .indent {
     margin-left: 2em;
-}
-
-td {
-    vertical-align: top;
 }
 
 .bg-cyan { background-color: #a0ffff; }
@@ -88,4 +68,97 @@ main {
 header, footer {
     display: block;
     margin-bottom: 1em;
+}
+
+/* Flexbox and Grid Layouts to replace tables */
+
+.intro-flex {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 1.5em;
+    margin: 2em 0;
+}
+
+.intro-box {
+    flex: 1;
+    min-width: 300px;
+    padding: 1.5em;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+}
+
+.intro-logo {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.data-grid {
+    display: grid;
+    margin: 1em 0;
+    border: 1px solid #ccc;
+    background-color: #eee;
+    gap: 1px;
+}
+
+.data-grid > div {
+    background-color: #fff;
+    padding: 0.8em;
+}
+
+.data-grid .header {
+    background-color: #f0f0f0;
+    font-weight: bold;
+    text-align: center;
+}
+
+.data-3-col {
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.data-2-col {
+    grid-template-columns: auto 1fr;
+}
+
+.two-col-list {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 1em;
+    margin: 1em 0;
+}
+
+.two-col-list .term {
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+.header-layout {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1em;
+    margin-bottom: 2em;
+}
+
+.logo-group {
+    display: flex;
+    gap: 0.5em;
+    align-items: center;
+}
+
+@media (max-width: 800px) {
+    .data-3-col {
+        grid-template-columns: 1fr;
+    }
+    .intro-flex {
+        flex-direction: column;
+    }
+    .intro-box {
+        width: 100%;
+    }
 }

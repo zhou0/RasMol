@@ -1,28 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
-<head><meta charset="UTF-8">
-
-<title>RasMol V2.7.5.2 ChangeLog</title>
-
-<link rel="stylesheet" href="style.css"><script type="module" src="script.js"></script></head>
+<head>
+    <meta charset="UTF-8">
+    <title>RasMol Documentation</title>
+    <link rel="stylesheet" href="style.css">
+    <script type="module" src="script.js"></script>
+</head>
 <body>
 
+
+
+
+
 <a href="http://www.iucr.org/iucr-top/welcome.html">
-<img alt="Iucrhome" src="html_graphics/iucrhome.jpg"></a>
+<img alt="[IUCr Home Page]" src="html_graphics/iucrhome.jpg"></a>
 <a href="http://www.iucr.org/iucr-top/cif/home.html">
-<img alt="Cifhome" src="html_graphics/cifhome.jpg"></a>
+<img alt="[CIF Home Page]" src="html_graphics/cifhome.jpg"></a>
 <a href="readme.html"><img src="html_graphics/rasmolbutton.jpg"
-alt="Rasmolbutton"></a>
+alt="[RasMol]"></a>
 <hr>
 <div class="center">
 | <a href="http://www.rasmol.net">RasMol</a> |
-<a href="readme.html#Copying">Copying and Distribution</a> |
-<a href="readme.html#Contents">Contents</a> |
+<a href="readme.html#copying">Copying and Distribution</a> |
+<a href="readme.html#contents">Contents</a> |
 <a href="install.html">Installation Instructions</a> |<br />
 | <a href="changelog.html">Changes</a> |
 <a href="todo.html">Things To Do</a> |
-<a href="readme.html#Introduction">Introduction</a> |
-<a href="readme.html#CodeAndBinaries">Source Code and Binaries</a> |<br />
+<a href="readme.html#introduction">Introduction</a> |
+<a href="readme.html#codeandbinaries">Source Code and Binaries</a> |<br />
 | <a href="doc/rasmol.html">RasMol Manual</a> |
 <a href="doc/esrasmol27.html">Spanish Translation of RasMol Manual</a> | 
 <a href="doc/itrasmol.hlp">Italian Translation of RasMol Help File</a> |<br />
@@ -38,10 +43,7 @@ RasMol 2.7.5.2</h1>
 
 
 <div class="center">
-<table>
-<tr>
-<td class="bg-cyan">
-<ul>
+<div class="two-col-list"><div class="term"><ul>
 <li><a href=http://www.rasmol.net/software/RasMol_Latest_Windows_Installer.exe>RasMol Latest Windows Installer</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />
 &nbsp;<br />
 <li><a href=http://www.rasmol.net/software/RasMol_Latest.tar.gz>RasMol Latest Source Tarball </a><br />
@@ -50,13 +52,7 @@ RasMol 2.7.5.2</h1>
 &nbsp;<br />
 <li><a href=http://www.rasmol.net/donate.shtml>Donate to Support RasMol </a><br />
 <li><a href=http://www.rasmol.net/register.shtml>Register your RasMol</a><br />
-</ul>
-
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<td><img  src="html_graphics/rasmollogo.jpg" alt="Rasmollogo">
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<td class="bg-yellow">
-<ul>
+</ul></div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <img  src="html_graphics/rasmollogo.jpg" alt="RasMol"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <ul>
 <li><a href=http://www.rasmol.net/software/RasMol_2.7.5.2_Windows_Installer.exe>RasMol 2.7.5.2 Windows Installer</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />
 &nbsp;<br />
 <li><a href=http://www.rasmol.net/software/RasMol_2.7.5.2.tar.gz>RasMol 2.7.5.2 Source
@@ -66,13 +62,11 @@ Tarball</a><br />
 &nbsp;<br />
 <li><a href=http://www.rasmol.net/donate.shtml>Donate to Support RasMol </a><br />
 <li><a href=http://www.rasmol.net/register.shtml>Register your RasMol</a><br />
-</ul>
-
-</table>
+</ul></div></div>
 </div>
 
 
-<h3 class="center">
+<h3 >
 Molecular Graphics Visualisation Tool<br />
 13 June 2009 (rev. 13 May 2011)<br />
 </h3>
@@ -90,27 +84,7 @@ Copyright &#169; Roger Sayle 1992-1999
 <p>
 <div class="center">
 and Based on Mods by
-<table>
-<tr><th>Author<th>Version, Date<th>Copyright
-<tr><td>Arne Mueller<td>RasMol 2.6x1 May 1998<td>&#169; Arne Mueller 1998
-<tr><td>Gary Grossman and<br>Marco Molinaro<td>RasMol 2.5-ucb November 1995<br>RasMol 2.6-ucb November 1996
-<td>&#169; UC Regents/ModularCHEM<br>Consortium 1995, 1996
-<tr><td>Philippe Valadon<td>RasTop 1.3 August 2000<td>&#169; Philippe Valadon 2000
-<tr><td>Herbert J. Bernstein<td>RasMol 2.7.0 March 1999<br>
-RasMol 2.7.1 June 1999<br>RasMol 2.7.1.1 January 2001<br />
-RasMol 2.7.2 August 2000<br>
-RasMol 2.7.2.1 April 2001<br>
-RasMol 2.7.2.1.1 January 2004<br />
-RasMol 2.7.3 February 2005<br />
-RasMol 2.7.3.1 Apr 06<br />
-RasMol 2.7.4 Nov 07<br />
-RasMol 2.7.4.1 Jan 08<br />
-RasMol 2.7.4.2 Mar 08<br />
-RasMol 2.7.5 Jun 09<br />
-RasMol 2.7.5.1 Jul 09<br />
-RasMol 2.7.5.2 May 11<br />
-<td>&#169; Herbert J. Bernstein 1998-2011
-</table>
+<div class="data-grid data-3-col"><div class="header">Author</div><div class="header">Version, Date</div><div class="header">Copyright</div><div>Arne Mueller<</div><div>&#169; Arne Mueller 1998</div><div>Gary Grossman and<br>Marco Molinaro<</div><div>&#169; UC Regents/ModularCHEM<br>Consortium 1995, 1996</div><div>Philippe Valadon<</div><div>&#169; Philippe Valadon 2000</div><div>Herbert J. Bernstein<</div><div>&#169; Herbert J. Bernstein 1998-2011</div></div>
 </div>
 <p>
 <div class="center">
@@ -134,7 +108,7 @@ RasMol 2.7.3.1, RasMol 2.7.3, RasMol 2.7.2.1.1 and on RasMol 2.7.2,
 on RasMol 2.7.1.1, on RasTop 1.3,
 on RasMol version 2.6_CIF.2, on RasMol version
 2.6x1, on RasMol version 2.6.4, and RasMol 2.5-ucb and 2.6-ucb.
-Please read the file <a HREF = "doc/NOTICE.html">NOTICE</a> for
+Please read the file <a href = "doc/NOTICE.html">NOTICE</a> for
 important notices which apply to this package and for
 license terms (GPL or RASLIC).
 <p>
@@ -1050,7 +1024,7 @@ output modes.
 
 [02/04/01]    HJB	langsel.c langsel_mac.c
                 Add French (thanks to Jean-Pierre Demailly 
-                <jean-Pierre.Demailly@ujf-grenoble.fr>) and Italian (Giuseppe Martini
+                <jean-pierre.demailly@ujf-grenoble.fr>) and Italian (Giuseppe Martini
                 <martini@iigb.na.cnr.it> and Giovanni Paolella <paolella@dbbm.unina.it>
                 with contributions by: A. Davassi, M. Masullo, C. Liotto, G. Paolella,
                 G. Martini.  Adapt to 2.7.2 menu structure.
