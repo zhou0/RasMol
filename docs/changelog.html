@@ -1,44 +1,49 @@
-<!doctype html public "-//IETF//DTD HTML 2.0//EN">
-<HTML>
-<HEAD>
-<title>RasMol V2.7.5.2 ChangeLog</title>
-</HEAD>
-<BODY BACKGROUND="html_graphics/rasmolwallpaper.jpg">
-<font face="Helvetica,Arial,Times" size=3>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>RasMol Documentation</title>
+    <link rel="stylesheet" href="style.css">
+    <script type="module" src="script.js"></script>
+</head>
+<body>
+
+
+
+
+
 <a href="http://www.iucr.org/iucr-top/welcome.html">
 <img alt="[IUCr Home Page]" src="html_graphics/iucrhome.jpg"></a>
 <a href="http://www.iucr.org/iucr-top/cif/home.html">
 <img alt="[CIF Home Page]" src="html_graphics/cifhome.jpg"></a>
-<A HREF="README.html"><IMG SRC="html_graphics/rasmolbutton.jpg"
+<A HREF="readme.html"><IMG SRC="html_graphics/rasmolbutton.jpg"
 ALT="[RasMol]"></A>
 <hr>
-<CENTER>
-| <a href="http://www.OpenrasMol.org">OpenRasMol</a> |
-<A href="README.html#Copying">Copying and Distribution</A> |
-<A href="README.html#Contents">Contents</A> |
-<A href="INSTALL.html">Installation Instructions</A> |<br />
-| <A href="ChangeLog.html">Changes</A> |
-<A href="TODO.html">Things To Do</A> |
-<A href="README.html#Introduction">Introduction</A> | 
-<A href="README.html#CodeAndBinaries">Source Code and Binaries</A> |<br />
+<div class="center">
+| <a href="http://www.RasMol.org">RasMol</a> |
+<A href="readme.html#copying">Copying and Distribution</A> |
+<A href="readme.html#contents">Contents</A> |
+<A href="install.html">Installation Instructions</A> |<br />
+| <A href="changelog.html">Changes</A> |
+<A href="todo.html">Things To Do</A> |
+<A href="readme.html#introduction">Introduction</A> |
+<A href="readme.html#codeandbinaries">Source Code and Binaries</A> |<br />
 | <A href="doc/rasmol.html">RasMol Manual</A> |
 <a href="doc/esrasmol27.html">Spanish Translation of RasMol Manual</a> | 
 <a href="doc/itrasmol.hlp">Italian Translation of RasMol Help File</a> |<br />
 | <a href=http://www.rasmol.org/donate.shtml>Donate to Support RasMol</a> |
-<a href="README.html">Release README</A> |
+<a href="readme.html">Release README</A> |
 <a href=http://www.rasmol.org/register.shtml>Register your RasMol</a> |
 <br />
-</CENTER>
+</div>
 
-<font color="#0808A0">
-<H1 ALIGN=CENTER>ChangeLog<br />
+
+<H1 >ChangeLog<br />
 RasMol 2.7.5.2</H1>
 
 
-<center>
-<table celpadding=0>
-<tr>
-<td valign=top bgcolor="#A0FFFF"><font face="Helvetica,Arial,Times" size=2>
+<div class="center">
+<div class="intro-flex"><div class="intro-box bg-cyan">
 <ul>
 <li><a href=http://www.rasmol.org/software/RasMol_Latest_Windows_Installer.exe>RasMol Latest Windows Installer</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />
 &nbsp;<br />
@@ -49,11 +54,7 @@ RasMol 2.7.5.2</H1>
 <li><a href=http://www.rasmol.org/donate.shtml>Donate to Support RasMol </a><br />
 <li><a href=http://www.rasmol.org/register.shtml>Register your RasMol</a><br />
 </ul>
-</font>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<td><IMG  SRC="html_graphics/rasmollogo.jpg" ALT="RasMol">
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<td valign=top bgcolor="#FFFFA0"><font face="Helvetica,Arial,Times" size=2>
+</div><div class="intro-logo"><IMG  SRC="html_graphics/rasmollogo.jpg" ALT="RasMol"></div><div class="intro-box bg-yellow"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 <ul>
 <li><a href=http://www.rasmol.org/software/RasMol_2.7.5.2_Windows_Installer.exe>RasMol 2.7.5.2 Windows Installer</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />
 &nbsp;<br />
@@ -65,17 +66,16 @@ Tarball</a><br />
 <li><a href=http://www.rasmol.org/donate.shtml>Donate to Support RasMol </a><br />
 <li><a href=http://www.rasmol.org/register.shtml>Register your RasMol</a><br />
 </ul>
-</font>
-</table>
-</center>
+</div></div>
+</div>
 
 
-<H3 ALIGN=CENTER>
+<H3 >
 Molecular Graphics Visualisation Tool<br />
 13 June 2009 (rev. 13 May 2011)<br />
 </h3>
-</font><font color="#000000">
-<CENTER>
+
+<div class="center">
 Based on RasMol 2.6
 by
 Roger Sayle<br />
@@ -84,17 +84,11 @@ Glaxo Wellcome Research &amp; Development,
 Stevenage, Hertfordshire, UK<br />
 Version 2.6, August 1995, Version 2.6.4, December 1998<br />
 Copyright &#169; Roger Sayle 1992-1999
-</CENTER>
+</div>
 <P>
-<CENTER>
+<div class="center">
 and Based on Mods by
-<table border=3>
-<tr><th align="left">Author<th align="left">Version, Date<th align="left">Copyright
-<tr><td>Arne Mueller<td>RasMol 2.6x1 May 1998<td>&#169; Arne Mueller 1998
-<tr><td valign="top">Gary Grossman and<br>Marco Molinaro<td>RasMol 2.5-ucb November 1995<br>RasMol 2.6-ucb November 1996
-<td valign="top">&#169; UC Regents/ModularCHEM<br>Consortium 1995, 1996
-<tr><td>Philippe Valadon<td>RasTop 1.3 August 2000<td>&#169; Philippe Valadon 2000
-<tr><td valign="top">Herbert J. Bernstein<td>RasMol 2.7.0 March 1999<br>
+<div class="data-grid data-3-col"><div class="header">Author</div><div class="header">Version, Date</div><div class="header">Copyright</div><div>Arne Mueller</div><div>RasMol 2.6x1 May 1998</div><div>&#169; Arne Mueller 1998</div><div>Gary Grossman and<br>Marco Molinaro</div><div>RasMol 2.5-ucb November 1995<br>RasMol 2.6-ucb November 1996</div><div>&#169; UC Regents/ModularCHEM<br>Consortium 1995, 1996</div><div>Philippe Valadon</div><div>RasTop 1.3 August 2000</div><div>&#169; Philippe Valadon 2000</div><div>Herbert J. Bernstein</div><div>RasMol 2.7.0 March 1999<br>
 RasMol 2.7.1 June 1999<br>RasMol 2.7.1.1 January 2001<br />
 RasMol 2.7.2 August 2000<br>
 RasMol 2.7.2.1 April 2001<br>
@@ -106,31 +100,22 @@ RasMol 2.7.4.1 Jan 08<br />
 RasMol 2.7.4.2 Mar 08<br />
 RasMol 2.7.5 Jun 09<br />
 RasMol 2.7.5.1 Jul 09<br />
-RasMol 2.7.5.2 May 11<br />
-<td valign="top">&#169; Herbert J. Bernstein 1998-2011
-</table>
-</CENTER>
+RasMol 2.7.5.2 May 11<br /></div><div>&#169; Herbert J. Bernstein 1998-2011</div></div>
+</div>
 <P>
-<CENTER>
+<div class="center">
 This Release by
 <br />Herbert J. Bernstein,
 Bernstein + Sons, 5 Brewster Lane, Bellport, NY, USA<br />
-<script language="javascript" type="text/javascript">
-<!-- 
-      var name = "yaya@";
-      var domain = "bernstein-plus-sons";
-      var domext = ".com";
-      document.write ("<a href=\"mailto:" + name + domain + domext + "\">" + name + domain + domext+"</a>"); 
-// -->
-</script>
+<span class="email-placeholder"></span>
 <noscript>
 yaya&#64;bernstein-plus-sons&#46;com
 </noscript>
 <br />
 Copyright &#169; Herbert J. Bernstein 1998-2009<br />
-</CENTER>
+</div>
 <HR>
-<H2 ALIGN=CENTER>IMPORTANT</H2>
+<H2 >IMPORTANT</H2>
 <P>
 This version is based directly on 
 RasMol 2.7.5.1,
@@ -2087,39 +2072,35 @@ create RasMol_2.7.0:</h3>
 The complete version 2 change history is in the directory <A HREF="ChangeLog/">ChangeLog</A>
 <P>
 <hr>
-<CENTER>
-| <a href="http://www.OpenrasMol.org">OpenRasMol</a> |
-<A href="README.html#Copying">Copying and Distribution</A> |
-<A href="README.html#Contents">Contents</A> |
-<A href="INSTALL.html">Installation Instructions</A> |<br />
-| <A href="ChangeLog.html">Changes</A> |
-<A href="TODO.html">Things To Do</A> |
-<A href="README.html#Introduction">Introduction</A> | 
-<A href="README.html#CodeAndBinaries">Source Code and Binaries</A> |<br />
+<div class="center">
+| <a href="http://www.RasMol.org">RasMol</a> |
+<A href="readme.html#copying">Copying and Distribution</A> |
+<A href="readme.html#contents">Contents</A> |
+<A href="install.html">Installation Instructions</A> |<br />
+| <A href="changelog.html">Changes</A> |
+<A href="todo.html">Things To Do</A> |
+<A href="readme.html#introduction">Introduction</A> |
+<A href="readme.html#codeandbinaries">Source Code and Binaries</A> |<br />
 | <A href="doc/rasmol.html">RasMol Manual</A> |
 <a href="doc/esrasmol27.html">Spanish Translation of RasMol Manual</a> | 
 <a href="doc/itrasmol.hlp">Italian Translation of RasMol Help File</a> |<br />
 | <a href=http://www.rasmol.org/donate.shtml>Donate to Support RasMol</a> |
-<a href="README.html">Release README</A> |
+<a href="readme.html">Release README</A> |
 <a href=http://www.rasmol.org/register.shtml>Register your RasMol</a> |
 <br />
-</CENTER>
+</div>
 <HR>
 Updated 14 May 2011.<br />
 Herbert J. Bernstein<br />
 Bernstein + Sons, 5 Brewster Lane, Bellport, NY 11713-2803, USA<br />
-<script language="javascript" type="text/javascript">
-<!-- 
-      var name = "yaya@";
-      var domain = "bernstein-plus-sons";
-      var domext = ".com";
-      document.write ("<a href=\"mailto:" + name + domain + domext + "\">" + name + domain + domext+"</a>"); 
-// -->
-</script>
+<span class="email-placeholder"></span>
 <noscript>
 yaya&#64;bernstein-plus-sons&#46;com
 </noscript>
 <br />
-</font>
-</BODY>
-</HTML>
+
+
+
+
+</body>
+</html>

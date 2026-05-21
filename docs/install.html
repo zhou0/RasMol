@@ -1,43 +1,46 @@
-<!doctype html public "-//IETF//DTD HTML 2.0//EN">
-<HTML>
-<HEAD>
-<TITLE>
-RasMol V2.7.5 INSTALL
-</TITLE>
-</HEAD>
-<BODY BACKGROUND="html_graphics/rasmolwallpaper.jpg">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>RasMol Documentation</title>
+    <link rel="stylesheet" href="style.css">
+    <script type="module" src="script.js"></script>
+</head>
+<body>
+
+
+
+
 
 <a href="http://www.iucr.org/iucr-top/welcome.html">
 <img alt="[IUCr Home Page]" src="html_graphics/iucrhome.jpg"></a>
 <a href="http://www.iucr.org/iucr-top/cif/home.html">
 <img alt="[CIF Home Page]" src="html_graphics/cifhome.jpg"></a>
-<A HREF="README.html"><IMG SRC="html_graphics/rasmolbutton.jpg"
+<A HREF="readme.html"><IMG SRC="html_graphics/rasmolbutton.jpg"
 ALT="[RasMol]"></A>
 <hr>
-<CENTER>
-| <a href="http://www.OpenrasMol.org">OpenRasMol</a> |
-<A href="README.html#Copying">Copying and Distribution</A> |
-<A href="README.html#Contents">Contents</A> |
-<A href="INSTALL.html">Installation Instructions</A> |<BR>
-| <A href="ChangeLog.html">Changes</A> |
-<A href="TODO.html">Things To Do</A> |
-<A href="README.html#Introduction">Introduction</A> | 
-<A href="README.html#CodeAndBinaries">Source Code and Binaries</A> |<BR>
+<div class="center">
+| <a href="http://www.RasMol.org">RasMol</a> |
+<A href="readme.html#copying">Copying and Distribution</A> |
+<A href="readme.html#contents">Contents</A> |
+<A href="install.html">Installation Instructions</A> |<BR>
+| <A href="changelog.html">Changes</A> |
+<A href="todo.html">Things To Do</A> |
+<A href="readme.html#introduction">Introduction</A> |
+<A href="readme.html#codeandbinaries">Source Code and Binaries</A> |<BR>
 | <A href="doc/rasmol.html">RasMol Manual</A> |
 <a href="doc/esrasmol27.html">Spanish Translation of RasMol Manual</a> | 
 <a href="doc/itrasmol.hlp">Italian Translation of RasMol Help File</a> |<BR>
 | <a href=http://www.rasmol.org/donate.shtml>Donate to Support RasMol</a> |
-<a href="README.html">Release README</A> |
+<a href="readme.html">Release README</A> |
 <a href=http://www.rasmol.org/register.shtml>Register your RasMol</a> |
-</CENTER>
+</div>
 
-<font color="#0808A0">
-<H1 ALIGN=CENTER>Installation Instructions<BR>
+
+<H1 >Installation Instructions<BR>
 RasMol 2.7.5</H1>
-<center>
-<table celpadding=0>
-<tr>
-<td valign=top bgcolor="#A0FFFF"><font face="Helvetica,Arial,Times" size=2>
+<div class="center">
+<div class="intro-flex"><div class="intro-box bg-cyan">
 <ul>
 <li><a href=http://www.rasmol.org/software/RasMol_Latest_Windows_Installer.exe>RasMol Latest Windows Installer</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />
 &nbsp;<br />
@@ -48,11 +51,7 @@ RasMol 2.7.5</H1>
 <li><a href=http://www.rasmol.org/donate.shtml>Donate to Support RasMol </a><br />
 <li><a href=http://www.rasmol.org/register.shtml>Register your RasMol</a><br />
 </ul>
-</font>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<td><IMG  SRC="html_graphics/rasmollogo.jpg" ALT="RasMol">
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<td valign=top bgcolor="#FFFFA0"><font face="Helvetica,Arial,Times" size=2>
+</div><div class="intro-logo"><IMG  SRC="html_graphics/rasmollogo.jpg" ALT="RasMol"></div><div class="intro-box bg-yellow"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 <ul>
 <li><a href=http://www.rasmol.org/software/RasMol_2.7.5_Windows_Installer.exe>RasMol 
 2.7.5 Windows Installer</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />
@@ -66,32 +65,25 @@ Manual</a><br />
 <li><a href=http://www.rasmol.org/donate.shtml>Donate to Support RasMol </a><br />
 <li><a href=http://www.rasmol.org/register.shtml>Register your RasMol</a><br />
 </ul>
-</font>
-</table>
-</center>
-<H3 ALIGN=CENTER>
+</div></div>
+</div>
+<H3 >
 Molecular Graphics Visualisation Tool<BR>
 3 June 2009 (rev. 17 July 2009)<br />
 </H3>
-</font><font color="#000000">
-<CENTER>
+
+<div class="center">
 Based on RasMol 2.6 by
 Roger Sayle<BR>
 Biomolecular Structures Group, Glaxo Wellcome Research & Development<BR>
 Stevenage, Hertfordshire, UK<BR>
 Version 2.6, August 1995, Version 2.6.4, December 1998<BR>
 Copyright &#169; Roger Sayle 1992-1999<BR>
-</CENTER>
+</div>
 <P>
-<CENTER>
+<div class="center">
 and Based on Mods by
-<table border=3>
-<tr><th align="left">Author<th align="left">Version, Date<th align="left">Copyright
-<tr><td>Arne Mueller<td>RasMol 2.6x1 May 1998<td>&#169 Arne Mueller 1998
-<tr><td valign="top">Gary Grossman and<br>Marco Molinaro<td>RasMol 2.5-ucb November 1995<br>RasMol 2.6-ucb November 1996
-<td valign="top">&#169 UC Regents/ModularCHEM<br>Consortium 1995, 1996
-<tr><td>Philippe Valadon<td>RasTop 1.3 August 2000<td>&#169 Philippe Valadon 2000
-<tr><td valign="top">Herbert J. Bernstein<td>RasMol 2.7.0 March 1999<br>
+<div class="data-grid data-3-col"><div class="header">Author</div><div class="header">Version, Date</div><div class="header">Copyright</div><div>Arne Mueller</div><div>RasMol 2.6x1 May 1998</div><div>&#169 Arne Mueller 1998</div><div>Gary Grossman and<br>Marco Molinaro</div><div>RasMol 2.5-ucb November 1995<br>RasMol 2.6-ucb November 1996</div><div>&#169 UC Regents/ModularCHEM<br>Consortium 1995, 1996</div><div>Philippe Valadon</div><div>RasTop 1.3 August 2000</div><div>&#169 Philippe Valadon 2000</div><div>Herbert J. Bernstein</div><div>RasMol 2.7.0 March 1999<br>
 RasMol 2.7.1 June 1999<br>RasMol 2.7.1.1 January 2001<BR>
 RasMol 2.7.2 August 2000<br>RasMol 2.7.2.1 April 2001<BR>
 RasMol 2.7.2 August 2000<br>RasMol 2.7.2.1 April 2001<br>
@@ -102,10 +94,8 @@ RasMol 2.7.4 Nov 07<br />
 RasMol 2.7.4.1 Jan 08<br />
 RasMol 2.7.4.2 Mar 08<br />
 RasMol 2.7.5 June 2009<br />
-RasMol 2.7.5.1 July 2009<br />
-<td valign="top">&#169 Herbert J. Bernstein 1998-2008
-</table>
-</CENTER>
+RasMol 2.7.5.1 July 2009<br /></div><div>&#169 Herbert J. Bernstein 1998-2008</div></div>
+</div>
 <P>
 RasMol 2.7.5 incorporates changes by T. Ikonen, G. McQuillan, N. Darakev
 and L. Andrews (via the neartree package).  Work on RasMol 2.7.5
@@ -127,45 +117,24 @@ the funding organizations.
 The code for use of RasMol under GTK in RasMol 2.7.4.2 was written by
 Teemu Ikonen.
 <P>
-<CENTER>
+<div class="center">
 and Incorporating Translations by
-<table border=3>
-<tr><th align="left">Author<th align="left">Item<th align="left">Language
-<tr><td>Isabel Serv&aacute;n Mart&iacute;nez,<br>
-Jos&eacute; Miguel Fern&aacute;ndez Fern&aacute;ndez
-<td valign="top">2.6 Manual<td valign="top">Spanish
-<tr><td>Jos&eacute; Miguel Fern&aacute;ndez Fern&aacute;ndez<td>2.7.1 Manual<td>Spanish
-<tr><td>Fernando Gabriel Ranea<td>2.7.1 menus and messages<td>Spanish
-<tr><td>Jean-Pierre Demailly<td>2.7.1 menus and messages<td>French
-<tr><td>Giuseppe Martini, Giovanni Paolella,<br>A. Davassi, M. Masullo, C. Liotto
-<td valign="top">2.7.1 menus and messages<br>
-2.7.1 help file<td valign="top">Italian
-<tr><td>G. Pozhvanov<td valign="top">2.7.3 menus and messages<td>Russian
-<tr><td>G. Todorov<td valign="top">2.7.3 menus and messages<td>Bulgarian
-<tr><td>Nan Jia, G. Todorov<td valign="top">2.7.3 menus and messages<td>Chinese
-<tr><td>Mamoru Yamanishi, Katajima Hajime<td valign="top">2.7.3 menus and messages<td>Japanese
-<tr>
-</table>
-</CENTER>
+<div class="data-grid data-3-col"><div class="header">Author</div><div class="header">Item</div><div class="header">Language</div><div>Isabel Serv&aacute;n Mart&iacute;nez,<br>
+Jos&eacute; Miguel Fern&aacute;ndez Fern&aacute;ndez</div><div>2.6 Manual</div><div>Spanish</div><div>Jos&eacute; Miguel Fern&aacute;ndez Fern&aacute;ndez</div><div>2.7.1 Manual</div><div>Spanish</div><div>Fernando Gabriel Ranea</div><div>2.7.1 menus and messages</div><div>Spanish</div><div>Jean-Pierre Demailly</div><div>2.7.1 menus and messages</div><div>French</div><div>Giuseppe Martini, Giovanni Paolella,<br>A. Davassi, M. Masullo, C. Liotto</div><div>2.7.1 menus and messages<br>
+2.7.1 help file</div><div>Italian</div><div>G. Pozhvanov</div><div>2.7.3 menus and messages</div><div>Russian</div><div>G. Todorov</div><div>2.7.3 menus and messages</div><div>Bulgarian</div><div>Nan Jia, G. Todorov</div><div>2.7.3 menus and messages</div><div>Chinese</div><div>Mamoru Yamanishi, Katajima Hajime</div><div>2.7.3 menus and messages</div><div>Japanese</div></div>
+</div>
 <P>
-<CENTER>
+<div class="center">
 This Release by
 <BR>Herbert J. Bernstein,
 Bernstein + Sons, 5 Brewster Lane, Bellport, NY, USA<BR>
-<script language="javascript" type="text/javascript">
-<!--
-      var name = "yaya@";
-      var domain = "bernstein-plus-sons";
-      var domext = ".com";
-      document.write ("<a href=\"mailto:" + name + domain + domext + "\">" + name + domain + domext+"</a>");
-// -->
-</script>
+<span class="email-placeholder"></span>
 <noscript>
 yaya&#64;bernstein-plus-sons&#46;com
 </noscript>
 <BR>
 Copyright &#169; Herbert J. Bernstein 1998-2009<BR>
-</CENTER>
+</div>
 <P>
  The original RasMol manual was created by Roger Sayle.  In July 1996,
  Dr. Margaret Wong of the Chemistry Department, Swinburne University
@@ -182,11 +151,11 @@ August 2000 for RasMol version 2.7.2, January 2001 for RasMol
 version 2.7.1.1 and April 2001 for RasMol version 2.7.2.1 and
 February 2005 for RasMol version 2.7.3.
 <p>
-<CENTER>Documentation Last Updated 19 July 2009<BR>
+<div class="center">Documentation Last Updated 19 July 2009<BR>
 Edited by Herbert J. Bernstein and Frances C. Bernstein
-</CENTER>
+</div>
 <p>
-<H4 Align="CENTER">Translations</H4>
+<H4 >Translations</H4>
 <P>Thanks to the efforts of Jos&eacute; Miguel Fern&aacute;ndez
 Fern&aacute;ndez (Departamento 
 de Bioqu&iacute;mica y Biolog&iacute;a Molecular. Universidad de Granada.
@@ -210,12 +179,12 @@ with contributions by A. Davassi, M. Masullo and C. Liotto provided Italian
 translation of menus and messages in March 2001.
 </P>
 <HR>
-<H4 ALIGN=CENTER>
+<H4 >
 THIS IS A PRELIMINARY RELEASE INVOLVING EXTENSIVE MODIFICATIONS<BR>
 *****  USE WITH CAUTION  ******<BR>
 </H4>
 <HR>
-<H2 ALIGN=CENTER><a name=Copying></a>IMPORTANT - Copying and Distribution</H2>
+<H2 ><a id="Copying"></a>IMPORTANT - Copying and Distribution</H2>
 <P>
 This version is based directly on RasMol version 2.7.4.2,
 on RasMol version 2.7.4.1,
@@ -230,7 +199,7 @@ Please read the file <A HREF = "doc/NOTICE.html">NOTICE</A> for
 important notices which apply to this package and for
 license terms (<a href=GPL>GPL</a> or <A href=RASLIC>RASLIC</a>).
 <HR>
-<a name="CodeAndBinaries"></a>
+<a id="CodeAndBinaries"></a>
 <H3>Obtaining RasMol v2.7.5</H3>
 <P>
   In order to install RasMol, you may start with a compiled binary or work from
@@ -240,7 +209,7 @@ license terms (<a href=GPL>GPL</a> or <A href=RASLIC>RASLIC</a>).
 and user documentation of RasMol 2.7.5 may be obtained 
 from <a href=http://blondie.dowling.edu/projects/rasmol>http://blondie.dowling.edu/projects/rasmol</a>
 and
-<a href=http://www.sourceforge.net/projects/openrasmol>http://blondie.dowling.edu/projects/rasmol</a>.
+<a href=http://www.sourceforge.net/projects/RasMol>http://blondie.dowling.edu/projects/rasmol</a>.
 and
 by
 anonymous FTP at:
@@ -255,7 +224,7 @@ href="http://www.bernstein-plus-sons.com/software/RasMol_2.7.5.tar.gz">http://ww
 <P>	
 As compiled version become available, they will be posted at <a href=http://blondie.dowling.edu/projects/rasmol>http://blondie.dowling.edu/projects/rasmol</a>
 and
-<a href=http://www.sourceforge.net/projects/openrasmol>http://blondie.dowling.edu/projects/rasmol</a>.
+<a href=http://www.sourceforge.net/projects/RasMol>http://blondie.dowling.edu/projects/rasmol</a>.
 
 
 
@@ -287,20 +256,18 @@ are used by RasMol.
 To build/rebuild RasMol 2.7.5 on any platform, you'll need to transfer 
 the following file:
 <P>
-<TABLE>
-<TR><TD VALIGN=TOP><A HREF="RasMol.tar.gz">RasMol.tar.gz</A><TD>UNIX 'tar'ed 'gzip'ped archive containing the
+<div class="two-col-list"><div class="term"><A HREF="RasMol.tar.gz">RasMol.tar.gz</A></div><div>UNIX 'tar'ed 'gzip'ped archive containing the
                         complete source code and documentation of the
-                        RasMol molecular graphics package.
-</TABLE>
+                        RasMol molecular graphics package.</div></div>
 <P>
 To unpack the file on a UNIX machine type the command &quot;gunzip
 RasMol.tar.gz&quot; and then the command &quot;tar -xvf
 RasMol.tar&quot; to extract the files in a subdirectory under the
 current directory.
 <P>
-<center>
+<div class="center">
 <b>*** IMPORTANT CHANGE IN INSTALLATION INSTRUCTIONS FOR RELEASE 2.7.5 ***</b>
-</center>
+</div>
 <p>
 You will either need to have the following packages installed in your system, or
 to ensure that the indicated defines are at the start Imakefile:
@@ -344,7 +311,7 @@ external_packages module in the CVS and as the External_Packages release on
 <a href=http://blondie.dowling.edu/projects/rasmol>http://blondie.dowling.edu/projects/rasmol</a>
 and
 <a 
-href=http://www.sourceforge.net/projects/openrasmol>http://www.sourceforge.net/projects/openrasmol</a>.
+href=http://www.sourceforge.net/projects/RasMol>http://www.sourceforge.net/projects/RasMol</a>.
 <p>
 
 These font kits  are snapshots of the versions in use at the time
@@ -474,21 +441,16 @@ version of the build_all.sh script called build_MACOSX.sh is provided.
 the runtime behaviour of the program. The following directives may be
 defined or undefined to suite the local site.
 <P>
-<TABLE>
-<TR><TD>THIRTYTWOBIT<BR>
+<div class="two-col-list"><div class="term">THIRTYTWOBIT<BR>
 SIXTEENBIT<BR>
-EIGHTBIT<TD>This determines whether RasMol will display and produce
+EIGHTBIT</div><div>This determines whether RasMol will display and produce
 		8bit, 16bit or 32(24) bit output. By default the symbol 
                 EIGHTBIT is defined producing images with up to 256 
-                colours. This symbol must be defined if IBMPC is defined.
-
-<TR><TD VALIGN=TOP>DIALBOX		<TD>This enables the use of a dials box, that is connected 
+                colours. This symbol must be defined if IBMPC is defined.</div><div class="term">DIALBOX</div><div>This enables the use of a dials box, that is connected
 		using the X Window System XInput extension. This option
 		requires that the program be compiled with the Xi and
 		Xext libraries. Note: libXi is called libXinput on some old
-		machines, so requires the compiler option -lXinput!
-
-<TR><TD VALIGN=TOP>MITSHM 		<TD>This option enables the use of the X Window System MIT shared
+		machines, so requires the compiler option -lXinput!</div><div class="term">MITSHM</div><div>This option enables the use of the X Window System MIT shared
 		memory extension. This enables images to be displayed faster
 		when RasMol and the X11 server are running on the same host.
 		This option requires the program be compiled with the Xext
@@ -496,46 +458,25 @@ EIGHTBIT<TD>This determines whether RasMol will display and produce
                 the XextSam library (which requires changing the Makefile or
                 Imakefile). This is now enabled by default. This should be
                 disabled on E&amp;S ESV workstations as MITSHM support is not 
-                provided as standard.
-
-<TR><TD VALIGN=TOP>TERMIOS		<TD>This directive enables the command line processing on UNIXs
+                provided as standard.</div><div class="term">TERMIOS</div><div>This directive enables the command line processing on UNIXs
 		that support the termios terminal handling routines. By 
 		leaving this symbol undefined, RasMol omits the interactive
-		command line interface. Undefining is not recommended!
-
-<TR><TD VALIGN=TOP>SOCKETS         <TD>This directive enables the TCP/IP server functionality of
+		command line interface. Undefining is not recommended!</div><div class="term">SOCKETS</div><div>This directive enables the TCP/IP server functionality of
                 RasMol to be enable.  This enables other software to connect
                 to a running RasMol.  This should be undefined on machines
-                not supporting BSD-style TCP/IP sockets (such as VMS).
-
-<TR><TD VALIGN=TOP>APPLEMAC        <TD>This determines whether the program is to run on an Apple
+                not supporting BSD-style TCP/IP sockets (such as VMS).</div><div class="term">APPLEMAC</div><div>This determines whether the program is to run on an Apple
                 Macintosh or PowerMac. By default, this option is disabled.
                 The Macintosh code may be compiled to be either EIGHTTBIT
-                or THIRTYTWOBIT and will generate images effectively.
-
-<TR><TD VALIGN=TOP>IBMPC           <TD>This determines whether the program is intended to run on an IBM PC or compatible. By default, this 
-                option is disabled.
-
-<TR><TD VALIGN=TOP>MSWIN           <TD>This determines whether the program is intended to run on an
+                or THIRTYTWOBIT and will generate images effectively.</div><div class="term">IBMPC</div><div>This determines whether the program is intended to run on an IBM PC or compatible. By default, this
+                option is disabled.</div><div class="term">MSWIN</div><div>This determines whether the program is intended to run on an
                 IBM PC or compatible under MS Windows. By default, this 
-                option is disabled. 
-
-<TR><TD VALIGN=TOP>PROFILE           <TD>Defining PROFILE enables code to
-                profile RasMol execution.
-                
-<TR><TD VALIGN=TOP>XPROCARCH        <TD>Defining XPROCARCH enables code 
+                option is disabled.</div><div class="term">PROFILE</div><div>Defining PROFILE enables code to
+                profile RasMol execution.</div><div class="term">XPROCARCH</div><div>Defining XPROCARCH enables code
                 for raswin that gets detailed information about the operating system
-                and processor
-                
-<TR><TD VALIGN=TOP>USE_UNAME        <TD>Defining USE_UNAME enables code 
+                and processor</div><div class="term">USE_UNAME</div><div>Defining USE_UNAME enables code
                 for rasmol under X11 that gets detailed information about the operating system
-                and processor.
-                
-
-<TR><TD VALIGN=TOP>USE_CBFLIB        <TD>Defining USE_CBFLIB enables code t
-                that depends on CBFLIB for map reading and writing.
-
-</TABLE>
+                and processor.</div><div class="term">USE_CBFLIB</div><div>Defining USE_CBFLIB enables code t
+                that depends on CBFLIB for map reading and writing.</div></div>
 <P>
 To summarise;
 <P>
@@ -590,37 +531,33 @@ Any comments, suggestions or questions about this
 modified version should be directed to Herbert J. Bernstein at
 <A HREF="mailto:rasmol@bernstein-plus-sons.com">rasmol@bernstein-plus-sons.com</A>.
 <P>
-<CENTER>
-| <a href="http://www.OpenrasMol.org">OpenRasMol</a> |
-<A href="README.html#Copying">Copying and Distribution</A> |
-<A href="README.html#Contents">Contents</A> |
-<A href="INSTALL.html">Installation Instructions</A> |<BR>
-| <A href="ChangeLog.html">Changes</A> |
-<A href="TODO.html">Things To Do</A> |
-<A href="README.html#Introduction">Introduction</A> | 
-<A href="README.html#CodeAndBinaries">Source Code and Binaries</A> |<BR>
+<div class="center">
+| <a href="http://www.RasMol.org">RasMol</a> |
+<A href="readme.html#copying">Copying and Distribution</A> |
+<A href="readme.html#contents">Contents</A> |
+<A href="install.html">Installation Instructions</A> |<BR>
+| <A href="changelog.html">Changes</A> |
+<A href="todo.html">Things To Do</A> |
+<A href="readme.html#introduction">Introduction</A> |
+<A href="readme.html#codeandbinaries">Source Code and Binaries</A> |<BR>
 | <A href="doc/rasmol.html">RasMol Manual</A> |
 <a href="doc/esrasmol27.html">Spanish Translation of RasMol Manual</a> | 
 <a href="doc/itrasmol.hlp">Italian Translation of RasMol Help File</a> |<BR>
 | <a href=http://www.rasmol.org/donate.shtml>Donate to Support RasMol</a> |
-<a href="README.html">Release README</A> |
+<a href="readme.html">Release README</A> |
 <a href=http://www.rasmol.org/register.shtml>Register your RasMol</a> |
-</CENTER>
+</div>
 
 <HR>
 Updated 19 July 2009.<BR>
 Herbert J. Bernstein<BR>
 Bernstein + Sons, 5 Brewster Lane, Bellport, NY 11713-2803, USA<BR>
-<script language="javascript" type="text/javascript">
-<!--
-      var name = "yaya@";
-      var domain = "bernstein-plus-sons";
-      var domext = ".com";
-      document.write ("<a href=\"mailto:" + name + domain + domext + "\">" + name + domain + domext+"</a>");
-// -->
-</script>
+<span class="email-placeholder"></span>
 <noscript>
 yaya&#64;bernstein-plus-sons&#46;com
 </noscript>
-</BODY>
-</HTML>
+
+
+
+</body>
+</html>
