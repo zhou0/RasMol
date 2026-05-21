@@ -1,0 +1,91 @@
+body {
+    background-image: url('html_graphics/rasmolwallpaper.jpg');
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 100%;
+    line-height: 1.5;
+    margin: 2em;
+    color: #000;
+    background-color: #fff;
+}
+
+.center {
+    text-align: center;
+}
+
+.title {
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.5em;
+}
+
+img {
+    border: none;
+    vertical-align: middle;
+}
+
+hr {
+    border: 0;
+    border-top: 1px solid #ccc;
+    margin: 1em 0;
+}
+
+a:link { color: #0000FF; }
+a:visited { color: #800080; }
+a:active { color: #FF0000; }
+
+.navbar {
+    text-align: center;
+    margin: 1em 0;
+}
+
+.footer {
+    font-size: 0.9em;
+    margin-top: 2em;
+}
+
+pre {
+    background-color: #f4f4f4;
+    padding: 1em;
+    border: 1px solid #ddd;
+    overflow: auto;
+}
+
+table {
+    border-collapse: collapse;
+    margin: 1em 0;
+    width: 100%;
+}
+
+table, th, td {
+    border: 1px solid #ccc;
+    padding: 0.5em;
+}
+
+th {
+    background-color: #eee;
+    text-align: left;
+}
+
+.indent {
+    margin-left: 2em;
+}
+
+td {
+    vertical-align: top;
+}
+
+.bg-cyan { background-color: #a0ffff; }
+.bg-yellow { background-color: #ffffa0; }
+
+.small-caps {
+    font-variant: small-caps;
+}
+
+main {
+    display: block;
+}
+
+header, footer {
+    display: block;
+    margin-bottom: 1em;
+}
