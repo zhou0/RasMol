@@ -2,21 +2,19 @@ body {
     background-image: url('html_graphics/rasmolwallpaper.jpg');
     font-family: Helvetica, Arial, sans-serif;
     font-size: 100%;
-    line-height: 1.5;
     margin: 2em;
     color: #000;
-    background-color: #fff;
 }
 
 .center {
     text-align: center;
 }
 
-.title {
+h1, h2, h3, h4, h5, h6 {
     text-align: center;
-    font-weight: bold;
-    font-size: 1.5em;
 }
+
+h1 { color: #0808A0; }
 
 img {
     border: none;
@@ -25,7 +23,7 @@ img {
 
 hr {
     border: 0;
-    border-top: 1px solid #ccc;
+    border-top: 1px solid #000;
     margin: 1em 0;
 }
 
@@ -33,95 +31,50 @@ a:link { color: #0000FF; }
 a:visited { color: #800080; }
 a:active { color: #FF0000; }
 
-.navbar {
-    text-align: center;
-    margin: 1em 0;
-}
-
-.footer {
-    font-size: 0.9em;
-    margin-top: 2em;
-}
-
-pre {
-    background-color: #f4f4f4;
-    padding: 1em;
-    border: 1px solid #ddd;
-    overflow: auto;
-}
-
-.indent {
-    margin-left: 2em;
-}
-
-.bg-cyan { background-color: #a0ffff; }
-.bg-yellow { background-color: #ffffa0; }
-
-.small-caps {
-    font-variant: small-caps;
-}
-
-main {
-    display: block;
-}
-
-header, footer {
-    display: block;
-    margin-bottom: 1em;
-}
-
-/* Flexbox and Grid Layouts to replace tables */
-
 .intro-flex {
     display: flex;
-    flex-wrap: wrap;
     justify-content: center;
     align-items: flex-start;
-    gap: 1.5em;
-    margin: 2em 0;
+    gap: 2em;
+    margin: 1em 0;
 }
 
 .intro-box {
-    flex: 1;
-    min-width: 300px;
-    padding: 1.5em;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+    padding: 0.5em;
+    font-size: 0.85em; /* Approximately size=2 */
+    min-width: 250px;
 }
 
-.intro-logo {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+.intro-box ul {
+    margin: 0;
+    padding-left: 1.5em;
 }
+
+.bg-cyan { background-color: #A0FFFF; }
+.bg-yellow { background-color: #FFFFA0; }
 
 .data-grid {
     display: grid;
-    margin: 1em 0;
-    border: 1px solid #ccc;
-    background-color: #eee;
-    gap: 1px;
+    margin: 1em auto;
+    border: 3px solid #888;
+    background-color: #888;
+    gap: 2px;
+    width: fit-content;
 }
 
 .data-grid > div {
     background-color: #fff;
-    padding: 0.8em;
+    padding: 0.4em;
+    text-align: left;
 }
 
 .data-grid .header {
-    background-color: #f0f0f0;
+    background-color: #fff;
     font-weight: bold;
-    text-align: center;
 }
 
 .data-3-col {
-    grid-template-columns: 1fr 1fr 1fr;
-}
-
-.data-2-col {
-    grid-template-columns: auto 1fr;
+    grid-template-columns: auto auto auto;
 }
 
 .two-col-list {
@@ -129,6 +82,7 @@ header, footer {
     grid-template-columns: auto 1fr;
     gap: 1em;
     margin: 1em 0;
+    text-align: left;
 }
 
 .two-col-list .term {
@@ -136,29 +90,32 @@ header, footer {
     white-space: nowrap;
 }
 
-.header-layout {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
-    gap: 1em;
-    margin-bottom: 2em;
+header, footer, nav, main {
+    display: block;
 }
 
-.logo-group {
-    display: flex;
-    gap: 0.5em;
-    align-items: center;
+nav {
+    margin-bottom: 1em;
+}
+
+footer {
+    margin-top: 2em;
+    font-size: 0.9em;
+}
+
+.small-caps {
+    font-variant: small-caps;
 }
 
 @media (max-width: 800px) {
-    .data-3-col {
-        grid-template-columns: 1fr;
-    }
     .intro-flex {
         flex-direction: column;
+        align-items: center;
     }
-    .intro-box {
-        width: 100%;
+    .data-3-col {
+        display: block;
+    }
+    .data-3-col > div {
+        border-bottom: 1px solid #ccc;
     }
 }
