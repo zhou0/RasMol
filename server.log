@@ -1,0 +1,9 @@
+127.0.0.1 - - [21/May/2026 17:50:31] "GET /readme.html HTTP/1.1" 200 -
+127.0.0.1 - - [21/May/2026 17:50:31] "GET /html_graphics/iucrhome.jpg HTTP/1.1" 200 -
+127.0.0.1 - - [21/May/2026 17:50:31] "GET /style.css HTTP/1.1" 200 -
+127.0.0.1 - - [21/May/2026 17:50:31] "GET /script.js HTTP/1.1" 200 -
+127.0.0.1 - - [21/May/2026 17:50:31] "GET /html_graphics/cifhome.jpg HTTP/1.1" 200 -
+127.0.0.1 - - [21/May/2026 17:50:31] "GET /html_graphics/rasmolbutton.jpg HTTP/1.1" 200 -
+127.0.0.1 - - [21/May/2026 17:50:31] "GET /html_graphics/rasmollogo.jpg HTTP/1.1" 200 -
+127.0.0.1 - - [21/May/2026 17:50:31] "GET /html_graphics/rasmolwallpaper.jpg HTTP/1.1" 200 -
+127.0.0.1 - - [21/May/2026 17:50:33] "GET /install.html HTTP/1.1" 200 -

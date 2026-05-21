@@ -1,0 +1,121 @@
+body {
+    background-image: url('html_graphics/rasmolwallpaper.jpg');
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 100%;
+    margin: 2em;
+    color: #000;
+}
+
+.center {
+    text-align: center;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    text-align: center;
+}
+
+h1 { color: #0808A0; }
+
+img {
+    border: none;
+    vertical-align: middle;
+}
+
+hr {
+    border: 0;
+    border-top: 1px solid #000;
+    margin: 1em 0;
+}
+
+a:link { color: #0000FF; }
+a:visited { color: #800080; }
+a:active { color: #FF0000; }
+
+.intro-flex {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 2em;
+    margin: 1em 0;
+}
+
+.intro-box {
+    padding: 0.5em;
+    font-size: 0.85em; /* Approximately size=2 */
+    min-width: 250px;
+}
+
+.intro-box ul {
+    margin: 0;
+    padding-left: 1.5em;
+}
+
+.bg-cyan { background-color: #A0FFFF; }
+.bg-yellow { background-color: #FFFFA0; }
+
+.data-grid {
+    display: grid;
+    margin: 1em auto;
+    border: 3px solid #888;
+    background-color: #888;
+    gap: 2px;
+    width: fit-content;
+}
+
+.data-grid > div {
+    background-color: #fff;
+    padding: 0.4em;
+    text-align: left;
+}
+
+.data-grid .header {
+    background-color: #fff;
+    font-weight: bold;
+}
+
+.data-3-col {
+    grid-template-columns: auto auto auto;
+}
+
+.two-col-list {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 1em;
+    margin: 1em 0;
+    text-align: left;
+}
+
+.two-col-list .term {
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+header, footer, nav, main {
+    display: block;
+}
+
+nav {
+    margin-bottom: 1em;
+}
+
+footer {
+    margin-top: 2em;
+    font-size: 0.9em;
+}
+
+.small-caps {
+    font-variant: small-caps;
+}
+
+@media (max-width: 800px) {
+    .intro-flex {
+        flex-direction: column;
+        align-items: center;
+    }
+    .data-3-col {
+        display: block;
+    }
+    .data-3-col > div {
+        border-bottom: 1px solid #ccc;
+    }
+}
