@@ -1,121 +1,67 @@
-<!doctype html public "-//IETF//DTD HTML 2.0//EN">
-<HTML>
-<HEAD>
-<TITLE>
-RasMol  V2.7.5.2 README
-</TITLE>
-</HEAD>
-<BODY BACKGROUND="html_graphics/rasmolwallpaper.jpg">
-<font face="Helvetica,Arial,Times" size=2>
-<table border="0" cellpadding="0">
-<tr><td valign="top">
-<table border="2" cellpadding="0">
-<tr>
-<td><a href="http://www.iucr.org/iucr-top/welcome.html">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>RasMol Documentation</title>
+    <link rel="stylesheet" href="style.css">
+    <script type="module" src="script.js"></script>
+</head>
+<body><header><a href="http://www.iucr.org/iucr-top/welcome.html">
 <img alt="[IUCr Home Page]" src="html_graphics/iucrhome.jpg"></a>
-</td>
-<td><a href="http://www.iucr.org/iucr-top/cif/home.html">
+<a href="http://www.iucr.org/iucr-top/cif/home.html">
 <img alt="[CIF Home Page]" src="html_graphics/cifhome.jpg"></a>
-</td>
-<td><A HREF="doc/rasmol.html"><IMG SRC="html_graphics/rasmolbutton.jpg"
-ALT="[RasMol Manual]"></A>
-</td><td align=center valign=center><a href="http://sourceforge.net/projects/openrasmol"><img 
-src="http://sflogo.sourceforge.net/sflogo.php?group_id=139903&amp;type=13" width="120" height="30" 
-alt="Get RasMol at SourceForge.net. Fast, secure and Free Open Source software downloads" /></a>
-</td>
-</tr>
-</table>
-</td>
-<td>&nbsp;&nbsp;</td>
-<td valign="top">
-
-<!--#exec cgi="/cgi-bin/ZCountND.cgi" -->
-<img src="/cgi-sys/Count.cgi?negate=T&dd=A&display=date"
-align="middle"
-ALT="
-<!--#config timefmt="%m-%d-%y" -->
-<!--#echo var="DATE_LOCAL" -->
-">  
-<img
-src="/cgi-sys/Count.cgi?negate=T&dd=A&display=clock" align="middle" ALT="
-<!--#config timefmt="%I:%M %p" -->
-<!--#echo var="DATE_LOCAL" -->
-">
-</td>
-<td valign="top">
-<img
-src="/cgi-sys/cgiwrap/yaya/Count.cgi?negate=T&dd=A&comma=T&incr=F&<!--#exec
-cgi=
-"/cgi-bin/ZCountDF.cgi" -->"
-align="middle" ALT="
-<!--#exec cgi="/cgi-bin/ZCountNI.cgi" -->
-">
-<br>
-visits since 17 July 2009
-</td>
-</tr>
-</table>
+<a href="doc/rasmol.html"><img src="html_graphics/rasmolbutton.jpg"
+alt="[RasMol Manual]"></a>
 <hr>
-<CENTER>
-| <a href="http://www.OpenrasMol.org">OpenRasMol</a> |
-<A href="README.html#Copying">Copying and Distribution</A> |
-<A href="README.html#Contents">Contents</A> |
-<A href="INSTALL.html">Installation Instructions</A> |<BR>
-| <A href="ChangeLog.html">Changes</A> |
-<A href="TODO.html">Things To Do</A> |
-<A href="README.html#Introduction">Introduction</A> | 
-<A href="README.html#CodeAndBinaries">Source Code and Binaries</A> |<BR>
-| <A href="doc/rasmol.html">RasMol Manual</A> |
+<nav aria-label="Main Navigation"><div class="center">
+| <a href="http://www.rasmol.net">RasMol</a> |
+<a href="readme.html#copying">Copying and Distribution</a> |
+<a href="readme.html#contents">Contents</a> |
+<a href="install.html">Installation Instructions</a> |<br>
+| <a href="changelog.html">Changes</a> |
+<a href="todo.html">Things To Do</a> |
+<a href="readme.html#introduction">Introduction</a> |
+<a href="readme.html#codeandbinaries">Source Code and Binaries</a> |<br>
+| <a href="doc/rasmol.html">RasMol Manual</a> |
 <a href="doc/esrasmol27.html">Spanish Translation of RasMol Manual</a> | 
-<a href="doc/itrasmol.hlp">Italian Translation of RasMol Help File</a> |<BR>
-| <a href=http://www.rasmol.org/donate.shtml>Donate to Support RasMol</a> |
-<a href="README.html">Release README</A> |
-<a href=http://www.rasmol.org/register.shtml>Register your RasMol</a> |
+<a href="doc/itrasmol.hlp">Italian Translation of RasMol Help File</a> |<br>
+| <a href=http://www.rasmol.net/donate.shtml>Donate to Support RasMol</a> |
+<a href="readme.html">Release README</a> |
+<a href=http://www.rasmol.net/register.shtml>Register your RasMol</a> |
 <br />
-</CENTER>
+</div></nav></header><main>
 
-<font color="#0808A0">
-<H1 ALIGN=CENTER>README<BR>
-RasMol 2.7.5.2</H1>
-<center>
-<table celpadding=0>
-<tr>
-<td valign=top bgcolor="#A0FFFF"><font face="Helvetica,Arial,Times" size=2>
-<ul>
-<li><a href=http://www.rasmol.org/software/RasMol_Latest_Windows_Installer.exe>RasMol Latest Windows Installer</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />
+
+<h1 >README<br>
+RasMol 2.7.5.2</h1>
+<div class="center">
+<div class="two-col-list"><div class="term"><ul>
+<li><a href=http://www.rasmol.net/software/RasMol_Latest_Windows_Installer.exe>RasMol Latest Windows Installer</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />
 &nbsp;<br />
-<li><a href=http://www.rasmol.org/software/RasMol_Latest.tar.gz>RasMol Latest Source Tarball </a><br />
+<li><a href=http://www.rasmol.net/software/RasMol_Latest.tar.gz>RasMol Latest Source Tarball </a><br />
 &nbsp;<br />
-<li><a href=http://www.rasmol.org/software/RasMol_Latest_Manual.html>RasMol Latest Manual </a><br />
+<li><a href=http://www.rasmol.net/software/RasMol_Latest_Manual.html>RasMol Latest Manual </a><br />
 &nbsp;<br />
-<li><a href=http://www.rasmol.org/donate.shtml>Donate to Support RasMol </a><br />
-<li><a href=http://www.rasmol.org/register.shtml>Register your RasMol</a><br />
-</ul>
-</font>
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<td><IMG  SRC="html_graphics/rasmollogo.jpg" ALT="RasMol">
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<td valign=top bgcolor="#FFFFA0"><font face="Helvetica,Arial,Times" size=2>
-<ul>
-<li><a href=http://www.rasmol.org/software/RasMol_2.7.5.2_Windows_Installer.exe>RasMol 2.7.5.2 Windows 
+<li><a href=http://www.rasmol.net/donate.shtml>Donate to Support RasMol </a><br />
+<li><a href=http://www.rasmol.net/register.shtml>Register your RasMol</a><br />
+</ul></div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <img  src="html_graphics/rasmollogo.jpg" alt="RasMol"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <ul>
+<li><a href=http://www.rasmol.net/software/RasMol_2.7.5.2_Windows_Installer.exe>RasMol 2.7.5.2 Windows
 Installer</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />
 &nbsp;<br />
-<li><a href=http://www.rasmol.org/software/RasMol_2.7.5.2.tar.gz>RasMol 2.7.5.2 Source Tarball</a><br />
+<li><a href=http://www.rasmol.net/software/RasMol_2.7.5.2.tar.gz>RasMol 2.7.5.2 Source Tarball</a><br />
 &nbsp;<br />
-<li><a href=http://www.rasmol.org/software/RasMol_2.7.5_Manual.html>RasMol 2.7.5 Manual</a><br />
+<li><a href=http://www.rasmol.net/software/RasMol_2.7.5_Manual.html>RasMol 2.7.5 Manual</a><br />
 &nbsp;<br />
-<li><a href=http://www.rasmol.org/donate.shtml>Donate to Support RasMol </a><br />
-<li><a href=http://www.rasmol.org/register.shtml>Register your RasMol</a><br />
-</ul>
-</font>
-</table>
-</center>
-<H3 ALIGN=CENTER>
+<li><a href=http://www.rasmol.net/donate.shtml>Donate to Support RasMol </a><br />
+<li><a href=http://www.rasmol.net/register.shtml>Register your RasMol</a><br />
+</ul></div></div>
+</div>
+<h2 >
 Molecular Graphics Visualisation Tool<br />
 3 June 2009 (rev. 13 May 2011)<br />
-</h3>
-</font><font color="#000000">
-<CENTER>
+</h2>
+
+<div class="center">
 Based on RasMol 2.6
 by
 Roger Sayle<br />
@@ -124,34 +70,13 @@ Glaxo Wellcome Research &amp; Development,
 Stevenage, Hertfordshire, UK<br />
 Version 2.6, August 1995, Version 2.6.4, December 1998<br />
 Copyright &#169; Roger Sayle 1992-1999
-</CENTER>
-<P>
-<CENTER>
+</div>
+<p>
+<div class="center">
 and Based on Mods by
-<table border=3>
-<tr><th align="left">Author<th align="left">Version, Date<th align="left">Copyright
-<tr><td>Arne Mueller<td>RasMol 2.6x1 May 1998<td>&#169; Arne Mueller 1998
-<tr><td valign="top">Gary Grossman and<br>Marco Molinaro<td>RasMol 2.5-ucb November 1995<br>RasMol 2.6-ucb November 1996
-<td valign="top">&#169; UC Regents/ModularCHEM<br>Consortium 1995, 1996
-<tr><td>Philippe Valadon<td>RasTop 1.3 August 2000<td>&#169; Philippe Valadon 2000
-<tr><td valign="top">Herbert J. Bernstein<td>RasMol 2.7.0 March 1999<br>
-RasMol 2.7.1 June 1999<br>RasMol 2.7.1.1 January 2001<br />
-RasMol 2.7.2 August 2000<br>
-RasMol 2.7.2.1 April 2001<br>
-RasMol 2.7.2.1.1 January 2004<br />
-RasMol 2.7.3 February 2005<br />
-RasMol 2.7.3.1 Apr 06<br />
-RasMol 2.7.4 Nov 07<br />
-RasMol 2.7.4.1 Jan 08<br />
-RasMol 2.7.4.2 Mar 08<br />
-RasMol 2.7.5 June 2009<br />
-RasMol 2.7.5.1 July 2009<br />
-RasMol 2.7.5.2 May 2011<br />
-
-<td valign="top">&#169; Herbert J. Bernstein 1998-2009
-</table>
-</CENTER>
-<P>
+<div class="data-grid data-3-col"><div class="header">Author</div><div class="header">Version, Date</div><div class="header">Copyright</div><div>Arne Mueller<</div><div>&#169; Arne Mueller 1998</div><div>Gary Grossman and<br>Marco Molinaro<</div><div>&#169; UC Regents/ModularCHEM<br>Consortium 1995, 1996</div><div>Philippe Valadon<</div><div>&#169; Philippe Valadon 2000</div><div>Herbert J. Bernstein<</div><div>&#169; Herbert J. Bernstein 1998-2009</div></div>
+</div>
+<p>
 RasMol 2.7.5 incorporates changes by T. Ikonen, G. McQuillan, N. Darakev
 and L. Andrews (via the neartree package).  Work on RasMol 2.7.5
 supported in part by grant 1R15GM078077-01 from the National Institute
@@ -168,50 +93,29 @@ and EF-0312612 from the U.S. National Science Foundation and grant
 DE-FG02-03ER63601 from BER/DOE. The content is solely the responsibility
 of the authors and does not necessarily represent the official views of
 the funding organizations.
-<P>
+<p>
 The code for use of RasMol under GTK in RasMol 2.7.4.2 was written by
 Teemu Ikonen.
-<CENTER>
+<div class="center">
 and Incorporating Translations by
-<table border=3>
-<tr><th align="left">Author<th align="left">Item<th align="left">Language
-<tr><td>Isabel Serv&aacute;n Mart&iacute;nez,<br>
+<div class="data-grid data-3-col"><div class="header">Author</div><div class="header">Item</div><div class="header">Language</div><div>Isabel Serv&aacute;n Mart&iacute;nez,<br>
 Jos&eacute; Miguel Fern&aacute;ndez Fern&aacute;ndez
-<td valign="top">2.6 Manual<td valign="top">Spanish
-<tr><td>Jos&eacute; Miguel Fern&aacute;ndez Fern&aacute;ndez<td>2.7.1 Manual<td>Spanish
-<tr><td>Fernando Gabriel Ranea<td>2.7.1 menus and messages<td>Spanish
-<tr><td>Jean-Pierre Demailly<td>2.7.1 menus and messages<td>French
-<tr><td>Giuseppe Martini, Giovanni Paolella,<br>A. Davassi, M. Masullo, C. Liotto
-<td valign="top">2.7.1 menus and messages<br>
-2.7.1 help file<td valign="top">Italian
-<tr><td>G. Pozhvanov<td valign="top">2.7.3 menus and messages<td>Russian
-<tr><td>G. Todorov<td valign="top">2.7.3 menus and messages<td>Bulgarian
-<tr><td>Nan Jia, G. Todorov<td valign="top">2.7.3 menus and messages<td>Chinese
-<tr><td>Mamoru Yamanishi, Katajima Hajime<td valign="top">2.7.3 menus and messages<td>Japanese
-<tr>
-<tr>
-</table>
-</CENTER>
-<P>
-<CENTER>
+<</div><div>Spanish</div><div>Jos&eacute; Miguel Fern&aacute;ndez Fern&aacute;ndez<</div><div>Spanish</div><div>Fernando Gabriel Ranea<</div><div>Spanish</div><div>Jean-Pierre Demailly<</div><div>French</div><div>Giuseppe Martini, Giovanni Paolella,<br>A. Davassi, M. Masullo, C. Liotto
+<</div><div>Italian</div><div>G. Pozhvanov<</div><div>Russian</div><div>G. Todorov<</div><div>Bulgarian</div><div>Nan Jia, G. Todorov<</div><div>Chinese</div><div>Mamoru Yamanishi, Katajima Hajime<</div><div>Japanese</div></div>
+</div>
+<p>
+<div class="center">
 This Release by
-<BR>Herbert J. Bernstein,
-Bernstein + Sons, 5 Brewster Lane, Bellport, NY, USA<BR>
-<script language="javascript" type="text/javascript">
-<!--
-      var name = "yaya@";
-      var domain = "bernstein-plus-sons";
-      var domext = ".com";
-      document.write ("<a href=\"mailto:" + name + domain + domext + "\">" + name + domain + domext+"</a>");
-// -->
-</script>
+<br>Herbert J. Bernstein,
+Bernstein + Sons, 5 Brewster Lane, Bellport, NY, USA<br>
+<span class="email-placeholder"></span>
 <noscript>
 yaya&#64;bernstein-plus-sons&#46;com
 </noscript>
-<BR>
-Copyright &#169; Herbert J. Bernstein 1998-2009<BR>
-</CENTER>
-<P>
+<br>
+Copyright &#169; Herbert J. Bernstein 1998-2009<br>
+</div>
+<p>
 The original RasMol manual was created by Roger Sayle.  In July 1996,
 Dr. Margaret Wong of the Chemistry Department, Swinburne University
 of Technology, Australia, made extensive revisions to the RasMol 2.5
@@ -228,15 +132,15 @@ version 2.7.1.1 and April 2001 for RasMol version 2.7.2.1 and
 February 2005 for RasMol version 2.7.3.
 
 <p>
-<CENTER>Documentation Last Updated 14 May 2011<br>
+<div class="center">Documentation Last Updated 14 May 2011<br>
 Edited by Herbert J. Bernstein and Frances C. Bernstein
-</CENTER>
+</div>
 <p>
-<H4 Align="CENTER">Translations</H4>
-<P>Thanks to the efforts of Jos&eacute; Miguel Fern&aacute;ndez
+<h3 >Translations</h3>
+<p>Thanks to the efforts of Jos&eacute; Miguel Fern&aacute;ndez
 Fern&aacute;ndez (Departamento 
 de Bioqu&iacute;mica y Biolog&iacute;a Molecular. Universidad de Granada.
-Espa&ntilde;a (<A HREF="mailto:jmfernan@ugr.es">jmfernan@ugr.es</A>)) a 
+Espa&ntilde;a (<a href="mailto:jmfernan@ugr.es">jmfernan@ugr.es</a>)) a
 <a href="doc/esrasmol27.html">translation of the
 Manual for Rasmol version 2.7.1 into Spanish</a> is now available.
 La traducci&oacute;n espa&ntilde;ola del manual de la
@@ -245,19 +149,19 @@ Isabel Serv&aacute;n Mart&iacute;nez y Jos&eacute; Miguel Fern&aacute;ndez
 Fern&aacute;ndez.  La actual traducci&oacute;n del Manual de RasMol 2.7.1
 ha sido realizada usando como base la anterior de RasMol 2.6 por
 &nbsp;Jos&eacute; Miguel Fern&aacute;ndez Fern&aacute;ndez.
-<P>
+<p>
 Thanks to translations by Fernando Gabriel Ranea <davinci@dinamica.com.ar> in late 2000
 and early 2001, RasMol is now
 capable of rendering most menu items and messages in Spanish.  
-Jean-Pierre Demailly <Jean-Pierre.Demailly@ujf-grenoble.fr> provided French
+Jean-Pierre Demailly <jean-pierre.demailly@ujf-grenoble.fr> provided French
 translations of menus and messages in January 2001.  
 Giuseppe Martini <martini@iigb.na.cnr.it> and Giovanni Paolella <paolella@dbbm.unina.it>
 with contributions by A. Davassi, M. Masullo and C. Liotto provided Italian
 translations of menus and messages in March 2001.
-</P>
-<HR>
-<H2 ALIGN=CENTER><a name=Copying></a>IMPORTANT - Copying and Distribution</H2>
-<P>
+</p>
+<hr>
+<h2 ><a name=Copying></a>IMPORTANT - Copying and Distribution</h2>
+<p>
 This version is based directly on RasMol version 2.7.5.1,
 on RasMol version 2.7.4.2,
 on RasMol version 2.7.4.1,
@@ -267,35 +171,35 @@ on RasMol version 2.7.3, on RasMol version 2.7.2.1.1,
 on RasMol version 2.7.2, on RasMol version 2.7.1, on RasMol
 version 2.6_CIF.2, on RasMol version 2.6x1, on RasMol version
 2.6.4, and RasMol 2.5-ucb and 2.6-ucb.
-<P>
-Please read the file <A HREF = "doc/NOTICE.html">NOTICE</A> for
+<p>
+Please read the file <a href = "doc/NOTICE.html">NOTICE</a> for
 important notices which apply to this package and for
-license terms (<a href=GPL>GPL</a> or <A href=RASLIC>RASLIC</a>).
+license terms (<a href=GPL>GPL</a> or <a href=RASLIC>RASLIC</a>).
 
-<HR>
-<H3><A NAME="Contents">Contents</A></H3>
-<P>
-<UL>
-<LI><A href="#Copying">IMPORTANT - Copying and Distribution</A>
-<LI><A href="INSTALL.html">Installation Instructions</A>
-<LI><A href="ChangeLog.html">Changes</A>
-<LI><A href="TODO.html">Things To Do</A>
-<LI><A href="#Introduction">Introduction</A>
-<LI><A href="#CodeAndBinaries">Source Code and Binaries</A>
-<LI>Directories
-  <UL>
-  <LI><A href="ChangeLog/">ChangeLog</A> -- Full ChangeLog directory
-  <LI><A href="src/">src</A> -- source code
-   <UL>
-     <LI><A href="src/mac/">mac</A> -- Macintosh build directory
-     <LI><A href="src/mswin/">mswin</A> -- Windows build directory
-   </UL>
-  <LI><A href="doc/README.html">doc</A> -- documentation
-  <LI><A href="data/">data</A> -- sample data files
-  </UL>
-</UL>
-<HR>
-<H3 ALIGN=CENTER><A NAME="Introduction">Introduction</A></H3>
+<hr>
+<h2><a name="Contents">Contents</a></h2>
+<p>
+<ul>
+<li><a href="#Copying">IMPORTANT - Copying and Distribution</a>
+<li><a href="install.html">Installation Instructions</a>
+<li><a href="changelog.html">Changes</a>
+<li><a href="todo.html">Things To Do</a>
+<li><a href="#Introduction">Introduction</a>
+<li><a href="#CodeAndBinaries">Source Code and Binaries</a>
+<li>Directories
+  <ul>
+  <li><a href="ChangeLog/">ChangeLog</a> -- Full ChangeLog directory
+  <li><a href="src/">src</a> -- source code
+   <ul>
+     <li><a href="src/mac/">mac</a> -- Macintosh build directory
+     <li><a href="src/mswin/">mswin</a> -- Windows build directory
+   </ul>
+  <li><a href="doc/README.html">doc</a> -- documentation
+  <li><a href="data/">data</a> -- sample data files
+  </ul>
+</ul>
+<hr>
+<h2 ><a name="Introduction">Introduction</a></h2>
 <p>This posting is made to announce the release of RasMol version
 2.7.5.2  This release is based on 
 <a href="http://www.bernstein-plus-sons.com/software/RasMol_2.7.5">RasMol 2.7.5.1</a>.
@@ -350,30 +254,30 @@ Our thanks to G. Pozhvanov, G. Todorov, Nan Jia, Mamoru Yamanishi and Katajima H
   <li> Extended export menus.
 </ul>
 
-For more detail on these and earlier changes, consult the openrasmol svn repository
+For more detail on these and earlier changes, consult the RasMol svn repository
 on sourceforge.
   
-<P>    
+<p>
     This version is available for MS Windows and various unix-systems.
 As binaries become available, they will be released on
 <a href=http://blondie.dowling.edu/projects/rasmol>http://blondie.dowling.edu/projects/rasmol</a>
 and
-<a href=http://www.sourceforge.net/projects/openrasmol>http:/www.sourceforge.net/projects/openrasmol</a>.
-<P>
+<a href=http://www.sourceforge.net/projects/RasMol>http:/www.sourceforge.net/projects/RasMol</a>.
+<p>
     For installation instructions see 
-    <A href="INSTALL.html">&quot;INSTALL&quot;</A>.
-<P>
+    <a href="install.html">&quot;INSTALL&quot;</a>.
+<p>
     For a list of open issues in this version, see
-    <A href="TODO.html">&quot;TODO&quot;</A>.
+    <a href="todo.html">&quot;TODO&quot;</a>.
 
-<P> 
+<p>
 RasMol is a molecular graphics program intended for the visualisation
 of proteins, nucleic acids and small molecules. The program is aimed at
 display, teaching and generation of publication quality images. The original
 program was been developed at the University of Edinburgh's
 Biocomputing Research Unit and the Biomolecular Structures Group at
 Glaxo Research and Development, Greenford, UK.
-<P> 
+<p>
 RasMol reads in molecular co-ordinate files in a number of formats and
 interactively displays the molecule on the screen in a variety of colour
 schemes and representations. Currently supported input file formats
@@ -401,7 +305,7 @@ the commands required to regenerate the current image. Finally the
 rendered image may be written out in a variety of formats including
 both raster and vector PostScript, GIF, PPM, BMP, PICT, Sun rasterfile
 or as a MolScript input script or Kinemage.
-<P>	
+<p>
 	Versions of RasMol have run on a wide range of architectures and systems 
 including SGI, sun4, sun3, sun386i, SGI, DEC, HP and E&amp;S workstations, IBM
 RS/6000, Cray, Sequent, DEC Alpha (OSF/1, OpenVMS and Windows NT), IBM
@@ -412,69 +316,64 @@ Windows frame buffer (X11R4 or later). The X Windows version of RasMol
 provides optional support for a hardware dials box and accelerated
 shared memory rendering (via the XInput and MIT-SHM extensions) if
 available.
-<P>
+<p>
 Reports of builds and/or problems on various platforms appreciated.
-<P>
-<HR>
-<H3 ALIGN=CENTER><A NAME="CodeAndBinaries">Source Code and Binaries</A></H3>
-<P>
+<p>
+<hr>
+<h2 ><a name="CodeAndBinaries">Source Code and Binaries</a></h2>
+<p>
  The complete source code
 and user documentation of RasMol 2.7.5.2 may be obtained 
-<a href=http://www.sourceforge.net/projects/openrasmol>http://www.sourceforge.net/projects/rasmol</a>.
+<a href=http://www.sourceforge.net/projects/RasMol>http://www.sourceforge.net/projects/rasmol</a>.
 and
 by
 anonymous FTP at:
-<P>
-    <A 
-href="ftp://ftp.bernstein-plus-sons.com/software/RasMol_2.7.5.2.tar.gz">ftp://ftp.bernstein-plus-sons.com/software/RasMol_2.7.5.2.tar.gz</A>
-<P>
+<p>
+    <a
+href="ftp://ftp.bernstein-plus-sons.com/software/RasMol_2.7.5.2.tar.gz">ftp://ftp.bernstein-plus-sons.com/software/RasMol_2.7.5.2.tar.gz</a>
+<p>
 or on the web at:
-<P>
-    <A 
-href="http://www.bernstein-plus-sons.com/software/RasMol_2.7.5.2.tar.gz">http://www.bernstein-plus-sons.com/software/RasMol_2.7.5.2.tar.gz</A>
-<P>	
-<a href=http://www.sourceforge.net/projects/openrasmol>http://www.sourceforge.net/projects/rasmol</a>.
+<p>
+    <a
+href="http://www.bernstein-plus-sons.com/software/RasMol_2.7.5.2.tar.gz">http://www.bernstein-plus-sons.com/software/RasMol_2.7.5.2.tar.gz</a>
+<p>
+<a href=http://www.sourceforge.net/projects/RasMol>http://www.sourceforge.net/projects/rasmol</a>.
 
 
-<P>
-<center>
-<P>	
+<p>
+<div class="center">
+<p>
 Any comments, suggestions or questions about this
 modified version of RasMol should be directed to
-<A HREF="mailto:rasmol@bernstein-plus-sons.com">rasmol@bernstein-plus-sons.com</A>.
-<P>
-<CENTER>
-| <a href="http://www.OpenrasMol.org">OpenRasMol</a> |
-<A href="README.html#Copying">Copying and Distribution</A> |
-<A href="README.html#Contents">Contents</A> |
-<A href="INSTALL.html">Installation Instructions</A> |<BR>
-| <A href="ChangeLog.html">Changes</A> |
-<A href="TODO.html">Things To Do</A> |
-<A href="README.html#Introduction">Introduction</A> | 
-<A href="README.html#CodeAndBinaries">Source Code and Binaries</A> |<BR>
-| <A href="doc/rasmol.html">RasMol Manual</A> |
+<a href="mailto:rasmol@bernstein-plus-sons.com">rasmol@bernstein-plus-sons.com</a>.
+<p>
+<div class="center">
+| <a href="http://www.rasmol.net">RasMol</a> |
+<a href="readme.html#copying">Copying and Distribution</a> |
+<a href="readme.html#contents">Contents</a> |
+<a href="install.html">Installation Instructions</a> |<br>
+| <a href="changelog.html">Changes</a> |
+<a href="todo.html">Things To Do</a> |
+<a href="readme.html#introduction">Introduction</a> |
+<a href="readme.html#codeandbinaries">Source Code and Binaries</a> |<br>
+| <a href="doc/rasmol.html">RasMol Manual</a> |
 <a href="doc/esrasmol27.html">Spanish Translation of RasMol Manual</a> | 
-<a href="doc/itrasmol.hlp">Italian Translation of RasMol 2.7.1 Help File</a> |<BR>
-| <a href=http://www.rasmol.org/donate.shtml>Donate to Support RasMol</a> |
-<a href="README.html">Release README</A> |
-<a href=http://www.rasmol.org/register.shtml>Register your RasMol</a> |
-</CENTER>
+<a href="doc/itrasmol.hlp">Italian Translation of RasMol 2.7.1 Help File</a> |<br>
+| <a href=http://www.rasmol.net/donate.shtml>Donate to Support RasMol</a> |
+<a href="readme.html">Release README</a> |
+<a href=http://www.rasmol.net/register.shtml>Register your RasMol</a> |
+</div>
 
-<HR>
-Updated 14 May 2011.<BR>
-Herbert J. Bernstein<BR>
-Bernstein + Sons, 5 Brewster Lane, Bellport, NY 11713-2803, USA<BR>
-<script language="javascript" type="text/javascript">
-<!--
-      var name = "yaya@";
-      var domain = "bernstein-plus-sons";
-      var domext = ".com";
-      document.write ("<a href=\"mailto:" + name + domain + domext + "\">" + name + domain + domext+"</a>");
-// -->
-</script>
+</main><footer><hr>
+Updated 14 May 2011.<br>
+Herbert J. Bernstein<br>
+Bernstein + Sons, 5 Brewster Lane, Bellport, NY 11713-2803, USA<br>
+<span class="email-placeholder"></span>
 <noscript>
 yaya&#64;bernstein-plus-sons&#46;com
 </noscript>
-</font>
-</BODY>
-</HTML>
+
+
+
+</footer></body>
+</html>
