@@ -6,13 +6,7 @@
     <link rel="stylesheet" href="style.css">
     <script type="module" src="script.js"></script>
 </head>
-<body>
-
-
-
-
-
-<div class="two-col-list"><div></div><div class="term"><a href="http://www.iucr.org/iucr-top/welcome.html">
+<body><header><a href="http://www.iucr.org/iucr-top/welcome.html">
 <img alt="[IUCr Home Page]" src="html_graphics/iucrhome.jpg"></a></div><div><a href="http://www.iucr.org/iucr-top/cif/home.html">
 <img alt="[CIF Home Page]" src="html_graphics/cifhome.jpg"></a> <a href="doc/rasmol.html"><img src="html_graphics/rasmolbutton.jpg"
 alt="[RasMol Manual]"></a> <a href="http://sourceforge.net/projects/RasMol"><img
@@ -48,7 +42,7 @@ visits since 17 July 2009
 
 
 <hr>
-<div class="center">
+<nav aria-label="Main Navigation"><div class="center">
 | <a href="http://www.rasmol.net">RasMol</a> |
 <a href="readme.html#copying">Copying and Distribution</a> |
 <a href="readme.html#contents">Contents</a> |
@@ -64,7 +58,7 @@ visits since 17 July 2009
 <a href="readme.html">Release README</a> |
 <a href=http://www.rasmol.net/register.shtml>Register your RasMol</a> |
 <br />
-</div>
+</div></nav></header><main>
 
 
 <h1 >README<br>
@@ -91,10 +85,10 @@ Installer</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />
 <li><a href=http://www.rasmol.net/register.shtml>Register your RasMol</a><br />
 </ul></div></div>
 </div>
-<h3 >
+<h2 >
 Molecular Graphics Visualisation Tool<br />
 3 June 2009 (rev. 13 May 2011)<br />
-</h3>
+</h2>
 
 <div class="center">
 Based on RasMol 2.6
@@ -171,7 +165,7 @@ February 2005 for RasMol version 2.7.3.
 Edited by Herbert J. Bernstein and Frances C. Bernstein
 </div>
 <p>
-<h4 class="center">Translations</h4>
+<h3 >Translations</h3>
 <p>Thanks to the efforts of Jos&eacute; Miguel Fern&aacute;ndez
 Fern&aacute;ndez (Departamento 
 de Bioqu&iacute;mica y Biolog&iacute;a Molecular. Universidad de Granada.
@@ -195,7 +189,7 @@ with contributions by A. Davassi, M. Masullo and C. Liotto provided Italian
 translations of menus and messages in March 2001.
 </p>
 <hr>
-<h2 class="center"><a id="Copying"></a>IMPORTANT - Copying and Distribution</h2>
+<h2 ><a id="Copying"></a>IMPORTANT - Copying and Distribution</h2>
 <p>
 This version is based directly on RasMol version 2.7.5.1,
 on RasMol version 2.7.4.2,
@@ -212,7 +206,7 @@ important notices which apply to this package and for
 license terms (<a href=GPL>GPL</a> or <a href=RASLIC>RASLIC</a>).
 
 <hr>
-<h3><a id="Contents">Contents</a></h3>
+<h2><a id="Contents">Contents</a></h2>
 <p>
 <ul>
 <li><a href="#Copying">IMPORTANT - Copying and Distribution</a>
@@ -234,7 +228,7 @@ license terms (<a href=GPL>GPL</a> or <a href=RASLIC>RASLIC</a>).
   </ul>
 </ul>
 <hr>
-<h3 class="center"><a id="Introduction">Introduction</a></h3>
+<h2 class="center"><a id="Introduction">Introduction</a></h2>
 <p>This posting is made to announce the release of RasMol version
 2.7.5.2  This release is based on 
 <a href="http://www.bernstein-plus-sons.com/software/RasMol_2.7.5">RasMol 2.7.5.1</a>.
@@ -355,7 +349,7 @@ available.
 Reports of builds and/or problems on various platforms appreciated.
 <p>
 <hr>
-<h3 class="center"><a id="CodeAndBinaries">Source Code and Binaries</a></h3>
+<h2 class="center"><a id="CodeAndBinaries">Source Code and Binaries</a></h2>
 <p>
  The complete source code
 and user documentation of RasMol 2.7.5.2 may be obtained 
@@ -399,7 +393,7 @@ modified version of RasMol should be directed to
 <a href=http://www.rasmol.net/register.shtml>Register your RasMol</a> |
 </div>
 
-<hr>
+</main><footer><hr>
 Updated 14 May 2011.<br>
 Herbert J. Bernstein<br>
 Bernstein + Sons, 5 Brewster Lane, Bellport, NY 11713-2803, USA<br>
@@ -408,5 +402,6 @@ Bernstein + Sons, 5 Brewster Lane, Bellport, NY 11713-2803, USA<br>
 yaya&#64;bernstein-plus-sons&#46;com
 </noscript>
 
+</footer>
 </body>
 </html>

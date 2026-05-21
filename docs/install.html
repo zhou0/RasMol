@@ -1,37 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
-<head><meta charset="UTF-8">
-
-<title>
-RasMol V2.7.5 INSTALL
-</title>
-
-<link rel="stylesheet" href="style.css"><script type="module" src="script.js"></script></head>
-<body>
-
-<a href="http://www.iucr.org/iucr-top/welcome.html">
-<img alt="Iucrhome" src="html_graphics/iucrhome.jpg"></a>
+<head>
+    <meta charset="UTF-8">
+    <title>RasMol Documentation</title>
+    <link rel="stylesheet" href="style.css">
+    <script type="module" src="script.js"></script>
+</head>
+<body><header><a href="http://www.iucr.org/iucr-top/welcome.html">
+<img alt="[IUCr Home Page]" src="html_graphics/iucrhome.jpg"></a>
 <a href="http://www.iucr.org/iucr-top/cif/home.html">
-<img alt="Cifhome" src="html_graphics/cifhome.jpg"></a>
+<img alt="[CIF Home Page]" src="html_graphics/cifhome.jpg"></a>
 <a href="readme.html"><img src="html_graphics/rasmolbutton.jpg"
-alt="Rasmolbutton"></a>
+alt="[RasMol]"></a>
 <hr>
-<div class="center">
+<nav aria-label="Main Navigation"><div class="center">
 | <a href="http://www.rasmol.net">RasMol</a> |
-<a href="readme.html#Copying">Copying and Distribution</a> |
-<a href="readme.html#Contents">Contents</a> |
+<a href="readme.html#copying">Copying and Distribution</a> |
+<a href="readme.html#contents">Contents</a> |
 <a href="install.html">Installation Instructions</a> |<br>
 | <a href="changelog.html">Changes</a> |
 <a href="todo.html">Things To Do</a> |
-<a href="readme.html#Introduction">Introduction</a> |
-<a href="readme.html#CodeAndBinaries">Source Code and Binaries</a> |<br>
+<a href="readme.html#introduction">Introduction</a> |
+<a href="readme.html#codeandbinaries">Source Code and Binaries</a> |<br>
 | <a href="doc/rasmol.html">RasMol Manual</a> |
 <a href="doc/esrasmol27.html">Spanish Translation of RasMol Manual</a> | 
 <a href="doc/itrasmol.hlp">Italian Translation of RasMol Help File</a> |<br>
 | <a href=http://www.rasmol.net/donate.shtml>Donate to Support RasMol</a> |
 <a href="readme.html">Release README</a> |
 <a href=http://www.rasmol.net/register.shtml>Register your RasMol</a> |
-</div>
+</div></nav></header><main>
 
 
 <h1 >Installation Instructions<br>
@@ -60,10 +57,10 @@ Manual</a><br />
 <li><a href=http://www.rasmol.net/register.shtml>Register your RasMol</a><br />
 </ul></div></div>
 </div>
-<h3 >
+<h2 >
 Molecular Graphics Visualisation Tool<br>
 3 June 2009 (rev. 17 July 2009)<br />
-</h3>
+</h2>
 
 <div class="center">
 Based on RasMol 2.6 by
@@ -138,7 +135,7 @@ February 2005 for RasMol version 2.7.3.
 Edited by Herbert J. Bernstein and Frances C. Bernstein
 </div>
 <p>
-<h4 class="center">Translations</h4>
+<h3 >Translations</h3>
 <p>Thanks to the efforts of Jos&eacute; Miguel Fern&aacute;ndez
 Fern&aacute;ndez (Departamento 
 de Bioqu&iacute;mica y Biolog&iacute;a Molecular. Universidad de Granada.
@@ -162,12 +159,12 @@ with contributions by A. Davassi, M. Masullo and C. Liotto provided Italian
 translation of menus and messages in March 2001.
 </p>
 <hr>
-<h4 class="center">
+<h3 >
 THIS IS A PRELIMINARY RELEASE INVOLVING EXTENSIVE MODIFICATIONS<br>
 *****  USE WITH CAUTION  ******<br>
-</h4>
+</h3>
 <hr>
-<h2 class="center"><a id="Copying"></a>IMPORTANT - Copying and Distribution</h2>
+<h2 ><a name=Copying></a>IMPORTANT - Copying and Distribution</h2>
 <p>
 This version is based directly on RasMol version 2.7.4.2,
 on RasMol version 2.7.4.1,
@@ -178,12 +175,12 @@ on RasMol version 2.7.2, on RasMol version 2.7.1, on RasMol
 version 2.6_CIF.2, on RasMol version 2.6x1, on RasMol version
 2.6.4, and RasMol 2.5-ucb and 2.6-ucb.
 <p>
-Please read the file <a HREF = "doc/NOTICE.html">NOTICE</a> for
+Please read the file <a href = "doc/NOTICE.html">NOTICE</a> for
 important notices which apply to this package and for
 license terms (<a href=GPL>GPL</a> or <a href=RASLIC>RASLIC</a>).
 <hr>
-<a id="CodeAndBinaries"></a>
-<h3>Obtaining RasMol v2.7.5</h3>
+<a name="CodeAndBinaries"></a>
+<h2>Obtaining RasMol v2.7.5</h2>
 <p>
   In order to install RasMol, you may start with a compiled binary or work from
  the source code.
@@ -326,10 +323,10 @@ environment variable RASMOLPATH)
  <p>
  <hr>
  
-<h3>Installing RasMol v2.7.5</h3>
+<h2>Installing RasMol v2.7.5</h2>
 <p>
 
-<h4>UNIX X11:</h4>
+<h3>UNIX X11:</h3>
 
 <p>
 If you are using a precompiled binary, see the instructions that are provided
@@ -402,7 +399,7 @@ rasmol_build_options.sh is in general perferred
 
 </ol>
 <p>
-<h4>MS Windows:</h4>
+<h3>MS Windows:</h3>
 <p>
 If you are using a precompiled binary, follow the instructions that come
 with the binary, but in general, you either need to place raswin.exe,
@@ -413,13 +410,13 @@ If you are building from source, you will need MINGW, not visual studio.
 CodeWarrior version 9 can also be used.
 </ol>
 <p>
-<h4>Macintosh under OSX:</h4>
+<h3>Macintosh under OSX:</h3>
 <p>
 Follow the instructions for unix and run under the X11 system.  A pre-edited
 version of the build_all.sh script called build_MACOSX.sh is provided.
 <p>
 
-<h3>COMPILATION DIRECTIVES</h3>
+<h2>COMPILATION DIRECTIVES</h2>
 <p>The file rasmol.h contains a number of #define directives that control
 the runtime behaviour of the program. The following directives may be
 defined or undefined to suite the local site.
@@ -531,7 +528,7 @@ modified version should be directed to Herbert J. Bernstein at
 <a href=http://www.rasmol.net/register.shtml>Register your RasMol</a> |
 </div>
 
-<hr>
+</main><footer><hr>
 Updated 19 July 2009.<br>
 Herbert J. Bernstein<br>
 Bernstein + Sons, 5 Brewster Lane, Bellport, NY 11713-2803, USA<br>
@@ -540,5 +537,6 @@ Bernstein + Sons, 5 Brewster Lane, Bellport, NY 11713-2803, USA<br>
 yaya&#64;bernstein-plus-sons&#46;com
 </noscript>
 
+</footer>
 </body>
 </html>
