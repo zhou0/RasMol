@@ -427,3 +427,26 @@ if {[tk windowingsystem] eq "aqua"} {
         exit
     }
 }
+
+# Localization
+set current_ui_lang "English"
+set script_dir [file dirname [info script]]
+if {[file exists [file join $script_dir rasmol_loc.tcl]]} {
+    source [file join $script_dir rasmol_loc.tcl]
+} elseif {[file exists "/usr/local/share/rasmol/rasmol_loc.tcl"]} {
+    source "/usr/local/share/rasmol/rasmol_loc.tcl"
+} elseif {[file exists "/usr/share/rasmol/rasmol_loc.tcl"]} {
+    source "/usr/share/rasmol/rasmol_loc.tcl"
+}
+
+if {[info procs localize_ui] ne ""} {
+    if {![winfo exists .menubar.lang]} {
+        menu .menubar.lang -tearoff 0
+        .menubar insert 7 cascade -label "Language" -menu .menubar.lang
+        foreach lang [lsort [array names ui_translations]] {
+            .menubar.lang add radiobutton -label $lang -variable current_ui_lang -value $lang \
+                -command {localize_ui}
+        }
+    }
+    localize_ui
+}
