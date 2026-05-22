@@ -1,2 +1,0 @@
-/usr/bin/ar qc ../../lib/libCQRlib.a CMakeFiles/CQRlib.dir/cqrlib.c.o
-/usr/bin/ranlib ../../lib/libCQRlib.a

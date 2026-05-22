@@ -1,2 +1,0 @@
-/usr/bin/ar qc ../../lib/libCNearTree.a CMakeFiles/CNearTree.dir/CNearTree.c.o
-/usr/bin/ranlib ../../lib/libCNearTree.a

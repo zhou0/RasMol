@@ -152,9 +152,7 @@
 /* #define MAXRAD    120   256   */
 /* #define MAXTABLE  7261  32897 */
 #define MAXRAD    255
-#ifdef USE_SQRT_LUT
 #define MAXTABLE  32641
-#endif
 
 
 #define SlabReject       0x00
@@ -235,17 +233,13 @@ int FBClear;
 Card __far *ColConst;
 #if defined(IBMPC) || defined(APPLEMAC)
 void __far * __far *HashTable;
-#ifdef USE_SQRT_LUT
 Byte __far * __far *LookUp;
 Byte __far *Array;
-#endif
 
 #else /* UNIX or VMS */
 void *HashTable[VOXSIZE];
-#ifdef USE_SQRT_LUT
 Byte *LookUp[MAXRAD];
 Byte Array[MAXTABLE];
-#endif
 #endif
 
 
@@ -283,38 +277,26 @@ extern int FBClear;
 extern Card __far *ColConst;
 #if defined(IBMPC) || defined(APPLEMAC)
 extern void __far * __far *HashTable;
-#ifdef USE_SQRT_LUT
 extern Byte __far * __far *LookUp;
 extern Byte __far *Array;
-#endif
 
 #else /* UNIX or VMS */
 extern void *HashTable[VOXSIZE];
-#ifdef USE_SQRT_LUT
 extern Byte *LookUp[MAXRAD];
 extern Byte Array[MAXTABLE];
 #endif
-#endif
 
 
 #endif
 
-#ifdef USE_SQRT_LUT
 #define pythag(h,x) \
            ((h)<MAXRAD? \
              (int)LookUp[(h)][(x)]: \
              (int)(.5+(sqrt((double)((h)*(h)-(x)*(x))))))
-#else
-#define pythag(h,x) ((int)(.5+(sqrt((double)((h)*(h)-(x)*(x))))))
-#endif
-#ifdef USE_SQRT_LUT
 #define apythag(h,x) \
            ((h)<MAXRAD/2? \
              (int)LookUp[(h)][(x)]: \
              (int)(.5+(sqrt((double)((h)*(h)-(x)*(x))))))
-#else
-#define apythag(h,x) ((int)(.5+(sqrt((double)((h)*(h)-(x)*(x))))))
-#endif
 #define colconst(r) \
      ((r)<MAXRAD? \
        ColConst[(r)] : \

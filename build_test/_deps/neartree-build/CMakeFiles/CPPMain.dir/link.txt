@@ -1,1 +1,0 @@
-/usr/bin/c++ CMakeFiles/CPPMain.dir/main.cpp.o CMakeFiles/CPPMain.dir/v.cpp.o -o ../../bin/CPPMain  -lm

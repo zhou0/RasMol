@@ -1,1 +1,0 @@
-/usr/bin/cc  -Wall -ansi -pedantic CMakeFiles/CQRlibTest.dir/CQRlibTest.c.o -o ../../bin/CQRlibTest  ../../lib/libCQRlib.a -lm

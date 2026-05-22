@@ -1,3 +1,0 @@
-/app/build_test/_deps/cvector-subbuild/CMakeFiles/cvector-populate.dir
-/app/build_test/_deps/cvector-subbuild/CMakeFiles/edit_cache.dir
-/app/build_test/_deps/cvector-subbuild/CMakeFiles/rebuild_cache.dir

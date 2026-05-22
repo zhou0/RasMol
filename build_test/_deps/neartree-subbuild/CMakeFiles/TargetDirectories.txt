@@ -1,3 +1,0 @@
-/app/build_test/_deps/neartree-subbuild/CMakeFiles/neartree-populate.dir
-/app/build_test/_deps/neartree-subbuild/CMakeFiles/edit_cache.dir
-/app/build_test/_deps/neartree-subbuild/CMakeFiles/rebuild_cache.dir
