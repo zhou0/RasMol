@@ -274,14 +274,14 @@ endif()
 
 # Tcl/Tk Support
 if(APPLE)
-    # macOS framework logic hints
+    # macOS Homebrew and framework logic hints
+    set(TCL_TK_PATHS /usr/local/opt/tcl-tk /opt/homebrew/opt/tcl-tk)
     set(CMAKE_FRAMEWORK_PATH /Library/Frameworks /System/Library/Frameworks)
-    find_library(TCL_LIBRARY Tcl)
-    find_library(TK_LIBRARY Tk)
-    find_path(TCL_INCLUDE_PATH tcl.h PATH_SUFFIXES Tcl.framework/Headers)
-    find_path(TK_INCLUDE_PATH tk.h PATH_SUFFIXES Tk.framework/Headers)
+    find_library(TCL_LIBRARY Tcl HINTS ${TCL_TK_PATHS} PATH_SUFFIXES lib)
+    find_library(TK_LIBRARY Tk HINTS ${TCL_TK_PATHS} PATH_SUFFIXES lib)
+    find_path(TCL_INCLUDE_PATH tcl.h HINTS ${TCL_TK_PATHS} PATH_SUFFIXES include Tcl.framework/Headers)
+    find_path(TK_INCLUDE_PATH tk.h HINTS ${TCL_TK_PATHS} PATH_SUFFIXES include Tk.framework/Headers)
 endif()
-
 if(NOT TCL_LIBRARY OR NOT TK_LIBRARY)
     find_package(TCL QUIET)
     find_package(TK QUIET)
