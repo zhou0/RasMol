@@ -149,6 +149,7 @@ jobs:
 
       - name: Install Build Dependencies (macOS)
         run: |
+          export MACOSX_DEPLOYMENT_TARGET=10.15
           brew install bison tcl-tk jpeg
           echo "${{ matrix.brew_prefix }}/opt/bison/bin" >> $GITHUB_PATH
 
