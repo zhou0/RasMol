@@ -2655,7 +2655,7 @@ void DrawCircle( void ) {
 	/* now |U[SBD.s0]| <= |U[SBD.s1]| <= |U[SBD.s2]|, draw an s0-s1 curve */
 		
 		rada = (int)(.5+sqrt(
-							  (double)(rad*rad+(C[0]-A[0])*(C[0]-A[0])
+							  (((double)rad)*((double)rad)+(C[0]-A[0])*(C[0]-A[0])
 									   +(C[1]-A[1])*(C[1]-A[1])
 									   +(C[2]-A[2])*(C[2]-A[2]))));
 		Xmin = - (Xmax =
