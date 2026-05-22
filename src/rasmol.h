@@ -214,11 +214,21 @@
 
 
 typedef double Real;
+
+#ifdef __APPLE__
+/* Avoid conflict with deprecated Byte and uint8_t in MacTypes.h/Tk */
+#ifdef Byte
+#undef Byte
+#endif
+#define Byte RasByte
+typedef unsigned char RasByte;
+#else
 #ifndef APPLEMAC
 #ifdef STDINT
 typedef uint8_t Byte;
 #else
 typedef unsigned char Byte;
+#endif
 #endif
 #endif
 
