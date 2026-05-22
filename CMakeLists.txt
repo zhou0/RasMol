@@ -1,6 +1,9 @@
 cmake_minimum_required(VERSION 3.11)
 project(RasMol C CXX)
 set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 # Default output directories used to avoid installation conflicts on Windows
 
 if(POLICY CMP0169)
@@ -333,17 +336,24 @@ set(CPACK_PACKAGE_NAME "RasMol")
 set(CPACK_PACKAGE_VENDOR "RasMol Maintenance Team")
 set(CPACK_PACKAGE_VERSION "2.8.0")
 set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "RasMol Molecular Graphics Visualisation Tool")
-set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_SOURCE_DIR}/RASLIC")
+configure_file("${CMAKE_SOURCE_DIR}/RASLIC" "${CMAKE_BINARY_DIR}/RASLIC.txt" COPYONLY)
+set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_BINARY_DIR}/RASLIC.txt")
 
 if(WIN32)
     set(CPACK_GENERATOR "WIX")
-    set(CPACK_WIX_UPGRADE_GUID "D9A1B1C1-E2F3-4G5H-6I7J-8K9L0M1N2O3P") # Placeholder UUID
+    set(CPACK_WIX_UPGRADE_GUID "AE33A535-6C64-4286-9C64-4A633F2356B2") # Placeholder UUID
 
     # Ensure compatibility with Windows 8.1 (Standard MSI features)
     #set(CPACK_WIX_PRODUCT_ICON "${CMAKE_SOURCE_DIR}/assets/rasmol.ico")
 
     # Optional: Add desktop shortcuts if supported by CPack WiX
     set(CPACK_WIX_PROGRAM_MENU_FOLDER "RasMol")
+elseif(UNIX AND NOT APPLE)
+    set(CPACK_GENERATOR "DEB;RPM")
+    set(CPACK_DEBIAN_PACKAGE_MAINTAINER "RasMol Maintenance Team")
+    set(CPACK_DEBIAN_PACKAGE_SECTION "science")
+    set(CPACK_RPM_PACKAGE_GROUP "Applications/Science")
+    set(CPACK_RPM_PACKAGE_LICENSE "GPL")
 elseif(APPLE)
     set(CPACK_GENERATOR "DragNDrop")
     set(CPACK_DMG_VOLUME_NAME "RasMol")

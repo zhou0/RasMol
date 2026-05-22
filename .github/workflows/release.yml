@@ -58,7 +58,7 @@ jobs:
             -DTK_LIBRARY="$env:TK_LIB_PATH"
 
       - name: Build
-        run: cmake --build build --config Release --target rasmol_tcl
+        run: cmake --build build --config Release
 
       - name: Install
         run: cmake --install build --config Release --prefix "${{ github.workspace }}/install_dir"
@@ -82,7 +82,7 @@ jobs:
       - name: Install Dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y libx11-dev libxext-dev libxi-dev libhdf5-dev tcl-dev tk-dev bison libxpm-dev
+          sudo apt-get install -y rpm libx11-dev libxext-dev libxi-dev libhdf5-dev tcl-dev tk-dev bison libxpm-dev
 
       - name: Configure CMake
         run: |
@@ -91,7 +91,7 @@ jobs:
             -DPIXELDEPTH=32
 
       - name: Build
-        run: cmake --build build --config Release --target rasmol_tcl
+        run: cmake --build build --config Release
 
       - name: Install
         run: cmake --install build --config Release --prefix AppDir/usr
@@ -106,23 +106,33 @@ jobs:
 
       - name: Install linuxdeploy
         run: |
-          wget https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppRun
-          chmod +x linuxdeploy-x86_64.AppRun
-          wget https://github.com/linuxdeploy/linuxdeploy-plugin-appimage/releases/download/continuous/linuxdeploy-plugin-appimage-x86_64.AppRun
-          chmod +x linuxdeploy-plugin-appimage-x86_64.AppRun
+          wget https://github.com/linuxdeploy/linuxdeploy/releases/download/1-alpha-20251107-1/linuxdeploy-x86_64.AppImage
+          chmod +x linuxdeploy-x86_64.AppImage
+          wget https://github.com/linuxdeploy/linuxdeploy-plugin-appimage/releases/download/1-alpha-20250213-1/linuxdeploy-plugin-appimage-x86_64.AppImage
+          chmod +x linuxdeploy-plugin-appimage-x86_64.AppImage
 
       - name: Build AppImage
         run: |
           export ARCH=x86_64
-          ./linuxdeploy-x86_64.AppRun --appdir AppDir --plugin appimage --output appimage
+          export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$GITHUB_WORKSPACE/build/lib
+          ./linuxdeploy-x86_64.AppImage --appdir AppDir --plugin appimage --output appimage \
+            $(find build/lib -name "*.so*" -printf "--library %p ")
         env:
           OUTPUT: RasMol-x86_64.AppImage
 
-      - name: Upload AppImage
+      - name: Build DEB and RPM
+        run: |
+          cd build
+          cpack -C Release -G "DEB;RPM"
+
+      - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: RasMol-Linux-AppImage
-          path: "*.AppImage"
+          name: RasMol-Linux-Artifacts
+          path: |
+            *.AppImage
+            build/*.deb
+            build/*.rpm"
 
   macos-release:
     strategy:
@@ -132,9 +142,11 @@ jobs:
           - arch: x86_64
             os: macos-13
             brew_prefix: /usr/local
+            deployment_target: "10.15"
           - arch: arm64
             os: macos-latest
             brew_prefix: /opt/homebrew
+            deployment_target: "11.0"
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
@@ -152,7 +164,7 @@ jobs:
             -DCMAKE_BUILD_TYPE=Release \
             -DPIXELDEPTH=32 \
             -DCMAKE_OSX_ARCHITECTURES="${{ matrix.arch }}" \
-            -DCMAKE_OSX_DEPLOYMENT_TARGET="10.15" \
+            -DCMAKE_OSX_DEPLOYMENT_TARGET="${{ matrix.deployment_target }}" \
             -DCMAKE_INSTALL_PREFIX=/usr/local \
             -DVTK_DIR="" \
             -DBISON_EXECUTABLE="$BISON_BIN" \
@@ -167,11 +179,18 @@ jobs:
       - name: Install to AppDir
         run: cmake --install build --prefix AppDir
 
-      - name: Upload Artifact
+      - name: Package DMG
+        run: |
+          cd build
+          cpack -C Release -G DragNDrop
+
+      - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
           name: RasMol-macOS-${{ matrix.arch }}
-          path: AppDir
+          path: |
+            AppDir
+            build/*.dmg
 
   macos-dmg:
     needs: macos-release
@@ -217,7 +236,8 @@ jobs:
           cmake -B build-dmg -S . \
             -DCMAKE_BUILD_TYPE=Release \
             -DPIXELDEPTH=32 \
-            -DBISON_EXECUTABLE="/opt/homebrew/opt/bison/bin/bison"
+            -DBISON_EXECUTABLE="/opt/homebrew/opt/bison/bin/bison" \
+            -DCMAKE_OSX_DEPLOYMENT_TARGET="11.0"
 
       - name: Package DMG
         run: |
