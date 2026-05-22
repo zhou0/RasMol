@@ -4416,11 +4416,11 @@ int AtomEdit(Long atomno, int heta,               /* atom serial no and
                           int*   __far charge     /* element charge      */)
 {
     
-}
+    return 0; }
 
 int AtomDelete(Long atomno){
     
-}
+    return 0; }
 
                           
                         

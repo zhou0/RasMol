@@ -222,6 +222,12 @@ typedef double Real;
 #endif
 #define Byte RasByte
 typedef unsigned char RasByte;
+/* Avoid conflict with deprecated Card and uint32_t in MacTypes.h/Tk */
+#ifdef Card
+#undef Card
+#endif
+#define Card RasCard
+typedef unsigned int RasCard;
 #else
 #ifndef APPLEMAC
 #ifdef STDINT
@@ -240,16 +246,24 @@ typedef char Char;
 
 #ifdef _LONGLONG
   #ifdef STDINT
+  #ifndef __APPLE__
   typedef uint32_t Card;
+  #endif
   #else
+  #ifndef __APPLE__
   typedef unsigned int Card;
+  #endif
   #endif
   typedef long Long;
 #else
   #ifdef STDINT
+  #ifndef __APPLE__
   typedef uint32_t Card;
+  #endif
   #else
+  #ifndef __APPLE__
   typedef unsigned long Card;
+  #endif
   #endif
   typedef long Long;
 #endif
