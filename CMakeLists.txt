@@ -366,6 +366,12 @@ if(WIN32)
 
     # Optional: Add desktop shortcuts if supported by CPack WiX
     set(CPACK_WIX_PROGRAM_MENU_FOLDER "RasMol")
+elseif(UNIX AND NOT APPLE)
+    set(CPACK_GENERATOR "DEB;RPM")
+    set(CPACK_DEBIAN_PACKAGE_MAINTAINER "RasMol Maintenance Team")
+    set(CPACK_DEBIAN_PACKAGE_SECTION "science")
+    set(CPACK_RPM_PACKAGE_GROUP "Applications/Science")
+    set(CPACK_RPM_PACKAGE_LICENSE "GPL")
 elseif(APPLE)
     set(CPACK_GENERATOR "DragNDrop")
     set(CPACK_DMG_VOLUME_NAME "RasMol")
