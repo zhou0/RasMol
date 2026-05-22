@@ -202,7 +202,20 @@ if(CBF_LIBRARY)
     add_definitions(-DUSE_CBFLIB)
 endif()
 
-# HDF5 is managed by CBFlib subproject
+
+if(NOT APPLE)
+find_package(HDF5 COMPONENTS C)
+if(HDF5_FOUND)
+    include_directories(${HDF5_INCLUDE_DIRS})
+    list(APPEND EXTERNAL_LIBRARIES ${HDF5_LIBRARIES})
+else()
+    find_path(HDF5_INCLUDE_DIR hdf5.h PATH_SUFFIXES hdf5/serial)
+    if(HDF5_INCLUDE_DIR)
+        include_directories(${HDF5_INCLUDE_DIR})
+    endif()
+endif()
+endif()
+
 
 if(CBF_INCLUDE_DIR)
     include_directories(${CBF_INCLUDE_DIR})

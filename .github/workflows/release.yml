@@ -153,13 +153,13 @@ jobs:
 
       - name: Install Build Dependencies (macOS)
         run: |
-          brew install bison tcl-tk jpeg libdeflate jbigkit liblerc webp hdf5
-          echo "${{ matrix.brew_prefix }}/opt/bison/bin" >> $GITHUB_PATH
+          brew install bison tcl-tk jpeg libdeflate jbigkit lerc webp
+          echo "$(brew --prefix bison)/bin" >> $GITHUB_PATH
 
       - name: Configure CMake
         run: |
-          TCL_ROOT="${{ matrix.brew_prefix }}/opt/tcl-tk"
-          BISON_BIN="${{ matrix.brew_prefix }}/opt/bison/bin/bison"
+          TCL_ROOT="$(brew --prefix tcl-tk)"
+          BISON_BIN="$(brew --prefix bison)/bin/bison"
           cmake -B build -S . \
             -DCMAKE_BUILD_TYPE=Release \
             -DPIXELDEPTH=32 \
@@ -200,8 +200,8 @@ jobs:
 
       - name: Install Build Dependencies (macOS)
         run: |
-          brew install bison libdeflate jbigkit lerc webp hdf5
-          echo "/opt/homebrew/opt/bison/bin" >> $GITHUB_PATH
+          brew install bison libdeflate jbigkit lerc webp
+          echo "$(brew --prefix bison)/bin" >> $GITHUB_PATH
 
       - name: Download x86_64 Artifact
         uses: actions/download-artifact@v4
@@ -236,7 +236,7 @@ jobs:
           cmake -B build-dmg -S . \
             -DCMAKE_BUILD_TYPE=Release \
             -DPIXELDEPTH=32 \
-            -DBISON_EXECUTABLE="/opt/homebrew/opt/bison/bin/bison" \
+            -DBISON_EXECUTABLE="$(brew --prefix bison)/bin/bison" \
             -DCMAKE_OSX_DEPLOYMENT_TARGET="11.0"
 
       - name: Package DMG
