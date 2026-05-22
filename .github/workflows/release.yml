@@ -140,11 +140,11 @@ jobs:
         arch: [x86_64, arm64]
         include:
           - arch: x86_64
-            os: macos-15
+            os: macos-14
             brew_prefix: /usr/local
             deployment_target: "10.15"
           - arch: arm64
-            os: macos-15
+            os: macos-14
             brew_prefix: /opt/homebrew
             deployment_target: "11.0"
     runs-on: ${{ matrix.os }}
