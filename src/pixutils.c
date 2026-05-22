@@ -2162,6 +2162,7 @@ static int TestSphere( int x, int y, int z, int rad )
         dptr++;  dx++;
 
 
+#ifdef USE_SQRT_LUT
 #define oUpdateLine  \
         dx = -wide;                   \
         dptr = dold-wide;             \
@@ -2170,6 +2171,7 @@ static int TestSphere( int x, int y, int z, int rad )
         do { UpdateAcross(*tptr); tptr++; } while(dx<=wide); \
         dold += View.yskip;  fold += View.yskip;             \
         dy++;
+#endif
 
 #define UpdateLine  \
         dx = -wide;                   \

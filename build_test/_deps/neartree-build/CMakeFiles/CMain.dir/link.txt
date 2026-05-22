@@ -1,0 +1,1 @@
+/usr/bin/cc CMakeFiles/CMain.dir/main.c.o -o ../../bin/CMain  -Wl,-rpath,/app/build_test/lib ../../lib/libCNearTree.a ../../lib/libCVector.so.2.0.1 -lm
