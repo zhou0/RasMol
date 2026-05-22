@@ -2392,6 +2392,7 @@ void ResetRenderer( void )
 }
 
 
+#ifdef USE_SQRT_LUT
 static void InitialiseTables( void )
 {
     register Byte __far *ptr;
@@ -2429,6 +2430,7 @@ static void InitialiseTables( void )
         *ptr++ = 0;    
     }
 }
+#endif
 
 
 void InitialiseRenderer( void )
@@ -2449,18 +2451,28 @@ void InitialiseRenderer( void )
 
 #if defined(IBMPC) || defined(APPLEMAC)
     /* Allocate tables on FAR heaps */ 
+    #ifdef USE_SQRT_LUT
     Array = (Byte __far*)_fmalloc(MAXTABLE*sizeof(Byte));
+#endif
+    #ifdef USE_SQRT_LUT
     LookUp = (Byte __far* __far*)_fmalloc(MAXRAD*sizeof(Byte __far*));
+#endif
     HashTable = (void __far* __far*)_fmalloc(VOXSIZE*sizeof(void __far*));
     ColConst = (Card __far*)_fmalloc(MAXRAD*sizeof(Card));
     
+    #ifdef USE_SQRT_LUT
     if( !Array || !LookUp || !HashTable || !ColConst )
+#else
+    if( !HashTable || !ColConst )
+#endif
 	FatalRenderError("tables");
 #else
     ColConst = ColConstTable;
 #endif
 
+    #ifdef USE_SQRT_LUT
     InitialiseTables();
+#endif
 
     /* Initialise ColConst! */
     for( rad=0; rad<MAXRAD; rad++ )
