@@ -341,7 +341,7 @@ set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_BINARY_DIR}/RASLIC.txt")
 
 if(WIN32)
     set(CPACK_GENERATOR "WIX")
-    set(CPACK_WIX_UPGRADE_GUID "D9A1B1C1-E2F3-4G5H-6I7J-8K9L0M1N2O3P") # Placeholder UUID
+    set(CPACK_WIX_UPGRADE_GUID "AE33A535-6C64-4286-9C64-4A633F2356B2") # Placeholder UUID
 
     # Ensure compatibility with Windows 8.1 (Standard MSI features)
     #set(CPACK_WIX_PRODUCT_ICON "${CMAKE_SOURCE_DIR}/assets/rasmol.ico")
