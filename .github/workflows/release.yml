@@ -200,7 +200,7 @@ jobs:
 
       - name: Install Build Dependencies (macOS)
         run: |
-          brew install bison libdeflate jbigkit lerc webp hdf5
+          brew install bison libdeflate jbigkit liblerc webp hdf5
           echo "/opt/homebrew/opt/bison/bin" >> $GITHUB_PATH
 
       - name: Download x86_64 Artifact
