@@ -150,8 +150,8 @@ jobs:
         arch: [x86_64, arm64]
         include:
           - arch: x86_64
-            os: macos-13
-            brew_prefix: /usr/local
+            os: macos-14
+            brew_prefix: /opt/homebrew
             deployment_target: "10.15"
           - arch: arm64
             os: macos-14
@@ -168,18 +168,13 @@ jobs:
 
       - name: Configure CMake
         run: |
-          TCL_ROOT="${{ matrix.brew_prefix }}/opt/tcl-tk"
-          BISON_BIN="${{ matrix.brew_prefix }}/opt/bison/bin/bison"
           cmake -B build -S . \
             -DCMAKE_BUILD_TYPE=Release \
             -DPIXELDEPTH=32 \
             -DCMAKE_OSX_ARCHITECTURES="${{ matrix.arch }}" \
             -DCMAKE_OSX_DEPLOYMENT_TARGET="${{ matrix.deployment_target }}" \
             -DCMAKE_INSTALL_PREFIX=/usr/local \
-            -DVTK_DIR="" \
-            -DBISON_EXECUTABLE="$BISON_BIN" \
-            -DTCL_INCLUDE_PATH="$TCL_ROOT/include" \
-            -DTK_INCLUDE_PATH="$TCL_ROOT/include"
+            -DVTK_DIR=""
 
 
       - name: Build
@@ -245,7 +240,6 @@ jobs:
           cmake -B build-dmg -S . \
             -DCMAKE_BUILD_TYPE=Release \
             -DPIXELDEPTH=32 \
-            -DBISON_EXECUTABLE="/opt/homebrew/opt/bison/bin/bison" \
             -DCMAKE_OSX_DEPLOYMENT_TARGET="11.0"
 
       - name: Package DMG
