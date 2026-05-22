@@ -114,9 +114,13 @@ jobs:
       - name: Build AppImage
         run: |
           export ARCH=x86_64
-          export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$GITHUB_WORKSPACE/build/lib
-          ./linuxdeploy-x86_64.AppImage --appdir AppDir --plugin appimage --output appimage \
-            $(find build/lib build/_deps -name "*.so*" -printf "--library %p ")
+          # Find all shared libraries in build directory and its dependencies
+          LIBS=$(find build/lib build/_deps -name "*.so*" -not -path "*/CMakeFiles/*" -printf "--library %p ")
+          echo "Found libraries: $LIBS"
+          # Ensure all library paths are in LD_LIBRARY_PATH
+          LIB_PATHS=$(find build/lib build/_deps -name "*.so*" -printf "%h:" | sort -u | tr -d "\n")
+          export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$LIB_PATHS
+          ./linuxdeploy-x86_64.AppImage --appdir AppDir --plugin appimage --output appimage $LIBS
         env:
           OUTPUT: RasMol-x86_64.AppImage
 
@@ -170,8 +174,8 @@ jobs:
             -DBISON_EXECUTABLE="$BISON_BIN" \
             -DTCL_INCLUDE_PATH="$TCL_ROOT/include" \
             -DTK_INCLUDE_PATH="$TCL_ROOT/include" \
-            -DTCL_LIBRARY="$(find $TCL_ROOT/lib -name 'libtcl8.6*' | head -n 1)" \
-            -DTK_LIBRARY="$(find $TCL_ROOT/lib -name 'libtk8.6*' | head -n 1)"
+            -DTCL_LIBRARY="$(find $TCL_ROOT/lib -name 'libtcl*' | head -n 1)" \
+            -DTK_LIBRARY="$(find $TCL_ROOT/lib -name 'libtk*' | head -n 1)"
 
       - name: Build
         run: cmake --build build --config Release
