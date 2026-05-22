@@ -153,7 +153,7 @@ jobs:
 
       - name: Install Build Dependencies (macOS)
         run: |
-          brew install bison tcl-tk jpeg libdeflate jbigkit lerc webp
+          brew install bison tcl-tk jpeg libdeflate jbigkit lerc webp hdf5
           echo "$(brew --prefix bison)/bin" >> $GITHUB_PATH
 
       - name: Configure CMake
@@ -200,7 +200,7 @@ jobs:
 
       - name: Install Build Dependencies (macOS)
         run: |
-          brew install bison libdeflate jbigkit lerc webp
+          brew install bison libdeflate jbigkit lerc webp hdf5
           echo "$(brew --prefix bison)/bin" >> $GITHUB_PATH
 
       - name: Download x86_64 Artifact
