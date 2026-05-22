@@ -58,7 +58,7 @@ jobs:
             -DTK_LIBRARY="$env:TK_LIB_PATH"
 
       - name: Build
-        run: cmake --build build --config Release --target rasmol_tcl
+        run: cmake --build build --config Release
 
       - name: Install
         run: cmake --install build --config Release --prefix "${{ github.workspace }}/install_dir"
@@ -82,7 +82,7 @@ jobs:
       - name: Install Dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y libx11-dev libxext-dev libxi-dev libhdf5-dev tcl-dev tk-dev bison libxpm-dev
+          sudo apt-get install -y rpm libx11-dev libxext-dev libxi-dev libhdf5-dev tcl-dev tk-dev bison libxpm-dev
 
       - name: Configure CMake
         run: |
@@ -91,7 +91,7 @@ jobs:
             -DPIXELDEPTH=32
 
       - name: Build
-        run: cmake --build build --config Release --target rasmol_tcl
+        run: cmake --build build --config Release
 
       - name: Install
         run: cmake --install build --config Release --prefix AppDir/usr
@@ -106,9 +106,9 @@ jobs:
 
       - name: Install linuxdeploy
         run: |
-          wget https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppRun
+          wget https://github.com/linuxdeploy/linuxdeploy/releases/download/1-alpha-20240109-1/linuxdeploy-x86_64.AppRun
           chmod +x linuxdeploy-x86_64.AppRun
-          wget https://github.com/linuxdeploy/linuxdeploy-plugin-appimage/releases/download/continuous/linuxdeploy-plugin-appimage-x86_64.AppRun
+          wget https://github.com/linuxdeploy/linuxdeploy-plugin-appimage/releases/download/1-alpha-20230713-1/linuxdeploy-plugin-appimage-x86_64.AppRun
           chmod +x linuxdeploy-plugin-appimage-x86_64.AppRun
 
       - name: Build AppImage
@@ -118,11 +118,19 @@ jobs:
         env:
           OUTPUT: RasMol-x86_64.AppImage
 
-      - name: Upload AppImage
+      - name: Build DEB and RPM
+        run: |
+          cd build
+          cpack -C Release -G "DEB;RPM"
+
+      - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: RasMol-Linux-AppImage
-          path: "*.AppImage"
+          name: RasMol-Linux-Artifacts
+          path: |
+            *.AppImage
+            build/*.deb
+            build/*.rpm"
 
   macos-release:
     strategy:
