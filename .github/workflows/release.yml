@@ -82,7 +82,7 @@ jobs:
       - name: Install Dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y rpm libx11-dev libxext-dev libxi-dev libhdf5-dev tcl-dev tk-dev bison libxpm-dev
+          sudo apt-get install -y rpm libx11-dev libxext-dev libxi-dev libhdf5-dev tcl-dev tk-dev bison libxpm-dev libdeflate-dev libjbig-dev liblerc-dev libwebp-dev libjpeg-dev
 
       - name: Configure CMake
         run: |
@@ -116,7 +116,7 @@ jobs:
           export ARCH=x86_64
           export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$GITHUB_WORKSPACE/build/lib
           ./linuxdeploy-x86_64.AppImage --appdir AppDir --plugin appimage --output appimage \
-            $(find build/lib -name "*.so*" -printf "--library %p ")
+            $(find build/lib build/_deps -name "*.so*" -printf "--library %p ")
         env:
           OUTPUT: RasMol-x86_64.AppImage
 
@@ -140,7 +140,7 @@ jobs:
         arch: [x86_64, arm64]
         include:
           - arch: x86_64
-            os: macos-14
+            os: macos-13
             brew_prefix: /usr/local
             deployment_target: "10.15"
           - arch: arm64
@@ -153,7 +153,7 @@ jobs:
 
       - name: Install Build Dependencies (macOS)
         run: |
-          brew install bison tcl-tk jpeg
+          brew install bison tcl-tk jpeg libdeflate jbigkit liblerc webp hdf5
           echo "${{ matrix.brew_prefix }}/opt/bison/bin" >> $GITHUB_PATH
 
       - name: Configure CMake
@@ -200,7 +200,7 @@ jobs:
 
       - name: Install Build Dependencies (macOS)
         run: |
-          brew install bison
+          brew install bison libdeflate jbigkit lerc webp hdf5
           echo "/opt/homebrew/opt/bison/bin" >> $GITHUB_PATH
 
       - name: Download x86_64 Artifact
