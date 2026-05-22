@@ -216,18 +216,32 @@
 typedef double Real;
 
 #ifdef __APPLE__
-/* Avoid conflict with deprecated Byte and uint8_t in MacTypes.h/Tk */
+/* Avoid conflict with deprecated types in MacTypes.h/Tk */
 #ifdef Byte
 #undef Byte
 #endif
 #define Byte RasByte
 typedef unsigned char RasByte;
-/* Avoid conflict with deprecated Card and uint32_t in MacTypes.h/Tk */
+
 #ifdef Card
 #undef Card
 #endif
 #define Card RasCard
 typedef unsigned int RasCard;
+
+#ifdef Pixel
+#undef Pixel
+#endif
+#define Pixel RasPixel
+#ifdef EIGHTBIT
+typedef unsigned char RasPixel;
+#else
+#ifdef SIXTEENBIT
+typedef unsigned short RasPixel;
+#else
+typedef unsigned int RasPixel;
+#endif
+#endif
 #else
 #ifndef APPLEMAC
 #ifdef STDINT
@@ -270,22 +284,34 @@ typedef char Char;
 
 #ifdef STDINT
   #ifdef EIGHTBIT
+  #ifndef __APPLE__
   typedef uint8_t Pixel;
+  #endif
   #else
   #ifdef THIRTYTWOBIT
-  typedef int32_t Pixel;
+  #ifndef __APPLE__
+typedef int32_t Pixel;
+#endif
   #else
-  typedef int16_t Pixel;
+  #ifndef __APPLE__
+typedef int16_t Pixel;
+#endif
   #endif
   #endif
 #else
   #ifdef EIGHTBIT
+  #ifndef __APPLE__
   typedef unsigned char Pixel;
+  #endif
   #else
   #ifdef THIRTYTWOBIT
-  typedef Long Pixel;
+  #ifndef __APPLE__
+typedef Long Pixel;
+#endif
   #else
-  typedef short Pixel;
+  #ifndef __APPLE__
+typedef short Pixel;
+#endif
   #endif
   #endif
 #endif

@@ -163,7 +163,7 @@ jobs:
 
       - name: Install Build Dependencies (macOS)
         run: |
-          brew install bison tcl-tk jpeg libdeflate jbigkit liblerc webp hdf5
+          brew install bison tcl-tk jpeg hdf5
           echo "${{ matrix.brew_prefix }}/opt/bison/bin" >> $GITHUB_PATH
 
       - name: Configure CMake

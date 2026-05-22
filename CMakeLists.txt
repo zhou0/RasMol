@@ -124,10 +124,19 @@ if(NOT CBF_LIBRARY)
             string(REGEX REPLACE "([^a-zA-Z0-9_])CQR([^a-zA-Z0-9_])" "\\1${CQRLIB_LIBRARY}\\2" CBF_CMAKE "${CBF_CMAKE}")
             string(REPLACE "-lCQR" "${CQRLIB_LIBRARY}" CBF_CMAKE "${CBF_CMAKE}")
             string(PREPEND CBF_CMAKE "include_directories(\"${CQRLIB_INCLUDE_DIR}\")\n")
-            if(APPLE)
-                string(APPEND CBF_CMAKE "\nfind_package(JPEG REQUIRED)\nlink_libraries(\${JPEG_LIBRARIES})\n")
-                # Also try to specifically link the internal tiff if it exists
-                string(REPLACE "add_subdirectory(libtiff)" "add_subdirectory(libtiff)\nif(TARGET tiff)\ntarget_link_libraries(tiff \${JPEG_LIBRARIES})\nendif()" CBF_CMAKE "${CBF_CMAKE}")
+                        if(APPLE)
+                # Disable optional TIFF codecs to avoid architecture mismatch with Homebrew libs
+                string(APPEND CBF_CMAKE "\nset(ZSTD OFF CACHE BOOL \"\" FORCE)\nset(WEBP OFF CACHE BOOL \"\" FORCE)\nset(LERC OFF CACHE BOOL \"\" FORCE)\nset(DEFLATE OFF CACHE BOOL \"\" FORCE)\nset(JBIG OFF CACHE BOOL \"\" FORCE)\n")
+
+                # Check if we are cross-compiling for x86_64 on ARM
+                if(CMAKE_OSX_ARCHITECTURES STREQUAL "x86_64")
+                    string(APPEND CBF_CMAKE "set(JPEG OFF CACHE BOOL \"\" FORCE)\n")
+                else()
+                    string(APPEND CBF_CMAKE "\nfind_package(JPEG REQUIRED)\nlink_libraries(\${JPEG_LIBRARIES})\n")
+                endif()
+
+                # Patch the internal tiff if it exists
+                string(REPLACE "add_subdirectory(libtiff)" "add_subdirectory(libtiff)\nif(TARGET tiff)\nif(NOT CMAKE_OSX_ARCHITECTURES STREQUAL \"x86_64\")\ntarget_link_libraries(tiff \${JPEG_LIBRARIES})\nendif()\nendif()" CBF_CMAKE "${CBF_CMAKE}")
             endif()
             file(WRITE ${cbflib_SOURCE_DIR}/CMakeLists.txt "${CBF_CMAKE}")
             add_subdirectory(${cbflib_SOURCE_DIR} ${cbflib_BINARY_DIR})
