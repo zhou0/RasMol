@@ -2680,7 +2680,7 @@ void DrawCircle( void ) {
 		
 		
 		G = Xmin*Xmin*(SBD.Us0Us0_Us2Us2)+Ymin*Ymin*(SBD.Us1Us1_Us2Us2)  +
-			2*Xmin*Ymin*(SBD.Us0Us1) - rad*rad*SBD.U[SBD.s2]*SBD.U[SBD.s2];
+			2*Xmin*Ymin*(SBD.Us0Us1) - ((Long)rad)*((Long)rad)*SBD.U[SBD.s2]*SBD.U[SBD.s2];
 		Gxup = (2*Xmin+1)*(SBD.Us0Us0_Us2Us2) + 2*Ymin*(SBD.Us0Us1);
 		Gyup = (2*Ymin+1)*(SBD.Us1Us1_Us2Us2) + 2*Xmin*(SBD.Us0Us1);
 		Gxdown = (-2*Xmin+1)*(SBD.Us0Us0_Us2Us2) - 2*Ymin*(SBD.Us0Us1);
