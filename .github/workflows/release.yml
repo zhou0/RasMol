@@ -154,7 +154,7 @@ jobs:
       - name: Install Build Dependencies (macOS)
         run: |
           # Note: If Homebrew hdf5 causes FindHDF5 bugs, consider using MacPorts: sudo port install hdf5
-          brew install bison tcl-tk jpeg libdeflate jbigkit liblerc webp hdf5
+          brew install bison tcl-tk jpeg libdeflate jbigkit lerc webp hdf5
           echo "$(brew --prefix bison)/bin" >> $GITHUB_PATH
 
       - name: Configure CMake
@@ -201,8 +201,8 @@ jobs:
 
       - name: Install Build Dependencies (macOS)
         run: |
-          brew install bison libdeflate jbigkit liblerc webp hdf5
-          echo "/opt/homebrew/opt/bison/bin" >> $GITHUB_PATH
+          brew install bison libdeflate jbigkit lerc webp hdf5
+          echo "$(brew --prefix bison)/bin" >> $GITHUB_PATH
 
       - name: Download x86_64 Artifact
         uses: actions/download-artifact@v4

@@ -1,7 +1,9 @@
-#include <tcl.h>
 #ifdef __APPLE__
+#ifndef MAC_OSX_TK
 #define MAC_OSX_TK
 #endif
+#endif
+#include <tcl.h>
 #include <tk.h>
 #include <stdlib.h>
 #include <string.h>
