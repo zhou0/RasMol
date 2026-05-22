@@ -201,8 +201,16 @@ if(CBF_LIBRARY)
     add_definitions(-DUSE_CBFLIB)
 endif()
 
-# Tentatively find HDF5 but skip if it causes errors in some CMake versions
-if(NOT APPLE)
+# Tentatively find HDF5
+if(APPLE)
+    find_path(HDF5_INCLUDE_DIR hdf5.h PATHS /usr/local/opt/hdf5/include /opt/homebrew/opt/hdf5/include)
+    find_library(HDF5_LIBRARY NAMES hdf5 PATHS /usr/local/opt/hdf5/lib /opt/homebrew/opt/hdf5/lib)
+    if(HDF5_INCLUDE_DIR AND HDF5_LIBRARY)
+        set(HDF5_FOUND TRUE)
+        set(HDF5_LIBRARIES ${HDF5_LIBRARY})
+        set(HDF5_INCLUDE_DIRS ${HDF5_INCLUDE_DIR})
+    endif()
+else()
     find_package(HDF5 QUIET COMPONENTS C)
 endif()
 if(HDF5_FOUND)
