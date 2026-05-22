@@ -203,6 +203,7 @@ if(CBF_LIBRARY)
 endif()
 
 
+# Fallback: If Homebrew HDF5 causes FindHDF5 bugs, use MacPorts (sudo port install hdf5)
 if(NOT APPLE)
 find_package(HDF5 COMPONENTS C)
 if(HDF5_FOUND)
