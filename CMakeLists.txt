@@ -1,5 +1,16 @@
 cmake_minimum_required(VERSION 3.11)
 project(RasMol C CXX)
+
+option(USE_SQRT_LUT "Use legacy square root lookup table" OFF)
+option(WITH_GLSL "Include GLSL shaders for GPU-accelerated rendering" ON)
+
+if(USE_SQRT_LUT)
+    add_definitions(-DUSE_SQRT_LUT)
+endif()
+
+if(WITH_GLSL)
+    add_definitions(-DWITH_GLSL)
+endif()
 set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 # Default output directories used to avoid installation conflicts on Windows
 
@@ -134,7 +145,9 @@ if(NOT CBF_LIBRARY)
         set(CBF_INCLUDE_DIR "" CACHE PATH "" FORCE)
     endif()
 endif()
-find_package(OpenGL)
+if(WITH_GLSL)
+    find_package(OpenGL)
+endif()
 
 # VTK Support
 set(VTK_COMPONENTS
@@ -267,7 +280,9 @@ endif()
 
 install(DIRECTORY data/ DESTINATION share/rasmol/data)
 install(DIRECTORY doc/ DESTINATION share/rasmol/doc)
-install(DIRECTORY src/shaders/ DESTINATION share/rasmol/shaders)
+if(WITH_GLSL)
+    install(DIRECTORY src/shaders/ DESTINATION share/rasmol/shaders)
+endif()
 if(EXISTS "${CMAKE_SOURCE_DIR}/doc/rasmol.hlp")
     install(FILES doc/rasmol.hlp DESTINATION share/rasmol)
 endif()

@@ -2392,7 +2392,8 @@ void ResetRenderer( void )
 }
 
 
-/*static void InitialiseTables( void )
+#ifdef USE_SQRT_LUT
+static void InitialiseTables( void )
 {
     register Byte __far *ptr;
     register unsigned int root,root2;
@@ -2405,7 +2406,7 @@ void ResetRenderer( void )
     for( rad=2; rad<MAXRAD; rad++ )
     {   LookUp[rad] = ptr;
 
-        / * i == 0 * /
+        /* i == 0 */
         *ptr++ = (Byte)rad;  
 
         root = rad-1;
@@ -2413,22 +2414,23 @@ void ResetRenderer( void )
 
         arg = rad*rad;
 	for( i=1; i<rad; i++ )
-        {   / * arg = rad*rad - i*i * /
+        {   /* arg = rad*rad - i*i */
             arg -= (i<<1)-1;
 
-            / * root = isqrt(arg)   * /
+            /* root = isqrt(arg)   */
             while( arg < root2 )
             {   root2 -= (root<<1)-1;
                 root--;
             }
-            / * Thanks to James Crook * /
+            /* Thanks to James Crook */
             *ptr++ = ((arg-root2)<i)? root : root+1;
         }
 
-        / * i == rad * /
+        /* i == rad */
         *ptr++ = 0;    
     }
-}*/
+}
+#endif
 
 
 void InitialiseRenderer( void )
@@ -2449,19 +2451,28 @@ void InitialiseRenderer( void )
 
 #if defined(IBMPC) || defined(APPLEMAC)
     /* Allocate tables on FAR heaps */ 
-    /* Array = (Byte __far*)_fmalloc(MAXTABLE*sizeof(Byte)); */
-    /* LookUp = (Byte __far* __far*)_fmalloc(MAXRAD*sizeof(Byte __far*)); */
+    #ifdef USE_SQRT_LUT
+    Array = (Byte __far*)_fmalloc(MAXTABLE*sizeof(Byte));
+#endif
+    #ifdef USE_SQRT_LUT
+    LookUp = (Byte __far* __far*)_fmalloc(MAXRAD*sizeof(Byte __far*));
+#endif
     HashTable = (void __far* __far*)_fmalloc(VOXSIZE*sizeof(void __far*));
     ColConst = (Card __far*)_fmalloc(MAXRAD*sizeof(Card));
     
-    /* if( !Array || !LookUp || !HashTable || !ColConst ) */
+    #ifdef USE_SQRT_LUT
+    if( !Array || !LookUp || !HashTable || !ColConst )
+#else
     if( !HashTable || !ColConst )
+#endif
 	FatalRenderError("tables");
 #else
     ColConst = ColConstTable;
 #endif
 
-    /* InitialiseTables(); */
+    #ifdef USE_SQRT_LUT
+    InitialiseTables();
+#endif
 
     /* Initialise ColConst! */
     for( rad=0; rad<MAXRAD; rad++ )
