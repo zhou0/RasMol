@@ -1,1 +1,0 @@
-/usr/bin/c++  -Wall -ansi -pedantic CMakeFiles/CPPQRTest.dir/CPPQRTest.cpp.o -o ../../bin/CPPQRTest  -lm

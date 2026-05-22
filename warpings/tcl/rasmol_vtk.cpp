@@ -9,9 +9,6 @@
 #include <vtkWindowToImageFilter.h>
 #include <vtkSmartPointer.h>
 #include <vtkProperty.h>
-#ifdef WITH_GLSL
-#include <vtkShaderProperty.h>
-#endif
 #include <vtkPolyData.h>
 #include <vtkPointData.h>
 #include <vtkImageData.h>
@@ -85,13 +82,6 @@ extern "C" int VTK_LoadPDB(const char* filename) {
     mapper->SetScaleModeToDataScalingOff();
 
     vtk_molecule_actor->SetMapper(mapper);
-    #ifdef WITH_GLSL
-    // Placeholder for loading custom shaders
-    // vtkSmartPointer<vtkShaderProperty> sp = vtk_molecule_actor->GetShaderProperty();
-    // sp->SetVertexShaderCode("...");
-    // sp->SetFragmentShaderCode("...");
-#endif
-
     vtk_molecule_actor->GetProperty()->SetColor(0.8, 0.8, 1.0);
     vtk_molecule_actor->VisibilityOn();
 

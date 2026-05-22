@@ -1,6 +1,5 @@
 # Build artifacts
 build/
-build_test/
 *.o
 *.obj
 rasmol

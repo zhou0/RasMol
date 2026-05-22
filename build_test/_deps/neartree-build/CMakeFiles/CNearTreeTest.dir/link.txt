@@ -1,1 +1,0 @@
-/usr/bin/cc CMakeFiles/CNearTreeTest.dir/CNearTreeTest.c.o -o ../../bin/CNearTreeTest  -Wl,-rpath,/app/build_test/lib ../../lib/libCNearTree.a ../../lib/libCVector.so.2.0.1 -lm

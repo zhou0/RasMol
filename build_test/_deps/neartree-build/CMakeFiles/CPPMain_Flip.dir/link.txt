@@ -1,1 +1,0 @@
-/usr/bin/c++ CMakeFiles/CPPMain_Flip.dir/main_flip.cpp.o CMakeFiles/CPPMain_Flip.dir/v.cpp.o -o ../../bin/CPPMain_Flip  -lm
