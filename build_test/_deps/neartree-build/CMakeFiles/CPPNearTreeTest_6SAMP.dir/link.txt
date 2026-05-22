@@ -1,0 +1,1 @@
+/usr/bin/c++ CMakeFiles/CPPNearTreeTest_6SAMP.dir/CNearTreeTest.cpp.o CMakeFiles/CPPNearTreeTest_6SAMP.dir/v.cpp.o -o ../../bin/CPPNearTreeTest_6SAMP  -lm

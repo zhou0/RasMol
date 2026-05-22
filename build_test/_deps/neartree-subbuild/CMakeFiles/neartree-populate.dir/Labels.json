@@ -1,0 +1,46 @@
+{
+	"sources" :
+	[
+		{
+			"file" : "/app/build_test/_deps/neartree-subbuild/CMakeFiles/neartree-populate"
+		},
+		{
+			"file" : "/app/build_test/_deps/neartree-subbuild/CMakeFiles/neartree-populate.rule"
+		},
+		{
+			"file" : "/app/build_test/_deps/neartree-subbuild/CMakeFiles/neartree-populate-complete.rule"
+		},
+		{
+			"file" : "/app/build_test/_deps/neartree-subbuild/neartree-populate-prefix/src/neartree-populate-stamp/neartree-populate-build.rule"
+		},
+		{
+			"file" : "/app/build_test/_deps/neartree-subbuild/neartree-populate-prefix/src/neartree-populate-stamp/neartree-populate-configure.rule"
+		},
+		{
+			"file" : "/app/build_test/_deps/neartree-subbuild/neartree-populate-prefix/src/neartree-populate-stamp/neartree-populate-download.rule"
+		},
+		{
+			"file" : "/app/build_test/_deps/neartree-subbuild/neartree-populate-prefix/src/neartree-populate-stamp/neartree-populate-install.rule"
+		},
+		{
+			"file" : "/app/build_test/_deps/neartree-subbuild/neartree-populate-prefix/src/neartree-populate-stamp/neartree-populate-mkdir.rule"
+		},
+		{
+			"file" : "/app/build_test/_deps/neartree-subbuild/neartree-populate-prefix/src/neartree-populate-stamp/neartree-populate-patch.rule"
+		},
+		{
+			"file" : "/app/build_test/_deps/neartree-subbuild/neartree-populate-prefix/src/neartree-populate-stamp/neartree-populate-test.rule"
+		},
+		{
+			"file" : "/app/build_test/_deps/neartree-subbuild/neartree-populate-prefix/src/neartree-populate-stamp/neartree-populate-update.rule"
+		}
+	],
+	"target" :
+	{
+		"labels" :
+		[
+			"neartree-populate"
+		],
+		"name" : "neartree-populate"
+	}
+}

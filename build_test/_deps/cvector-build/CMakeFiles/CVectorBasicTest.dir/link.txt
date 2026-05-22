@@ -1,0 +1,1 @@
+/usr/bin/cc CMakeFiles/CVectorBasicTest.dir/CVectorBasicTest.c.o -o ../../bin/CVectorBasicTest  -Wl,-rpath,/app/build_test/lib: ../../lib/libCVector.so.2.0.1
