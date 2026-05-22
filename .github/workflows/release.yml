@@ -140,9 +140,11 @@ jobs:
           - arch: x86_64
             os: macos-13
             brew_prefix: /usr/local
+            deployment_target: "10.15"
           - arch: arm64
             os: macos-latest
             brew_prefix: /opt/homebrew
+            deployment_target: "11.0"
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
@@ -160,7 +162,7 @@ jobs:
             -DCMAKE_BUILD_TYPE=Release \
             -DPIXELDEPTH=32 \
             -DCMAKE_OSX_ARCHITECTURES="${{ matrix.arch }}" \
-            -DCMAKE_OSX_DEPLOYMENT_TARGET="10.15" \
+            -DCMAKE_OSX_DEPLOYMENT_TARGET="${{ matrix.deployment_target }}" \
             -DCMAKE_INSTALL_PREFIX=/usr/local \
             -DVTK_DIR="" \
             -DBISON_EXECUTABLE="$BISON_BIN" \
@@ -175,11 +177,18 @@ jobs:
       - name: Install to AppDir
         run: cmake --install build --prefix AppDir
 
-      - name: Upload Artifact
+      - name: Package DMG
+        run: |
+          cd build
+          cpack -C Release -G DragNDrop
+
+      - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
           name: RasMol-macOS-${{ matrix.arch }}
-          path: AppDir
+          path: |
+            AppDir
+            build/*.dmg
 
   macos-dmg:
     needs: macos-release
@@ -225,7 +234,8 @@ jobs:
           cmake -B build-dmg -S . \
             -DCMAKE_BUILD_TYPE=Release \
             -DPIXELDEPTH=32 \
-            -DBISON_EXECUTABLE="/opt/homebrew/opt/bison/bin/bison"
+            -DBISON_EXECUTABLE="/opt/homebrew/opt/bison/bin/bison" \
+            -DCMAKE_OSX_DEPLOYMENT_TARGET="11.0"
 
       - name: Package DMG
         run: |
