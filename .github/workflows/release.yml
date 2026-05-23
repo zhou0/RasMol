@@ -162,7 +162,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Install MacPorts
-        uses: melrob/install-macports@v1
+        uses: macports/setup-macports@v1
 
       - name: Install Build Dependencies (MacPorts)
         run: |
@@ -206,7 +206,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Install MacPorts
-        uses: melrob/install-macports@v1
+        uses: macports/setup-macports@v1
 
       - name: Install Build Dependencies (MacPorts)
         run: |
