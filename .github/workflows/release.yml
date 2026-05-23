@@ -114,6 +114,7 @@ jobs:
       - name: Build AppImage
         run: |
           export ARCH=x86_64
+          mkdir -p build/AppImage
           # Find all shared libraries in build directory and its dependencies
           # Using a list of --library arguments
           LIBS_ARGS=""
@@ -127,22 +128,24 @@ jobs:
           export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$LIB_PATHS
 
           ./linuxdeploy-x86_64.AppImage --appdir AppDir --output appimage $LIBS_ARGS
-        env:
-          OUTPUT: RasMol-x86_64.AppImage
+          mv *.AppImage build/AppImage/
 
       - name: Build DEB and RPM
         run: |
           cd build
           cpack -C Release -G "DEB;RPM"
+          mkdir -p DEB RPM
+          mv *.deb DEB/
+          mv *.rpm RPM/
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
           name: RasMol-Linux-Artifacts
           path: |
-            *.AppImage
-            build/*.deb
-            build/*.rpm"
+            build/AppImage/*.AppImage
+            build/DEB/*.deb
+            build/RPM/*.rpm"
 
   macos-release:
     strategy:
