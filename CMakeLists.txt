@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 3.11)
 project(RasMol C CXX)
+include(install_deps.cmake)
 if(APPLE)
     set(CMAKE_PREFIX_PATH /opt/local ${CMAKE_PREFIX_PATH})
 endif()
