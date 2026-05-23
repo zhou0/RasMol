@@ -67,7 +67,7 @@ if(NOT CVECTOR_LIBRARY)
     message(STATUS "CVector not found. Fetching from GitHub...")
     fetchcontent_declare(cvector
         GIT_REPOSITORY https://github.com/zhou0/CVector.git
-        GIT_TAG master
+        GIT_TAG 809da8ade9d6d789336076830bde069dbde36af8
     )
     fetchcontent_getproperties(cvector)
     if(NOT cvector_POPULATED)
@@ -94,7 +94,7 @@ if(NOT NEARTREE_LIBRARY)
     message(STATUS "NearTree not found. Fetching from GitHub...")
     fetchcontent_declare(neartree
         GIT_REPOSITORY https://github.com/zhou0/NearTree.git
-        GIT_TAG main
+        GIT_TAG 809da8ade9d6d789336076830bde069dbde36af8
     )
     fetchcontent_makeavailable(neartree)
     set(NEARTREE_LIBRARY CNearTree CACHE STRING "" FORCE)
@@ -308,16 +308,15 @@ endif()
 if(CBF_LIBRARY)
     list(APPEND EXTERNAL_LIBRARIES ${CBF_LIBRARY})
     if(APPLE)
+        find_package(JPEG REQUIRED)
+        find_package(ZLIB REQUIRED)
+        list(APPEND EXTERNAL_LIBRARIES ${JPEG_LIBRARIES} ${ZLIB_LIBRARIES})
         foreach(lib zstd webp Lerc deflate jbig lzma)
             find_library(${lib}_LIB NAMES ${lib} HINTS /opt/local/lib)
             if(${lib}_LIB)
                 list(APPEND EXTERNAL_LIBRARIES ${${lib}_LIB})
             endif()
         endforeach()
-        find_package(JPEG REQUIRED)
-        list(APPEND EXTERNAL_LIBRARIES ${JPEG_LIBRARIES})
-        find_package(ZLIB REQUIRED)
-        list(APPEND EXTERNAL_LIBRARIES ${ZLIB_LIBRARIES})
     endif()
 endif()
 if(NEARTREE_LIBRARY)
