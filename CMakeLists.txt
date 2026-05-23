@@ -105,7 +105,7 @@ if(NOT CBF_LIBRARY)
     message(STATUS "CBFlib not found. Fetching from GitHub...")
     fetchcontent_declare(cbflib
         GIT_REPOSITORY https://github.com/zhou0/cbflib.git
-        GIT_TAG ebe2164f6cc356e9c44c0ee1a7fda8631c3bfc6a
+        GIT_TAG 207a0992a43d5bd7387ff6561fc5cfbf37f52c3f
     )
     set(CBF_ENABLE_FORTRAN OFF CACHE BOOL "" FORCE)
     set(CBF_ENABLE_JAVA OFF CACHE BOOL "" FORCE)
