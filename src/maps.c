@@ -399,7 +399,7 @@ int SaveMapFile( FILE *fp, int info, int mapno ) {
     
     cbf_failnez (cbf_new_column(cbf,"entry_id"))
         
-        if (Info.identcode && *Info.identcode) {
+        if (*Info.identcode) {
             
             cbf_failnez (cbf_set_value(cbf,Info.identcode))
             cbf_failnez (cbf_set_typeofvalue(cbf,"dblq"))

@@ -4946,7 +4946,7 @@ static void ApplyMapAtomSelection(int dontadd, int searchwithin, int SearchRadiu
                 MapPointsPtr = mapinfo->MapPointsPtr;
                 if (MapPointsPtr)
                 for (i=0; i<MapPointsPtr->size; i++) {
-                    if (!(MapPointsPtr->array[i]).flag&SelectFlag) continue;
+                    if (!((MapPointsPtr->array[i]).flag&SelectFlag)) continue;
                     coord[0] = (double)(MapPointsPtr->array[i]).xpos;
                     coord[1] = (double)(MapPointsPtr->array[i]).ypos;
                     coord[2] = (double)(MapPointsPtr->array[i]).zpos;
@@ -5119,7 +5119,7 @@ static void ApplyMapRestriction( void ) {
     if (MapInfoPtr)  {
         for (j=0; j < MapInfoPtr->size; j++) {
             vector_get_elementptr((GenericVec __far *)MapInfoPtr,(void __far * __far *)&mapinfo,j );
-            if (!mapinfo->flag&MapSelectFlag) {
+            if (!(mapinfo->flag&MapSelectFlag)) {
                 DeleteMap(j,True);
             }
         }
@@ -5393,7 +5393,7 @@ static void ApplyMapAtomShow(int SearchRadius) {
                 MapPointsPtr = mapinfo->MapPointsPtr;
                 if (MapPointsPtr)
                     for (i=0; i<MapPointsPtr->size; i++) {
-                        if (!(MapPointsPtr->array[i]).flag&SelectFlag) continue;
+                        if (!((MapPointsPtr->array[i]).flag&SelectFlag)) continue;
                         coord[0] = (double)(MapPointsPtr->array[i]).xpos;
                         coord[1] = (double)(MapPointsPtr->array[i]).ypos;
                         coord[2] = (double)(MapPointsPtr->array[i]).zpos;
@@ -5924,7 +5924,7 @@ int ExecuteAtomCommand(int heta) {
     double offsets[3];
 
 
-}
+    return 0; }
 
 /* Execute a command given as
  {(<selection>){.}}command

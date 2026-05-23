@@ -2299,7 +2299,7 @@ void ColourPointAttrib( int r, int g, int b, int mapno )
       	
         if (MapPointsPtr)
         for (i=0; i<MapPointsPtr->size; i++) {
-          if (!(MapPointsPtr->array[i]).flag&SelectFlag) continue;
+          if (!((MapPointsPtr->array[i]).flag&SelectFlag)) continue;
           x = (MapPointsPtr->array[i]).xpos;
           y = (MapPointsPtr->array[i]).ypos;
           z = (MapPointsPtr->array[i]).zpos;
@@ -2337,7 +2337,7 @@ void ColourPointPotential( int mapno )
       	
         if (MapPointsPtr)
         for (i=0; i<MapPointsPtr->size; i++) {
-          if (!(MapPointsPtr->array[i]).flag&SelectFlag) continue;
+          if (!((MapPointsPtr->array[i]).flag&SelectFlag)) continue;
           x = (MapPointsPtr->array[i]).xpos;
           y = (MapPointsPtr->array[i]).ypos;
           z = (MapPointsPtr->array[i]).zpos;
@@ -2402,7 +2402,7 @@ void ColourPointAtom( int mapno )
             
             if (MapPointsPtr)
                 for (i=0; i<MapPointsPtr->size; i++) {
-                    if (!(MapPointsPtr->array[i]).flag&SelectFlag) continue;
+                    if (!((MapPointsPtr->array[i]).flag&SelectFlag)) continue;
                     coord[0] = (double)(MapPointsPtr->array[i]).xpos;
                     coord[1] = (double)(MapPointsPtr->array[i]).ypos;
                     coord[2] = (double)(MapPointsPtr->array[i]).zpos;

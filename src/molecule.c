@@ -3309,8 +3309,7 @@ void DestroyDatabase( void )
     ResetDatabase();
 }
 
-void FreeAlloc( data )
-    void *data;
+void FreeAlloc( void *data )
 {
 #ifdef APPLEMAC
     register AllocRef *ptr;

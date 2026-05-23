@@ -474,9 +474,7 @@ int n;
 }
 #endif
 
-int     GetMoleculeVariable (mol, field, data)
-int mol;
-void *field, *data;
+int     GetMoleculeVariable (int mol, void *field, void *data)
 {
     /* Find this field */
     int     i;
@@ -524,8 +522,7 @@ void StoreMoleculeData (int index)
 }
 
 
-void    RestoreMoleculeData (index)
-int index;
+void    RestoreMoleculeData (int index)
 {
     int     i;
     char   *data = Molecules[index];
