@@ -175,7 +175,7 @@ jobs:
 
       - name: Install Build Dependencies (MacPorts)
         run: |
-          sudo port install bison && sudo port install tcl tk libjpeg-turbo hdf5 zstd webp lerc libdeflate jbigkit xz +universal configure.universal_archs="arm64 x86_64"
+          sudo port install bison && sudo port install tcl tk libjpeg-turbo hdf5 zstd webp lerc libdeflate jbigkit xz zlib configure.build_arch=${{ matrix.arch }} configure.universal_archs=${{ matrix.arch }}
           echo "/opt/local/bin" >> $GITHUB_PATH
 
       - name: Configure CMake
@@ -225,7 +225,7 @@ jobs:
 
       - name: Install Build Dependencies (MacPorts)
         run: |
-          sudo port install bison && sudo port install tcl tk libjpeg-turbo hdf5 zstd webp lerc libdeflate jbigkit xz +universal configure.universal_archs="arm64 x86_64"
+          sudo port install bison && sudo port install tcl tk libjpeg-turbo hdf5 zstd webp lerc libdeflate jbigkit xz zlib +universal configure.universal_archs="arm64 x86_64"
           echo "/opt/local/bin" >> $GITHUB_PATH
 
       - name: Download x86_64 Artifact
