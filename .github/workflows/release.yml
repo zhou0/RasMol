@@ -11,6 +11,11 @@ jobs:
   windows-msi:
     runs-on: windows-latest
     steps:
+      - name: Fix Git Config
+        run: |
+          git config --global --unset-all credential.helper || true
+          git config --system --unset-all credential.helper || true
+
       - uses: actions/checkout@v4
 
       - name: Set up MSVC
@@ -77,6 +82,11 @@ jobs:
   linux-appimage:
     runs-on: ubuntu-22.04
     steps:
+      - name: Fix Git Config
+        run: |
+          git config --global --unset-all credential.helper || true
+          git config --system --unset-all credential.helper || true
+
       - uses: actions/checkout@v4
 
       - name: Install Dependencies
@@ -150,18 +160,23 @@ jobs:
   macos-release:
     strategy:
       matrix:
-        arch: [x86_64, arm64]
+        arch: [arm64]
         include:
-          - arch: x86_64
-            os: macos-14
-            port_prefix: /opt/local
-            deployment_target: "10.15"
+#          - arch: x86_64
+#            os: macos-14
+#            port_prefix: /opt/local
+#            deployment_target: "10.15"
           - arch: arm64
             os: macos-14
             port_prefix: /opt/local
             deployment_target: "11.0"
     runs-on: ${{ matrix.os }}
     steps:
+      - name: Fix Git Config
+        run: |
+          git config --global --unset-all credential.helper || true
+          git config --system --unset-all credential.helper || true
+
       - uses: actions/checkout@v4
 
       - name: Install MacPorts
@@ -207,71 +222,71 @@ jobs:
           path: |
             AppDir
             build/*.dmg
-
-  macos-dmg:
-    needs: macos-release
-    runs-on: macos-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Install MacPorts
-        run: |
-          curl -LO https://github.com/macports/macports-base/releases/download/v2.10.1/MacPorts-2.10.1-14-Sonoma.pkg
-          sudo installer -pkg MacPorts-2.10.1-14-Sonoma.pkg -target /
-          echo "universal_archs arm64 x86_64" | sudo tee -a /opt/local/etc/macports/macports.conf
-          echo "/opt/local/bin" >> $GITHUB_PATH
-          echo "/opt/local/sbin" >> $GITHUB_PATH
-          /opt/local/bin/port selfupdate || true
-
-      - name: Install Build Dependencies (MacPorts)
-        run: |
-          sudo port install bison && sudo port install tcl tk libjpeg-turbo hdf5 zstd webp lerc libdeflate jbigkit xz zlib +universal configure.universal_archs="arm64 x86_64"
-          echo "/opt/local/bin" >> $GITHUB_PATH
-
-      - name: Download x86_64 Artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: RasMol-macOS-x86_64
-          path: AppDir-x86_64
-
-      - name: Download arm64 Artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: RasMol-macOS-arm64
-          path: AppDir-arm64
-
-      - name: Create Universal Binaries
-        run: |
-          mkdir -p AppDir-Universal/bin
-          mkdir -p AppDir-Universal/share/rasmol
-          for bin in AppDir-x86_64/bin/*; do
-            if [ -f "$bin" ]; then
-              name=$(basename "$bin")
-              if [ -f "AppDir-arm64/bin/$name" ]; then
-                lipo -create "AppDir-x86_64/bin/$name" "AppDir-arm64/bin/$name" -output "AppDir-Universal/bin/$name"
-              else
-                cp "$bin" "AppDir-Universal/bin/$name"
-              fi
-            fi
-          done
-          cp -R AppDir-x86_64/share/rasmol/* AppDir-Universal/share/rasmol/
-
-      - name: Configure CPack
-        run: |
-          cmake -B build-dmg -S . \
-            -DCMAKE_BUILD_TYPE=Release \
-            -DPIXELDEPTH=32 \
-            -DCMAKE_OSX_DEPLOYMENT_TARGET="11.0"
-
-      - name: Package DMG
-        run: |
-          mkdir -p build-dmg/install
-          cp -R AppDir-Universal/* build-dmg/install/
-          cd build-dmg
-          cpack -C Release -G DragNDrop -D CPACK_INSTALL_DIRECTORY="install"
-
-      - name: Upload DMG
-        uses: actions/upload-artifact@v4
-        with:
-          name: RasMol-MacOS-DMG
-          path: build-dmg/*.dmg
+#
+#  macos-dmg:
+#    needs: macos-release
+#    runs-on: macos-latest
+#    steps:
+#      - uses: actions/checkout@v4
+#
+#      - name: Install MacPorts
+#        run: |
+#          curl -LO https://github.com/macports/macports-base/releases/download/v2.10.1/MacPorts-2.10.1-14-Sonoma.pkg
+#          sudo installer -pkg MacPorts-2.10.1-14-Sonoma.pkg -target /
+#          echo "universal_archs arm64 x86_64" | sudo tee -a /opt/local/etc/macports/macports.conf
+#          echo "/opt/local/bin" >> $GITHUB_PATH
+#          echo "/opt/local/sbin" >> $GITHUB_PATH
+#          /opt/local/bin/port selfupdate || true
+#
+#      - name: Install Build Dependencies (MacPorts)
+#        run: |
+#          sudo port install bison && sudo port install tcl tk libjpeg-turbo hdf5 zstd webp lerc libdeflate jbigkit xz zlib +universal configure.universal_archs="arm64 x86_64"
+#          echo "/opt/local/bin" >> $GITHUB_PATH
+#
+#      - name: Download x86_64 Artifact
+#        uses: actions/download-artifact@v4
+#        with:
+#          name: RasMol-macOS-x86_64
+#          path: AppDir-x86_64
+#
+#      - name: Download arm64 Artifact
+#        uses: actions/download-artifact@v4
+#        with:
+#          name: RasMol-macOS-arm64
+#          path: AppDir-arm64
+#
+#      - name: Create Universal Binaries
+#        run: |
+#          mkdir -p AppDir-Universal/bin
+#          mkdir -p AppDir-Universal/share/rasmol
+#          for bin in AppDir-x86_64/bin/*; do
+#            if [ -f "$bin" ]; then
+#              name=$(basename "$bin")
+#              if [ -f "AppDir-arm64/bin/$name" ]; then
+#                lipo -create "AppDir-x86_64/bin/$name" "AppDir-arm64/bin/$name" -output "AppDir-Universal/bin/$name"
+#              else
+#                cp "$bin" "AppDir-Universal/bin/$name"
+#              fi
+#            fi
+#          done
+#          cp -R AppDir-x86_64/share/rasmol/* AppDir-Universal/share/rasmol/
+#
+#      - name: Configure CPack
+#        run: |
+#          cmake -B build-dmg -S . \
+#            -DCMAKE_BUILD_TYPE=Release \
+#            -DPIXELDEPTH=32 \
+#            -DCMAKE_OSX_DEPLOYMENT_TARGET="11.0"
+#
+#      - name: Package DMG
+#        run: |
+#          mkdir -p build-dmg/install
+#          cp -R AppDir-Universal/* build-dmg/install/
+#          cd build-dmg
+#          cpack -C Release -G DragNDrop -D CPACK_INSTALL_DIRECTORY="install"
+#
+#      - name: Upload DMG
+#        uses: actions/upload-artifact@v4
+#        with:
+#          name: RasMol-MacOS-DMG
+#          path: build-dmg/*.dmg
