@@ -55,7 +55,7 @@ if(NOT CQRLIB_LIBRARY)
     message(STATUS "CQRlib not found. Fetching from GitHub...")
     fetchcontent_declare(cqrlib
         GIT_REPOSITORY https://github.com/zhou0/cqrlib.git
-        GIT_TAG 809da8ade9d6d789336076830bde069dbde36af8
+        GIT_TAG master
     )
     fetchcontent_makeavailable(cqrlib)
     set(CQRLIB_LIBRARY CQRlib CACHE STRING "" FORCE)
@@ -67,7 +67,7 @@ if(NOT CVECTOR_LIBRARY)
     message(STATUS "CVector not found. Fetching from GitHub...")
     fetchcontent_declare(cvector
         GIT_REPOSITORY https://github.com/zhou0/CVector.git
-        GIT_TAG 809da8ade9d6d789336076830bde069dbde36af8
+        GIT_TAG master
     )
     fetchcontent_getproperties(cvector)
     if(NOT cvector_POPULATED)
@@ -94,7 +94,7 @@ if(NOT NEARTREE_LIBRARY)
     message(STATUS "NearTree not found. Fetching from GitHub...")
     fetchcontent_declare(neartree
         GIT_REPOSITORY https://github.com/zhou0/NearTree.git
-        GIT_TAG 809da8ade9d6d789336076830bde069dbde36af8
+        GIT_TAG main
     )
     fetchcontent_makeavailable(neartree)
     set(NEARTREE_LIBRARY CNearTree CACHE STRING "" FORCE)

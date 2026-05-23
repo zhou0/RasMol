@@ -145,7 +145,7 @@ jobs:
           path: |
             build/AppImage/*.AppImage
             build/DEB/*.deb
-            build/RPM/*.rpm"
+            build/RPM/*.rpm
 
   macos-release:
     strategy:
