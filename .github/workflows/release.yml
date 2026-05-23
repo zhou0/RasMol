@@ -220,7 +220,7 @@ jobs:
 
       - name: Install Build Dependencies (MacPorts)
         run: |
-          sudo port install bison && sudo port install hdf5 zstd webp lerc libdeflate jbigkit xz +universal
+          sudo port install bison && sudo port install tcl tk libjpeg-turbo hdf5 zstd webp lerc libdeflate jbigkit xz +universal
           echo "/opt/local/bin" >> $GITHUB_PATH
 
       - name: Download x86_64 Artifact
