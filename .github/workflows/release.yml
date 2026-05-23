@@ -151,20 +151,23 @@ jobs:
         include:
           - arch: x86_64
             os: macos-14
-            brew_prefix: /opt/homebrew
+            port_prefix: /opt/local
             deployment_target: "10.15"
           - arch: arm64
             os: macos-14
-            brew_prefix: /opt/homebrew
+            port_prefix: /opt/local
             deployment_target: "11.0"
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install Build Dependencies (macOS)
+      - name: Install MacPorts
+        uses: melrob/install-macports@v1
+
+      - name: Install Build Dependencies (MacPorts)
         run: |
-          brew install bison tcl-tk jpeg hdf5
-          echo "${{ matrix.brew_prefix }}/opt/bison/bin" >> $GITHUB_PATH
+          sudo port install bison && sudo port install tcl tk libjpeg-turbo hdf5 zstd webp lerc libdeflate jbigkit xz +universal
+          echo "/opt/local/bin" >> $GITHUB_PATH
 
       - name: Configure CMake
         run: |
@@ -202,10 +205,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install Build Dependencies (macOS)
+      - name: Install MacPorts
+        uses: melrob/install-macports@v1
+
+      - name: Install Build Dependencies (MacPorts)
         run: |
-          brew install bison libdeflate jbigkit liblerc webp hdf5
-          echo "/opt/homebrew/opt/bison/bin" >> $GITHUB_PATH
+          sudo port install bison && sudo port install hdf5 zstd webp lerc libdeflate jbigkit xz +universal
+          echo "/opt/local/bin" >> $GITHUB_PATH
 
       - name: Download x86_64 Artifact
         uses: actions/download-artifact@v4
