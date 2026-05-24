@@ -65,17 +65,10 @@ const config: Config = {
         src: 'img/logo.svg',
       },
       items: [
-        {
-          type: 'docSidebar',
-          sidebarId: 'tutorialSidebar',
-          position: 'left',
-          label: 'Tutorial',
-        },
         {to: '/download', label: 'Download', position: 'left'},
         {to: '/features', label: 'Features', position: 'left'},
         {to: '/history', label: 'History', position: 'left'},
         {to: '/blog', label: 'Blog', position: 'left'},
-        {href: 'pathname:///legacy/', label: 'Legacy Documentation', position: 'left'},
         {
           href: 'https://github.com/zhou0/RasMol',
           label: 'GitHub',
@@ -89,19 +82,11 @@ const config: Config = {
         {
           title: 'Docs',
           items: [
-            {
-              label: 'Tutorial',
-              to: '/docs/intro',
-            },
           ],
         },
         {
           title: 'Community',
           items: [
-            {
-              label: 'Stack Overflow',
-              href: 'https://stackoverflow.com/questions/tagged/rasmol',
-            },
             {
               label: 'GitHub',
               href: 'https://github.com/zhou0/RasMol',
