@@ -181,3 +181,30 @@ img {
         flex-direction: column;
     }
 }
+
+
+/* Legacy Table Mimic (Tableless) - Version 2 */
+.legacy-table {
+    display: table;
+    border-collapse: separate;
+    border-spacing: 2px;
+    border: 3px outset #888;
+    background-color: #fff;
+    margin: 1em auto;
+}
+
+.legacy-tr {
+    display: table-row;
+}
+
+.legacy-th, .legacy-td {
+    display: table-cell;
+    border: 2px inset #888;
+    padding: 5px;
+    vertical-align: top;
+    text-align: left;
+}
+
+.legacy-th {
+    font-weight: bold;
+}
