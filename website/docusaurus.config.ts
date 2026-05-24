@@ -71,7 +71,9 @@ const config: Config = {
           position: 'left',
           label: 'Tutorial',
         },
+        {to: '/download', label: 'Download', position: 'left'},
         {to: '/blog', label: 'Blog', position: 'left'},
+        {href: 'pathname:///legacy/', label: 'Legacy Documentation', position: 'left'},
         {
           href: 'https://github.com/zhou0/RasMol',
           label: 'GitHub',
