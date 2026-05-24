@@ -54,10 +54,12 @@ array set ui_translations {
         "Help" "Помощ"
         "About" "Относно RasMol..."
         "UserM" "Ръководство..."
+        "Language" "Език"
+        "MouseMode" "Режим на мишката"
     }
     "English" {
         "File" "File"
-        "Open" "Open"
+        "Open" "Open..."
         "Info" "Information"
         "Close" "Close"
         "Exit" "Exit"
@@ -106,8 +108,10 @@ array set ui_translations {
         "RAll" "Rotate All"
         "Export" "Export"
         "Help" "Help"
-        "About" "About RasMol"
-        "UserM" "User Manual"
+        "About" "About RasMol..."
+        "UserM" "User Manual..."
+        "Language" "Language"
+        "MouseMode" "Mouse Mode"
     }
     "French" {
         "File" "Fichier"
@@ -162,6 +166,64 @@ array set ui_translations {
         "Help" "Aide"
         "About" "A propos de RasMol..."
         "UserM" "Manuel utilisateur..."
+        "Language" "Langue"
+        "MouseMode" "Mode souris"
+    }
+    "German" {
+        "File" "Datei"
+        "Open" "Öffnen..."
+        "Info" "Information"
+        "Close" "Schließen"
+        "Exit" "Beenden"
+        "Display" "Anzeige"
+        "Wireframe" "Drahtmodell"
+        "Backbone" "Rückgrat"
+        "Sticks" "Stäbchen"
+        "Spacefill" "Kalottenmodell"
+        "BallStick" "Kugel-Stab-Modell"
+        "Ribbons" "Bänder"
+        "Strands" "Stränge"
+        "Cartoons" "Cartoons"
+        "MolSurf" "Moleküloberfläche"
+        "Colours" "Farben"
+        "Monochrome" "Monochrom"
+        "CPK" "CPK"
+        "Shapely" "Shapely"
+        "Group" "Gruppe"
+        "Chain" "Kette"
+        "Temp" "Temperatur"
+        "Struct" "Struktur"
+        "User" "Benutzer"
+        "Model" "Modell"
+        "Alt" "Alt"
+        "Options" "Optionen"
+        "Slab" "Slab-Modus"
+        "Hydr" "Wasserstoffe"
+        "Het" "Heteroatome"
+        "Spec" "Spiegelnd"
+        "Shad" "Schatten"
+        "Stereo" "Stereo"
+        "Label" "Beschriftungen"
+        "Settings" "Einstellungen"
+        "POff" "Auswahl aus"
+        "PIdent" "Identifizieren"
+        "PDist" "Distanz messen"
+        "PMon" "Monitor"
+        "PAng" "Winkel messen"
+        "PTrsn" "Torsionswinkel messen"
+        "PLabl" "Beschriftung"
+        "PCent" "Zentrum wählen"
+        "PCoord" "Koordinaten"
+        "PBond" "Bindung wählen"
+        "RBond" "Bindung drehen"
+        "RMol" "Molekül drehen"
+        "RAll" "Alles drehen"
+        "Export" "Exportieren"
+        "Help" "Hilfe"
+        "About" "Über RasMol..."
+        "UserM" "Benutzerhandbuch..."
+        "Language" "Sprache"
+        "MouseMode" "Mausmodus"
     }
     "Italian" {
         "File" "File"
@@ -199,7 +261,7 @@ array set ui_translations {
         "Stereo" "Stereo"
         "Label" "Etichette"
         "Settings" "Impostazioni"
-        "POff" "Disattiva scelta"
+        "POff" "Disattiva selezione"
         "PIdent" "Identifica"
         "PDist" "Distanza"
         "PMon" "Monitor"
@@ -216,6 +278,8 @@ array set ui_translations {
         "Help" "Aiuto"
         "About" "Informazioni su RasMol..."
         "UserM" "Manuale Utente..."
+        "Language" "Lingua"
+        "MouseMode" "Modalità mouse"
     }
     "Japanese" {
         "File" "ファイル"
@@ -270,6 +334,8 @@ array set ui_translations {
         "Help" "ヘルプ"
         "About" "RasMolについて..."
         "UserM" "マニュアル..."
+        "Language" "言語"
+        "MouseMode" "マウスモード"
     }
     "Russian" {
         "File" "Файл"
@@ -324,10 +390,12 @@ array set ui_translations {
         "Help" "Помощь"
         "About" "О программе RasMol..."
         "UserM" "Руководство пользователя..."
+        "Language" "Язык"
+        "MouseMode" "Режим мыши"
     }
-    "SimplifiedChinese" {
+    "Simplified Chinese" {
         "File" "文件"
-        "Open" "打开"
+        "Open" "打开..."
         "Info" "信息"
         "Close" "关闭"
         "Exit" "退出"
@@ -364,7 +432,7 @@ array set ui_translations {
         "POff" "选择"
         "PIdent" "鉴别"
         "PDist" "选择距离"
-        "PMon" "选择监视器"
+        "PMon" "选择监視器"
         "PAng" "选择角度"
         "PTrsn" "选择转矩"
         "PLabl" "选择标签"
@@ -372,12 +440,14 @@ array set ui_translations {
         "PCoord" "选择坐标"
         "PBond" "选择化学键"
         "RBond" "化学键轮换"
-        "RMol" "摩尔轮换"
-        "RAll" "全部轮换"
+        "RMol" "摩尔轮換"
+        "RAll" "全部轮換"
         "Export" "输出"
         "Help" "帮助"
         "About" "关于 RasMol..."
         "UserM" "用户手册..."
+        "Language" "语言"
+        "MouseMode" "鼠标模式"
     }
     "Spanish" {
         "File" "Archivo"
@@ -417,7 +487,7 @@ array set ui_translations {
         "Settings" "Configuraciones"
         "POff" "Desactivar elección"
         "PIdent" "Elegir identificación"
-        "PDist" "Elegir distancia"
+        "PDist" "Elegir distanza"
         "PMon" "Elegir monitor"
         "PAng" "Elegir ángulo"
         "PTrsn" "Elegir torsiones"
@@ -432,10 +502,12 @@ array set ui_translations {
         "Help" "Ayuda"
         "About" "Acerca del RasMol..."
         "UserM" "Manual del Usuario..."
+        "Language" "Idioma"
+        "MouseMode" "Modo ratón"
     }
-    "TraditionalChinese" {
+    "Traditional Chinese" {
         "File" "檔案"
-        "Open" "開啟"
+        "Open" "開啟..."
         "Info" "資訊"
         "Close" "關閉"
         "Exit" "離開"
@@ -484,8 +556,10 @@ array set ui_translations {
         "RAll" "全部旋轉"
         "Export" "輸出"
         "Help" "說明"
-        "About" "關於 RasMol"
-        "UserM" "使用者手冊"
+        "About" "關於 RasMol..."
+        "UserM" "使用者手冊..."
+        "Language" "語言"
+        "MouseMode" "滑鼠模式"
     }
 }
 
@@ -505,29 +579,18 @@ proc tr {key} {
 }
 
 proc localize_ui {} {
-    # Original menus indices: File(0), Display(1), Colours(2), Export(3), Options(4), Settings(5), Language(6), Help(7)
+    # Original menus indices: File(0), Display(1), Colours(2), Export(3), Options(4), Settings(5), Help(6)
+    # The "Language" menu is now a submenu under "Settings".
 
     set labels {
-        0 "File" 1 "Display" 2 "Colours" 3 "Export" 4 "Options" 5 "Settings" 7 "Help"
+        0 "File" 1 "Display" 2 "Colours" 3 "Export" 4 "Options" 5 "Settings" 6 "Help"
     }
     foreach {idx key} $labels {
         catch { .menubar entryconfigure $idx -label [tr $key] }
     }
 
-    # Localize "Language" menu itself
-    set lang_label "Language"
-    if {$::current_ui_lang eq "SimplifiedChinese"} { set lang_label "语言" }
-    if {$::current_ui_lang eq "TraditionalChinese"} { set lang_label "語言" }
-    if {$::current_ui_lang eq "French"} { set lang_label "Langue" }
-    if {$::current_ui_lang eq "Spanish"} { set lang_label "Idioma" }
-    if {$::current_ui_lang eq "Italian"} { set lang_label "Lingua" }
-    if {$::current_ui_lang eq "Japanese"} { set lang_label "言語" }
-    if {$::current_ui_lang eq "Russian"} { set lang_label "Язык" }
-    if {$::current_ui_lang eq "Bulgarian"} { set lang_label "Език" }
-    catch { .menubar entryconfigure 6 -label $lang_label }
-
     # File Menu
-    catch { .menubar.file entryconfigure 0 -label "[tr "Open"]..." }
+    catch { .menubar.file entryconfigure 0 -label [tr "Open"] }
     catch { .menubar.file entryconfigure 1 -label [tr "Info"] }
     catch { .menubar.file entryconfigure 3 -label [tr "Close"] }
     catch { .menubar.file entryconfigure 5 -label [tr "Exit"] }
@@ -566,6 +629,12 @@ proc localize_ui {} {
         catch { .menubar.settings entryconfigure $i -label [tr $key] }
         incr i
     }
+
+    # Settings -> Mouse Mode
+    catch { .menubar.settings entryconfigure 15 -label [tr "MouseMode"] }
+
+    # Settings -> Language (Inside Settings menu)
+    catch { .menubar.settings entryconfigure 17 -label [tr "Language"] }
 
     # Help Menu
     catch { .menubar.help entryconfigure 0 -label [tr "About"] }

@@ -428,8 +428,32 @@ if {[tk windowingsystem] eq "aqua"} {
     }
 }
 
+
+
 # Localization
-set current_ui_lang "English"
+package require msgcat
+
+proc detect_lang {} {
+    set locale [msgcat::mclocale]
+    set lang_part [string range $locale 0 1]
+    switch -glob -- [string tolower $locale] {
+        zh_cn* { return "Simplified Chinese" }
+        zh_tw* - zh_hk* { return "Traditional Chinese" }
+    }
+    switch -- $lang_part {
+        en { return "English" }
+        fr { return "French" }
+        de { return "German" }
+        it { return "Italian" }
+        es { return "Spanish" }
+        ru { return "Russian" }
+        ja { return "Japanese" }
+        bg { return "Bulgarian" }
+        default { return "English" }
+    }
+}
+
+set current_ui_lang [detect_lang]
 set script_dir [file dirname [info script]]
 if {[file exists [file join $script_dir rasmol_loc.tcl]]} {
     source [file join $script_dir rasmol_loc.tcl]
@@ -440,12 +464,12 @@ if {[file exists [file join $script_dir rasmol_loc.tcl]]} {
 }
 
 if {[info procs localize_ui] ne ""} {
-    if {![winfo exists .menubar.lang]} {
-        menu .menubar.lang -tearoff 0
-        .menubar insert 7 cascade -label "Language" -menu .menubar.lang
+    if {![winfo exists .menubar.settings.lang]} {
+        menu .menubar.settings.lang -tearoff 0
+        .menubar.settings add separator
+        .menubar.settings add cascade -label "Language" -menu .menubar.settings.lang
         foreach lang [lsort [array names ui_translations]] {
-            .menubar.lang add radiobutton -label $lang -variable current_ui_lang -value $lang \
-                -command {localize_ui}
+            .menubar.settings.lang add radiobutton -label $lang -variable current_ui_lang -value $lang  -command {localize_ui}
         }
     }
     localize_ui
