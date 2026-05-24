@@ -8,3 +8,5 @@ rastxt
 # Temporary and editor files
 *~
 .DS_Store
+/website/node_modules/
+/website/.docusaurus/
