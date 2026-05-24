@@ -1,84 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="stylesheet" href="style.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RasMol V2.7.5 Manual</title>
-    <style>
-        body {
-            font-family: Helvetica, Arial, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 20px;
-            background: url('./html_graphics/rasmolwallpaper.jpg');
-            background-attachment: fixed;
-        }
-        .content-box {
-            background-color: rgba(255, 255, 255, 0.95);
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-        header, footer {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        nav {
-            margin: 20px 0;
-            font-size: 0.9em;
-        }
-        nav a {
-            text-decoration: none;
-            color: #0056b3;
-            padding: 0 5px;
-        }
-        nav a:hover {
-            text-decoration: underline;
-        }
-        h1, h2, h3 {
-            color: #0808A0;
-            text-align: center;
-        }
-        hr {
-            border: 0;
-            border-top: 1px solid #ccc;
-            margin: 30px 0;
-        }
-        .center-text {
-            text-align: center;
-        }
-        img {
-            max-width: 100%;
-            height: auto;
-        }
-        .sidebar-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
-        }
-        .sidebar-td {
-            padding: 10px;
-            vertical-align: top;
-        }
-        .blue-bg { background-color: #A0FFFF; }
-        .yellow-bg { background-color: #FFFFA0; }
-        .sidebar-ul {
-            list-style-type: none;
-            padding: 0;
-            font-size: 0.85em;
-        }
-        .sidebar-ul li {
-            margin-bottom: 10px;
-        }
-        pre {
-            background-color: #f8f9fa;
-            padding: 10px;
-            border: 1px solid #ddd;
-            overflow-x: auto;
-        }
-    </style>
 </head>
 <body>
     <div class="content-box">
@@ -89,24 +15,24 @@
             <a href="http://www.iucr.org/iucr-top/cif/home.html">
                 <img alt="CIF Home Page" src="./html_graphics/cifhome.jpg">
             </a>
-            <a href="../README.html">
+            <a href="readme.html">
                 <img alt="RasMol" src="./html_graphics/rasmolbutton.jpg">
             </a>
             <nav aria-label="Main Navigation">
-                | <a href="http://www.OpenrasMol.org">OpenRasMol</a> |
-                <a href="../README.html#Copying">Copying and Distribution</a> |
-                <a href="../README.html#Contents">Contents</a> |
-                <a href="../INSTALL.html">Installation Instructions</a> |<br>
-                | <a href="../ChangeLog.html">Changes</a> |
-                <a href="../TODO.html">Things To Do</a> |
-                <a href="../README.html#Introduction">Introduction</a> |
-                <a href="../README.html#CodeAndBinaries">Source Code and Binaries</a> |<br>
+                | <a href="http://www.rasmol.net">RasMol</a> |
+                <a href="readme.html#Copying">Copying and Distribution</a> |
+                <a href="readme.html#Contents">Contents</a> |
+                <a href="install.html">Installation Instructions</a> |<br>
+                | <a href="changelog.html">Changes</a> |
+                <a href="todo.html">Things To Do</a> |
+                <a href="readme.html#Introduction">Introduction</a> |
+                <a href="readme.html#CodeAndBinaries">Source Code and Binaries</a> |<br>
                 | <a href="rasmol.html">RasMol Manual</a> |
-                <a href="esrasmol27.html">Spanish Translation of RasMol Manual</a> |
+                <a href="esrasmol2721.html">Spanish Translation of RasMol Manual</a> |
                 <a href="itrasmol.hlp">Italian Translation of RasMol Help File</a> |<br>
-                | <a href="http://www.rasmol.org/donate.shtml">Donate to Support RasMol</a> |
-                <a href="../README.html">Release README</a> |
-                <a href="http://www.rasmol.org/register.shtml">Register your RasMol</a> |
+                | <a href="http://www.rasmol.net/donate.shtml">Donate to Support RasMol</a> |
+                <a href="readme.html">Release README</a> |
+                <a href="http://www.rasmol.net/register.shtml">Register your RasMol</a> |
             </nav>
         </header>
 
@@ -114,36 +40,36 @@
 <H1 >Manual<BR>
 RasMol 2.7.5</H1>
 <center>
-<table class="sidebar-table" >
-<tr>
-<td  class="sidebar-td blue-bg">
+<div class="legacy-table-wrapper" data-table="true" class="sidebar-table" >
+<div class="legacy-tr">
+<div class="legacy-td"  class="sidebar-td blue-bg">
 <ul class="sidebar-ul">
-<li><a href=http://www.rasmol.org/software/RasMol_Latest_Windows_Installer.exe>RasMol
+<li><a href=http://www.rasmol.net/software/RasMol_Latest_Windows_Installer.exe>RasMol
 Latest Windows Installer</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />&nbsp;<br />
-<li><a href=http://www.rasmol.org/software/RasMol_Latest.tar.gz>RasMol
+<li><a href=http://www.rasmol.net/software/RasMol_Latest.tar.gz>RasMol
 Latest Source Tarball </a><br />&nbsp;<br />
-<li><a href=http://www.rasmol.org/software/RasMol_Latest_Manual.html>RasMol
+<li><a href=http://www.rasmol.net/software/RasMol_Latest_Manual.html>RasMol
 Latest Manual </a><br />&nbsp;<br />
-<li><a href=http://www.rasmol.org/donate.shtml>Donate to Support RasMol </a><br />
-<li><a href=http://www.rasmol.org/register.shtml>Register your RasMol</a><br />
+<li><a href=http://www.rasmol.net/donate.shtml>Donate to Support RasMol </a><br />
+<li><a href=http://www.rasmol.net/register.shtml>Register your RasMol</a><br />
 </ul>
 
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<td><IMG  SRC="./html_graphics/rasmollogo.jpg" ALT="RasMol">
-<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<td  class="sidebar-td yellow-bg">
+<div class="legacy-td">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<div class="legacy-td"><IMG  SRC="./html_graphics/rasmollogo.jpg" ALT="RasMol">
+<div class="legacy-td">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<div class="legacy-td"  class="sidebar-td yellow-bg">
 <ul class="sidebar-ul">
-<li><a href=http://www.rasmol.org/software/RasMol_2.7.5_Windows_Installer.exe>RasMol
+<li><a href=http://www.rasmol.net/software/RasMol_2.7.5_Windows_Installer.exe>RasMol
 2.7.5 Windows Installer</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />&nbsp;<br />
-<li><a href=http://www.rasmol.org/software/RasMol_2.7.5.tar.gz>RasMol
+<li><a href=http://www.rasmol.net/software/RasMol_2.7.5.tar.gz>RasMol
 2.7.5 Source Tarball</a><br />&nbsp;<br />
-<li><a href=http://www.rasmol.org/software/RasMol_2.7.5_Manual.html>RasMol
+<li><a href=http://www.rasmol.net/software/RasMol_2.7.5_Manual.html>RasMol
 2.7.5 Manual</a><br />&nbsp;<br />
-<li><a href=http://www.rasmol.org/donate.shtml>Donate to Support RasMol </a><br />
-<li><a href=http://www.rasmol.org/register.shtml>Register your RasMol</a><br />
+<li><a href=http://www.rasmol.net/donate.shtml>Donate to Support RasMol </a><br />
+<li><a href=http://www.rasmol.net/register.shtml>Register your RasMol</a><br />
 </ul>
 
-</table>
+</div>
 </center>
 <H3 >
 Molecular Graphics Visualisation Tool<BR>
@@ -163,13 +89,13 @@ Copyright &#169; Roger Sayle 1992-1999
 <P>
 
 and Based on Mods by
-<table class="sidebar-table" border=3>
-<tr><th align="left">Author<th align="left">Version, Date<th align="left">Copyright
-<tr><td>Arne Mueller<td>RasMol 2.6x1 May 1998<td>&#169 Arne Mueller 1998
-<tr><td valign="top">Gary Grossman and<br>Marco Molinaro<td>RasMol 2.5-ucb November 1995<br>RasMol 2.6-ucb November 1996
-<td valign="top">&#169 UC Regents/ModularCHEM<br>Consortium 1995, 1996
-<tr><td>Philippe Valadon<td>RasTop 1.3 August 2000<td>&#169 Philippe Valadon 2000
-<tr><td valign="top">Herbert J. Bernstein<td>RasMol 2.7.0 March 1999<br>
+<div class="legacy-table-wrapper" data-table="true" class="sidebar-table">
+<div class="legacy-tr"><div class="legacy-th" >Author<div class="legacy-th" >Version, Date<div class="legacy-th" >Copyright
+<div class="legacy-tr"><div class="legacy-td">Arne Mueller<div class="legacy-td">RasMol 2.6x1 May 1998<div class="legacy-td">&#169 Arne Mueller 1998
+<div class="legacy-tr"><div class="legacy-td" v>Gary Grossman and<br>Marco Molinaro<div class="legacy-td">RasMol 2.5-ucb November 1995<br>RasMol 2.6-ucb November 1996
+<div class="legacy-td" v>&#169 UC Regents/ModularCHEM<br>Consortium 1995, 1996
+<div class="legacy-tr"><div class="legacy-td">Philippe Valadon<div class="legacy-td">RasTop 1.3 August 2000<div class="legacy-td">&#169 Philippe Valadon 2000
+<div class="legacy-tr"><div class="legacy-td" v>Herbert J. Bernstein<div class="legacy-td">RasMol 2.7.0 March 1999<br>
 RasMol 2.7.1 June 1999<br />RasMol 2.7.1.1 January 2001<br />
 RasMol 2.7.2 August 2000<br />RasMol 2.7.2.1 April 2001<br />
 RasMol 2.7.2.1.1 January 2004<br />RasMol 2.7.3 February 2005<br />
@@ -178,8 +104,8 @@ RasMol 2.7.4.1 January 2008<br />
 RasMol 2.7.4.2 March 2008<br />
 RasMol 2.7.5 June 2009<br />
 RasMol 2.7.5.1 July 2009<br />
-<td valign="top">&#169 Herbert J. Bernstein 1998-2009
-</table>
+<div class="legacy-td" v>&#169 Herbert J. Bernstein 1998-2009
+</div>
 
 <P>
 RasMol 2.7.5 incorporates changes by T. Ikonen, G. McQuillan, N. Darakev
@@ -204,23 +130,23 @@ Teemu Ikonen.
 <P>
 
 and Incorporating Translations by
-<table class="sidebar-table" border=3>
-<tr><th align="left">Author<th align="left">Item<th align="left">Language
-<tr><td>Isabel Serv&aacute;n Mart&iacute;nez,<br>Jos&eacute; Miguel Fern&aacute;ndez Fern&aacute;ndez
-<td valign="top">2.6 Manual<td valign="top">Spanish
-<tr><td>Jos&eacute; Miguel Fern&aacute;ndez Fern&aacute;ndez<td>2.7.1 Manual<td>Spanish
-<tr><td>Fernando Gabriel Ranea<td>2.7.1 menus and messages<td>Spanish
-<tr><td>Jean-Pierre Demailly<td>2.7.1 menus and messages<td>French
-<tr><td>Giuseppe Martini, Giovanni Paolella,<br>A. Davassi, M. Masullo, C. Liotto
-<td valign="top">2.7.1 menus and messages<br>
-2.7.1 help file<td valign="top">Italian
-<tr><td>G. Pozhvanov<td valign="top">2.7.3 menus and messages<td>Russian
-<tr><td>G. Todorov<td valign="top">2.7.3 menus and messages<td>Bulgarian
-<tr><td>Nan Jia, G. Todorov<td valign="top">2.7.3 menus and messages<td>Chinese
-<tr><td>Mamoru Yamanishi, Katajima Hajime<td valign="top">2.7.3 menus and messages<td>Japanese
-<tr>
-<tr>
-</table>
+<div class="legacy-table-wrapper" data-table="true" class="sidebar-table">
+<div class="legacy-tr"><div class="legacy-th" >Author<div class="legacy-th" >Item<div class="legacy-th" >Language
+<div class="legacy-tr"><div class="legacy-td">Isabel Serv&aacute;n Mart&iacute;nez,<br>Jos&eacute; Miguel Fern&aacute;ndez Fern&aacute;ndez
+<div class="legacy-td" v>2.6 Manual<div class="legacy-td" v>Spanish
+<div class="legacy-tr"><div class="legacy-td">Jos&eacute; Miguel Fern&aacute;ndez Fern&aacute;ndez<div class="legacy-td">2.7.1 Manual<div class="legacy-td">Spanish
+<div class="legacy-tr"><div class="legacy-td">Fernando Gabriel Ranea<div class="legacy-td">2.7.1 menus and messages<div class="legacy-td">Spanish
+<div class="legacy-tr"><div class="legacy-td">Jean-Pierre Demailly<div class="legacy-td">2.7.1 menus and messages<div class="legacy-td">French
+<div class="legacy-tr"><div class="legacy-td">Giuseppe Martini, Giovanni Paolella,<br>A. Davassi, M. Masullo, C. Liotto
+<div class="legacy-td" v>2.7.1 menus and messages<br>
+2.7.1 help file<div class="legacy-td" v>Italian
+<div class="legacy-tr"><div class="legacy-td">G. Pozhvanov<div class="legacy-td" v>2.7.3 menus and messages<div class="legacy-td">Russian
+<div class="legacy-tr"><div class="legacy-td">G. Todorov<div class="legacy-td" v>2.7.3 menus and messages<div class="legacy-td">Bulgarian
+<div class="legacy-tr"><div class="legacy-td">Nan Jia, G. Todorov<div class="legacy-td" v>2.7.3 menus and messages<div class="legacy-td">Chinese
+<div class="legacy-tr"><div class="legacy-td">Mamoru Yamanishi, Katajima Hajime<div class="legacy-td" v>2.7.3 menus and messages<div class="legacy-td">Japanese
+<div class="legacy-tr">
+<div class="legacy-tr">
+</div>
 
 <P>
 
@@ -263,12 +189,12 @@ Edited by Herbert J. Bernstein and Frances C. Bernstein
 
 
 <p>
-<H4 Align="CENTER">Translations</H4>
+<H4>Translations</H4>
 <P>Thanks to the efforts of Jos&eacute; Miguel Fern&aacute;ndez
 Fern&aacute;ndez (Departamento
 de Bioqu&iacute;mica y Biolog&iacute;a Molecular. Universidad de Granada.
 Espa&ntilde;a (<A HREF="mailto:jmfernan@ugr.es">jmfernan@ugr.es</A>)) a
-<a href="http://www.bernstein-plus-sons.com/software/RasMol_2.7.3/doc/esrasmol27.html">translation of the
+<a href="http://www.bernstein-plus-sons.com/software/RasMol_2.7.3/esrasmol2721.html">translation of the
 Manual for Rasmol version 2.7.1 into Spanish</a> is now available.
 La traducci&oacute;n espa&ntilde;ola del manual de la
 versi&oacute;n de la Dra. Wong revisada por Eric Martz fue realizada por
@@ -303,7 +229,7 @@ on RasMol version 2.7.2, on RasMol version 2.7.1, on RasMol
 version 2.6_CIF.2, on RasMol version 2.6x1, on RasMol version
 2.6.4, and RasMol 2.5-ucb and 2.6-ucb.
 <P>
-Please read the file <A HREF = "NOTICE.html">NOTICE</A> for
+Please read the file <A HREF = "notice.html">NOTICE</A> for
 important notices which apply to this package and for
 license terms (GPL or RASLIC).
 <HR>
@@ -329,116 +255,116 @@ license terms (GPL or RASLIC).
 </UL>
 <li><a href="#chcomref">Command Reference</a>
 <center>
-<table class="sidebar-table"  BORDER CELLPADDING=2>
-<tr><td><a href="#backbone">Backbone</a>
-<td><a href="#background">Background</a>
-<td><a href="#bond">Bond</a>
-<td><a href="#bulgarian">Bulgarian</a>
-<td><a href="#cartoon">Cartoon</a>
-<td><a href="#centre">Centre</a>
-<td><a href="#chinese">Chinese</a>
-<td><a href="#clipboard">Clipboard</a>
-<tr><td><a href="#colour">Colour</a>
-<td><a href="#colourmode">ColourMode</a>
-<td><a href="#connect">Connect</a>
-<td><a href="#spacefill">CPK</a>
-<td><a href="#cpknew">CPKnew</a>
-<td><a href="#defer">Defer</a>
-<td><a href="#define">Define</a>
-<td><a href="#depth">Depth</a>
-<tr><td><a href="#dots">Dots</a>
-<td><a href="#echo">Echo</a>
-<td><a href="#english">English</a>
-<td><a href="#execute">Execute</a>
-<td><a href="#quit">Exit</a>
-<td><a href="#french">French</a>
-<td><a href="#hbonds">HBonds</a>
-<td><a href="#help">Help</a>
-<tr><td><a href="#italian">Italian</a>
-<td><a href="#japanese">Japanese</a>
-<td><a href="#label">Label</a>
-<td><a href="#load">Load</a>
-<td><a href="#map">Map</a>
-<td><a href="#molecule">Molecule</a>
-<td><a href="#monitor">Monitor</a>
-<td><a href="#notoggle">NoToggle</a>
-<tr><td><a href="#pause">Pause</a>
-<td><a href="#play">Play</a>
-<td><a href="#print">Print</a>
-<td><a href="#quit">Quit</a>
-<td><a href="#record">Record</a>
-<td><a href="#refresh">Refresh</a>
-<td><a href="#renumber">Renumber</a>
-<td><a href="#reset">Reset</a>
-<tr><td><a href="#restrict">Restrict</a>
-<td><a href="#ribbons">Ribbons</a>
-<td><a href="#rotate">Rotate</a>
-<td><a href="#save">Save</a>
-<td><a href="#script">Script</a>
-<td><a href="#select">Select</a>
-<td><a href="#set">Set</a>
-<td><a href="#show">Show</a>
-<tr><td><a href="#slab">Slab</a>
-<td><a href="#script">Source</a>
-<td><a href="#spacefill">Spacefill</a>
-<td><a href="#spanish">Spanish</a>
-<td><a href="#ssbonds">SSBonds</a>
-<td><a href="#star">Star</a>
-<td><a href="#stereo">Stereo</a>
-<td><a href="#strands">Strands</a>
-<tr><td><a href="#structure">Structure</a>
-<td><a href="#surface">Surface</a>
-<td><a href="#trace">Trace</a>
-<td><a href="#translate">Translate</a>
-<td><a href="#unbond">UnBond</a>
-<td><a href="#wireframe">Wireframe</a>
-<td><a href="#write">Write</a>
-<td><a href="#zap">Zap</a>
-<tr><td><a href="#zoom">Zoom</a>
-<td colspan=7>
-</table>
+<div class="legacy-table-wrapper" data-table="true" class="sidebar-table"  BORDER>
+<div class="legacy-tr"><div class="legacy-td"><a href="#backbone">Backbone</a>
+<div class="legacy-td"><a href="#background">Background</a>
+<div class="legacy-td"><a href="#bond">Bond</a>
+<div class="legacy-td"><a href="#bulgarian">Bulgarian</a>
+<div class="legacy-td"><a href="#cartoon">Cartoon</a>
+<div class="legacy-td"><a href="#centre">Centre</a>
+<div class="legacy-td"><a href="#chinese">Chinese</a>
+<div class="legacy-td"><a href="#clipboard">Clipboard</a>
+<div class="legacy-tr"><div class="legacy-td"><a href="#colour">Colour</a>
+<div class="legacy-td"><a href="#colourmode">ColourMode</a>
+<div class="legacy-td"><a href="#connect">Connect</a>
+<div class="legacy-td"><a href="#spacefill">CPK</a>
+<div class="legacy-td"><a href="#cpknew">CPKnew</a>
+<div class="legacy-td"><a href="#defer">Defer</a>
+<div class="legacy-td"><a href="#define">Define</a>
+<div class="legacy-td"><a href="#depth">Depth</a>
+<div class="legacy-tr"><div class="legacy-td"><a href="#dots">Dots</a>
+<div class="legacy-td"><a href="#echo">Echo</a>
+<div class="legacy-td"><a href="#english">English</a>
+<div class="legacy-td"><a href="#execute">Execute</a>
+<div class="legacy-td"><a href="#quit">Exit</a>
+<div class="legacy-td"><a href="#french">French</a>
+<div class="legacy-td"><a href="#hbonds">HBonds</a>
+<div class="legacy-td"><a href="#help">Help</a>
+<div class="legacy-tr"><div class="legacy-td"><a href="#italian">Italian</a>
+<div class="legacy-td"><a href="#japanese">Japanese</a>
+<div class="legacy-td"><a href="#label">Label</a>
+<div class="legacy-td"><a href="#load">Load</a>
+<div class="legacy-td"><a href="#map">Map</a>
+<div class="legacy-td"><a href="#molecule">Molecule</a>
+<div class="legacy-td"><a href="#monitor">Monitor</a>
+<div class="legacy-td"><a href="#notoggle">NoToggle</a>
+<div class="legacy-tr"><div class="legacy-td"><a href="#pause">Pause</a>
+<div class="legacy-td"><a href="#play">Play</a>
+<div class="legacy-td"><a href="#print">Print</a>
+<div class="legacy-td"><a href="#quit">Quit</a>
+<div class="legacy-td"><a href="#record">Record</a>
+<div class="legacy-td"><a href="#refresh">Refresh</a>
+<div class="legacy-td"><a href="#renumber">Renumber</a>
+<div class="legacy-td"><a href="#reset">Reset</a>
+<div class="legacy-tr"><div class="legacy-td"><a href="#restrict">Restrict</a>
+<div class="legacy-td"><a href="#ribbons">Ribbons</a>
+<div class="legacy-td"><a href="#rotate">Rotate</a>
+<div class="legacy-td"><a href="#save">Save</a>
+<div class="legacy-td"><a href="#script">Script</a>
+<div class="legacy-td"><a href="#select">Select</a>
+<div class="legacy-td"><a href="#set">Set</a>
+<div class="legacy-td"><a href="#show">Show</a>
+<div class="legacy-tr"><div class="legacy-td"><a href="#slab">Slab</a>
+<div class="legacy-td"><a href="#script">Source</a>
+<div class="legacy-td"><a href="#spacefill">Spacefill</a>
+<div class="legacy-td"><a href="#spanish">Spanish</a>
+<div class="legacy-td"><a href="#ssbonds">SSBonds</a>
+<div class="legacy-td"><a href="#star">Star</a>
+<div class="legacy-td"><a href="#stereo">Stereo</a>
+<div class="legacy-td"><a href="#strands">Strands</a>
+<div class="legacy-tr"><div class="legacy-td"><a href="#structure">Structure</a>
+<div class="legacy-td"><a href="#surface">Surface</a>
+<div class="legacy-td"><a href="#trace">Trace</a>
+<div class="legacy-td"><a href="#translate">Translate</a>
+<div class="legacy-td"><a href="#unbond">UnBond</a>
+<div class="legacy-td"><a href="#wireframe">Wireframe</a>
+<div class="legacy-td"><a href="#write">Write</a>
+<div class="legacy-td"><a href="#zap">Zap</a>
+<div class="legacy-tr"><div class="legacy-td"><a href="#zoom">Zoom</a>
+<div class="legacy-td">
+</div>
 </center>
 <li><a href="#chsetopt">Internal Parameters</a>
-<center><table class="sidebar-table" BORDER CELLPADDING=2>
-<TR><TD><a href="#setambient">Ambient</a>
-<TD><a href="#setaxes">Axes</a>
-<TD><a href="#setbackground">Background</a>
-<TD><a href="#setbackfade">BackFade</a>
-<TD><a href="#setbondmode">BondMode</a>
-<TD><a href="#setbonds">Bonds</a>
-<TD><a href="#setboundbox">BoundBox</a>
-<TD><a href="#setcartoon">Cartoon</a>
-<TR><TD><a href="#setcisangle">CisAngle</A>
-<TD><a href="#setdisplay">Display</a>
-<TD><a href="#setfontsize">FontSize</a>
-<TD><a href="#setfontstroke">FontStroke</a>
-<TD><a href="#sethbonds">HBonds</a>
-<TD><a href="#sethetero">Hetero</a>
-<TD><a href="#sethourglass">HourGlass</a>
-<TD><a href="#sethydrogen">Hydrogen</a>
-<TR><TD><a href="#setkinemage">Kinemage</a>
-<TD><a href="#setmenus">Menus</a>
-<TD><a href="#setmonitor">Monitor</a>
-<TD><a href="#setmouse">Mouse</a>
-<TD><a href="#setpicking">Picking</a>
-<TD><a href="#setplay">Play...</a>
-<TD><a href="#setradius">Radius</a>
-<TD><a href="#setrecord">Record...</a>
-<TR><TD><a href="#setshadepower">ShadePower</a>
-<TD><a href="#setshadow">Shadow</a>
-<TD><a href="#setslabmode">SlabMode</a>
-<TD><a href="#setsolvent">Solvent</a>
-<TD><a href="#setspecular">Specular</a>
-<TD><a href="#setspecpower">SpecPower</a>
-<TD><a href="#setstereo">Stereo</a>
-<TD><a href="#setssbonds">SSBonds</a>
-<TR><TD><a href="#setstrands">Strands</a>
-<TD><a href="#settransparent">Transparent</a>
-<TD><a href="#setunitcell">UnitCell</a>
-<TD><a href="#setvectps">VectPS</a>
-<TD><a href="#setwrite">Write</a>
-<TD CELLSPAN=3>
-</table></center>
+<center><div class="legacy-table-wrapper" data-table="true" class="sidebar-table" BORDER>
+<div class="legacy-tr"><div class="legacy-td"><a href="#setambient">Ambient</a>
+<div class="legacy-td"><a href="#setaxes">Axes</a>
+<div class="legacy-td"><a href="#setbackground">Background</a>
+<div class="legacy-td"><a href="#setbackfade">BackFade</a>
+<div class="legacy-td"><a href="#setbondmode">BondMode</a>
+<div class="legacy-td"><a href="#setbonds">Bonds</a>
+<div class="legacy-td"><a href="#setboundbox">BoundBox</a>
+<div class="legacy-td"><a href="#setcartoon">Cartoon</a>
+<div class="legacy-tr"><div class="legacy-td"><a href="#setcisangle">CisAngle</A>
+<div class="legacy-td"><a href="#setdisplay">Display</a>
+<div class="legacy-td"><a href="#setfontsize">FontSize</a>
+<div class="legacy-td"><a href="#setfontstroke">FontStroke</a>
+<div class="legacy-td"><a href="#sethbonds">HBonds</a>
+<div class="legacy-td"><a href="#sethetero">Hetero</a>
+<div class="legacy-td"><a href="#sethourglass">HourGlass</a>
+<div class="legacy-td"><a href="#sethydrogen">Hydrogen</a>
+<div class="legacy-tr"><div class="legacy-td"><a href="#setkinemage">Kinemage</a>
+<div class="legacy-td"><a href="#setmenus">Menus</a>
+<div class="legacy-td"><a href="#setmonitor">Monitor</a>
+<div class="legacy-td"><a href="#setmouse">Mouse</a>
+<div class="legacy-td"><a href="#setpicking">Picking</a>
+<div class="legacy-td"><a href="#setplay">Play...</a>
+<div class="legacy-td"><a href="#setradius">Radius</a>
+<div class="legacy-td"><a href="#setrecord">Record...</a>
+<div class="legacy-tr"><div class="legacy-td"><a href="#setshadepower">ShadePower</a>
+<div class="legacy-td"><a href="#setshadow">Shadow</a>
+<div class="legacy-td"><a href="#setslabmode">SlabMode</a>
+<div class="legacy-td"><a href="#setsolvent">Solvent</a>
+<div class="legacy-td"><a href="#setspecular">Specular</a>
+<div class="legacy-td"><a href="#setspecpower">SpecPower</a>
+<div class="legacy-td"><a href="#setstereo">Stereo</a>
+<div class="legacy-td"><a href="#setssbonds">SSBonds</a>
+<div class="legacy-tr"><div class="legacy-td"><a href="#setstrands">Strands</a>
+<div class="legacy-td"><a href="#settransparent">Transparent</a>
+<div class="legacy-td"><a href="#setunitcell">UnitCell</a>
+<div class="legacy-td"><a href="#setvectps">VectPS</a>
+<div class="legacy-td"><a href="#setwrite">Write</a>
+<div class="legacy-td" CELLSPAN=3>
+</div></center>
 <li><a href="#chexprs">Atom Expressions</a>
 <li><a href="#predefinedsets">Predefined Sets</a>
 <li><a href="#chcolours">Colour Schemes</a>
@@ -1375,16 +1301,16 @@ summarized below. However, there are also '<B>set mouse
 insight</B>' and '<B>set mouse quanta</B>' modes (not shown below). <BR>
 <BR>
 
-<TABLE  BORDER CELLPADDING=2>
-<TR><TH>Action</TH> <TH>Windows</TH> <TH>Macintosh</TH></TR>
-<TR><TD>Rotate X, Y</TD> <TD>Left</TD> <TD>Unmodified</TD>
-</TR> <TR><TD>Translate X, Y</TD> <TD>Right</TD> <TD>Command*</TD> </TR>
-<TR> <TD>Rotate Z</TD> <TD>Shift-Right</TD> <TD>Shift-Command*</TD> </TR>
-<TR> <TD>Zoom</TD> <TD>Shift-Left</TD> <TD>Shift</TD> </TR>
-<TR> <TD>Slab Plane</TD> <TD>Ctrl-Left</TD> <TD>Ctrl</TD> </TR>
-<CAPTION ALIGN=BOTTOM>*On some Macs, the Option (Alt)
+<div class="legacy-table-wrapper"  BORDER>
+<div class="legacy-tr"><div class="legacy-th">Action</div> <div class="legacy-th">Windows</div> <div class="legacy-th">Macintosh</div></div>
+<div class="legacy-tr"><div class="legacy-td">Rotate X, Y</div> <div class="legacy-td">Left</div> <div class="legacy-td">Unmodified</div>
+</div> <div class="legacy-tr"><div class="legacy-td">Translate X, Y</div> <div class="legacy-td">Right</div> <div class="legacy-td">Command*</div> </div>
+<div class="legacy-tr"> <div class="legacy-td">Rotate Z</div> <div class="legacy-td">Shift-Right</div> <div class="legacy-td">Shift-Command*</div> </div>
+<div class="legacy-tr"> <div class="legacy-td">Zoom</div> <div class="legacy-td">Shift-Left</div> <div class="legacy-td">Shift</div> </div>
+<div class="legacy-tr"> <div class="legacy-td">Slab Plane</div> <div class="legacy-td">Ctrl-Left</div> <div class="legacy-td">Ctrl</div> </div>
+<CAPTION>*On some Macs, the Option (Alt)
 key has the same effect on RasMol as the Command key.</caption>
-</TABLE>
+</div>
 
 <P>
 <HR>
@@ -1732,74 +1658,74 @@ and
 The commands/keywords currently recognised by RasMol are given below.
 <p>
 <center>
-<table class="sidebar-table" BORDER CELLPADDING=2>
-<tr><td><a href="#backbone">Backbone</a>
-<td><a href="#background">Background</a>
-<td><a href="#bond">Bond</a>
-<td><a href="#bulgarian">Bulgarian</a>
-<td><a href="#cartoon">Cartoon</a>
-<td><a href="#centre">Centre</a>
-<td><a href="#chinese">Chinese</a>
-<td><a href="#clipboard">Clipboard</a>
-<tr><td><a href="#colour">Colour</a>
-<td><a href="#colourmode">ColourMode</a>
-<td><a href="#connect">Connect</a>
-<td><a href="#spacefill">CPK</a>
-<td><a href="#cpknew">CPKnew</a>
-<td><a href="#defer">Defer</a>
-<td><a href="#define">Define</a>
-<td><a href="#depth">Depth</a>
-<tr><td><a href="#dots">Dots</a>
-<td><a href="#echo">Echo</a>
-<td><a href="#english">English</a>
-<td><a href="#execute">Execute</a>
-<td><a href="#quit">Exit</a>
-<td><a href="#french">French</a>
-<td><a href="#hbonds">HBonds</a>
-<td><a href="#help">Help</a>
-<tr><td><a href="#italian">Italian</a>
-<td><a href="#japanese">Japanese</a>
-<td><a href="#label">Label</a>
-<td><a href="#load">Load</a>
-<td><a href="#map">Map</a>
-<td><a href="#molecule">Molecule</a>
-<td><a href="#monitor">Monitor</a>
-<td><a href="#notoggle">NoToggle</a>
-<tr><td><a href="#pause">Pause</a>
-<td><a href="#play">Play</a>
-<td><a href="#print">Print</a>
-<td><a href="#quit">Quit</a>
-<td><a href="#record">Record</a>
-<td><a href="#refresh">Refresh</a>
-<td><a href="#renumber">Renumber</a>
-<td><a href="#reset">Reset</a>
-<tr><td><a href="#restrict">Restrict</a>
-<td><a href="#ribbons">Ribbons</a>
-<td><a href="#rotate">Rotate</a>
-<td><a href="#save">Save</a>
-<td><a href="#script">Script</a>
-<td><a href="#select">Select</a>
-<td><a href="#set">Set</a>
-<td><a href="#show">Show</a>
-<tr><td><a href="#slab">Slab</a>
-<td><a href="#script">Source</a>
-<td><a href="#spacefill">Spacefill</a>
-<td><a href="#spanish">Spanish</a>
-<td><a href="#ssbonds">SSBonds</a>
-<td><a href="#star">Star</a>
-<td><a href="#stereo">Stereo</a>
-<td><a href="#strands">Strands</a>
-<tr><td><a href="#structure">Structure</a>
-<td><a href="#surface">Surface</a>
-<td><a href="#trace">Trace</a>
-<td><a href="#translate">Translate</a>
-<td><a href="#unbond">UnBond</a>
-<td><a href="#wireframe">Wireframe</a>
-<td><a href="#write">Write</a>
-<td><a href="#zap">Zap</a>
-<tr><td><a href="#zoom">Zoom</a>
-<td colspan=7>
-</table>
+<div class="legacy-table-wrapper" data-table="true" class="sidebar-table" BORDER>
+<div class="legacy-tr"><div class="legacy-td"><a href="#backbone">Backbone</a>
+<div class="legacy-td"><a href="#background">Background</a>
+<div class="legacy-td"><a href="#bond">Bond</a>
+<div class="legacy-td"><a href="#bulgarian">Bulgarian</a>
+<div class="legacy-td"><a href="#cartoon">Cartoon</a>
+<div class="legacy-td"><a href="#centre">Centre</a>
+<div class="legacy-td"><a href="#chinese">Chinese</a>
+<div class="legacy-td"><a href="#clipboard">Clipboard</a>
+<div class="legacy-tr"><div class="legacy-td"><a href="#colour">Colour</a>
+<div class="legacy-td"><a href="#colourmode">ColourMode</a>
+<div class="legacy-td"><a href="#connect">Connect</a>
+<div class="legacy-td"><a href="#spacefill">CPK</a>
+<div class="legacy-td"><a href="#cpknew">CPKnew</a>
+<div class="legacy-td"><a href="#defer">Defer</a>
+<div class="legacy-td"><a href="#define">Define</a>
+<div class="legacy-td"><a href="#depth">Depth</a>
+<div class="legacy-tr"><div class="legacy-td"><a href="#dots">Dots</a>
+<div class="legacy-td"><a href="#echo">Echo</a>
+<div class="legacy-td"><a href="#english">English</a>
+<div class="legacy-td"><a href="#execute">Execute</a>
+<div class="legacy-td"><a href="#quit">Exit</a>
+<div class="legacy-td"><a href="#french">French</a>
+<div class="legacy-td"><a href="#hbonds">HBonds</a>
+<div class="legacy-td"><a href="#help">Help</a>
+<div class="legacy-tr"><div class="legacy-td"><a href="#italian">Italian</a>
+<div class="legacy-td"><a href="#japanese">Japanese</a>
+<div class="legacy-td"><a href="#label">Label</a>
+<div class="legacy-td"><a href="#load">Load</a>
+<div class="legacy-td"><a href="#map">Map</a>
+<div class="legacy-td"><a href="#molecule">Molecule</a>
+<div class="legacy-td"><a href="#monitor">Monitor</a>
+<div class="legacy-td"><a href="#notoggle">NoToggle</a>
+<div class="legacy-tr"><div class="legacy-td"><a href="#pause">Pause</a>
+<div class="legacy-td"><a href="#play">Play</a>
+<div class="legacy-td"><a href="#print">Print</a>
+<div class="legacy-td"><a href="#quit">Quit</a>
+<div class="legacy-td"><a href="#record">Record</a>
+<div class="legacy-td"><a href="#refresh">Refresh</a>
+<div class="legacy-td"><a href="#renumber">Renumber</a>
+<div class="legacy-td"><a href="#reset">Reset</a>
+<div class="legacy-tr"><div class="legacy-td"><a href="#restrict">Restrict</a>
+<div class="legacy-td"><a href="#ribbons">Ribbons</a>
+<div class="legacy-td"><a href="#rotate">Rotate</a>
+<div class="legacy-td"><a href="#save">Save</a>
+<div class="legacy-td"><a href="#script">Script</a>
+<div class="legacy-td"><a href="#select">Select</a>
+<div class="legacy-td"><a href="#set">Set</a>
+<div class="legacy-td"><a href="#show">Show</a>
+<div class="legacy-tr"><div class="legacy-td"><a href="#slab">Slab</a>
+<div class="legacy-td"><a href="#script">Source</a>
+<div class="legacy-td"><a href="#spacefill">Spacefill</a>
+<div class="legacy-td"><a href="#spanish">Spanish</a>
+<div class="legacy-td"><a href="#ssbonds">SSBonds</a>
+<div class="legacy-td"><a href="#star">Star</a>
+<div class="legacy-td"><a href="#stereo">Stereo</a>
+<div class="legacy-td"><a href="#strands">Strands</a>
+<div class="legacy-tr"><div class="legacy-td"><a href="#structure">Structure</a>
+<div class="legacy-td"><a href="#surface">Surface</a>
+<div class="legacy-td"><a href="#trace">Trace</a>
+<div class="legacy-td"><a href="#translate">Translate</a>
+<div class="legacy-td"><a href="#unbond">UnBond</a>
+<div class="legacy-td"><a href="#wireframe">Wireframe</a>
+<div class="legacy-td"><a href="#write">Write</a>
+<div class="legacy-td"><a href="#zap">Zap</a>
+<div class="legacy-tr"><div class="legacy-td"><a href="#zoom">Zoom</a>
+<div class="legacy-td">
+</div>
 </center><hr>
 <a name="backbone"><h3>Backbone</h3></a><p>
 <pre>
@@ -3291,46 +3217,46 @@ own set or permissible parameter options. Typically, omitting the
 parameter option resets that parameter to its default value. A list of
 valid parameter names is given below.
 <p>
-<center><table class="sidebar-table" BORDER CELLPADDING=2>
-<TR><TD><a href="#setambient">Ambient</a>
-<TD><a href="#setaxes">Axes</a>
-<TD><a href="#setbackground">Background</a>
-<TD><a href="#setbackfade">BackFade</a>
-<TD><a href="#setbondmode">BondMode</a>
-<TD><a href="#setbonds">Bonds</a>
-<TD><a href="#setboundbox">BoundBox</a>
-<TD><a href="#setcartoon">Cartoon</a>
-<TR><TD><a href="#setcisangle">CisAngle</A>
-<TD><a href="#setdisplay">Display</a>
-<TD><a href="#setfontsize">FontSize</a>
-<TD><a href="#setfontstroke">FontStroke</a>
-<TD><a href="#sethbonds">HBonds</a>
-<TD><a href="#sethetero">Hetero</a>
-<TD><a href="#sethourglass">HourGlass</a>
-<TD><a href="#sethydrogen">Hydrogen</a>
-<TR><TD><a href="#setkinemage">Kinemage</a>
-<TD><a href="#setmenus">Menus</a>
-<TD><a href="#setmonitor">Monitor</a>
-<TD><a href="#setmouse">Mouse</a>
-<TD><a href="#setpicking">Picking</a>
-<TD><a href="#setplay">Play...</a>
-<TD><a href="#setradius">Radius</a>
-<TD><a href="#setrecord">Record...</a>
-<TR><TD><a href="#setshadepower">ShadePower</a>
-<TD><a href="#setshadow">Shadow</a>
-<TD><a href="#setslabmode">SlabMode</a>
-<TD><a href="#setsolvent">Solvent</a>
-<TD><a href="#setspecular">Specular</a>
-<TD><a href="#setspecpower">SpecPower</a>
-<TD><a href="#setstereo">Stereo</a>
-<TD><a href="#setssbonds">SSBonds</a>
-<TR><TD><a href="#setstrands">Strands</a>
-<TD><a href="#settransparent">Transparent</a>
-<TD><a href="#setunitcell">UnitCell</a>
-<TD><a href="#setvectps">VectPS</a>
-<TD><a href="#setwrite">Write</a>
-<TD CELLSPAN=3>
-</table></center>
+<center><div class="legacy-table-wrapper" data-table="true" class="sidebar-table" BORDER>
+<div class="legacy-tr"><div class="legacy-td"><a href="#setambient">Ambient</a>
+<div class="legacy-td"><a href="#setaxes">Axes</a>
+<div class="legacy-td"><a href="#setbackground">Background</a>
+<div class="legacy-td"><a href="#setbackfade">BackFade</a>
+<div class="legacy-td"><a href="#setbondmode">BondMode</a>
+<div class="legacy-td"><a href="#setbonds">Bonds</a>
+<div class="legacy-td"><a href="#setboundbox">BoundBox</a>
+<div class="legacy-td"><a href="#setcartoon">Cartoon</a>
+<div class="legacy-tr"><div class="legacy-td"><a href="#setcisangle">CisAngle</A>
+<div class="legacy-td"><a href="#setdisplay">Display</a>
+<div class="legacy-td"><a href="#setfontsize">FontSize</a>
+<div class="legacy-td"><a href="#setfontstroke">FontStroke</a>
+<div class="legacy-td"><a href="#sethbonds">HBonds</a>
+<div class="legacy-td"><a href="#sethetero">Hetero</a>
+<div class="legacy-td"><a href="#sethourglass">HourGlass</a>
+<div class="legacy-td"><a href="#sethydrogen">Hydrogen</a>
+<div class="legacy-tr"><div class="legacy-td"><a href="#setkinemage">Kinemage</a>
+<div class="legacy-td"><a href="#setmenus">Menus</a>
+<div class="legacy-td"><a href="#setmonitor">Monitor</a>
+<div class="legacy-td"><a href="#setmouse">Mouse</a>
+<div class="legacy-td"><a href="#setpicking">Picking</a>
+<div class="legacy-td"><a href="#setplay">Play...</a>
+<div class="legacy-td"><a href="#setradius">Radius</a>
+<div class="legacy-td"><a href="#setrecord">Record...</a>
+<div class="legacy-tr"><div class="legacy-td"><a href="#setshadepower">ShadePower</a>
+<div class="legacy-td"><a href="#setshadow">Shadow</a>
+<div class="legacy-td"><a href="#setslabmode">SlabMode</a>
+<div class="legacy-td"><a href="#setsolvent">Solvent</a>
+<div class="legacy-td"><a href="#setspecular">Specular</a>
+<div class="legacy-td"><a href="#setspecpower">SpecPower</a>
+<div class="legacy-td"><a href="#setstereo">Stereo</a>
+<div class="legacy-td"><a href="#setssbonds">SSBonds</a>
+<div class="legacy-tr"><div class="legacy-td"><a href="#setstrands">Strands</a>
+<div class="legacy-td"><a href="#settransparent">Transparent</a>
+<div class="legacy-td"><a href="#setunitcell">UnitCell</a>
+<div class="legacy-td"><a href="#setvectps">VectPS</a>
+<div class="legacy-td"><a href="#setwrite">Write</a>
+<div class="legacy-td" CELLSPAN=3>
+</div></center>
 <p><hr>
 <a name="show"><h3>Show</h3></a><p>
 <pre>
@@ -3894,46 +3820,46 @@ rendering options and mouse button mappings.
 <p>
 A complete list of internal parameter names is given below.
 <p>
-<center><table class="sidebar-table" BORDER CELLPADDING=2>
-<TR><TD><a href="#setambient">Ambient</a>
-<TD><a href="#setaxes">Axes</a>
-<TD><a href="#setbackground">Background</a>
-<TD><a href="#setbackfade">BackFade</a>
-<TD><a href="#setbondmode">BondMode</a>
-<TD><a href="#setbonds">Bonds</a>
-<TD><a href="#setboundbox">BoundBox</a>
-<TD><a href="#setcartoon">Cartoon</a>
-<TR><TD><a href="#setcisangle">CisAngle</A>
-<TD><a href="#setdisplay">Display</a>
-<TD><a href="#setfontsize">FontSize</a>
-<TD><a href="#setfontstroke">FontStroke</a>
-<TD><a href="#sethbonds">HBonds</a>
-<TD><a href="#sethetero">Hetero</a>
-<TD><a href="#sethourglass">HourGlass</a>
-<TD><a href="#sethydrogen">Hydrogen</a>
-<TR><TD><a href="#setkinemage">Kinemage</a>
-<TD><a href="#setmenus">Menus</a>
-<TD><a href="#setmonitor">Monitor</a>
-<TD><a href="#setmouse">Mouse</a>
-<TD><a href="#setpicking">Picking</a>
-<TD><a href="#setplay">Play...</a>
-<TD><a href="#setradius">Radius</a>
-<TD><a href="#setrecord">Record...</a>
-<TR><TD><a href="#setshadepower">ShadePower</a>
-<TD><a href="#setshadow">Shadow</a>
-<TD><a href="#setslabmode">SlabMode</a>
-<TD><a href="#setsolvent">Solvent</a>
-<TD><a href="#setspecular">Specular</a>
-<TD><a href="#setspecpower">SpecPower</a>
-<TD><a href="#setstereo">Stereo</a>
-<TD><a href="#setssbonds">SSBonds</a>
-<TR><TD><a href="#setstrands">Strands</a>
-<TD><a href="#settransparent">Transparent</a>
-<TD><a href="#setunitcell">UnitCell</a>
-<TD><a href="#setvectps">VectPS</a>
-<TD><a href="#setwrite">Write</a>
-<TD CELLSPAN=3>
-</table></center>
+<center><div class="legacy-table-wrapper" data-table="true" class="sidebar-table" BORDER>
+<div class="legacy-tr"><div class="legacy-td"><a href="#setambient">Ambient</a>
+<div class="legacy-td"><a href="#setaxes">Axes</a>
+<div class="legacy-td"><a href="#setbackground">Background</a>
+<div class="legacy-td"><a href="#setbackfade">BackFade</a>
+<div class="legacy-td"><a href="#setbondmode">BondMode</a>
+<div class="legacy-td"><a href="#setbonds">Bonds</a>
+<div class="legacy-td"><a href="#setboundbox">BoundBox</a>
+<div class="legacy-td"><a href="#setcartoon">Cartoon</a>
+<div class="legacy-tr"><div class="legacy-td"><a href="#setcisangle">CisAngle</A>
+<div class="legacy-td"><a href="#setdisplay">Display</a>
+<div class="legacy-td"><a href="#setfontsize">FontSize</a>
+<div class="legacy-td"><a href="#setfontstroke">FontStroke</a>
+<div class="legacy-td"><a href="#sethbonds">HBonds</a>
+<div class="legacy-td"><a href="#sethetero">Hetero</a>
+<div class="legacy-td"><a href="#sethourglass">HourGlass</a>
+<div class="legacy-td"><a href="#sethydrogen">Hydrogen</a>
+<div class="legacy-tr"><div class="legacy-td"><a href="#setkinemage">Kinemage</a>
+<div class="legacy-td"><a href="#setmenus">Menus</a>
+<div class="legacy-td"><a href="#setmonitor">Monitor</a>
+<div class="legacy-td"><a href="#setmouse">Mouse</a>
+<div class="legacy-td"><a href="#setpicking">Picking</a>
+<div class="legacy-td"><a href="#setplay">Play...</a>
+<div class="legacy-td"><a href="#setradius">Radius</a>
+<div class="legacy-td"><a href="#setrecord">Record...</a>
+<div class="legacy-tr"><div class="legacy-td"><a href="#setshadepower">ShadePower</a>
+<div class="legacy-td"><a href="#setshadow">Shadow</a>
+<div class="legacy-td"><a href="#setslabmode">SlabMode</a>
+<div class="legacy-td"><a href="#setsolvent">Solvent</a>
+<div class="legacy-td"><a href="#setspecular">Specular</a>
+<div class="legacy-td"><a href="#setspecpower">SpecPower</a>
+<div class="legacy-td"><a href="#setstereo">Stereo</a>
+<div class="legacy-td"><a href="#setssbonds">SSBonds</a>
+<div class="legacy-tr"><div class="legacy-td"><a href="#setstrands">Strands</a>
+<div class="legacy-td"><a href="#settransparent">Transparent</a>
+<div class="legacy-td"><a href="#setunitcell">UnitCell</a>
+<div class="legacy-td"><a href="#setvectps">VectPS</a>
+<div class="legacy-td"><a href="#setwrite">Write</a>
+<div class="legacy-td" CELLSPAN=3>
+</div></center>
 <p><hr>
 <a name="setambient"><h3>Set Ambient</h3></a><p>
 <pre>
@@ -5461,114 +5387,114 @@ or
 The table below summarises RasMol's classification of the common amino acids.
 <p>
 
-<TABLE BORDER CELLPADDING=2>
-<TR><TH>Residues:<TH>ala<TH>arg<TH>asn<TH>asp<TH>cys<TH>glu<TH>gln<TH>gly<TH>his<TH>ile<TH>leu<TH>lys<TH>met<TH>phe<TH>pro<TH>ser<TH>thr<TH>trp<TH>tyr<TH>val
-<TR><TH><TH>A<TH>R<TH>N<TH>D<TH>C<TH>E<TH>Q<TH>G<TH>H<TH>I<TH>L<TH>K<TH>M<TH>F<TH>P<TH>S<TH>T<TH>W<TH>Y<TH>V
-<TR><TH>Predefined Set<TH CELLSPAN=20 >
-<TR><TH>           <TD>A<TD>R<TD>N<TD>D<TD>C<TD>E<TD>Q<TD>G<TD>H<TD>I<TD>L<TD>K<TD>M<TD>F<TD>P<TD>S<TD>T<TD>W<TD>Y<TD>V
-<TR><TH ALIGN=LEFT>acidic     <TD > <TD > <TD >
-<TD >*<TD > <TD >*<TD >
-<TD > <TD > <TD > <TD >
-<TD > <TD > <TD > <TD >
-<TD > <TD > <TD > <TD >
-<TD >
-<TR><TH ALIGN=LEFT>acyclic    <TD >*<TD >*<TD >*
-<TD >*<TD >*<TD >*<TD >*
-<TD >*<TD > <TD >*<TD >*
-<TD >*<TD >*<TD > <TD >
-<TD >*<TD >*<TD > <TD >
-<TD >*
-<TR><TH ALIGN=LEFT>aliphatic  <TD >*<TD > <TD >
-<TD > <TD > <TD > <TD >
-<TD >*<TD > <TD >*<TD >*
-<TD > <TD > <TD > <TD >
-<TD > <TD > <TD > <TD >
-<TD >*
-<TR><TH ALIGN=LEFT>aromatic   <TD > <TD > <TD >
-<TD > <TD > <TD > <TD >
-<TD > <TD >*<TD > <TD >
-<TD > <TD > <TD >*<TD >
-<TD > <TD > <TD >*<TD >*
-<TD >
-<TR><TH ALIGN=LEFT>basic      <TD > <TD >*<TD >
-<TD > <TD > <TD > <TD >
-<TD > <TD >*<TD > <TD >
-<TD >*<TD > <TD > <TD >
-<TD > <TD > <TD > <TD >
-<TD >
-<TR><TH ALIGN=LEFT>buried     <TD >*<TD > <TD >
-<TD > <TD >*<TD > <TD >
-<TD > <TD > <TD >*<TD >*
-<TD > <TD >*<TD >*<TD >
-<TD > <TD > <TD >*<TD >
-<TD >*
-<TR><TH ALIGN=LEFT>charged    <TD > <TD >*<TD >
-<TD >*<TD > <TD >*<TD >
-<TD > <TD >*<TD > <TD >
-<TD >*<TD > <TD > <TD >
-<TD > <TD > <TD > <TD >
-<TD >
-<TR><TH ALIGN=LEFT>cyclic     <TD > <TD > <TD >
-<TD > <TD > <TD > <TD >
-<TD > <TD >*<TD > <TD >
-<TD > <TD > <TD >*<TD >*
-<TD > <TD > <TD >*<TD >*
-<TD >
-<TR><TH ALIGN=LEFT>hydrophobic<TD >*<TD > <TD >
-<TD > <TD > <TD > <TD >
-<TD >*<TD > <TD >*<TD >*
-<TD > <TD >*<TD >*<TD >*
-<TD > <TD > <TD >*<TD >*
-<TD >*
-<TR><TH ALIGN=LEFT>large      <TD > <TD >*<TD >
-<TD > <TD > <TD >*<TD >*
-<TD > <TD >*<TD >*<TD >*
-<TD >*<TD >*<TD >*<TD >
-<TD > <TD > <TD >*<TD >*
-<TD >
-<TR><TH ALIGN=LEFT>medium     <TD > <TD > <TD >*
-<TD >*<TD >*<TD > <TD >
-<TD > <TD > <TD > <TD >
-<TD > <TD > <TD > <TD >*
-<TD > <TD >*<TD > <TD >
-<TD >*
-<TR><TH ALIGN=LEFT>negative   <TD > <TD > <TD >
-<TD >*<TD > <TD >*<TD >
-<TD > <TD > <TD > <TD >
-<TD > <TD > <TD > <TD >
-<TD > <TD > <TD > <TD >
-<TD >
-<TR><TH ALIGN=LEFT>neutral    <TD >*<TD > <TD >*
-<TD > <TD >*<TD > <TD >*
-<TD >*<TD >*<TD >*<TD >*
-<TD > <TD >*<TD >*<TD >*
-<TD >*<TD >*<TD >*<TD >*
-<TD >*
-<TR><TH ALIGN=LEFT>polar      <TD > <TD >*<TD >*
-<TD >*<TD >*<TD >*<TD >*
-<TD > <TD >*<TD > <TD >
-<TD >*<TD > <TD > <TD >
-<TD >*<TD >*<TD > <TD >
-<TD >
-<TR><TH ALIGN=LEFT>positive   <TD > <TD >*<TD >
-<TD > <TD > <TD > <TD >
-<TD > <TD >*<TD > <TD >
-<TD >*<TD > <TD > <TD >
-<TD > <TD > <TD > <TD >
-<TD >
-<TR><TH ALIGN=LEFT>small      <TD >*<TD > <TD >
-<TD > <TD > <TD > <TD >
-<TD >*<TD > <TD > <TD >
-<TD > <TD > <TD > <TD >
-<TD >*<TD > <TD > <TD >
-<TD >
-<TR><TH ALIGN=LEFT>surface    <TD > <TD >*<TD >*
-<TD >*<TD > <TD >*<TD >*
-<TD >*<TD >*<TD > <TD >
-<TD >*<TD > <TD > <TD >*
-<TD >*<TD >*<TD > <TD >*
-<TD >
-</TABLE>
+<div class="legacy-table-wrapper" BORDER>
+<div class="legacy-tr"><div class="legacy-th">Residues:<div class="legacy-th">ala<div class="legacy-th">arg<div class="legacy-th">asn<div class="legacy-th">asp<div class="legacy-th">cys<div class="legacy-th">glu<div class="legacy-th">gln<div class="legacy-th">gly<div class="legacy-th">his<div class="legacy-th">ile<div class="legacy-th">leu<div class="legacy-th">lys<div class="legacy-th">met<div class="legacy-th">phe<div class="legacy-th">pro<div class="legacy-th">ser<div class="legacy-th">thr<div class="legacy-th">trp<div class="legacy-th">tyr<div class="legacy-th">val
+<div class="legacy-tr"><div class="legacy-th"><div class="legacy-th">A<div class="legacy-th">R<div class="legacy-th">N<div class="legacy-th">D<div class="legacy-th">C<div class="legacy-th">E<div class="legacy-th">Q<div class="legacy-th">G<div class="legacy-th">H<div class="legacy-th">I<div class="legacy-th">L<div class="legacy-th">K<div class="legacy-th">M<div class="legacy-th">F<div class="legacy-th">P<div class="legacy-th">S<div class="legacy-th">T<div class="legacy-th">W<div class="legacy-th">Y<div class="legacy-th">V
+<div class="legacy-tr"><div class="legacy-th">Predefined Set<div class="legacy-th" CELLSPAN=20 >
+<div class="legacy-tr"><div class="legacy-th">           <div class="legacy-td">A<div class="legacy-td">R<div class="legacy-td">N<div class="legacy-td">D<div class="legacy-td">C<div class="legacy-td">E<div class="legacy-td">Q<div class="legacy-td">G<div class="legacy-td">H<div class="legacy-td">I<div class="legacy-td">L<div class="legacy-td">K<div class="legacy-td">M<div class="legacy-td">F<div class="legacy-td">P<div class="legacy-td">S<div class="legacy-td">T<div class="legacy-td">W<div class="legacy-td">Y<div class="legacy-td">V
+<div class="legacy-tr"><div class="legacy-th">acidic     <div class="legacy-td" > <div class="legacy-td" > <div class="legacy-td" >
+<div class="legacy-td" >*<div class="legacy-td" > <div class="legacy-td" >*<div class="legacy-td" >
+<div class="legacy-td" > <div class="legacy-td" > <div class="legacy-td" > <div class="legacy-td" >
+<div class="legacy-td" > <div class="legacy-td" > <div class="legacy-td" > <div class="legacy-td" >
+<div class="legacy-td" > <div class="legacy-td" > <div class="legacy-td" > <div class="legacy-td" >
+<div class="legacy-td" >
+<div class="legacy-tr"><div class="legacy-th">acyclic    <div class="legacy-td" >*<div class="legacy-td" >*<div class="legacy-td" >*
+<div class="legacy-td" >*<div class="legacy-td" >*<div class="legacy-td" >*<div class="legacy-td" >*
+<div class="legacy-td" >*<div class="legacy-td" > <div class="legacy-td" >*<div class="legacy-td" >*
+<div class="legacy-td" >*<div class="legacy-td" >*<div class="legacy-td" > <div class="legacy-td" >
+<div class="legacy-td" >*<div class="legacy-td" >*<div class="legacy-td" > <div class="legacy-td" >
+<div class="legacy-td" >*
+<div class="legacy-tr"><div class="legacy-th">aliphatic  <div class="legacy-td" >*<div class="legacy-td" > <div class="legacy-td" >
+<div class="legacy-td" > <div class="legacy-td" > <div class="legacy-td" > <div class="legacy-td" >
+<div class="legacy-td" >*<div class="legacy-td" > <div class="legacy-td" >*<div class="legacy-td" >*
+<div class="legacy-td" > <div class="legacy-td" > <div class="legacy-td" > <div class="legacy-td" >
+<div class="legacy-td" > <div class="legacy-td" > <div class="legacy-td" > <div class="legacy-td" >
+<div class="legacy-td" >*
+<div class="legacy-tr"><div class="legacy-th">aromatic   <div class="legacy-td" > <div class="legacy-td" > <div class="legacy-td" >
+<div class="legacy-td" > <div class="legacy-td" > <div class="legacy-td" > <div class="legacy-td" >
+<div class="legacy-td" > <div class="legacy-td" >*<div class="legacy-td" > <div class="legacy-td" >
+<div class="legacy-td" > <div class="legacy-td" > <div class="legacy-td" >*<div class="legacy-td" >
+<div class="legacy-td" > <div class="legacy-td" > <div class="legacy-td" >*<div class="legacy-td" >*
+<div class="legacy-td" >
+<div class="legacy-tr"><div class="legacy-th">basic      <div class="legacy-td" > <div class="legacy-td" >*<div class="legacy-td" >
+<div class="legacy-td" > <div class="legacy-td" > <div class="legacy-td" > <div class="legacy-td" >
+<div class="legacy-td" > <div class="legacy-td" >*<div class="legacy-td" > <div class="legacy-td" >
+<div class="legacy-td" >*<div class="legacy-td" > <div class="legacy-td" > <div class="legacy-td" >
+<div class="legacy-td" > <div class="legacy-td" > <div class="legacy-td" > <div class="legacy-td" >
+<div class="legacy-td" >
+<div class="legacy-tr"><div class="legacy-th">buried     <div class="legacy-td" >*<div class="legacy-td" > <div class="legacy-td" >
+<div class="legacy-td" > <div class="legacy-td" >*<div class="legacy-td" > <div class="legacy-td" >
+<div class="legacy-td" > <div class="legacy-td" > <div class="legacy-td" >*<div class="legacy-td" >*
+<div class="legacy-td" > <div class="legacy-td" >*<div class="legacy-td" >*<div class="legacy-td" >
+<div class="legacy-td" > <div class="legacy-td" > <div class="legacy-td" >*<div class="legacy-td" >
+<div class="legacy-td" >*
+<div class="legacy-tr"><div class="legacy-th">charged    <div class="legacy-td" > <div class="legacy-td" >*<div class="legacy-td" >
+<div class="legacy-td" >*<div class="legacy-td" > <div class="legacy-td" >*<div class="legacy-td" >
+<div class="legacy-td" > <div class="legacy-td" >*<div class="legacy-td" > <div class="legacy-td" >
+<div class="legacy-td" >*<div class="legacy-td" > <div class="legacy-td" > <div class="legacy-td" >
+<div class="legacy-td" > <div class="legacy-td" > <div class="legacy-td" > <div class="legacy-td" >
+<div class="legacy-td" >
+<div class="legacy-tr"><div class="legacy-th">cyclic     <div class="legacy-td" > <div class="legacy-td" > <div class="legacy-td" >
+<div class="legacy-td" > <div class="legacy-td" > <div class="legacy-td" > <div class="legacy-td" >
+<div class="legacy-td" > <div class="legacy-td" >*<div class="legacy-td" > <div class="legacy-td" >
+<div class="legacy-td" > <div class="legacy-td" > <div class="legacy-td" >*<div class="legacy-td" >*
+<div class="legacy-td" > <div class="legacy-td" > <div class="legacy-td" >*<div class="legacy-td" >*
+<div class="legacy-td" >
+<div class="legacy-tr"><div class="legacy-th">hydrophobic<div class="legacy-td" >*<div class="legacy-td" > <div class="legacy-td" >
+<div class="legacy-td" > <div class="legacy-td" > <div class="legacy-td" > <div class="legacy-td" >
+<div class="legacy-td" >*<div class="legacy-td" > <div class="legacy-td" >*<div class="legacy-td" >*
+<div class="legacy-td" > <div class="legacy-td" >*<div class="legacy-td" >*<div class="legacy-td" >*
+<div class="legacy-td" > <div class="legacy-td" > <div class="legacy-td" >*<div class="legacy-td" >*
+<div class="legacy-td" >*
+<div class="legacy-tr"><div class="legacy-th">large      <div class="legacy-td" > <div class="legacy-td" >*<div class="legacy-td" >
+<div class="legacy-td" > <div class="legacy-td" > <div class="legacy-td" >*<div class="legacy-td" >*
+<div class="legacy-td" > <div class="legacy-td" >*<div class="legacy-td" >*<div class="legacy-td" >*
+<div class="legacy-td" >*<div class="legacy-td" >*<div class="legacy-td" >*<div class="legacy-td" >
+<div class="legacy-td" > <div class="legacy-td" > <div class="legacy-td" >*<div class="legacy-td" >*
+<div class="legacy-td" >
+<div class="legacy-tr"><div class="legacy-th">medium     <div class="legacy-td" > <div class="legacy-td" > <div class="legacy-td" >*
+<div class="legacy-td" >*<div class="legacy-td" >*<div class="legacy-td" > <div class="legacy-td" >
+<div class="legacy-td" > <div class="legacy-td" > <div class="legacy-td" > <div class="legacy-td" >
+<div class="legacy-td" > <div class="legacy-td" > <div class="legacy-td" > <div class="legacy-td" >*
+<div class="legacy-td" > <div class="legacy-td" >*<div class="legacy-td" > <div class="legacy-td" >
+<div class="legacy-td" >*
+<div class="legacy-tr"><div class="legacy-th">negative   <div class="legacy-td" > <div class="legacy-td" > <div class="legacy-td" >
+<div class="legacy-td" >*<div class="legacy-td" > <div class="legacy-td" >*<div class="legacy-td" >
+<div class="legacy-td" > <div class="legacy-td" > <div class="legacy-td" > <div class="legacy-td" >
+<div class="legacy-td" > <div class="legacy-td" > <div class="legacy-td" > <div class="legacy-td" >
+<div class="legacy-td" > <div class="legacy-td" > <div class="legacy-td" > <div class="legacy-td" >
+<div class="legacy-td" >
+<div class="legacy-tr"><div class="legacy-th">neutral    <div class="legacy-td" >*<div class="legacy-td" > <div class="legacy-td" >*
+<div class="legacy-td" > <div class="legacy-td" >*<div class="legacy-td" > <div class="legacy-td" >*
+<div class="legacy-td" >*<div class="legacy-td" >*<div class="legacy-td" >*<div class="legacy-td" >*
+<div class="legacy-td" > <div class="legacy-td" >*<div class="legacy-td" >*<div class="legacy-td" >*
+<div class="legacy-td" >*<div class="legacy-td" >*<div class="legacy-td" >*<div class="legacy-td" >*
+<div class="legacy-td" >*
+<div class="legacy-tr"><div class="legacy-th">polar      <div class="legacy-td" > <div class="legacy-td" >*<div class="legacy-td" >*
+<div class="legacy-td" >*<div class="legacy-td" >*<div class="legacy-td" >*<div class="legacy-td" >*
+<div class="legacy-td" > <div class="legacy-td" >*<div class="legacy-td" > <div class="legacy-td" >
+<div class="legacy-td" >*<div class="legacy-td" > <div class="legacy-td" > <div class="legacy-td" >
+<div class="legacy-td" >*<div class="legacy-td" >*<div class="legacy-td" > <div class="legacy-td" >
+<div class="legacy-td" >
+<div class="legacy-tr"><div class="legacy-th">positive   <div class="legacy-td" > <div class="legacy-td" >*<div class="legacy-td" >
+<div class="legacy-td" > <div class="legacy-td" > <div class="legacy-td" > <div class="legacy-td" >
+<div class="legacy-td" > <div class="legacy-td" >*<div class="legacy-td" > <div class="legacy-td" >
+<div class="legacy-td" >*<div class="legacy-td" > <div class="legacy-td" > <div class="legacy-td" >
+<div class="legacy-td" > <div class="legacy-td" > <div class="legacy-td" > <div class="legacy-td" >
+<div class="legacy-td" >
+<div class="legacy-tr"><div class="legacy-th">small      <div class="legacy-td" >*<div class="legacy-td" > <div class="legacy-td" >
+<div class="legacy-td" > <div class="legacy-td" > <div class="legacy-td" > <div class="legacy-td" >
+<div class="legacy-td" >*<div class="legacy-td" > <div class="legacy-td" > <div class="legacy-td" >
+<div class="legacy-td" > <div class="legacy-td" > <div class="legacy-td" > <div class="legacy-td" >
+<div class="legacy-td" >*<div class="legacy-td" > <div class="legacy-td" > <div class="legacy-td" >
+<div class="legacy-td" >
+<div class="legacy-tr"><div class="legacy-th">surface    <div class="legacy-td" > <div class="legacy-td" >*<div class="legacy-td" >*
+<div class="legacy-td" >*<div class="legacy-td" > <div class="legacy-td" >*<div class="legacy-td" >*
+<div class="legacy-td" >*<div class="legacy-td" >*<div class="legacy-td" > <div class="legacy-td" >
+<div class="legacy-td" >*<div class="legacy-td" > <div class="legacy-td" > <div class="legacy-td" >*
+<div class="legacy-td" >*<div class="legacy-td" >*<div class="legacy-td" > <div class="legacy-td" >*
+<div class="legacy-td" >
+</div>
 <p><hr>
 <a name="chcolours"><h2>Colour Schemes</h2></a>
 The RasMol
@@ -5598,156 +5524,156 @@ names are
 listed below with their corresponding RGB triplet and hexadecimal value.
 <p>
 
-<TABLE BORDER CELLPADDING=2>
-<TR><TH height="20">Predefined colour</TH>
-<TH HEIGHT="20">Sample</TH>
-<TH HEIGHT="20">RGB Values</TH>
-<TH HEIGHT="20">Hexadecimal</TH></TR>
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TD HEIGHT="18" BGCOLOR="#FFFFFF"><FONT COLOR="#000000">
-<TT><B>Black</B></TT></FONT></TD>
-<TD HEIGHT="18" BGCOLOR="#000000">&nbsp;
-<TD HEIGHT="18"><TT>[  0,  0,  0]</TT></TD>
-<TD HEIGHT="18"><TT>000000</TT></TD></TR>
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TD height="18" BGCOLOR="#FFFFFF"><FONT COLOR="#000000">
-<TT><B>Blue</B></TT></FONT></TD>
-<TD HEIGHT="18" BGCOLOR="#0000FF">&nbsp;
-<TD HEIGHT="18"><TT>[  0,  0,255]</TT></TD>
-<TD HEIGHT="18"><TT>0000FF</TT></TD></TR>
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TD height="18" BGCOLOR="#FFFFFF"><FONT COLOR="#000000">
-<TT><B>BlueTint</B></TT></FONT></TD>
-<TD HEIGHT="18" BGCOLOR="#AFD7FF">&nbsp;
-<TD HEIGHT="18"><TT>[175,214,255]</TT></TD>
-<TD HEIGHT="18"><TT>AFD7FF</TT></TD></TR>
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TD height="18" BGCOLOR="#FFFFFF"><FONT COLOR="#000000">
-<TT><B>Brown</B></TT></FONT></TD>
-<TD HEIGHT="18" BGCOLOR="#AF7559">&nbsp;
-<TD HEIGHT="18"><TT>[175,117,89]</TT></TD>
-<TD HEIGHT="18"><TT>AF7559</TT></TD></TR>
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TD HEIGHT="18" BGCOLOR="#FFFFFF"><FONT COLOR="#000000">
-<TT><B>Cyan</B></TT></FONT></TD>
-<TD HEIGHT="18" BGCOLOR="#00FFFF">&nbsp;
-<TD HEIGHT="18"><TT>[  0,255,255]</TT></TD>
-<TD HEIGHT="18"><TT>00FFFF</TT></TD></TR>
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TD HEIGHT="18" BGCOLOR="#FFFFFF"><FONT COLOR="#000000">
-<TT><B>Gold</B></TT></FONT></TD>
-<TD HEIGHT="18" BGCOLOR="#FC9C00">&nbsp;
-<TD HEIGHT="18"><TT>[255,156,  0]</TT></TD>
-<TD HEIGHT="18"><TT>FC9C00</TT></TD></TR>
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TD HEIGHT="18" BGCOLOR="#FFFFFF"><FONT COLOR="#000000">
-<TT><B>Grey</B></TT></FONT></TD>
-<TD HEIGHT="18" BGCOLOR="#7D7D7D">&nbsp;
-<TD HEIGHT="18"><TT>[125,125,125]</TT></TD>
-<TD HEIGHT="18"><TT>7D7D7D</TT></TD></TR>
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TD HEIGHT="18" BGCOLOR="#FFFFFF"><FONT COLOR="#000000">
-<TT><B>Green</B></TT></FONT></TD>
-<TD HEIGHT="18" BGCOLOR="#00FF00">&nbsp;
-<TD HEIGHT="18"><TT>[  0,255,  0]</TT></TD>
-<TD HEIGHT="18"><TT>00FF00</TT></TD></TR>
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TD HEIGHT="18" BGCOLOR="#FFFFFF"><FONT COLOR="#000000">
-<TT><B>GreenBlue</B></TT></FONT></TD>
-<TD HEIGHT="18" BGCOLOR="#2E8B57">&nbsp;
-<TD HEIGHT="18"><TT>[ 46,139,87]</TT></TD>
-<TD HEIGHT="18"><TT>2E8B57</TT></TD></TR>
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TD HEIGHT="18" BGCOLOR="#FFFFFF"><FONT COLOR="#000000">
-<TT><B>GreenTint</B></TT></FONT></TD>
-<TD HEIGHT="18" BGCOLOR="#98FFB3">&nbsp;
-<TD HEIGHT="18"><TT>[152,255,179]</TT></TD>
-<TD HEIGHT="18"><TT>98FFB3</TT></TD></TR>
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TD HEIGHT="18" BGCOLOR="#FFFFFF"><FONT COLOR="#000000">
-<TT><B>HotPink</B></TT></FONT></TD>
-<TD HEIGHT="18" BGCOLOR="#FF0065">&nbsp;
-<TD HEIGHT="18"><TT>[255,  0,101]</TT></TD>
-<TD HEIGHT="18"><TT>FF0065</TT></TD></TR>
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TD HEIGHT="18" BGCOLOR="#FFFFFF"><FONT COLOR="#000000">
-<TT><B>Magenta</B></TT></FONT></TD>
-<TD HEIGHT="18" BGCOLOR="#FF00FF">&nbsp;
-<TD HEIGHT="18"><TT>[0,255,0]</TT></TD>
-<TD HEIGHT="18"><TT>FF00FF</TT></TD></TR>
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TD HEIGHT="18" BGCOLOR="#FFFFFF"><FONT COLOR="#000000">
-<TT><B>Orange</B></TT></FONT></TD>
-<TD HEIGHT="18" BGCOLOR="#FFA500">&nbsp;
-<TD HEIGHT="18"><TT>[255,165,  0]</TT></TD>
-<TD HEIGHT="18"><TT>FFA500</TT></TD></TR>
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TD HEIGHT="18" BGCOLOR="#FFFFFF"><FONT COLOR="#000000">
-<TT><B>Pink</B></TT></FONT></TD>
-<TD HEIGHT="18" BGCOLOR="#FF6575">&nbsp;
-<TD HEIGHT="18"><TT>[255,101,117]</TT></TD>
-<TD HEIGHT="18"><TT>FF6575</TT></TD></TR>
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TD HEIGHT="18" BGCOLOR="#FFFFFF"><FONT COLOR="#000000">
-<TT><B>PinkTint</B></TT></FONT></TD>
-<TD HEIGHT="18" BGCOLOR="#FFABBB">&nbsp;
-<TD HEIGHT="18"><TT>[255,171,187]</TT></TD>
-<TD HEIGHT="18"><TT>FFABBB</TT></TD></TR>
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TD HEIGHT="18" BGCOLOR="#FFFFFF"><FONT COLOR="#000000">
-<TT><B>Purple</B></TT></FONT></TD>
-<TD HEIGHT="18" BGCOLOR="#A020F0">&nbsp;
-<TD HEIGHT="18"><TT>[160, 32,240]</TT></TD>
-<TD HEIGHT="18"><TT>A020F0</TT></TD></TR>
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TD HEIGHT="18" BGCOLOR="#FFFFFF"><FONT COLOR="#000000">
-<TT><B>Red</B></TT></FONT></TD>
-<TD HEIGHT="18" BGCOLOR="#FF0000">&nbsp;
-<TD HEIGHT="18"><TT>[255,  0,  0]</TT></TD>
-<TD HEIGHT="18"><TT>FF0000</TT></TD></TR>
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TD HEIGHT="18" BGCOLOR="#FFFFFF"><FONT COLOR="#000000">
-<TT><B>RedOrange</B></TT></FONT></TD>
-<TD HEIGHT="18" BGCOLOR="#FF4500">&nbsp;
-<TD HEIGHT="18"><TT>[255, 69,  0]</TT></TD>
-<TD HEIGHT="18"><TT>FF4500</TT></TD></TR>
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TD HEIGHT="18" BGCOLOR="#FFFFFF"><FONT COLOR="#000000">
-<TT><B>SeaGreen</B></TT></FONT></TD>
-<TD HEIGHT="18" BGCOLOR="#00FA6D">&nbsp;
-<TD HEIGHT="18"><TT>[  0,250,109]</TT></TD>
-<TD HEIGHT="18"><TT>00FA6D</TT></TD></TR>
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TD HEIGHT="18" BGCOLOR="#FFFFFF"><FONT COLOR="#000000">
-<TT><B>SkyBlue</B></TT></FONT></TD>
-<TD HEIGHT="18" BGCOLOR="#3A90FF">&nbsp;
-<TD HEIGHT="18"><TT>[ 58,144,255]</TT></TD>
-<TD HEIGHT="18"><TT>3A90FF</TT></TD></TR>
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TD HEIGHT="18" BGCOLOR="#FFFFFF"><FONT COLOR="#000000">
-<TT><B>Violet</B></TT></FONT></TD>
-<TD HEIGHT="18" BGCOLOR="#EE82EE">&nbsp;
-<TD HEIGHT="18"><TT>[238,130,238]</TT></TD>
-<TD HEIGHT="18"><TT>EE82EE</TT></TD></TR>
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TD HEIGHT="18" BGCOLOR="#FFFFFF"><FONT COLOR="#000000">
-<TT><B>White</B></TT></FONT></TD>
-<TD HEIGHT="18" BGCOLOR="#FFFFFF">&nbsp;
-<TD HEIGHT="18"><TT>[255,255,255]</TT></TD>
-<TD HEIGHT="18"><TT>FFFFFF</TT></TD></TR>
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TD HEIGHT="18" BGCOLOR="#FFFFFF"><FONT COLOR="#000000">
-<TT><B>Yellow</B></TT></FONT></TD>
-<TD HEIGHT="18" BGCOLOR="#FFFF00">&nbsp;
-<TD HEIGHT="18"><TT>[255,255,  0]</TT></TD>
-<TD HEIGHT="18"><TT>FFFF00</TT></TD></TR>
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TD HEIGHT="18" BGCOLOR="#FFFFFF"><FONT COLOR="#000000">
-<TT><B>YellowTint</B></TT></FONT></TD>
-<TD HEIGHT="18" BGCOLOR="#F6F675">&nbsp;
-<TD HEIGHT="18"><TT>[246,246,117]</TT></TD>
-<TD HEIGHT="18"><TT>F6F675</TT></TD></TR>
-</TABLE>
+<div class="legacy-table-wrapper" BORDER>
+<div class="legacy-tr"><div class="legacy-th">Predefined colour</div>
+<div class="legacy-th">Sample</div>
+<div class="legacy-th">RGB Values</div>
+<div class="legacy-th">Hexadecimal</div></div>
+<div class="legacy-tr">
+<div class="legacy-td"><FONT COLOR="#000000">
+<TT><B>Black</B></TT></FONT></div>
+<div class="legacy-td">&nbsp;
+<div class="legacy-td"><TT>[  0,  0,  0]</TT></div>
+<div class="legacy-td"><TT>000000</TT></div></div>
+<div class="legacy-tr">
+<div class="legacy-td"><FONT COLOR="#000000">
+<TT><B>Blue</B></TT></FONT></div>
+<div class="legacy-td">&nbsp;
+<div class="legacy-td"><TT>[  0,  0,255]</TT></div>
+<div class="legacy-td"><TT>0000FF</TT></div></div>
+<div class="legacy-tr">
+<div class="legacy-td"><FONT COLOR="#000000">
+<TT><B>BlueTint</B></TT></FONT></div>
+<div class="legacy-td">&nbsp;
+<div class="legacy-td"><TT>[175,214,255]</TT></div>
+<div class="legacy-td"><TT>AFD7FF</TT></div></div>
+<div class="legacy-tr">
+<div class="legacy-td"><FONT COLOR="#000000">
+<TT><B>Brown</B></TT></FONT></div>
+<div class="legacy-td">&nbsp;
+<div class="legacy-td"><TT>[175,117,89]</TT></div>
+<div class="legacy-td"><TT>AF7559</TT></div></div>
+<div class="legacy-tr">
+<div class="legacy-td"><FONT COLOR="#000000">
+<TT><B>Cyan</B></TT></FONT></div>
+<div class="legacy-td">&nbsp;
+<div class="legacy-td"><TT>[  0,255,255]</TT></div>
+<div class="legacy-td"><TT>00FFFF</TT></div></div>
+<div class="legacy-tr">
+<div class="legacy-td"><FONT COLOR="#000000">
+<TT><B>Gold</B></TT></FONT></div>
+<div class="legacy-td">&nbsp;
+<div class="legacy-td"><TT>[255,156,  0]</TT></div>
+<div class="legacy-td"><TT>FC9C00</TT></div></div>
+<div class="legacy-tr">
+<div class="legacy-td"><FONT COLOR="#000000">
+<TT><B>Grey</B></TT></FONT></div>
+<div class="legacy-td">&nbsp;
+<div class="legacy-td"><TT>[125,125,125]</TT></div>
+<div class="legacy-td"><TT>7D7D7D</TT></div></div>
+<div class="legacy-tr">
+<div class="legacy-td"><FONT COLOR="#000000">
+<TT><B>Green</B></TT></FONT></div>
+<div class="legacy-td">&nbsp;
+<div class="legacy-td"><TT>[  0,255,  0]</TT></div>
+<div class="legacy-td"><TT>00FF00</TT></div></div>
+<div class="legacy-tr">
+<div class="legacy-td"><FONT COLOR="#000000">
+<TT><B>GreenBlue</B></TT></FONT></div>
+<div class="legacy-td">&nbsp;
+<div class="legacy-td"><TT>[ 46,139,87]</TT></div>
+<div class="legacy-td"><TT>2E8B57</TT></div></div>
+<div class="legacy-tr">
+<div class="legacy-td"><FONT COLOR="#000000">
+<TT><B>GreenTint</B></TT></FONT></div>
+<div class="legacy-td">&nbsp;
+<div class="legacy-td"><TT>[152,255,179]</TT></div>
+<div class="legacy-td"><TT>98FFB3</TT></div></div>
+<div class="legacy-tr">
+<div class="legacy-td"><FONT COLOR="#000000">
+<TT><B>HotPink</B></TT></FONT></div>
+<div class="legacy-td">&nbsp;
+<div class="legacy-td"><TT>[255,  0,101]</TT></div>
+<div class="legacy-td"><TT>FF0065</TT></div></div>
+<div class="legacy-tr">
+<div class="legacy-td"><FONT COLOR="#000000">
+<TT><B>Magenta</B></TT></FONT></div>
+<div class="legacy-td">&nbsp;
+<div class="legacy-td"><TT>[0,255,0]</TT></div>
+<div class="legacy-td"><TT>FF00FF</TT></div></div>
+<div class="legacy-tr">
+<div class="legacy-td"><FONT COLOR="#000000">
+<TT><B>Orange</B></TT></FONT></div>
+<div class="legacy-td">&nbsp;
+<div class="legacy-td"><TT>[255,165,  0]</TT></div>
+<div class="legacy-td"><TT>FFA500</TT></div></div>
+<div class="legacy-tr">
+<div class="legacy-td"><FONT COLOR="#000000">
+<TT><B>Pink</B></TT></FONT></div>
+<div class="legacy-td">&nbsp;
+<div class="legacy-td"><TT>[255,101,117]</TT></div>
+<div class="legacy-td"><TT>FF6575</TT></div></div>
+<div class="legacy-tr">
+<div class="legacy-td"><FONT COLOR="#000000">
+<TT><B>PinkTint</B></TT></FONT></div>
+<div class="legacy-td">&nbsp;
+<div class="legacy-td"><TT>[255,171,187]</TT></div>
+<div class="legacy-td"><TT>FFABBB</TT></div></div>
+<div class="legacy-tr">
+<div class="legacy-td"><FONT COLOR="#000000">
+<TT><B>Purple</B></TT></FONT></div>
+<div class="legacy-td">&nbsp;
+<div class="legacy-td"><TT>[160, 32,240]</TT></div>
+<div class="legacy-td"><TT>A020F0</TT></div></div>
+<div class="legacy-tr">
+<div class="legacy-td"><FONT COLOR="#000000">
+<TT><B>Red</B></TT></FONT></div>
+<div class="legacy-td">&nbsp;
+<div class="legacy-td"><TT>[255,  0,  0]</TT></div>
+<div class="legacy-td"><TT>FF0000</TT></div></div>
+<div class="legacy-tr">
+<div class="legacy-td"><FONT COLOR="#000000">
+<TT><B>RedOrange</B></TT></FONT></div>
+<div class="legacy-td">&nbsp;
+<div class="legacy-td"><TT>[255, 69,  0]</TT></div>
+<div class="legacy-td"><TT>FF4500</TT></div></div>
+<div class="legacy-tr">
+<div class="legacy-td"><FONT COLOR="#000000">
+<TT><B>SeaGreen</B></TT></FONT></div>
+<div class="legacy-td">&nbsp;
+<div class="legacy-td"><TT>[  0,250,109]</TT></div>
+<div class="legacy-td"><TT>00FA6D</TT></div></div>
+<div class="legacy-tr">
+<div class="legacy-td"><FONT COLOR="#000000">
+<TT><B>SkyBlue</B></TT></FONT></div>
+<div class="legacy-td">&nbsp;
+<div class="legacy-td"><TT>[ 58,144,255]</TT></div>
+<div class="legacy-td"><TT>3A90FF</TT></div></div>
+<div class="legacy-tr">
+<div class="legacy-td"><FONT COLOR="#000000">
+<TT><B>Violet</B></TT></FONT></div>
+<div class="legacy-td">&nbsp;
+<div class="legacy-td"><TT>[238,130,238]</TT></div>
+<div class="legacy-td"><TT>EE82EE</TT></div></div>
+<div class="legacy-tr">
+<div class="legacy-td"><FONT COLOR="#000000">
+<TT><B>White</B></TT></FONT></div>
+<div class="legacy-td">&nbsp;
+<div class="legacy-td"><TT>[255,255,255]</TT></div>
+<div class="legacy-td"><TT>FFFFFF</TT></div></div>
+<div class="legacy-tr">
+<div class="legacy-td"><FONT COLOR="#000000">
+<TT><B>Yellow</B></TT></FONT></div>
+<div class="legacy-td">&nbsp;
+<div class="legacy-td"><TT>[255,255,  0]</TT></div>
+<div class="legacy-td"><TT>FFFF00</TT></div></div>
+<div class="legacy-tr">
+<div class="legacy-td"><FONT COLOR="#000000">
+<TT><B>YellowTint</B></TT></FONT></div>
+<div class="legacy-td">&nbsp;
+<div class="legacy-td"><TT>[246,246,117]</TT></div>
+<div class="legacy-td"><TT>F6F675</TT></div></div>
+</div>
 
 <P>
 Note that the rendering of the hexadecimal-equivalent colours shown
@@ -5785,106 +5711,106 @@ colours are hallowed by tradition. This colour scheme is similar to the
 scheme.
 <p>
 
-<TABLE BORDER CELLPADDING=2>
+<div class="legacy-table-wrapper" BORDER>
 
-<TR><TH HEIGHT="20">Amino Acids</TH>
-<TH HEIGHT="20">colour Name</TH>
-<TH HEIGHT="20">Sample</TH>
-<TH HEIGHT="20">RGB Values</TH>
-<TH HEIGHT="20">Hexadecimal</TH></TR>
+<div class="legacy-tr"><div class="legacy-th">Amino Acids</div>
+<div class="legacy-th">colour Name</div>
+<div class="legacy-th">Sample</div>
+<div class="legacy-th">RGB Values</div>
+<div class="legacy-th">Hexadecimal</div></div>
 
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000">
-<TT><B>ASP, GLU</B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000"><TT><B>Bright Red</B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#E60A0A"><TT>&nbsp;</TD>
-<TD HEIGHT="20"><TT>[230,230, 10]</TT></TD>
-<TD HEIGHT="20"><TT>E60A0A</TT></TD></TR>
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000">
-<TT><B>CYS, MET</B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000"><TT><B>Yellow</B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#E6E600"><TT>&nbsp;</TD>
-<TD HEIGHT="20"><TT>[230,230,  0]</TT></TD>
-<TD HEIGHT="20"><TT>E6E600</TT></TD></TR>
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000">
-<TT><B>LYS, ARG</B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000"><TT><B>Blue</B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#145AFF"><TT>&nbsp;</TD>
-<TD HEIGHT="20"><TT>[ 20, 90,255]</TT></TD>
-<TD HEIGHT="20"><TT>145AFF</TT></TD></TR>
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000">
-<TT><B>SER, THR</B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000"><TT><B>Orange</B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#FA9600"><TT>&nbsp;</TD>
-<TD HEIGHT="20"><TT>[250,150,  0]</TT></TD>
-<TD HEIGHT="20"><TT>FA9600</TT></TD></TR>
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000">
-<TT><B>PHE, TYR</B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000"><TT><B>Mid Blue</B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#3232AA"><TT>&nbsp;</TD>
-<TD HEIGHT="20"><TT>[ 50, 50,170]</TT></TD>
-<TD HEIGHT="20"><TT>3232AA</TT></TD></TR>
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000">
-<TT><B>ASN, GLN</B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000"><TT><B>Cyan</B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#00DCDC"><TT>&nbsp;</TD>
-<TD HEIGHT="20"><TT>[  0,220,220]</TT></TD>
-<TD HEIGHT="20"><TT>00DCDC</TT></TD></TR>
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000">
-<TT><B>GLY</B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000"><TT><B>Light Grey</B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#EBEBEB"><TT>&nbsp;</TD>
-<TD HEIGHT="20"><TT>[235,235,235]</TT></TD>
-<TD HEIGHT="20"><TT>EBEBEB</TT></TD></TR>
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000">
-<TT><B>LEU, VAL, ILE</TT></B></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000"><TT><B>Green</B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#0F820F"><TT>&nbsp;</TD>
-<TD HEIGHT="20"><TT>[ 15,130, 15]</TT></TD>
-<TD HEIGHT="20"><TT>0F820F</TT></TD></TR>
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000">
-<TT><B>ALA</B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000"><TT><B>Dark Grey</B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#C8C8C8"><TT>&nbsp;</TD>
-<TD HEIGHT="20"><TT>[200,200,200]</TT></TD>
-<TD HEIGHT="20"><TT>C8C8C8</TT></TD></TR>
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000">
-<TT><B>TRP</B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000"><TT><B>Purple</B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#B45AB4"><TT>&nbsp;</TD>
-<TD HEIGHT="20"><TT>[180, 90,180]</TT></TD>
-<TD HEIGHT="20"><TT>B45AB4</TT></TD></TR>
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000">
-<TT><B>HIS</B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000"><TT><B>Pale Blue</B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#8282D2"><TT>&nbsp;</TD>
-<TD HEIGHT="20"><TT>[130,130,210]</TT></TD>
-<TD HEIGHT="20"><TT>8282D2</TT></TD></TR>
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000">
-<TT><B>PRO</B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000"><TT><B>Flesh</B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#DC9682"><TT>&nbsp;</TD>
-<TD HEIGHT="20"><TT>[220,150,130]</TT></TD>
-<TD HEIGHT="20"><TT>DC9682</TT></TD></TR>
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TT><TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000">
-<TT><B>Others</B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000"><TT><B>Tan</B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#BEA06E"><TT>&nbsp;</TD>
-<TD HEIGHT="20"><TT>[190,160,110]</TT></TD>
-<TD HEIGHT="20"><TT>BEA06E</TT></TD></TR>
-</TABLE>
+<div class="legacy-tr">
+<div class="legacy-td"><FONT COLOR="#000000">
+<TT><B>ASP, GLU</B></TT></FONT></div>
+<div class="legacy-td"><FONT COLOR="#000000"><TT><B>Bright Red</B></TT></FONT></div>
+<div class="legacy-td"><TT>&nbsp;</div>
+<div class="legacy-td"><TT>[230,230, 10]</TT></div>
+<div class="legacy-td"><TT>E60A0A</TT></div></div>
+<div class="legacy-tr">
+<div class="legacy-td"><FONT COLOR="#000000">
+<TT><B>CYS, MET</B></TT></FONT></div>
+<div class="legacy-td"><FONT COLOR="#000000"><TT><B>Yellow</B></TT></FONT></div>
+<div class="legacy-td"><TT>&nbsp;</div>
+<div class="legacy-td"><TT>[230,230,  0]</TT></div>
+<div class="legacy-td"><TT>E6E600</TT></div></div>
+<div class="legacy-tr">
+<div class="legacy-td"><FONT COLOR="#000000">
+<TT><B>LYS, ARG</B></TT></FONT></div>
+<div class="legacy-td"><FONT COLOR="#000000"><TT><B>Blue</B></TT></FONT></div>
+<div class="legacy-td"><TT>&nbsp;</div>
+<div class="legacy-td"><TT>[ 20, 90,255]</TT></div>
+<div class="legacy-td"><TT>145AFF</TT></div></div>
+<div class="legacy-tr">
+<div class="legacy-td"><FONT COLOR="#000000">
+<TT><B>SER, THR</B></TT></FONT></div>
+<div class="legacy-td"><FONT COLOR="#000000"><TT><B>Orange</B></TT></FONT></div>
+<div class="legacy-td"><TT>&nbsp;</div>
+<div class="legacy-td"><TT>[250,150,  0]</TT></div>
+<div class="legacy-td"><TT>FA9600</TT></div></div>
+<div class="legacy-tr">
+<div class="legacy-td"><FONT COLOR="#000000">
+<TT><B>PHE, TYR</B></TT></FONT></div>
+<div class="legacy-td"><FONT COLOR="#000000"><TT><B>Mid Blue</B></TT></FONT></div>
+<div class="legacy-td"><TT>&nbsp;</div>
+<div class="legacy-td"><TT>[ 50, 50,170]</TT></div>
+<div class="legacy-td"><TT>3232AA</TT></div></div>
+<div class="legacy-tr">
+<div class="legacy-td"><FONT COLOR="#000000">
+<TT><B>ASN, GLN</B></TT></FONT></div>
+<div class="legacy-td"><FONT COLOR="#000000"><TT><B>Cyan</B></TT></FONT></div>
+<div class="legacy-td"><TT>&nbsp;</div>
+<div class="legacy-td"><TT>[  0,220,220]</TT></div>
+<div class="legacy-td"><TT>00DCDC</TT></div></div>
+<div class="legacy-tr">
+<div class="legacy-td"><FONT COLOR="#000000">
+<TT><B>GLY</B></TT></FONT></div>
+<div class="legacy-td"><FONT COLOR="#000000"><TT><B>Light Grey</B></TT></FONT></div>
+<div class="legacy-td"><TT>&nbsp;</div>
+<div class="legacy-td"><TT>[235,235,235]</TT></div>
+<div class="legacy-td"><TT>EBEBEB</TT></div></div>
+<div class="legacy-tr">
+<div class="legacy-td"><FONT COLOR="#000000">
+<TT><B>LEU, VAL, ILE</TT></B></FONT></div>
+<div class="legacy-td"><FONT COLOR="#000000"><TT><B>Green</B></TT></FONT></div>
+<div class="legacy-td"><TT>&nbsp;</div>
+<div class="legacy-td"><TT>[ 15,130, 15]</TT></div>
+<div class="legacy-td"><TT>0F820F</TT></div></div>
+<div class="legacy-tr">
+<div class="legacy-td"><FONT COLOR="#000000">
+<TT><B>ALA</B></TT></FONT></div>
+<div class="legacy-td"><FONT COLOR="#000000"><TT><B>Dark Grey</B></TT></FONT></div>
+<div class="legacy-td"><TT>&nbsp;</div>
+<div class="legacy-td"><TT>[200,200,200]</TT></div>
+<div class="legacy-td"><TT>C8C8C8</TT></div></div>
+<div class="legacy-tr">
+<div class="legacy-td"><FONT COLOR="#000000">
+<TT><B>TRP</B></TT></FONT></div>
+<div class="legacy-td"><FONT COLOR="#000000"><TT><B>Purple</B></TT></FONT></div>
+<div class="legacy-td"><TT>&nbsp;</div>
+<div class="legacy-td"><TT>[180, 90,180]</TT></div>
+<div class="legacy-td"><TT>B45AB4</TT></div></div>
+<div class="legacy-tr">
+<div class="legacy-td"><FONT COLOR="#000000">
+<TT><B>HIS</B></TT></FONT></div>
+<div class="legacy-td"><FONT COLOR="#000000"><TT><B>Pale Blue</B></TT></FONT></div>
+<div class="legacy-td"><TT>&nbsp;</div>
+<div class="legacy-td"><TT>[130,130,210]</TT></div>
+<div class="legacy-td"><TT>8282D2</TT></div></div>
+<div class="legacy-tr">
+<div class="legacy-td"><FONT COLOR="#000000">
+<TT><B>PRO</B></TT></FONT></div>
+<div class="legacy-td"><FONT COLOR="#000000"><TT><B>Flesh</B></TT></FONT></div>
+<div class="legacy-td"><TT>&nbsp;</div>
+<div class="legacy-td"><TT>[220,150,130]</TT></div>
+<div class="legacy-td"><TT>DC9682</TT></div></div>
+<div class="legacy-tr">
+<TT><div class="legacy-td"><FONT COLOR="#000000">
+<TT><B>Others</B></TT></FONT></div>
+<div class="legacy-td"><FONT COLOR="#000000"><TT><B>Tan</B></TT></FONT></div>
+<div class="legacy-td"><TT>&nbsp;</div>
+<div class="legacy-td"><TT>[190,160,110]</TT></div>
+<div class="legacy-td"><TT>BEA06E</TT></div></div>
+</div>
 
 <P>
 <p><hr>
@@ -5935,105 +5861,105 @@ The assignment of the most commonly used element types to colours is
 given below.
 <p>
 
-<TABLE BORDER CELLPADDING=2>
-<TR><TH HEIGHT="20">Element</TH>
-<TH HEIGHT="20">Colour Name</TH>
-<TH HEIGHT="20">Sample</TH>
-<TH HEIGHT="20">RGB Values</TH>
-<TH HEIGHT="20">Hexadecimal</TH></TR>
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TD HEIGHT="20" BGCOLOR="#000000"><FONT COLOR="#C8C8C8">
-<B>Carbon</B></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#000000"><FONT COLOR="#C8C8C8"><B>light grey</B></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#C8C8C8">&nbsp;</TD>
-<TD HEIGHT="20"><TT>[200,200,200]</TT></TD>
-<TD HEIGHT="20">C8C8C8</TD></TR>
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TD HEIGHT="20" BGCOLOR="#000000"><FONT COLOR="#F00000">
-<B>Oxygen</B></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#000000"><FONT COLOR="#F00000"><B>red</B></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#F00000">&nbsp;</TD>
-<TD HEIGHT="20"><TT>[240,0,0]</TT></TD>
-<TD HEIGHT="20">F00000</TD></TR>
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TD HEIGHT="20" BGCOLOR="#000000"><FONT COLOR="#FFFFFF">
-<B>Hydrogen</B></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#000000"><FONT COLOR="#FFFFFF"><TT><B>white</TT></B></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF">&nbsp;</TD>
-<TD HEIGHT="20"><TT>[255,255,255]</TT></TD>
-<TD HEIGHT="20">FFFFFF</TD></TR>
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TD HEIGHT="20" BGCOLOR="#000000"><FONT COLOR="#8F8FFF">
-<B>Nitrogen</B></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#000000"><FONT COLOR="#8F8FFF"><B>sky blue</B></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#8F8FFF">&nbsp;</TD>
-<TD HEIGHT="20"><TT>[143,143,255]</TT></TD>
-<TD HEIGHT="20">8F8FFF</TD></TR>
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TD HEIGHT="20" BGCOLOR="#000000"><FONT COLOR="#FFC832">
-<B>Sulfur</B></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#000000"><FONT COLOR="#FFC832"><B>yellow</B></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#FFC832">&nbsp;</TD>
-<TD HEIGHT="20"><TT>[255,200,50]</TT></TD>
-<TD HEIGHT="20">FFC832</TD></TR>
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TD HEIGHT="20" BGCOLOR="#000000"><FONT COLOR="#FFA500">
-<B>Phosphorus</B></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#000000"><FONT COLOR="#FFA500"><TT><B>orange</TT></B></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#FFA500">&nbsp;</TD>
-<TD HEIGHT="20"><TT>[255,165,0]</TT></TD>
-<TD HEIGHT="20">FFA500</TD></TR>
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TD HEIGHT="20" BGCOLOR="#000000"><FONT COLOR="#00FF00">
-<B>Chlorine</B></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#000000"><FONT COLOR="#00FF00"><TT><B>green</TT></B></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#00FF00">&nbsp;</TD>
-<TD HEIGHT="20"><TT>[0,255,0]</TT></TD>
-<TD HEIGHT="20">00FF00</TD></TR>
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TD HEIGHT="20" BGCOLOR="#000000"><FONT COLOR="#A52A2A">
-<B>Bromine, Zinc</B></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#000000"><FONT COLOR="#A52A2A"><B>brown</B></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#A52A2A">&nbsp;</TD>
-<TD HEIGHT="20"><TT>[165,42,42]</TT></TD>
-<TD HEIGHT="20">A52A2A</TD></TR>
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TD HEIGHT="20" BGCOLOR="#000000"><FONT COLOR="#0000FF">
-<B>Sodium</B></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#000000"><FONT COLOR="#0000FF"><TT><B>blue</TT></B></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#0000FF">&nbsp;</TD>
-<TD HEIGHT="20"><TT>[0,0,255]</TT></TD>
-<TD HEIGHT="20">0000FF</TD></TR>
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TD HEIGHT="20" BGCOLOR="#000000"><FONT COLOR="#FFA500">
-<B>Iron</B></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#000000"><FONT COLOR="#FFA500"><TT><B>orange</TT></B></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#FFA500">&nbsp;</TD>
-<TD HEIGHT="20"><TT>[255,165,0]</TT></TD>
-<TD HEIGHT="20">FFA500</TD></TR>
+<div class="legacy-table-wrapper" BORDER>
+<div class="legacy-tr"><div class="legacy-th">Element</div>
+<div class="legacy-th">Colour Name</div>
+<div class="legacy-th">Sample</div>
+<div class="legacy-th">RGB Values</div>
+<div class="legacy-th">Hexadecimal</div></div>
+<div class="legacy-tr">
+<div class="legacy-td"><FONT COLOR="#C8C8C8">
+<B>Carbon</B></FONT></div>
+<div class="legacy-td"><FONT COLOR="#C8C8C8"><B>light grey</B></FONT></div>
+<div class="legacy-td">&nbsp;</div>
+<div class="legacy-td"><TT>[200,200,200]</TT></div>
+<div class="legacy-td">C8C8C8</div></div>
+<div class="legacy-tr">
+<div class="legacy-td"><FONT COLOR="#F00000">
+<B>Oxygen</B></FONT></div>
+<div class="legacy-td"><FONT COLOR="#F00000"><B>red</B></FONT></div>
+<div class="legacy-td">&nbsp;</div>
+<div class="legacy-td"><TT>[240,0,0]</TT></div>
+<div class="legacy-td">F00000</div></div>
+<div class="legacy-tr">
+<div class="legacy-td"><FONT COLOR="#FFFFFF">
+<B>Hydrogen</B></FONT></div>
+<div class="legacy-td"><FONT COLOR="#FFFFFF"><TT><B>white</TT></B></FONT></div>
+<div class="legacy-td">&nbsp;</div>
+<div class="legacy-td"><TT>[255,255,255]</TT></div>
+<div class="legacy-td">FFFFFF</div></div>
+<div class="legacy-tr">
+<div class="legacy-td"><FONT COLOR="#8F8FFF">
+<B>Nitrogen</B></FONT></div>
+<div class="legacy-td"><FONT COLOR="#8F8FFF"><B>sky blue</B></FONT></div>
+<div class="legacy-td">&nbsp;</div>
+<div class="legacy-td"><TT>[143,143,255]</TT></div>
+<div class="legacy-td">8F8FFF</div></div>
+<div class="legacy-tr">
+<div class="legacy-td"><FONT COLOR="#FFC832">
+<B>Sulfur</B></FONT></div>
+<div class="legacy-td"><FONT COLOR="#FFC832"><B>yellow</B></FONT></div>
+<div class="legacy-td">&nbsp;</div>
+<div class="legacy-td"><TT>[255,200,50]</TT></div>
+<div class="legacy-td">FFC832</div></div>
+<div class="legacy-tr">
+<div class="legacy-td"><FONT COLOR="#FFA500">
+<B>Phosphorus</B></FONT></div>
+<div class="legacy-td"><FONT COLOR="#FFA500"><TT><B>orange</TT></B></FONT></div>
+<div class="legacy-td">&nbsp;</div>
+<div class="legacy-td"><TT>[255,165,0]</TT></div>
+<div class="legacy-td">FFA500</div></div>
+<div class="legacy-tr">
+<div class="legacy-td"><FONT COLOR="#00FF00">
+<B>Chlorine</B></FONT></div>
+<div class="legacy-td"><FONT COLOR="#00FF00"><TT><B>green</TT></B></FONT></div>
+<div class="legacy-td">&nbsp;</div>
+<div class="legacy-td"><TT>[0,255,0]</TT></div>
+<div class="legacy-td">00FF00</div></div>
+<div class="legacy-tr">
+<div class="legacy-td"><FONT COLOR="#A52A2A">
+<B>Bromine, Zinc</B></FONT></div>
+<div class="legacy-td"><FONT COLOR="#A52A2A"><B>brown</B></FONT></div>
+<div class="legacy-td">&nbsp;</div>
+<div class="legacy-td"><TT>[165,42,42]</TT></div>
+<div class="legacy-td">A52A2A</div></div>
+<div class="legacy-tr">
+<div class="legacy-td"><FONT COLOR="#0000FF">
+<B>Sodium</B></FONT></div>
+<div class="legacy-td"><FONT COLOR="#0000FF"><TT><B>blue</TT></B></FONT></div>
+<div class="legacy-td">&nbsp;</div>
+<div class="legacy-td"><TT>[0,0,255]</TT></div>
+<div class="legacy-td">0000FF</div></div>
+<div class="legacy-tr">
+<div class="legacy-td"><FONT COLOR="#FFA500">
+<B>Iron</B></FONT></div>
+<div class="legacy-td"><FONT COLOR="#FFA500"><TT><B>orange</TT></B></FONT></div>
+<div class="legacy-td">&nbsp;</div>
+<div class="legacy-td"><TT>[255,165,0]</TT></div>
+<div class="legacy-td">FFA500</div></div>
 <!-- 5/26/97 Changed Iron from purple to orange. WM -->
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TD HEIGHT="20" BGCOLOR="#000000"><FONT COLOR="#228B22">
-<B>Magnesium</B></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#000000"><FONT COLOR="#228B22"><B>forest green</B></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#228B22">&nbsp;</TD>
-<TD HEIGHT="20"><TT>[34,139,34]</TT></TD>
-<TD HEIGHT="20">228B22</TD></TR>
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TD HEIGHT="20" BGCOLOR="#000000"><FONT COLOR="#808090">
-<B>Calcium</B></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#000000"><FONT COLOR="#808090"><B>dark grey</B></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#808090">&nbsp;</TD>
-<TD HEIGHT="20"><TT>[128,128,144]</TT></TD>
-<TD HEIGHT="20">808090</TD></TR>
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TD HEIGHT="20" BGCOLOR="#000000"><FONT COLOR="#FF1493">
-<B>Unknown</B></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#000000"><FONT COLOR="#FF1493"><B>deep pink</B></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#FF1493">&nbsp;</TD>
-<TD HEIGHT="20"><TT>[255,20,147]</TT></TD>
-<TD HEIGHT="20">FF1493</TD></TR>
-</TABLE>
+<div class="legacy-tr">
+<div class="legacy-td"><FONT COLOR="#228B22">
+<B>Magnesium</B></FONT></div>
+<div class="legacy-td"><FONT COLOR="#228B22"><B>forest green</B></FONT></div>
+<div class="legacy-td">&nbsp;</div>
+<div class="legacy-td"><TT>[34,139,34]</TT></div>
+<div class="legacy-td">228B22</div></div>
+<div class="legacy-tr">
+<div class="legacy-td"><FONT COLOR="#808090">
+<B>Calcium</B></FONT></div>
+<div class="legacy-td"><FONT COLOR="#808090"><B>dark grey</B></FONT></div>
+<div class="legacy-td">&nbsp;</div>
+<div class="legacy-td"><TT>[128,128,144]</TT></div>
+<div class="legacy-td">808090</div></div>
+<div class="legacy-tr">
+<div class="legacy-td"><FONT COLOR="#FF1493">
+<B>Unknown</B></FONT></div>
+<div class="legacy-td"><FONT COLOR="#FF1493"><B>deep pink</B></FONT></div>
+<div class="legacy-td">&nbsp;</div>
+<div class="legacy-td"><TT>[255,20,147]</TT></div>
+<div class="legacy-td">FF1493</div></div>
+</div>
 
 <P>
 <p>
@@ -6048,440 +5974,440 @@ colour codes listed are to help in understanding the mapping and are
 not used by RasMol):
 <P>
 
-<TABLE BORDER CELLPADDING=2>
+<div class="legacy-table-wrapper" BORDER>
 
-<TR><TH HEIGHT="20">Code</TH>
-<TH HEIGHT="20">colour Name</TH>
-<TH HEIGHT="20">Sample</TH>
-<TH HEIGHT="20">RGB Values</TH>
-<TH HEIGHT="20">Hexadecimal</TH></TR>
+<div class="legacy-tr"><div class="legacy-th">Code</div>
+<div class="legacy-th">colour Name</div>
+<div class="legacy-th">Sample</div>
+<div class="legacy-th">RGB Values</div>
+<div class="legacy-th">Hexadecimal</div></div>
 
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000">
-<B>LG</B></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000"><TT><B>Light Grey</B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#C8C8C8"><TT>&nbsp;</TD>
-<TD HEIGHT="20"><TT>[200,200,200]</TT></TD>
-<TD HEIGHT="20"><TT>C8C8C8</TT></TD></TR>
+<div class="legacy-tr">
+<div class="legacy-td"><FONT COLOR="#000000">
+<B>LG</B></FONT></div>
+<div class="legacy-td"><FONT COLOR="#000000"><TT><B>Light Grey</B></TT></FONT></div>
+<div class="legacy-td"><TT>&nbsp;</div>
+<div class="legacy-td"><TT>[200,200,200]</TT></div>
+<div class="legacy-td"><TT>C8C8C8</TT></div></div>
 
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000">
-<B>SB</B></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000"><TT><B>Sky Blue</B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#8F8FFF"><TT>&nbsp;</TD>
-<TD HEIGHT="20"><TT>[143,143,255]</TT></TD>
-<TD HEIGHT="20"><TT>8F8FFF</TT></TD></TR>
+<div class="legacy-tr">
+<div class="legacy-td"><FONT COLOR="#000000">
+<B>SB</B></FONT></div>
+<div class="legacy-td"><FONT COLOR="#000000"><TT><B>Sky Blue</B></TT></FONT></div>
+<div class="legacy-td"><TT>&nbsp;</div>
+<div class="legacy-td"><TT>[143,143,255]</TT></div>
+<div class="legacy-td"><TT>8F8FFF</TT></div></div>
 
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000">
-<B>R</B></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000"><TT><B>Red</B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#F00000"><TT>&nbsp;</TD>
-<TD HEIGHT="20"><TT>[240,  0,  0]</TT></TD>
-<TD HEIGHT="20"><TT>F00000</TT></TD></TR>
+<div class="legacy-tr">
+<div class="legacy-td"><FONT COLOR="#000000">
+<B>R</B></FONT></div>
+<div class="legacy-td"><FONT COLOR="#000000"><TT><B>Red</B></TT></FONT></div>
+<div class="legacy-td"><TT>&nbsp;</div>
+<div class="legacy-td"><TT>[240,  0,  0]</TT></div>
+<div class="legacy-td"><TT>F00000</TT></div></div>
 
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000">
-<B>Y</B></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000"><TT><B>Yellow</B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#FFC832"><TT>&nbsp;</TD>
-<TD HEIGHT="20"><TT>[255,200, 50]</TT></TD>
-<TD HEIGHT="20"><TT>FFC832</TT></TD></TR>
+<div class="legacy-tr">
+<div class="legacy-td"><FONT COLOR="#000000">
+<B>Y</B></FONT></div>
+<div class="legacy-td"><FONT COLOR="#000000"><TT><B>Yellow</B></TT></FONT></div>
+<div class="legacy-td"><TT>&nbsp;</div>
+<div class="legacy-td"><TT>[255,200, 50]</TT></div>
+<div class="legacy-td"><TT>FFC832</TT></div></div>
 
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000">
-<B>W</B></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000"><TT><B>White</B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><TT>&nbsp;</TD>
-<TD HEIGHT="20"><TT>[255,255,255]</TT></TD>
-<TD HEIGHT="20"><TT>FFFFFF</TT></TD></TR>
+<div class="legacy-tr">
+<div class="legacy-td"><FONT COLOR="#000000">
+<B>W</B></FONT></div>
+<div class="legacy-td"><FONT COLOR="#000000"><TT><B>White</B></TT></FONT></div>
+<div class="legacy-td"><TT>&nbsp;</div>
+<div class="legacy-td"><TT>[255,255,255]</TT></div>
+<div class="legacy-td"><TT>FFFFFF</TT></div></div>
 
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000">
-<B>Pk</B></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000"><TT><B>Pink</B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#FFC0CB"><TT>&nbsp;</TD>
-<TD HEIGHT="20"><TT>[255,192,203]</TT></TD>
-<TD HEIGHT="20"><TT>FFC0CB</TT></TD></TR>
+<div class="legacy-tr">
+<div class="legacy-td"><FONT COLOR="#000000">
+<B>Pk</B></FONT></div>
+<div class="legacy-td"><FONT COLOR="#000000"><TT><B>Pink</B></TT></FONT></div>
+<div class="legacy-td"><TT>&nbsp;</div>
+<div class="legacy-td"><TT>[255,192,203]</TT></div>
+<div class="legacy-td"><TT>FFC0CB</TT></div></div>
 
 
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000">
-<B>Go</B></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000"><TT><B>Golden Rod</B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#DAA520"><TT>&nbsp;</TD>
-<TD HEIGHT="20"><TT>[218,165, 32]</TT></TD>
-<TD HEIGHT="20"><TT>DAA520</TT></TD></TR>
+<div class="legacy-tr">
+<div class="legacy-td"><FONT COLOR="#000000">
+<B>Go</B></FONT></div>
+<div class="legacy-td"><FONT COLOR="#000000"><TT><B>Golden Rod</B></TT></FONT></div>
+<div class="legacy-td"><TT>&nbsp;</div>
+<div class="legacy-td"><TT>[218,165, 32]</TT></div>
+<div class="legacy-td"><TT>DAA520</TT></div></div>
 
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000">
-<B>Bl</B></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000"><TT><B>Blue</B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#0000FF"><TT>&nbsp;</TD>
-<TD HEIGHT="20"><TT>[  0,  0,255]</TT></TD>
-<TD HEIGHT="20"><TT>0000FF</TT></TD></TR>
+<div class="legacy-tr">
+<div class="legacy-td"><FONT COLOR="#000000">
+<B>Bl</B></FONT></div>
+<div class="legacy-td"><FONT COLOR="#000000"><TT><B>Blue</B></TT></FONT></div>
+<div class="legacy-td"><TT>&nbsp;</div>
+<div class="legacy-td"><TT>[  0,  0,255]</TT></div>
+<div class="legacy-td"><TT>0000FF</TT></div></div>
 
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000">
-<B>Or</B></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000"><TT><B>Orange</B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#FFA500"><TT>&nbsp;</TD>
-<TD HEIGHT="20"><TT>[255,165,  0]</TT></TD>
-<TD HEIGHT="20"><TT>FFA500</TT></TD></TR>
+<div class="legacy-tr">
+<div class="legacy-td"><FONT COLOR="#000000">
+<B>Or</B></FONT></div>
+<div class="legacy-td"><FONT COLOR="#000000"><TT><B>Orange</B></TT></FONT></div>
+<div class="legacy-td"><TT>&nbsp;</div>
+<div class="legacy-td"><TT>[255,165,  0]</TT></div>
+<div class="legacy-td"><TT>FFA500</TT></div></div>
 
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000">
-<B>DG</B></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000"><TT><B>Dark Grey</B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#808090"><TT>&nbsp;</TD>
-<TD HEIGHT="20"><TT>[128,128,144]</TT></TD>
-<TD HEIGHT="20"><TT>808090</TT></TD></TR>
+<div class="legacy-tr">
+<div class="legacy-td"><FONT COLOR="#000000">
+<B>DG</B></FONT></div>
+<div class="legacy-td"><FONT COLOR="#000000"><TT><B>Dark Grey</B></TT></FONT></div>
+<div class="legacy-td"><TT>&nbsp;</div>
+<div class="legacy-td"><TT>[128,128,144]</TT></div>
+<div class="legacy-td"><TT>808090</TT></div></div>
 
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000">
-<B>Br</B></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000"><TT><B>Brown</B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#A52A2A"><TT>&nbsp;</TD>
-<TD HEIGHT="20"><TT>[165, 42, 42]</TT></TD>
-<TD HEIGHT="20"><TT>A52A2A</TT></TD></TR>
+<div class="legacy-tr">
+<div class="legacy-td"><FONT COLOR="#000000">
+<B>Br</B></FONT></div>
+<div class="legacy-td"><FONT COLOR="#000000"><TT><B>Brown</B></TT></FONT></div>
+<div class="legacy-td"><TT>&nbsp;</div>
+<div class="legacy-td"><TT>[165, 42, 42]</TT></div>
+<div class="legacy-td"><TT>A52A2A</TT></div></div>
 
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000">
-<B>P</B></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000"><TT><B>Purple</B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#A020F0"><TT>&nbsp;</TD>
-<TD HEIGHT="20"><TT>[160, 32,240]</TT></TD>
-<TD HEIGHT="20"><TT>A020F0</TT></TD></TR>
+<div class="legacy-tr">
+<div class="legacy-td"><FONT COLOR="#000000">
+<B>P</B></FONT></div>
+<div class="legacy-td"><FONT COLOR="#000000"><TT><B>Purple</B></TT></FONT></div>
+<div class="legacy-td"><TT>&nbsp;</div>
+<div class="legacy-td"><TT>[160, 32,240]</TT></div>
+<div class="legacy-td"><TT>A020F0</TT></div></div>
 
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000">
-<B>DP</B></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000"><TT><B>Deep Pink</B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#FF1493"><TT>&nbsp;</TD>
-<TD HEIGHT="20"><TT>[255, 20,147]</TT></TD>
-<TD HEIGHT="20"><TT>FF1493</TT></TD></TR>
+<div class="legacy-tr">
+<div class="legacy-td"><FONT COLOR="#000000">
+<B>DP</B></FONT></div>
+<div class="legacy-td"><FONT COLOR="#000000"><TT><B>Deep Pink</B></TT></FONT></div>
+<div class="legacy-td"><TT>&nbsp;</div>
+<div class="legacy-td"><TT>[255, 20,147]</TT></div>
+<div class="legacy-td"><TT>FF1493</TT></div></div>
 
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000">
-<B>G</B></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000"><TT><B>Green</TT></B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#00FF00"><TT>&nbsp;</TD>
-<TD HEIGHT="20"><TT>[  0,255,  0]</TT></TD>
-<TD HEIGHT="20"><TT>00FF00</TT></TD></TR>
+<div class="legacy-tr">
+<div class="legacy-td"><FONT COLOR="#000000">
+<B>G</B></FONT></div>
+<div class="legacy-td"><FONT COLOR="#000000"><TT><B>Green</TT></B></TT></FONT></div>
+<div class="legacy-td"><TT>&nbsp;</div>
+<div class="legacy-td"><TT>[  0,255,  0]</TT></div>
+<div class="legacy-td"><TT>00FF00</TT></div></div>
 
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000">
-<B>FB</B></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000"><TT><B>Fire Brick</TT></B></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#B22222"><TT>&nbsp;</TD>
-<TD HEIGHT="20"><TT>[178, 34, 34]</TT></TD>
-<TD HEIGHT="20"><TT>B22222</TT></TD></TR>
+<div class="legacy-tr">
+<div class="legacy-td"><FONT COLOR="#000000">
+<B>FB</B></FONT></div>
+<div class="legacy-td"><FONT COLOR="#000000"><TT><B>Fire Brick</TT></B></FONT></div>
+<div class="legacy-td"><TT>&nbsp;</div>
+<div class="legacy-td"><TT>[178, 34, 34]</TT></div>
+<div class="legacy-td"><TT>B22222</TT></div></div>
 
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000">
-<B>FG</B></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000"><TT><B>Forest Green</B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#228B22"><TT>&nbsp;</TD>
-<TD HEIGHT="20"><TT>[ 34,139, 34]</TT></TD>
-<TD HEIGHT="20"><TT>228B22</TT></TD></TR>
-</TABLE>
+<div class="legacy-tr">
+<div class="legacy-td"><FONT COLOR="#000000">
+<B>FG</B></FONT></div>
+<div class="legacy-td"><FONT COLOR="#000000"><TT><B>Forest Green</B></TT></FONT></div>
+<div class="legacy-td"><TT>&nbsp;</div>
+<div class="legacy-td"><TT>[ 34,139, 34]</TT></div>
+<div class="legacy-td"><TT>228B22</TT></div></div>
+</div>
 
 <P>
 In the CPKnew colouring scheme, RasMol uses brighter colours:
 <P>
 
 
-<TABLE BORDER CELLPADDING=2>
+<div class="legacy-table-wrapper" BORDER>
 
-<TR><TH HEIGHT="20">Code</TH>
-<TH HEIGHT="20">colour Name</TH>
-<TH HEIGHT="20">Sample</TH>
-<TH HEIGHT="20">RGB Values</TH>
-<TH HEIGHT="20">Hexadecimal</TH></TR>
+<div class="legacy-tr"><div class="legacy-th">Code</div>
+<div class="legacy-th">colour Name</div>
+<div class="legacy-th">Sample</div>
+<div class="legacy-th">RGB Values</div>
+<div class="legacy-th">Hexadecimal</div></div>
 
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000">
-<B>LG</B></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000"><TT><B>Light Grey</B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#D3D3D3"><TT>&nbsp;</TD>
-<TD HEIGHT="20"><TT>[211,211,211]</TT></TD>
-<TD HEIGHT="20"><TT>D3D3D3</TT></TD></TR>
+<div class="legacy-tr">
+<div class="legacy-td"><FONT COLOR="#000000">
+<B>LG</B></FONT></div>
+<div class="legacy-td"><FONT COLOR="#000000"><TT><B>Light Grey</B></TT></FONT></div>
+<div class="legacy-td"><TT>&nbsp;</div>
+<div class="legacy-td"><TT>[211,211,211]</TT></div>
+<div class="legacy-td"><TT>D3D3D3</TT></div></div>
 
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000">
-<B>SB</B></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000"><TT><B>Sky Blue</B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#87CEE6"><TT>&nbsp;</TD>
-<TD HEIGHT="20"><TT>[135,206,235]</TT></TD>
-<TD HEIGHT="20"><TT>87CEE6</TT></TD></TR>
+<div class="legacy-tr">
+<div class="legacy-td"><FONT COLOR="#000000">
+<B>SB</B></FONT></div>
+<div class="legacy-td"><FONT COLOR="#000000"><TT><B>Sky Blue</B></TT></FONT></div>
+<div class="legacy-td"><TT>&nbsp;</div>
+<div class="legacy-td"><TT>[135,206,235]</TT></div>
+<div class="legacy-td"><TT>87CEE6</TT></div></div>
 
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000">
-<B>R</B></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000"><TT><B>Red</B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#FF0000"><TT>&nbsp;</TD>
-<TD HEIGHT="20"><TT>[255,  0,  0]</TT></TD>
-<TD HEIGHT="20"><TT>FF0000</TT></TD></TR>
+<div class="legacy-tr">
+<div class="legacy-td"><FONT COLOR="#000000">
+<B>R</B></FONT></div>
+<div class="legacy-td"><FONT COLOR="#000000"><TT><B>Red</B></TT></FONT></div>
+<div class="legacy-td"><TT>&nbsp;</div>
+<div class="legacy-td"><TT>[255,  0,  0]</TT></div>
+<div class="legacy-td"><TT>FF0000</TT></div></div>
 
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000">
-<B>Y</B></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000"><TT><B>Yellow</B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#FFFF00"><TT>&nbsp;</TD>
-<TD HEIGHT="20"><TT>[255,255,  0]</TT></TD>
-<TD HEIGHT="20"><TT>FFFF00</TT></TD></TR>
+<div class="legacy-tr">
+<div class="legacy-td"><FONT COLOR="#000000">
+<B>Y</B></FONT></div>
+<div class="legacy-td"><FONT COLOR="#000000"><TT><B>Yellow</B></TT></FONT></div>
+<div class="legacy-td"><TT>&nbsp;</div>
+<div class="legacy-td"><TT>[255,255,  0]</TT></div>
+<div class="legacy-td"><TT>FFFF00</TT></div></div>
 
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000">
-<B>W</B></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000"><TT><B>White</B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><TT>&nbsp;</TD>
-<TD HEIGHT="20"><TT>[255,255,255]</TT></TD>
-<TD HEIGHT="20"><TT>FFFFFF</TT></TD></TR>
+<div class="legacy-tr">
+<div class="legacy-td"><FONT COLOR="#000000">
+<B>W</B></FONT></div>
+<div class="legacy-td"><FONT COLOR="#000000"><TT><B>White</B></TT></FONT></div>
+<div class="legacy-td"><TT>&nbsp;</div>
+<div class="legacy-td"><TT>[255,255,255]</TT></div>
+<div class="legacy-td"><TT>FFFFFF</TT></div></div>
 
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000">
-<B>Pk</B></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000"><TT><B>Pink</B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#FFC0CB"><TT>&nbsp;</TD>
-<TD HEIGHT="20"><TT>[255,192,203]</TT></TD>
-<TD HEIGHT="20"><TT>FFC0CB</TT></TD></TR>
+<div class="legacy-tr">
+<div class="legacy-td"><FONT COLOR="#000000">
+<B>Pk</B></FONT></div>
+<div class="legacy-td"><FONT COLOR="#000000"><TT><B>Pink</B></TT></FONT></div>
+<div class="legacy-td"><TT>&nbsp;</div>
+<div class="legacy-td"><TT>[255,192,203]</TT></div>
+<div class="legacy-td"><TT>FFC0CB</TT></div></div>
 
 
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000">
-<B>Go</B></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000"><TT><B>Golden Rod</B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#DAA520"><TT>&nbsp;</TD>
-<TD HEIGHT="20"><TT>[218,165, 32]</TT></TD>
-<TD HEIGHT="20"><TT>DAA520</TT></TD></TR>
+<div class="legacy-tr">
+<div class="legacy-td"><FONT COLOR="#000000">
+<B>Go</B></FONT></div>
+<div class="legacy-td"><FONT COLOR="#000000"><TT><B>Golden Rod</B></TT></FONT></div>
+<div class="legacy-td"><TT>&nbsp;</div>
+<div class="legacy-td"><TT>[218,165, 32]</TT></div>
+<div class="legacy-td"><TT>DAA520</TT></div></div>
 
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000">
-<B>Bl</B></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000"><TT><B>Blue</B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#0000FF"><TT>&nbsp;</TD>
-<TD HEIGHT="20"><TT>[  0,  0,255]</TT></TD>
-<TD HEIGHT="20"><TT>0000FF</TT></TD></TR>
+<div class="legacy-tr">
+<div class="legacy-td"><FONT COLOR="#000000">
+<B>Bl</B></FONT></div>
+<div class="legacy-td"><FONT COLOR="#000000"><TT><B>Blue</B></TT></FONT></div>
+<div class="legacy-td"><TT>&nbsp;</div>
+<div class="legacy-td"><TT>[  0,  0,255]</TT></div>
+<div class="legacy-td"><TT>0000FF</TT></div></div>
 
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000">
-<B>Or</B></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000"><TT><B>Orange</B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#FFAA00"><TT>&nbsp;</TD>
-<TD HEIGHT="20"><TT>[255,170,  0]</TT></TD>
-<TD HEIGHT="20"><TT>FFAA00</TT></TD></TR>
+<div class="legacy-tr">
+<div class="legacy-td"><FONT COLOR="#000000">
+<B>Or</B></FONT></div>
+<div class="legacy-td"><FONT COLOR="#000000"><TT><B>Orange</B></TT></FONT></div>
+<div class="legacy-td"><TT>&nbsp;</div>
+<div class="legacy-td"><TT>[255,170,  0]</TT></div>
+<div class="legacy-td"><TT>FFAA00</TT></div></div>
 
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000">
-<B>DG</B></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000"><TT><B>Dark Grey</B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#696969"><TT>&nbsp;</TD>
-<TD HEIGHT="20"><TT>[105,105,105]</TT></TD>
-<TD HEIGHT="20"><TT>696969</TT></TD></TR>
+<div class="legacy-tr">
+<div class="legacy-td"><FONT COLOR="#000000">
+<B>DG</B></FONT></div>
+<div class="legacy-td"><FONT COLOR="#000000"><TT><B>Dark Grey</B></TT></FONT></div>
+<div class="legacy-td"><TT>&nbsp;</div>
+<div class="legacy-td"><TT>[105,105,105]</TT></div>
+<div class="legacy-td"><TT>696969</TT></div></div>
 
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000">
-<B>Br</B></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000"><TT><B>Brown</B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#802828"><TT>&nbsp;</TD>
-<TD HEIGHT="20"><TT>[128, 40, 40]</TT></TD>
-<TD HEIGHT="20"><TT>802828</TT></TD></TR>
+<div class="legacy-tr">
+<div class="legacy-td"><FONT COLOR="#000000">
+<B>Br</B></FONT></div>
+<div class="legacy-td"><FONT COLOR="#000000"><TT><B>Brown</B></TT></FONT></div>
+<div class="legacy-td"><TT>&nbsp;</div>
+<div class="legacy-td"><TT>[128, 40, 40]</TT></div>
+<div class="legacy-td"><TT>802828</TT></div></div>
 
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000">
-<B>P</B></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000"><TT><B>Purple</B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#A020F0"><TT>&nbsp;</TD>
-<TD HEIGHT="20"><TT>[160, 32,240]</TT></TD>
-<TD HEIGHT="20"><TT>A020F0</TT></TD></TR>
+<div class="legacy-tr">
+<div class="legacy-td"><FONT COLOR="#000000">
+<B>P</B></FONT></div>
+<div class="legacy-td"><FONT COLOR="#000000"><TT><B>Purple</B></TT></FONT></div>
+<div class="legacy-td"><TT>&nbsp;</div>
+<div class="legacy-td"><TT>[160, 32,240]</TT></div>
+<div class="legacy-td"><TT>A020F0</TT></div></div>
 
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000">
-<B>DP</B></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000"><TT><B>Deep Pink</B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#FA1691"><TT>&nbsp;</TD>
-<TD HEIGHT="20"><TT>[250, 22,145]</TT></TD>
-<TD HEIGHT="20"><TT>FA1691</TT></TD></TR>
+<div class="legacy-tr">
+<div class="legacy-td"><FONT COLOR="#000000">
+<B>DP</B></FONT></div>
+<div class="legacy-td"><FONT COLOR="#000000"><TT><B>Deep Pink</B></TT></FONT></div>
+<div class="legacy-td"><TT>&nbsp;</div>
+<div class="legacy-td"><TT>[250, 22,145]</TT></div>
+<div class="legacy-td"><TT>FA1691</TT></div></div>
 
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000">
-<B>G</B></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000"><TT><B>Green</TT></B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#00FF00"><TT>&nbsp;</TD>
-<TD HEIGHT="20"><TT>[  0,255,  0]</TT></TD>
-<TD HEIGHT="20"><TT>00FF00</TT></TD></TR>
+<div class="legacy-tr">
+<div class="legacy-td"><FONT COLOR="#000000">
+<B>G</B></FONT></div>
+<div class="legacy-td"><FONT COLOR="#000000"><TT><B>Green</TT></B></TT></FONT></div>
+<div class="legacy-td"><TT>&nbsp;</div>
+<div class="legacy-td"><TT>[  0,255,  0]</TT></div>
+<div class="legacy-td"><TT>00FF00</TT></div></div>
 
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000">
-<B>FB</B></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000"><TT><B>Fire Brick</TT></B></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#B22121"><TT>&nbsp;</TD>
-<TD HEIGHT="20"><TT>[178, 33, 33]</TT></TD>
-<TD HEIGHT="20"><TT>B22121</TT></TD></TR>
+<div class="legacy-tr">
+<div class="legacy-td"><FONT COLOR="#000000">
+<B>FB</B></FONT></div>
+<div class="legacy-td"><FONT COLOR="#000000"><TT><B>Fire Brick</TT></B></FONT></div>
+<div class="legacy-td"><TT>&nbsp;</div>
+<div class="legacy-td"><TT>[178, 33, 33]</TT></div>
+<div class="legacy-td"><TT>B22121</TT></div></div>
 
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000">
-<B>FG</B></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000"><TT><B>Forest Green</B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#228B22"><TT>&nbsp;</TD>
-<TD HEIGHT="20"><TT>[ 34,139, 34]</TT></TD>
-<TD HEIGHT="20"><TT>228B22</TT></TD></TR>
-</TABLE>
+<div class="legacy-tr">
+<div class="legacy-td"><FONT COLOR="#000000">
+<B>FG</B></FONT></div>
+<div class="legacy-td"><FONT COLOR="#000000"><TT><B>Forest Green</B></TT></FONT></div>
+<div class="legacy-td"><TT>&nbsp;</div>
+<div class="legacy-td"><TT>[ 34,139, 34]</TT></div>
+<div class="legacy-td"><TT>228B22</TT></div></div>
+</div>
 
 
 <p>
 
 
-<TABLE BORDER CELLPADDING=2>
-<TR ALIGN=center>
- <TH>1a</TH><TH>2a</TH><TH>3b</TH><TH>4b</TH><TH>5b</TH><TH>6b</TH><TH>7b</TH>
- <TH COLSPAN=3>8</TH>
- <TH>1b</TH><TH>2b</TH><TH>3a</TH><TH>4a</TH><TH>5a</TH><TH>6a</TH><TH>7a</TH>
- <TH>0</TH>
-</TR>
+<div class="legacy-table-wrapper" BORDER>
+<div class="legacy-tr">
+ <div class="legacy-th">1a</div><div class="legacy-th">2a</div><div class="legacy-th">3b</div><div class="legacy-th">4b</div><div class="legacy-th">5b</div><div class="legacy-th">6b</div><div class="legacy-th">7b</div>
+ <div class="legacy-th">8</div>
+ <div class="legacy-th">1b</div><div class="legacy-th">2b</div><div class="legacy-th">3a</div><div class="legacy-th">4a</div><div class="legacy-th">5a</div><div class="legacy-th">6a</div><div class="legacy-th">7a</div>
+ <div class="legacy-th">0</div>
+</div>
 
-<TR ALIGN=center>
- <TD BGCOLOR="#FFFFFF"><FONT COLOR="#000000">H<BR>1 W</FONT></TD>
- <TD COLSPAN=16></TD>
- <TD BGCOLOR="#FFC0CB"><FONT  COLOR="#000000">He<BR>2 Pk</FONT></TD>
-</TR>
+<div class="legacy-tr">
+ <div class="legacy-td"><FONT COLOR="#000000">H<BR>1 W</FONT></div>
+ <div class="legacy-td"></div>
+ <div class="legacy-td"><FONT  COLOR="#000000">He<BR>2 Pk</FONT></div>
+</div>
 
-<TR ALIGN=center>
- <TD BGCOLOR="#B22222"><FONT COLOR="#00FFFF">Li<BR>3 FB</FONT></TD>
- <TD BGCOLOR="#FF1493"><FONT COLOR="#00FFFF">Be<BR>4 DP</FONT></TD>
- <TD COLSPAN=10></TD>
- <TD BGCOLOR="#00FF00"><FONT COLOR="#000000">B<BR>5 G</FONT></TD>
- <TD BGCOLOR="#C8C8C8"><FONT COLOR="#000000">C<BR>6 LG</FONT></TD>
- <TD BGCOLOR="#8F8FFF"><FONT COLOR="#000000">N<BR>7 SB</FONT></TD>
- <TD BGCOLOR="#F00000"><FONT COLOR="#00FFFF">O<BR>8 R</FONT></TD>
- <TD BGCOLOR="#DAA520"><FONT COLOR="#000000">F<BR>9 Go</FONT></TD>
- <TD BGCOLOR="#FF1493"><FONT COLOR="#00FFFF">Ne<BR>10 DP</FONT></TD>
-</TR>
+<div class="legacy-tr">
+ <div class="legacy-td"><FONT COLOR="#00FFFF">Li<BR>3 FB</FONT></div>
+ <div class="legacy-td"><FONT COLOR="#00FFFF">Be<BR>4 DP</FONT></div>
+ <div class="legacy-td"></div>
+ <div class="legacy-td"><FONT COLOR="#000000">B<BR>5 G</FONT></div>
+ <div class="legacy-td"><FONT COLOR="#000000">C<BR>6 LG</FONT></div>
+ <div class="legacy-td"><FONT COLOR="#000000">N<BR>7 SB</FONT></div>
+ <div class="legacy-td"><FONT COLOR="#00FFFF">O<BR>8 R</FONT></div>
+ <div class="legacy-td"><FONT COLOR="#000000">F<BR>9 Go</FONT></div>
+ <div class="legacy-td"><FONT COLOR="#00FFFF">Ne<BR>10 DP</FONT></div>
+</div>
 
-<TR ALIGN=center>
- <TD BGCOLOR="#0000FF"><FONT COLOR="#FFFF00">Na<BR>11 Bl</FONT></TD>
- <TD BGCOLOR="#228B22"><FONT COLOR="#00FFFF">Mg<BR>12 FG</FONT></TD>
- <TD COLSPAN=10></TD>
- <TD BGCOLOR="#808090"><FONT COLOR="#00FFFF">Al<BR>13 DG</FONT></TD>
- <TD BGCOLOR="#DAA520"><FONT COLOR="#000000">Si<BR>14 Go</FONT></TD>
- <TD BGCOLOR="#FFA500"><FONT COLOR="#000000">P<BR>15 Or</FONT></TD>
- <TD BGCOLOR="#FFC832"><FONT COLOR="#000000">S<BR>16 Y</FONT></TD>
- <TD BGCOLOR="#00FF00"><FONT COLOR="#000000">Cl<BR>17 G</FONT></TD>
- <TD BGCOLOR="#FF1493"><FONT COLOR="#00FFFF">Ar<BR>18 DP</FONT></TD>
-</TR>
+<div class="legacy-tr">
+ <div class="legacy-td"><FONT COLOR="#FFFF00">Na<BR>11 Bl</FONT></div>
+ <div class="legacy-td"><FONT COLOR="#00FFFF">Mg<BR>12 FG</FONT></div>
+ <div class="legacy-td"></div>
+ <div class="legacy-td"><FONT COLOR="#00FFFF">Al<BR>13 DG</FONT></div>
+ <div class="legacy-td"><FONT COLOR="#000000">Si<BR>14 Go</FONT></div>
+ <div class="legacy-td"><FONT COLOR="#000000">P<BR>15 Or</FONT></div>
+ <div class="legacy-td"><FONT COLOR="#000000">S<BR>16 Y</FONT></div>
+ <div class="legacy-td"><FONT COLOR="#000000">Cl<BR>17 G</FONT></div>
+ <div class="legacy-td"><FONT COLOR="#00FFFF">Ar<BR>18 DP</FONT></div>
+</div>
 
-<TR ALIGN=center>
- <TD BGCOLOR="#FF1493"><FONT COLOR="#00FFFF">K<BR>19 DP</FONT></TD>
- <TD BGCOLOR="#808090"><FONT COLOR="#00FFFF">Ca<BR>20 DG</FONT></TD>
- <TD BGCOLOR="#FF1493"><FONT COLOR="#00FFFF">Sc<BR>21 DP</FONT></TD>
- <TD BGCOLOR="#808090"><FONT COLOR="#00FFFF">Ti<BR>22 DG</FONT></TD>
- <TD BGCOLOR="#FF1493"><FONT COLOR="#00FFFF">V<BR>23 DP</FONT></TD>
- <TD BGCOLOR="#808090"><FONT COLOR="#00FFFF">Cr<BR>24 DG</FONT></TD>
- <TD BGCOLOR="#808090"><FONT COLOR="#00FFFF">Mn<BR>25 DG</FONT></TD>
- <TD BGCOLOR="#FFA500"><FONT COLOR="#000000">Fe<BR>26 Or</FONT></TD>
- <TD BGCOLOR="#FF1493"><FONT COLOR="#00FFFF">Co<BR>27 DP</FONT></TD>
- <TD BGCOLOR="#A52A2A"><FONT COLOR="#00FFFF">Ni<BR>28 Br</FONT></TD>
- <TD BGCOLOR="#A52A2A"><FONT COLOR="#00FFFF">Cu<BR>29 Br</FONT></TD>
- <TD BGCOLOR="#A52A2A"><FONT COLOR="#00FFFF">Zn<BR>30 Br</FONT></TD>
- <TD BGCOLOR="#FF1493"><FONT COLOR="#00FFFF">Ga<BR>31 DP</FONT></TD>
- <TD BGCOLOR="#FF1493"><FONT COLOR="#00FFFF">Ge<BR>32 DP</FONT></TD>
- <TD BGCOLOR="#FF1493"><FONT COLOR="#00FFFF">As<BR>33 DP</FONT></TD>
- <TD BGCOLOR="#FF1493"><FONT COLOR="#00FFFF">Se<BR>34 DP</FONT></TD>
- <TD BGCOLOR="#A52A2A"><FONT COLOR="#00FFFF">Br<BR>35 Br</FONT></TD>
- <TD BGCOLOR="#FF1493"><FONT COLOR="#00FFFF">Kr<BR>36 DP</FONT></TD>
-</TR>
+<div class="legacy-tr">
+ <div class="legacy-td"><FONT COLOR="#00FFFF">K<BR>19 DP</FONT></div>
+ <div class="legacy-td"><FONT COLOR="#00FFFF">Ca<BR>20 DG</FONT></div>
+ <div class="legacy-td"><FONT COLOR="#00FFFF">Sc<BR>21 DP</FONT></div>
+ <div class="legacy-td"><FONT COLOR="#00FFFF">Ti<BR>22 DG</FONT></div>
+ <div class="legacy-td"><FONT COLOR="#00FFFF">V<BR>23 DP</FONT></div>
+ <div class="legacy-td"><FONT COLOR="#00FFFF">Cr<BR>24 DG</FONT></div>
+ <div class="legacy-td"><FONT COLOR="#00FFFF">Mn<BR>25 DG</FONT></div>
+ <div class="legacy-td"><FONT COLOR="#000000">Fe<BR>26 Or</FONT></div>
+ <div class="legacy-td"><FONT COLOR="#00FFFF">Co<BR>27 DP</FONT></div>
+ <div class="legacy-td"><FONT COLOR="#00FFFF">Ni<BR>28 Br</FONT></div>
+ <div class="legacy-td"><FONT COLOR="#00FFFF">Cu<BR>29 Br</FONT></div>
+ <div class="legacy-td"><FONT COLOR="#00FFFF">Zn<BR>30 Br</FONT></div>
+ <div class="legacy-td"><FONT COLOR="#00FFFF">Ga<BR>31 DP</FONT></div>
+ <div class="legacy-td"><FONT COLOR="#00FFFF">Ge<BR>32 DP</FONT></div>
+ <div class="legacy-td"><FONT COLOR="#00FFFF">As<BR>33 DP</FONT></div>
+ <div class="legacy-td"><FONT COLOR="#00FFFF">Se<BR>34 DP</FONT></div>
+ <div class="legacy-td"><FONT COLOR="#00FFFF">Br<BR>35 Br</FONT></div>
+ <div class="legacy-td"><FONT COLOR="#00FFFF">Kr<BR>36 DP</FONT></div>
+</div>
 
-<TR ALIGN=center>
- <TD BGCOLOR="#FF1493"><FONT COLOR="#00FFFF">Rb<BR>37 DP</FONT></TD>
- <TD BGCOLOR="#FF1493"><FONT COLOR="#00FFFF">Sr<BR>38 DP</FONT></TD>
- <TD BGCOLOR="#FF1493"><FONT COLOR="#00FFFF">Y<BR>39 DP</FONT></TD>
- <TD BGCOLOR="#FF1493"><FONT COLOR="#00FFFF">Zr<BR>40 DP</FONT></TD>
- <TD BGCOLOR="#FF1493"><FONT COLOR="#00FFFF">Nb<BR>41 DP</FONT></TD>
- <TD BGCOLOR="#FF1493"><FONT COLOR="#00FFFF">Mo<BR>42 DP</FONT></TD>
- <TD BGCOLOR="#FF1493"><FONT COLOR="#00FFFF">Tc<BR>43 DP</FONT></TD>
- <TD BGCOLOR="#FF1493"><FONT COLOR="#00FFFF">Ru<BR>44 DP</FONT></TD>
- <TD BGCOLOR="#FF1493"><FONT COLOR="#00FFFF">Rh<BR>45 DP</FONT></TD>
- <TD BGCOLOR="#FF1493"><FONT COLOR="#00FFFF">Pd<BR>46 DP</FONT></TD>
- <TD BGCOLOR="#808090"><FONT COLOR="#00FFFF">Ag<BR>47 DG</FONT></TD>
- <TD BGCOLOR="#FF1493"><FONT COLOR="#00FFFF">Cd<BR>48 DP</FONT></TD>
- <TD BGCOLOR="#FF1493"><FONT COLOR="#00FFFF">In<BR>49 DP</FONT></TD>
- <TD BGCOLOR="#FF1493"><FONT COLOR="#00FFFF">Sn<BR>50 DP</FONT></TD>
- <TD BGCOLOR="#FF1493"><FONT COLOR="#00FFFF">Sb<BR>51 DP</FONT></TD>
- <TD BGCOLOR="#FF1493"><FONT COLOR="#00FFFF">Te<BR>52 DP</FONT></TD>
- <TD BGCOLOR="#A020F0"><FONT COLOR="#00FFFF">I<BR>53 P</FONT></TD>
- <TD BGCOLOR="#FF1493"><FONT COLOR="#00FFFF">Xe<BR>54 DP</FONT></TD>
-</TR>
+<div class="legacy-tr">
+ <div class="legacy-td"><FONT COLOR="#00FFFF">Rb<BR>37 DP</FONT></div>
+ <div class="legacy-td"><FONT COLOR="#00FFFF">Sr<BR>38 DP</FONT></div>
+ <div class="legacy-td"><FONT COLOR="#00FFFF">Y<BR>39 DP</FONT></div>
+ <div class="legacy-td"><FONT COLOR="#00FFFF">Zr<BR>40 DP</FONT></div>
+ <div class="legacy-td"><FONT COLOR="#00FFFF">Nb<BR>41 DP</FONT></div>
+ <div class="legacy-td"><FONT COLOR="#00FFFF">Mo<BR>42 DP</FONT></div>
+ <div class="legacy-td"><FONT COLOR="#00FFFF">Tc<BR>43 DP</FONT></div>
+ <div class="legacy-td"><FONT COLOR="#00FFFF">Ru<BR>44 DP</FONT></div>
+ <div class="legacy-td"><FONT COLOR="#00FFFF">Rh<BR>45 DP</FONT></div>
+ <div class="legacy-td"><FONT COLOR="#00FFFF">Pd<BR>46 DP</FONT></div>
+ <div class="legacy-td"><FONT COLOR="#00FFFF">Ag<BR>47 DG</FONT></div>
+ <div class="legacy-td"><FONT COLOR="#00FFFF">Cd<BR>48 DP</FONT></div>
+ <div class="legacy-td"><FONT COLOR="#00FFFF">In<BR>49 DP</FONT></div>
+ <div class="legacy-td"><FONT COLOR="#00FFFF">Sn<BR>50 DP</FONT></div>
+ <div class="legacy-td"><FONT COLOR="#00FFFF">Sb<BR>51 DP</FONT></div>
+ <div class="legacy-td"><FONT COLOR="#00FFFF">Te<BR>52 DP</FONT></div>
+ <div class="legacy-td"><FONT COLOR="#00FFFF">I<BR>53 P</FONT></div>
+ <div class="legacy-td"><FONT COLOR="#00FFFF">Xe<BR>54 DP</FONT></div>
+</div>
 
-<TR ALIGN=center>
- <TD BGCOLOR="#FF1493"><FONT COLOR="#00FFFF">Cs<BR>55 DP</FONT></TD>
- <TD BGCOLOR="#FFA500"><FONT COLOR="#000000">Ba<BR>56 Or</FONT></TD>
- <TD BGCOLOR="#FF1493"><FONT COLOR="#00FFFF">La<BR>57 DP</FONT></TD>
- <TD BGCOLOR="#FF1493"><FONT COLOR="#00FFFF">Hf<BR>72 DP</FONT></TD>
- <TD BGCOLOR="#FF1493"><FONT COLOR="#00FFFF">Ta<BR>73 DP</FONT></TD>
- <TD BGCOLOR="#FF1493"><FONT COLOR="#00FFFF">W<BR>74 DP</FONT></TD>
- <TD BGCOLOR="#FF1493"><FONT COLOR="#00FFFF">Re<BR>75 DP</FONT></TD>
- <TD BGCOLOR="#FF1493"><FONT COLOR="#00FFFF">Os<BR>76 DP</FONT></TD>
- <TD BGCOLOR="#FF1493"><FONT COLOR="#00FFFF">Ir<BR>77 DP</FONT></TD>
- <TD BGCOLOR="#FF1493"><FONT COLOR="#00FFFF">Pt<BR>78 DP</FONT></TD>
- <TD BGCOLOR="#DAA520"><FONT COLOR="#000000">Au<BR>79 Go</FONT></TD>
- <TD BGCOLOR="#FF1493"><FONT COLOR="#00FFFF">Hg<BR>80 DP</FONT></TD>
- <TD BGCOLOR="#FF1493"><FONT COLOR="#00FFFF">Tl<BR>81 DP</FONT></TD>
- <TD BGCOLOR="#FF1493"><FONT COLOR="#00FFFF">Pb<BR>82 DP</FONT></TD>
- <TD BGCOLOR="#FF1493"><FONT COLOR="#00FFFF">Bi<BR>83 DP</FONT></TD>
- <TD BGCOLOR="#FF1493"><FONT COLOR="#00FFFF">Po<BR>84 DP</FONT></TD>
- <TD BGCOLOR="#FF1493"><FONT COLOR="#00FFFF">At<BR>85 DP</FONT></TD>
- <TD BGCOLOR="#FF1493"><FONT COLOR="#00FFFF">Rn<BR>86 DP</FONT></TD>
-</TR>
+<div class="legacy-tr">
+ <div class="legacy-td"><FONT COLOR="#00FFFF">Cs<BR>55 DP</FONT></div>
+ <div class="legacy-td"><FONT COLOR="#000000">Ba<BR>56 Or</FONT></div>
+ <div class="legacy-td"><FONT COLOR="#00FFFF">La<BR>57 DP</FONT></div>
+ <div class="legacy-td"><FONT COLOR="#00FFFF">Hf<BR>72 DP</FONT></div>
+ <div class="legacy-td"><FONT COLOR="#00FFFF">Ta<BR>73 DP</FONT></div>
+ <div class="legacy-td"><FONT COLOR="#00FFFF">W<BR>74 DP</FONT></div>
+ <div class="legacy-td"><FONT COLOR="#00FFFF">Re<BR>75 DP</FONT></div>
+ <div class="legacy-td"><FONT COLOR="#00FFFF">Os<BR>76 DP</FONT></div>
+ <div class="legacy-td"><FONT COLOR="#00FFFF">Ir<BR>77 DP</FONT></div>
+ <div class="legacy-td"><FONT COLOR="#00FFFF">Pt<BR>78 DP</FONT></div>
+ <div class="legacy-td"><FONT COLOR="#000000">Au<BR>79 Go</FONT></div>
+ <div class="legacy-td"><FONT COLOR="#00FFFF">Hg<BR>80 DP</FONT></div>
+ <div class="legacy-td"><FONT COLOR="#00FFFF">Tl<BR>81 DP</FONT></div>
+ <div class="legacy-td"><FONT COLOR="#00FFFF">Pb<BR>82 DP</FONT></div>
+ <div class="legacy-td"><FONT COLOR="#00FFFF">Bi<BR>83 DP</FONT></div>
+ <div class="legacy-td"><FONT COLOR="#00FFFF">Po<BR>84 DP</FONT></div>
+ <div class="legacy-td"><FONT COLOR="#00FFFF">At<BR>85 DP</FONT></div>
+ <div class="legacy-td"><FONT COLOR="#00FFFF">Rn<BR>86 DP</FONT></div>
+</div>
 
-<TR ALIGN=center>
- <TD BGCOLOR="#FF1493"><FONT COLOR="#00FFFF">Fr<BR>87 DP</FONT></TD>
- <TD BGCOLOR="#FF1493"><FONT COLOR="#00FFFF">Ra<BR>88 DP</FONT></TD>
- <TD BGCOLOR="#FF1493"><FONT COLOR="#00FFFF">Ac<BR>89 DP</FONT></TD>
- <TD><COLSPAN=15></TD></TR>
-</TR>
+<div class="legacy-tr">
+ <div class="legacy-td"><FONT COLOR="#00FFFF">Fr<BR>87 DP</FONT></div>
+ <div class="legacy-td"><FONT COLOR="#00FFFF">Ra<BR>88 DP</FONT></div>
+ <div class="legacy-td"><FONT COLOR="#00FFFF">Ac<BR>89 DP</FONT></div>
+ <div class="legacy-td"><COLSPAN=15></div></div>
+</div>
 
-<TR><TD COLSPAN=18></TD></TR>
-<TR><TD COLSPAN=18></TD></TR>
+<div class="legacy-tr"><div class="legacy-td"></div></div>
+<div class="legacy-tr"><div class="legacy-td"></div></div>
 
-<TR ALIGN=center>
- <TD COLSPAN=2><FONT SIZE=-1>Lanthinide<BR>Series</FONT></FONT></TD>
- <TD BGCOLOR="#FF1493"><FONT COLOR="#00FFFF">Ce<BR>58 DP</FONT></TD>
- <TD BGCOLOR="#FF1493"><FONT COLOR="#00FFFF">Pr<BR>59 DP</FONT></TD>
- <TD BGCOLOR="#FF1493"><FONT COLOR="#00FFFF">Nd<BR>60 DP</FONT></TD>
- <TD BGCOLOR="#FF1493"><FONT COLOR="#00FFFF">Pm<BR>61 DP</FONT></TD>
- <TD BGCOLOR="#FF1493"><FONT COLOR="#00FFFF">Sm<BR>62 DP</FONT></TD>
- <TD BGCOLOR="#FF1493"><FONT COLOR="#00FFFF">Eu<BR>63 DP</FONT></TD>
- <TD BGCOLOR="#FF1493"><FONT COLOR="#00FFFF">Gd<BR>64 DP</FONT></TD>
- <TD BGCOLOR="#FF1493"><FONT COLOR="#00FFFF">Tb<BR>65 DP</FONT></TD>
- <TD BGCOLOR="#FF1493"><FONT COLOR="#00FFFF">Dy<BR>66 DP</FONT></TD>
- <TD BGCOLOR="#FF1493"><FONT COLOR="#00FFFF">Ho<BR>67 DP</FONT></TD>
- <TD BGCOLOR="#FF1493"><FONT COLOR="#00FFFF">Er<BR>68 DP</FONT></TD>
- <TD BGCOLOR="#FF1493"><FONT COLOR="#00FFFF">Tm<BR>69 DP</FONT></TD>
- <TD BGCOLOR="#FF1493"><FONT COLOR="#00FFFF">Yb<BR>70 DP</FONT></TD>
- <TD BGCOLOR="#FF1493"><FONT COLOR="#00FFFF">Lu<BR>71 DP</FONT></TD>
- <TD COLSPAN=2></TD>
-</TR>
+<div class="legacy-tr">
+ <div class="legacy-td"><FONT SIZE=-1>Lanthinide<BR>Series</FONT></FONT></div>
+ <div class="legacy-td"><FONT COLOR="#00FFFF">Ce<BR>58 DP</FONT></div>
+ <div class="legacy-td"><FONT COLOR="#00FFFF">Pr<BR>59 DP</FONT></div>
+ <div class="legacy-td"><FONT COLOR="#00FFFF">Nd<BR>60 DP</FONT></div>
+ <div class="legacy-td"><FONT COLOR="#00FFFF">Pm<BR>61 DP</FONT></div>
+ <div class="legacy-td"><FONT COLOR="#00FFFF">Sm<BR>62 DP</FONT></div>
+ <div class="legacy-td"><FONT COLOR="#00FFFF">Eu<BR>63 DP</FONT></div>
+ <div class="legacy-td"><FONT COLOR="#00FFFF">Gd<BR>64 DP</FONT></div>
+ <div class="legacy-td"><FONT COLOR="#00FFFF">Tb<BR>65 DP</FONT></div>
+ <div class="legacy-td"><FONT COLOR="#00FFFF">Dy<BR>66 DP</FONT></div>
+ <div class="legacy-td"><FONT COLOR="#00FFFF">Ho<BR>67 DP</FONT></div>
+ <div class="legacy-td"><FONT COLOR="#00FFFF">Er<BR>68 DP</FONT></div>
+ <div class="legacy-td"><FONT COLOR="#00FFFF">Tm<BR>69 DP</FONT></div>
+ <div class="legacy-td"><FONT COLOR="#00FFFF">Yb<BR>70 DP</FONT></div>
+ <div class="legacy-td"><FONT COLOR="#00FFFF">Lu<BR>71 DP</FONT></div>
+ <div class="legacy-td"></div>
+</div>
 
-<TR ALIGN=center>
- <TD COLSPAN=2><FONT SIZE=-1>Actinide<BR>Series</FONT></FONT></TD>
- <TD BGCOLOR="#FF1493"><FONT COLOR="#00FFFF">Th<BR>90 DP</FONT></TD>
- <TD BGCOLOR="#FF1493"><FONT COLOR="#00FFFF">Pa<BR>91 DP</FONT></TD>
- <TD BGCOLOR="#FF1493"><FONT COLOR="#00FFFF">U<BR>92 DP</FONT></TD>
- <TD BGCOLOR="#FF1493"><FONT COLOR="#00FFFF">Np<BR>93 DP</FONT></TD>
- <TD BGCOLOR="#FF1493"><FONT COLOR="#00FFFF">Pu<BR>94 DP</FONT></TD>
- <TD BGCOLOR="#FF1493"><FONT COLOR="#00FFFF">Am<BR>95 DP</FONT></TD>
- <TD BGCOLOR="#FF1493"><FONT COLOR="#00FFFF">Cm<BR>96 DP</FONT></TD>
- <TD BGCOLOR="#FF1493"><FONT COLOR="#00FFFF">Bk<BR>97 DP</FONT></TD>
- <TD BGCOLOR="#FF1493"><FONT COLOR="#00FFFF">Cf<BR>98 DP</FONT></TD>
- <TD BGCOLOR="#FF1493"><FONT COLOR="#00FFFF">Es<BR>99 DP</FONT></TD>
- <TD BGCOLOR="#FF1493"><FONT COLOR="#00FFFF">Fm<BR>100 DP</FONT></TD>
- <TD BGCOLOR="#FF1493"><FONT COLOR="#00FFFF">Md<BR>101 DP</FONT></TD>
- <TD BGCOLOR="#FF1493"><FONT COLOR="#00FFFF">No<BR>102 DP</FONT></TD>
- <TD BGCOLOR="#FF1493"><FONT COLOR="#00FFFF">Lr<BR>103 DP</FONT></TD>
- <TD COLSPAN=2></TD>
-</TR>
-</TABLE>
+<div class="legacy-tr">
+ <div class="legacy-td"><FONT SIZE=-1>Actinide<BR>Series</FONT></FONT></div>
+ <div class="legacy-td"><FONT COLOR="#00FFFF">Th<BR>90 DP</FONT></div>
+ <div class="legacy-td"><FONT COLOR="#00FFFF">Pa<BR>91 DP</FONT></div>
+ <div class="legacy-td"><FONT COLOR="#00FFFF">U<BR>92 DP</FONT></div>
+ <div class="legacy-td"><FONT COLOR="#00FFFF">Np<BR>93 DP</FONT></div>
+ <div class="legacy-td"><FONT COLOR="#00FFFF">Pu<BR>94 DP</FONT></div>
+ <div class="legacy-td"><FONT COLOR="#00FFFF">Am<BR>95 DP</FONT></div>
+ <div class="legacy-td"><FONT COLOR="#00FFFF">Cm<BR>96 DP</FONT></div>
+ <div class="legacy-td"><FONT COLOR="#00FFFF">Bk<BR>97 DP</FONT></div>
+ <div class="legacy-td"><FONT COLOR="#00FFFF">Cf<BR>98 DP</FONT></div>
+ <div class="legacy-td"><FONT COLOR="#00FFFF">Es<BR>99 DP</FONT></div>
+ <div class="legacy-td"><FONT COLOR="#00FFFF">Fm<BR>100 DP</FONT></div>
+ <div class="legacy-td"><FONT COLOR="#00FFFF">Md<BR>101 DP</FONT></div>
+ <div class="legacy-td"><FONT COLOR="#00FFFF">No<BR>102 DP</FONT></div>
+ <div class="legacy-td"><FONT COLOR="#00FFFF">Lr<BR>103 DP</FONT></div>
+ <div class="legacy-td"></div>
+</div>
+</div>
 
 
 <P>
@@ -6567,265 +6493,265 @@ scheme is similar to the
 colour scheme.
 <p>
 
-<TABLE BORDER CELLPADDING=2>
+<div class="legacy-table-wrapper" BORDER>
 
-<TR><TH HEIGHT="20">Residues</TH>
-<TH HEIGHT="20">Colour Name</TH>
-<TH HEIGHT="20">Sample</TH>
-<TH HEIGHT="20">RGB Values</TH>
-<TH HEIGHT="20">Hexadecimal</TH></TR>
+<div class="legacy-tr"><div class="legacy-th">Residues</div>
+<div class="legacy-th">Colour Name</div>
+<div class="legacy-th">Sample</div>
+<div class="legacy-th">RGB Values</div>
+<div class="legacy-th">Hexadecimal</div></div>
 
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000">
-<TT><B>ALA</B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000"><TT><B>Medium Green</B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="8CFF8C"><TT>&nbsp;</TD>
-<TD HEIGHT="20"><TT>[140,255,140]</TT></TD>
-<TD HEIGHT="20"><TT>8CFF8C</TT></TD></TR>
-
-
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000">
-<TT><B>GLY</B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000"><TT><B>White</B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="FFFFFF"><TT>&nbsp;</TD>
-<TD HEIGHT="20"><TT>[255,255,255]</TT></TD>
-<TD HEIGHT="20"><TT>FFFFFF</TT></TD></TR>
+<div class="legacy-tr">
+<div class="legacy-td"><FONT COLOR="#000000">
+<TT><B>ALA</B></TT></FONT></div>
+<div class="legacy-td"><FONT COLOR="#000000"><TT><B>Medium Green</B></TT></FONT></div>
+<div class="legacy-td"><TT>&nbsp;</div>
+<div class="legacy-td"><TT>[140,255,140]</TT></div>
+<div class="legacy-td"><TT>8CFF8C</TT></div></div>
 
 
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000">
-<TT><B>LEU</B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000"><TT><B>Olive Green</B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="455E45"><TT>&nbsp;</TD>
-<TD HEIGHT="20"><TT>[ 69, 94, 69]</TT></TD>
-<TD HEIGHT="20"><TT>455E45</TT></TD></TR>
+<div class="legacy-tr">
+<div class="legacy-td"><FONT COLOR="#000000">
+<TT><B>GLY</B></TT></FONT></div>
+<div class="legacy-td"><FONT COLOR="#000000"><TT><B>White</B></TT></FONT></div>
+<div class="legacy-td"><TT>&nbsp;</div>
+<div class="legacy-td"><TT>[255,255,255]</TT></div>
+<div class="legacy-td"><TT>FFFFFF</TT></div></div>
 
 
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000">
-<TT><B>SER</B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000"><TT><B>Medium Orange</B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="FF7042"><TT>&nbsp;</TD>
-<TD HEIGHT="20"><TT>[255,112, 66]</TT></TD>
-<TD HEIGHT="20"><TT>FF7042</TT></TD></TR>
+<div class="legacy-tr">
+<div class="legacy-td"><FONT COLOR="#000000">
+<TT><B>LEU</B></TT></FONT></div>
+<div class="legacy-td"><FONT COLOR="#000000"><TT><B>Olive Green</B></TT></FONT></div>
+<div class="legacy-td"><TT>&nbsp;</div>
+<div class="legacy-td"><TT>[ 69, 94, 69]</TT></div>
+<div class="legacy-td"><TT>455E45</TT></div></div>
 
 
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000">
-<TT><B>VAL</B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000"><TT><B>Light Purple</B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="FF8CFF"><TT>&nbsp;</TD>
-<TD HEIGHT="20"><TT>[255,140,255]</TT></TD>
-<TD HEIGHT="20"><TT>FF8CFF</TT></TD></TR>
+<div class="legacy-tr">
+<div class="legacy-td"><FONT COLOR="#000000">
+<TT><B>SER</B></TT></FONT></div>
+<div class="legacy-td"><FONT COLOR="#000000"><TT><B>Medium Orange</B></TT></FONT></div>
+<div class="legacy-td"><TT>&nbsp;</div>
+<div class="legacy-td"><TT>[255,112, 66]</TT></div>
+<div class="legacy-td"><TT>FF7042</TT></div></div>
 
 
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000">
-<TT><B>THR</B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000"><TT><B>Dark Orange</B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="B84C00"><TT>&nbsp;</TD>
-<TD HEIGHT="20"><TT>[184, 76, 0]</TT></TD>
-<TD HEIGHT="20"><TT>B84C00</TT></TD></TR>
+<div class="legacy-tr">
+<div class="legacy-td"><FONT COLOR="#000000">
+<TT><B>VAL</B></TT></FONT></div>
+<div class="legacy-td"><FONT COLOR="#000000"><TT><B>Light Purple</B></TT></FONT></div>
+<div class="legacy-td"><TT>&nbsp;</div>
+<div class="legacy-td"><TT>[255,140,255]</TT></div>
+<div class="legacy-td"><TT>FF8CFF</TT></div></div>
 
 
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000">
-<TT><B>LYS</B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000"><TT><B>Royal Blue</B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="4747B8"><TT>&nbsp;</TD>
-<TD HEIGHT="20"><TT>[ 71, 71,184]</TT></TD>
-<TD HEIGHT="20"><TT>4747B8</TT></TD></TR>
+<div class="legacy-tr">
+<div class="legacy-td"><FONT COLOR="#000000">
+<TT><B>THR</B></TT></FONT></div>
+<div class="legacy-td"><FONT COLOR="#000000"><TT><B>Dark Orange</B></TT></FONT></div>
+<div class="legacy-td"><TT>&nbsp;</div>
+<div class="legacy-td"><TT>[184, 76, 0]</TT></div>
+<div class="legacy-td"><TT>B84C00</TT></div></div>
 
 
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000">
-<TT><B>ASP</B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000"><TT><B>Dark Rose</B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="A00042"><TT>&nbsp;</TD>
-<TD HEIGHT="20"><TT>[160,0,66]</TT></TD>
-<TD HEIGHT="20"><TT>A00042</TT></TD></TR>
+<div class="legacy-tr">
+<div class="legacy-td"><FONT COLOR="#000000">
+<TT><B>LYS</B></TT></FONT></div>
+<div class="legacy-td"><FONT COLOR="#000000"><TT><B>Royal Blue</B></TT></FONT></div>
+<div class="legacy-td"><TT>&nbsp;</div>
+<div class="legacy-td"><TT>[ 71, 71,184]</TT></div>
+<div class="legacy-td"><TT>4747B8</TT></div></div>
 
 
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000">
-<TT><B>ILE</B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000"><TT><B>Dark Green</B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="004C00"><TT>&nbsp;</TD>
-<TD HEIGHT="20"><TT>[  0, 76,  0]</TT></TD>
-<TD HEIGHT="20"><TT>004C00</TT></TD></TR>
+<div class="legacy-tr">
+<div class="legacy-td"><FONT COLOR="#000000">
+<TT><B>ASP</B></TT></FONT></div>
+<div class="legacy-td"><FONT COLOR="#000000"><TT><B>Dark Rose</B></TT></FONT></div>
+<div class="legacy-td"><TT>&nbsp;</div>
+<div class="legacy-td"><TT>[160,0,66]</TT></div>
+<div class="legacy-td"><TT>A00042</TT></div></div>
 
 
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000">
-<TT><B>ASN</B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000"><TT><B>Light Salmon</B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="FF7C70"><TT>&nbsp;</TD>
-<TD HEIGHT="20"><TT>[255,124,112]</TT></TD>
-<TD HEIGHT="20"><TT>FF7C70</TT></TD></TR>
+<div class="legacy-tr">
+<div class="legacy-td"><FONT COLOR="#000000">
+<TT><B>ILE</B></TT></FONT></div>
+<div class="legacy-td"><FONT COLOR="#000000"><TT><B>Dark Green</B></TT></FONT></div>
+<div class="legacy-td"><TT>&nbsp;</div>
+<div class="legacy-td"><TT>[  0, 76,  0]</TT></div>
+<div class="legacy-td"><TT>004C00</TT></div></div>
 
 
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000">
-<TT><B>GLU</B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000"><TT><B>Dark Brown</B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="660000"><TT>&nbsp;</TD>
-<TD HEIGHT="20"><TT>[102,  0,  0]</TT></TD>
-<TD HEIGHT="20"><TT>660000</TT></TD></TR>
+<div class="legacy-tr">
+<div class="legacy-td"><FONT COLOR="#000000">
+<TT><B>ASN</B></TT></FONT></div>
+<div class="legacy-td"><FONT COLOR="#000000"><TT><B>Light Salmon</B></TT></FONT></div>
+<div class="legacy-td"><TT>&nbsp;</div>
+<div class="legacy-td"><TT>[255,124,112]</TT></div>
+<div class="legacy-td"><TT>FF7C70</TT></div></div>
 
 
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000">
-<TT><B>PRO</B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000"><TT><B>Dark Grey</B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="525252"><TT>&nbsp;</TD>
-<TD HEIGHT="20"><TT>[ 82, 82, 82]</TT></TD>
-<TD HEIGHT="20"><TT>525252</TT></TD></TR>
+<div class="legacy-tr">
+<div class="legacy-td"><FONT COLOR="#000000">
+<TT><B>GLU</B></TT></FONT></div>
+<div class="legacy-td"><FONT COLOR="#000000"><TT><B>Dark Brown</B></TT></FONT></div>
+<div class="legacy-td"><TT>&nbsp;</div>
+<div class="legacy-td"><TT>[102,  0,  0]</TT></div>
+<div class="legacy-td"><TT>660000</TT></div></div>
 
 
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000">
-<TT><B>ARG</B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000"><TT><B>Dark Blue</B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="00007C"><TT>&nbsp;</TD>
-<TD HEIGHT="20"><TT>[  0,  0,124]</TT></TD>
-<TD HEIGHT="20"><TT>00007C</TT></TD></TR>
+<div class="legacy-tr">
+<div class="legacy-td"><FONT COLOR="#000000">
+<TT><B>PRO</B></TT></FONT></div>
+<div class="legacy-td"><FONT COLOR="#000000"><TT><B>Dark Grey</B></TT></FONT></div>
+<div class="legacy-td"><TT>&nbsp;</div>
+<div class="legacy-td"><TT>[ 82, 82, 82]</TT></div>
+<div class="legacy-td"><TT>525252</TT></div></div>
 
 
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000">
-<TT><B>PHE</B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000"><TT><B>Olive Grey</B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="534C42"><TT>&nbsp;</TD>
-<TD HEIGHT="20"><TT>[ 83, 76, 66]</TT></TD>
-<TD HEIGHT="20"><TT>534C42</TT></TD></TR>
+<div class="legacy-tr">
+<div class="legacy-td"><FONT COLOR="#000000">
+<TT><B>ARG</B></TT></FONT></div>
+<div class="legacy-td"><FONT COLOR="#000000"><TT><B>Dark Blue</B></TT></FONT></div>
+<div class="legacy-td"><TT>&nbsp;</div>
+<div class="legacy-td"><TT>[  0,  0,124]</TT></div>
+<div class="legacy-td"><TT>00007C</TT></div></div>
 
 
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000">
-<TT><B>GLN</B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000"><TT><B>Dark Salmon</B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="FF4C4C"><TT>&nbsp;</TD>
-<TD HEIGHT="20"><TT>[255, 76, 76]</TT></TD>
-<TD HEIGHT="20"><TT>FF4C4C</TT></TD></TR>
+<div class="legacy-tr">
+<div class="legacy-td"><FONT COLOR="#000000">
+<TT><B>PHE</B></TT></FONT></div>
+<div class="legacy-td"><FONT COLOR="#000000"><TT><B>Olive Grey</B></TT></FONT></div>
+<div class="legacy-td"><TT>&nbsp;</div>
+<div class="legacy-td"><TT>[ 83, 76, 66]</TT></div>
+<div class="legacy-td"><TT>534C42</TT></div></div>
 
 
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000">
-<TT><B>TYR</B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000"><TT><B>Medium Brown</B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="8C704C"><TT>&nbsp;</TD>
-<TD HEIGHT="20"><TT>[140,112,76]</TT></TD>
-<TD HEIGHT="20"><TT>8C704C</TT></TD></TR>
+<div class="legacy-tr">
+<div class="legacy-td"><FONT COLOR="#000000">
+<TT><B>GLN</B></TT></FONT></div>
+<div class="legacy-td"><FONT COLOR="#000000"><TT><B>Dark Salmon</B></TT></FONT></div>
+<div class="legacy-td"><TT>&nbsp;</div>
+<div class="legacy-td"><TT>[255, 76, 76]</TT></div>
+<div class="legacy-td"><TT>FF4C4C</TT></div></div>
 
 
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000">
-<TT><B>HIS</B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000"><TT><B>Medium Blue</B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="7070FF"><TT>&nbsp;</TD>
-<TD HEIGHT="20"><TT>[112,112,255]</TT></TD>
-<TD HEIGHT="20"><TT>7070FF</TT></TD></TR>
+<div class="legacy-tr">
+<div class="legacy-td"><FONT COLOR="#000000">
+<TT><B>TYR</B></TT></FONT></div>
+<div class="legacy-td"><FONT COLOR="#000000"><TT><B>Medium Brown</B></TT></FONT></div>
+<div class="legacy-td"><TT>&nbsp;</div>
+<div class="legacy-td"><TT>[140,112,76]</TT></div>
+<div class="legacy-td"><TT>8C704C</TT></div></div>
 
 
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000">
-<TT><B>CYS</B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000"><TT><B>Medium Yellow</B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="FFFF70"><TT>&nbsp;</TD>
-<TD HEIGHT="20"><TT>[255,255,112]</TT></TD>
-<TD HEIGHT="20"><TT>FFFF70</TT></TD></TR>
+<div class="legacy-tr">
+<div class="legacy-td"><FONT COLOR="#000000">
+<TT><B>HIS</B></TT></FONT></div>
+<div class="legacy-td"><FONT COLOR="#000000"><TT><B>Medium Blue</B></TT></FONT></div>
+<div class="legacy-td"><TT>&nbsp;</div>
+<div class="legacy-td"><TT>[112,112,255]</TT></div>
+<div class="legacy-td"><TT>7070FF</TT></div></div>
 
 
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000">
-<TT><B>MET</B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000"><TT><B>Light Brown</B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="B8A042"><TT>&nbsp;</TD>
-<TD HEIGHT="20"><TT>[184,160, 66]</TT></TD>
-<TD HEIGHT="20"><TT>B8A042</TT></TD></TR>
+<div class="legacy-tr">
+<div class="legacy-td"><FONT COLOR="#000000">
+<TT><B>CYS</B></TT></FONT></div>
+<div class="legacy-td"><FONT COLOR="#000000"><TT><B>Medium Yellow</B></TT></FONT></div>
+<div class="legacy-td"><TT>&nbsp;</div>
+<div class="legacy-td"><TT>[255,255,112]</TT></div>
+<div class="legacy-td"><TT>FFFF70</TT></div></div>
 
 
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000">
-<TT><B>TRP</B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000"><TT><B>Olive Brown</B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="4F4600"><TT>&nbsp;</TD>
-<TD HEIGHT="20"><TT>[ 79, 70,  0]</TT></TD>
-<TD HEIGHT="20"><TT>4F4600</TT></TD></TR>
+<div class="legacy-tr">
+<div class="legacy-td"><FONT COLOR="#000000">
+<TT><B>MET</B></TT></FONT></div>
+<div class="legacy-td"><FONT COLOR="#000000"><TT><B>Light Brown</B></TT></FONT></div>
+<div class="legacy-td"><TT>&nbsp;</div>
+<div class="legacy-td"><TT>[184,160, 66]</TT></div>
+<div class="legacy-td"><TT>B8A042</TT></div></div>
 
 
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000">
-<TT><B>ASX,GLX,PCA,HYP</B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000"><TT><B>Medium Purple</B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="FF00FF"><TT>&nbsp;</TD>
-<TD HEIGHT="20"><TT>[255,  0,255]</TT></TD>
-<TD HEIGHT="20"><TT>FF00FF</TT></TD></TR>
+<div class="legacy-tr">
+<div class="legacy-td"><FONT COLOR="#000000">
+<TT><B>TRP</B></TT></FONT></div>
+<div class="legacy-td"><FONT COLOR="#000000"><TT><B>Olive Brown</B></TT></FONT></div>
+<div class="legacy-td"><TT>&nbsp;</div>
+<div class="legacy-td"><TT>[ 79, 70,  0]</TT></div>
+<div class="legacy-td"><TT>4F4600</TT></div></div>
 
 
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000">
-<TT><B>A</B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000"><TT><B>Light Blue</B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="A0A0FF"><TT>&nbsp;</TD>
-<TD HEIGHT="20"><TT>[160,160,255]</TT></TD>
-<TD HEIGHT="20"><TT>A0A0FF</TT></TD></TR>
+<div class="legacy-tr">
+<div class="legacy-td"><FONT COLOR="#000000">
+<TT><B>ASX,GLX,PCA,HYP</B></TT></FONT></div>
+<div class="legacy-td"><FONT COLOR="#000000"><TT><B>Medium Purple</B></TT></FONT></div>
+<div class="legacy-td"><TT>&nbsp;</div>
+<div class="legacy-td"><TT>[255,  0,255]</TT></div>
+<div class="legacy-td"><TT>FF00FF</TT></div></div>
 
 
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000">
-<TT><B>C</B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000"><TT><B>Light Orange</B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="FF8C4B"><TT>&nbsp;</TD>
-<TD HEIGHT="20"><TT>[255,140,75]</TT></TD>
-<TD HEIGHT="20"><TT>FF8C4B</TT></TD></TR>
+<div class="legacy-tr">
+<div class="legacy-td"><FONT COLOR="#000000">
+<TT><B>A</B></TT></FONT></div>
+<div class="legacy-td"><FONT COLOR="#000000"><TT><B>Light Blue</B></TT></FONT></div>
+<div class="legacy-td"><TT>&nbsp;</div>
+<div class="legacy-td"><TT>[160,160,255]</TT></div>
+<div class="legacy-td"><TT>A0A0FF</TT></div></div>
 
 
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000">
-<TT><B>G</B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000"><TT><B>Medium Salmon</B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="FF7070"><TT>&nbsp;</TD>
-<TD HEIGHT="20"><TT>[255,112,112]</TT></TD>
-<TD HEIGHT="20"><TT>FF7070</TT></TD></TR>
+<div class="legacy-tr">
+<div class="legacy-td"><FONT COLOR="#000000">
+<TT><B>C</B></TT></FONT></div>
+<div class="legacy-td"><FONT COLOR="#000000"><TT><B>Light Orange</B></TT></FONT></div>
+<div class="legacy-td"><TT>&nbsp;</div>
+<div class="legacy-td"><TT>[255,140,75]</TT></div>
+<div class="legacy-td"><TT>FF8C4B</TT></div></div>
 
 
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000">
-<TT><B>T</B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000"><TT><B>Light Green</B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="A0FFA0"><TT>&nbsp;</TD>
-<TD HEIGHT="20"><TT>[160,255,160]</TT></TD>
-<TD HEIGHT="20"><TT>A0FFA0</TT></TD></TR>
+<div class="legacy-tr">
+<div class="legacy-td"><FONT COLOR="#000000">
+<TT><B>G</B></TT></FONT></div>
+<div class="legacy-td"><FONT COLOR="#000000"><TT><B>Medium Salmon</B></TT></FONT></div>
+<div class="legacy-td"><TT>&nbsp;</div>
+<div class="legacy-td"><TT>[255,112,112]</TT></div>
+<div class="legacy-td"><TT>FF7070</TT></div></div>
 
 
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000">
-<TT><B>Backbone</B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000"><TT><B>Light Grey</B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="B8B8B8"><TT>&nbsp;</TD>
-<TD HEIGHT="20"><TT>[184,184,184]</TT></TD>
-<TD HEIGHT="20"><TT>B8B8B8</TT></TD></TR>
+<div class="legacy-tr">
+<div class="legacy-td"><FONT COLOR="#000000">
+<TT><B>T</B></TT></FONT></div>
+<div class="legacy-td"><FONT COLOR="#000000"><TT><B>Light Green</B></TT></FONT></div>
+<div class="legacy-td"><TT>&nbsp;</div>
+<div class="legacy-td"><TT>[160,255,160]</TT></div>
+<div class="legacy-td"><TT>A0FFA0</TT></div></div>
 
 
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000">
-<TT><B>Special</B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000"><TT><B>Dark Purple</B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="5E005E"><TT>&nbsp;</TD>
-<TD HEIGHT="20"><TT>[ 94,  0, 94]</TT></TD>
-<TD HEIGHT="20"><TT>5E005E</TT></TD></TR>
+<div class="legacy-tr">
+<div class="legacy-td"><FONT COLOR="#000000">
+<TT><B>Backbone</B></TT></FONT></div>
+<div class="legacy-td"><FONT COLOR="#000000"><TT><B>Light Grey</B></TT></FONT></div>
+<div class="legacy-td"><TT>&nbsp;</div>
+<div class="legacy-td"><TT>[184,184,184]</TT></div>
+<div class="legacy-td"><TT>B8B8B8</TT></div></div>
 
 
-<TR VALIGN=MIDDLE ALIGN=LEFT>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000">
-<TT><B>Default</B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="#FFFFFF"><FONT COLOR="#000000"><TT><B>Medium Purple</B></TT></FONT></TD>
-<TD HEIGHT="20" BGCOLOR="FF00FF"><TT>&nbsp;</TD>
-<TD HEIGHT="20"><TT>[255,  0,255]</TT></TD>
-<TD HEIGHT="20"><TT>FF00FF</TT></TD></TR>
-</TABLE>
+<div class="legacy-tr">
+<div class="legacy-td"><FONT COLOR="#000000">
+<TT><B>Special</B></TT></FONT></div>
+<div class="legacy-td"><FONT COLOR="#000000"><TT><B>Dark Purple</B></TT></FONT></div>
+<div class="legacy-td"><TT>&nbsp;</div>
+<div class="legacy-td"><TT>[ 94,  0, 94]</TT></div>
+<div class="legacy-td"><TT>5E005E</TT></div></div>
+
+
+<div class="legacy-tr">
+<div class="legacy-td"><FONT COLOR="#000000">
+<TT><B>Default</B></TT></FONT></div>
+<div class="legacy-td"><FONT COLOR="#000000"><TT><B>Medium Purple</B></TT></FONT></div>
+<div class="legacy-td"><TT>&nbsp;</div>
+<div class="legacy-td"><TT>[255,  0,255]</TT></div>
+<div class="legacy-td"><TT>FF00FF</TT></div></div>
+</div>
 
 <P>
 
@@ -6923,18 +6849,18 @@ dielectric constant value of 10.
 The following table lists the names, single letter and three letter
 codes of each of the amino acids.
 <p>
-<center><table class="sidebar-table" BORDER CELLPADDING=2>
-<TR><TD>Alanine         <TD>A  <TD>ALA         <TD>Arginine        <TD>R  <TD>ARG
-<TR><TD>Asparagine      <TD>N  <TD>ASN         <TD>Aspartic acid   <TD>D  <TD>ASP
-<TR><TD>Cysteine        <TD>C  <TD>CYS         <TD>Glutamic acid   <TD>E  <TD>GLU
-<TR><TD>Glutamine       <TD>Q  <TD>GLN         <TD>Glycine         <TD>G  <TD>GLY
-<TR><TD>Histidine       <TD>H  <TD>HIS         <TD>Isoleucine      <TD>I  <TD>ILE
-<TR><TD>Leucine         <TD>L  <TD>LEU         <TD>Lysine          <TD>K  <TD>LYS
-<TR><TD>Methionine      <TD>M  <TD>MET         <TD>Phenylalanine   <TD>F  <TD>PHE
-<TR><TD>Proline         <TD>P  <TD>PRO         <TD>Serine          <TD>S  <TD>SER
-<TR><TD>Threonine       <TD>T  <TD>THR         <TD>Tryptophan      <TD>W  <TD>TRP
-<TR><TD>Tyrosine        <TD>Y  <TD>TYR         <TD>Valine          <TD>V  <TD>VAL
-</table></center>
+<center><div class="legacy-table-wrapper" data-table="true" class="sidebar-table" BORDER>
+<div class="legacy-tr"><div class="legacy-td">Alanine         <div class="legacy-td">A  <div class="legacy-td">ALA         <div class="legacy-td">Arginine        <div class="legacy-td">R  <div class="legacy-td">ARG
+<div class="legacy-tr"><div class="legacy-td">Asparagine      <div class="legacy-td">N  <div class="legacy-td">ASN         <div class="legacy-td">Aspartic acid   <div class="legacy-td">D  <div class="legacy-td">ASP
+<div class="legacy-tr"><div class="legacy-td">Cysteine        <div class="legacy-td">C  <div class="legacy-td">CYS         <div class="legacy-td">Glutamic acid   <div class="legacy-td">E  <div class="legacy-td">GLU
+<div class="legacy-tr"><div class="legacy-td">Glutamine       <div class="legacy-td">Q  <div class="legacy-td">GLN         <div class="legacy-td">Glycine         <div class="legacy-td">G  <div class="legacy-td">GLY
+<div class="legacy-tr"><div class="legacy-td">Histidine       <div class="legacy-td">H  <div class="legacy-td">HIS         <div class="legacy-td">Isoleucine      <div class="legacy-td">I  <div class="legacy-td">ILE
+<div class="legacy-tr"><div class="legacy-td">Leucine         <div class="legacy-td">L  <div class="legacy-td">LEU         <div class="legacy-td">Lysine          <div class="legacy-td">K  <div class="legacy-td">LYS
+<div class="legacy-tr"><div class="legacy-td">Methionine      <div class="legacy-td">M  <div class="legacy-td">MET         <div class="legacy-td">Phenylalanine   <div class="legacy-td">F  <div class="legacy-td">PHE
+<div class="legacy-tr"><div class="legacy-td">Proline         <div class="legacy-td">P  <div class="legacy-td">PRO         <div class="legacy-td">Serine          <div class="legacy-td">S  <div class="legacy-td">SER
+<div class="legacy-tr"><div class="legacy-td">Threonine       <div class="legacy-td">T  <div class="legacy-td">THR         <div class="legacy-td">Tryptophan      <div class="legacy-td">W  <div class="legacy-td">TRP
+<div class="legacy-tr"><div class="legacy-td">Tyrosine        <div class="legacy-td">Y  <div class="legacy-td">TYR         <div class="legacy-td">Valine          <div class="legacy-td">V  <div class="legacy-td">VAL
+</div></center>
 <p><hr>
 <a name="booleans"><h3>Booleans</h3></a><p>
 A boolean parameter is a truth value. Valid boolean values are 'true' and
@@ -6978,26 +6904,26 @@ in the 1992 and earlier formats or in the 1996 and later formats.
 <pre>
 FORMAT(6A1,I5,1X,A4,A1,A3,1X,A1,I4,A1,3X,3F8.3,2F6.2,1X,I3,2X,A4,2A2)
 </pre>
-<TABLE BORDER CELLPADDING=2>
+<div class="legacy-table-wrapper" BORDER>
 
-<TR><TH>Column<TH ALIGN=left>Content<TH>fmt
-<TR><TD>1-6<TD>'ATOM' or 'HETATM'<TD>all
-<TR><TD>7-11<TD>Atom serial number (may have gaps)<TD>all
-<TR><TD>13-16<TD>Atom name, in IUPAC standard format<TD>all
-<TR><TD>17<TD>Alternate location indicator indicated by A, B or C<TD>all
-<TR><TD>18-20<TD>Residue name, in IUPAC standard format<TD>all
-<TR><TD>23-26<TD>Residue sequence number<TD>all
-<TR><TD>27<TD>Code for insertions of residues (i.e. 66A & 66B)<TD>all
-<TR><TD>31-38<TD>X coordinate<TD>all
-<TR><TD>39-46<TD>Y coordinate<TD>all
-<TR><TD>47-54<TD>Z coordinate<TD>all
-<TR><TD>55-60<TD>Occupancy<TD>all
-<TR><TD>61-66<TD>Temperature factor<TD>all
-<TR><TD>68-70<TD>Footnote number<TD>92
-<TR><TD>73-76<TD>Segment Identifier (left-justified)<TD>96
-<TR><TD>77-78<TD>Element Symbol (right-justified)<TD>96
-<TR><TD>79-80<TD>Charge on the Atom<TD>96
-</TABLE>
+<div class="legacy-tr"><div class="legacy-th">Column<div class="legacy-th">Content<div class="legacy-th">fmt
+<div class="legacy-tr"><div class="legacy-td">1-6<div class="legacy-td">'ATOM' or 'HETATM'<div class="legacy-td">all
+<div class="legacy-tr"><div class="legacy-td">7-11<div class="legacy-td">Atom serial number (may have gaps)<div class="legacy-td">all
+<div class="legacy-tr"><div class="legacy-td">13-16<div class="legacy-td">Atom name, in IUPAC standard format<div class="legacy-td">all
+<div class="legacy-tr"><div class="legacy-td">17<div class="legacy-td">Alternate location indicator indicated by A, B or C<div class="legacy-td">all
+<div class="legacy-tr"><div class="legacy-td">18-20<div class="legacy-td">Residue name, in IUPAC standard format<div class="legacy-td">all
+<div class="legacy-tr"><div class="legacy-td">23-26<div class="legacy-td">Residue sequence number<div class="legacy-td">all
+<div class="legacy-tr"><div class="legacy-td">27<div class="legacy-td">Code for insertions of residues (i.e. 66A & 66B)<div class="legacy-td">all
+<div class="legacy-tr"><div class="legacy-td">31-38<div class="legacy-td">X coordinate<div class="legacy-td">all
+<div class="legacy-tr"><div class="legacy-td">39-46<div class="legacy-td">Y coordinate<div class="legacy-td">all
+<div class="legacy-tr"><div class="legacy-td">47-54<div class="legacy-td">Z coordinate<div class="legacy-td">all
+<div class="legacy-tr"><div class="legacy-td">55-60<div class="legacy-td">Occupancy<div class="legacy-td">all
+<div class="legacy-tr"><div class="legacy-td">61-66<div class="legacy-td">Temperature factor<div class="legacy-td">all
+<div class="legacy-tr"><div class="legacy-td">68-70<div class="legacy-td">Footnote number<div class="legacy-td">92
+<div class="legacy-tr"><div class="legacy-td">73-76<div class="legacy-td">Segment Identifier (left-justified)<div class="legacy-td">96
+<div class="legacy-tr"><div class="legacy-td">77-78<div class="legacy-td">Element Symbol (right-justified)<div class="legacy-td">96
+<div class="legacy-tr"><div class="legacy-td">79-80<div class="legacy-td">Charge on the Atom<div class="legacy-td">96
+</div>
 <p>
 Residues occur in order starting from the N-terminal residue
 for proteins and
@@ -7064,17 +6990,17 @@ each remembered ATOM/HETATM record in turn, and searches for a COLO
 record that matches in all of columns 7 through 30. The first such COLO
 record to be found determines the colour and radius of the atom.
 <p>
-<TABLE BORDER CELLPADDING=2>
+<div class="legacy-table-wrapper" BORDER>
 
-<TR><TH>Column<TH ALIGN=left>Content
-<TR><TD>1-6<TD>'COLOR' or 'COLOUR'
-<TR><TD>7-30<TD>Mask (described below)
-<TR><TD>31-38<TD>Red component
-<TR><TD>39-46<TD>Green component
-<TR><TD>47-54<TD>Blue component
-<TR><TD>55-60<TD>Sphere radius in &Aring;ngstroms
-<TR><TD>61-70<TD>Comments
-</TABLE>
+<div class="legacy-tr"><div class="legacy-th">Column<div class="legacy-th">Content
+<div class="legacy-tr"><div class="legacy-td">1-6<div class="legacy-td">'COLOR' or 'COLOUR'
+<div class="legacy-tr"><div class="legacy-td">7-30<div class="legacy-td">Mask (described below)
+<div class="legacy-tr"><div class="legacy-td">31-38<div class="legacy-td">Red component
+<div class="legacy-tr"><div class="legacy-td">39-46<div class="legacy-td">Green component
+<div class="legacy-tr"><div class="legacy-td">47-54<div class="legacy-td">Blue component
+<div class="legacy-tr"><div class="legacy-td">55-60<div class="legacy-td">Sphere radius in &Aring;ngstroms
+<div class="legacy-tr"><div class="legacy-td">61-70<div class="legacy-td">Comments
+</div>
 <p>
 Note that the Red, Green and Blue components are in the same positions
 as the X, Y, and Z components of an ATOM or HETA record, and the van
@@ -7130,51 +7056,51 @@ the same conventions as are used for the fixed-field PDB format. Thus
 chain identifiers and alternate conformation identifiers are limited to
 a single character, atom names are limited to 4 characters, etc. RasMol
 interprets the following CIF and mmCIF tags:
-<TABLE BORDER CELLPADDING=2>
-<TR><TH ALIGN=LEFT>mmCIF tag<TH ALIGN=LEFT>CIF tag<TH ALIGN=LEFT>Used for
-<TR><TD>&nbsp;<TD>&nbsp;<TD>&nbsp;
-<TR><TD>_struct_biol.details<TD>&nbsp;<TD>Info.classification
-<TR><TD>_database_2.database_code<TD>&nbsp;<TD>Info.identcode
-<TR><TD>_entry.id <TD>&nbsp;<TD>&nbsp;
-<TR><TD>_struct_biol.id<TD>&nbsp;<TD>&nbsp;
-<TR><TD>_struct.title<TD>&nbsp;Info.moleculename
-<TR><TD>_chemical_name_common <TD>&nbsp;<TD>&nbsp;
-<TR><TD>_chemical_name_systematic<TD>&nbsp;<TD>&nbsp;
-<TR><TD>_chemical_name_mineral<TD>&nbsp;<TD>&nbsp;
-<TR><TD> &nbsp;<TD>&nbsp;<TD>&nbsp;
-<TR><TD>_symmetry.space_group_name_H-M<TD>_symmetry_space_group_name_H-M<TD> Info.spacegroup
-<TR><TD>_cell.length_a<TD>_cell_length_a<TD>Info.cell
-<TR><TD>_cell.length_b<TD>_cell_length_b<TD>&nbsp;
-<TR><TD>_cell.length_c<TD>_cell_length_c<TD>&nbsp;
-<TR><TD>_cell.angle_alpha<TD>_cell_angle_alpha<TD>&nbsp;
-<TR><TD>_cell.angle_alpha<TD>_cell_angle_alpha<TD>&nbsp;
-<TR><TD>_cell.angle_beta<TD>_cell_angle_beta<TD>&nbsp;
-<TR><TD>_cell.angle_gamma<TD>_cell_angle_gamma<TD>&nbsp;
-<TR><TD>&nbsp;<TD>&nbsp;<TD>&nbsp;
-<TR><TD>_atom_sites.fract_transf_matrix[1][1]<TD> _atom_sites_fract_tran_matrix_11<TD>Used to compute orthogonal coords
-<TR><TD>...<TD>...<TD>&nbsp;
-<TR><TD>_atom_sites.fract_transf_vector[1]<TD> _atom_sites_fract_tran_vector_1<TD>&nbsp;
-<TR><TD>...<TD>...<TD>&nbsp;
-<TR><TD>_atom_sites.cartn_transf_matrix[1][1]<TD>_atom_sites_cartn_tran_matrix_11<TD> Alternative to compute orth. coords
-<TR><TD>...<TD>...<TD>&nbsp;
-<TR><TD>_atom_sites.cartn_transf_vector[1]<TD> _atom_sites_cartn_tran_vector_1<TD>&nbsp;
-<TR><TD>...<TD>...<TD>&nbsp;
-<TR><TD>_atom_site.cartn_x<TD>_atom_site_cartn_x<TD>atomic coordinates
-<TR><TD>...<TD>...<TD>&nbsp;
-<TR><TD>or<TD>&nbsp;<TD>&nbsp;
-<TR><TD>_atom_site.fract_x<TD>_atom_site_fract_x<TD>&nbsp;
-<TR><TD>...<TD>...<TD>&nbsp;
-<TR><TD>&nbsp;<TD>&nbsp;<TD>&nbsp;
-<TR><TD>_struct_conn.id<TD>&nbsp;<TD>bonds
-<TR><TD>...<TD>&nbsp<TD>&nbsp;
-<TR><TD>_geom_bond.atom_site_id_1<TD>_geom_bond_atom_site_label_1<TD>&nbsp;
-<TR><TD>...<TD>...<TD>&nbsp;
-<TR><TD>&nbsp;<TD>&nbsp;<TD>&nbsp;
-<TR><TD>_struct_conf.id<TD>&nbsp;<TD>helices, sheets, turns
-<TR><TD>_struct_sheet_range.id<TD>&nbsp;<TD>&nbsp;
-<TR><TD>...<TD>&nbsp;<TD>&nbsp;
-<TR><TD>
-</table>
+<div class="legacy-table-wrapper" BORDER>
+<div class="legacy-tr"><div class="legacy-th">mmCIF tag<div class="legacy-th">CIF tag<div class="legacy-th">Used for
+<div class="legacy-tr"><div class="legacy-td">&nbsp;<div class="legacy-td">&nbsp;<div class="legacy-td">&nbsp;
+<div class="legacy-tr"><div class="legacy-td">_struct_biol.details<div class="legacy-td">&nbsp;<div class="legacy-td">Info.classification
+<div class="legacy-tr"><div class="legacy-td">_database_2.database_code<div class="legacy-td">&nbsp;<div class="legacy-td">Info.identcode
+<div class="legacy-tr"><div class="legacy-td">_entry.id <div class="legacy-td">&nbsp;<div class="legacy-td">&nbsp;
+<div class="legacy-tr"><div class="legacy-td">_struct_biol.id<div class="legacy-td">&nbsp;<div class="legacy-td">&nbsp;
+<div class="legacy-tr"><div class="legacy-td">_struct.title<div class="legacy-td">&nbsp;Info.moleculename
+<div class="legacy-tr"><div class="legacy-td">_chemical_name_common <div class="legacy-td">&nbsp;<div class="legacy-td">&nbsp;
+<div class="legacy-tr"><div class="legacy-td">_chemical_name_systematic<div class="legacy-td">&nbsp;<div class="legacy-td">&nbsp;
+<div class="legacy-tr"><div class="legacy-td">_chemical_name_mineral<div class="legacy-td">&nbsp;<div class="legacy-td">&nbsp;
+<div class="legacy-tr"><div class="legacy-td"> &nbsp;<div class="legacy-td">&nbsp;<div class="legacy-td">&nbsp;
+<div class="legacy-tr"><div class="legacy-td">_symmetry.space_group_name_H-M<div class="legacy-td">_symmetry_space_group_name_H-M<div class="legacy-td"> Info.spacegroup
+<div class="legacy-tr"><div class="legacy-td">_cell.length_a<div class="legacy-td">_cell_length_a<div class="legacy-td">Info.cell
+<div class="legacy-tr"><div class="legacy-td">_cell.length_b<div class="legacy-td">_cell_length_b<div class="legacy-td">&nbsp;
+<div class="legacy-tr"><div class="legacy-td">_cell.length_c<div class="legacy-td">_cell_length_c<div class="legacy-td">&nbsp;
+<div class="legacy-tr"><div class="legacy-td">_cell.angle_alpha<div class="legacy-td">_cell_angle_alpha<div class="legacy-td">&nbsp;
+<div class="legacy-tr"><div class="legacy-td">_cell.angle_alpha<div class="legacy-td">_cell_angle_alpha<div class="legacy-td">&nbsp;
+<div class="legacy-tr"><div class="legacy-td">_cell.angle_beta<div class="legacy-td">_cell_angle_beta<div class="legacy-td">&nbsp;
+<div class="legacy-tr"><div class="legacy-td">_cell.angle_gamma<div class="legacy-td">_cell_angle_gamma<div class="legacy-td">&nbsp;
+<div class="legacy-tr"><div class="legacy-td">&nbsp;<div class="legacy-td">&nbsp;<div class="legacy-td">&nbsp;
+<div class="legacy-tr"><div class="legacy-td">_atom_sites.fract_transf_matrix[1][1]<div class="legacy-td"> _atom_sites_fract_tran_matrix_11<div class="legacy-td">Used to compute orthogonal coords
+<div class="legacy-tr"><div class="legacy-td">...<div class="legacy-td">...<div class="legacy-td">&nbsp;
+<div class="legacy-tr"><div class="legacy-td">_atom_sites.fract_transf_vector[1]<div class="legacy-td"> _atom_sites_fract_tran_vector_1<div class="legacy-td">&nbsp;
+<div class="legacy-tr"><div class="legacy-td">...<div class="legacy-td">...<div class="legacy-td">&nbsp;
+<div class="legacy-tr"><div class="legacy-td">_atom_sites.cartn_transf_matrix[1][1]<div class="legacy-td">_atom_sites_cartn_tran_matrix_11<div class="legacy-td"> Alternative to compute orth. coords
+<div class="legacy-tr"><div class="legacy-td">...<div class="legacy-td">...<div class="legacy-td">&nbsp;
+<div class="legacy-tr"><div class="legacy-td">_atom_sites.cartn_transf_vector[1]<div class="legacy-td"> _atom_sites_cartn_tran_vector_1<div class="legacy-td">&nbsp;
+<div class="legacy-tr"><div class="legacy-td">...<div class="legacy-td">...<div class="legacy-td">&nbsp;
+<div class="legacy-tr"><div class="legacy-td">_atom_site.cartn_x<div class="legacy-td">_atom_site_cartn_x<div class="legacy-td">atomic coordinates
+<div class="legacy-tr"><div class="legacy-td">...<div class="legacy-td">...<div class="legacy-td">&nbsp;
+<div class="legacy-tr"><div class="legacy-td">or<div class="legacy-td">&nbsp;<div class="legacy-td">&nbsp;
+<div class="legacy-tr"><div class="legacy-td">_atom_site.fract_x<div class="legacy-td">_atom_site_fract_x<div class="legacy-td">&nbsp;
+<div class="legacy-tr"><div class="legacy-td">...<div class="legacy-td">...<div class="legacy-td">&nbsp;
+<div class="legacy-tr"><div class="legacy-td">&nbsp;<div class="legacy-td">&nbsp;<div class="legacy-td">&nbsp;
+<div class="legacy-tr"><div class="legacy-td">_struct_conn.id<div class="legacy-td">&nbsp;<div class="legacy-td">bonds
+<div class="legacy-tr"><div class="legacy-td">...<div class="legacy-td">&nbsp<div class="legacy-td">&nbsp;
+<div class="legacy-tr"><div class="legacy-td">_geom_bond.atom_site_id_1<div class="legacy-td">_geom_bond_atom_site_label_1<div class="legacy-td">&nbsp;
+<div class="legacy-tr"><div class="legacy-td">...<div class="legacy-td">...<div class="legacy-td">&nbsp;
+<div class="legacy-tr"><div class="legacy-td">&nbsp;<div class="legacy-td">&nbsp;<div class="legacy-td">&nbsp;
+<div class="legacy-tr"><div class="legacy-td">_struct_conf.id<div class="legacy-td">&nbsp;<div class="legacy-td">helices, sheets, turns
+<div class="legacy-tr"><div class="legacy-td">_struct_sheet_range.id<div class="legacy-td">&nbsp;<div class="legacy-td">&nbsp;
+<div class="legacy-tr"><div class="legacy-td">...<div class="legacy-td">&nbsp;<div class="legacy-td">&nbsp;
+<div class="legacy-tr"><div class="legacy-td">
+</div>
 A search is made through multiple data blocks for the desired tags, so
 a single dataset may be composed from multiple data blocks, but
 multiple data sets may not be stacked in the same file.
@@ -7342,20 +7268,20 @@ Sciences, Vol. 31, 326-333, 1991.
 <p><hr>
 <hr>
 
-| <a href="http://www.OpenrasMol.org">OpenRasMol</a> |
-<A href="http://www.rasmol.org/software/rasmol/README.html#Copying">Copying and Distribution</A> |
-<A href="http://www.rasmol.org/software/rasmol/README.html#Contents">Contents</A> |
-<A href="http://www.rasmol.org/software/rasmol/INSTALL.html">Installation Instructions</A> |<br />
-| <A href="http://www.rasmol.org/software/rasmol/ChangeLog.html">Changes</A> |
-<A href="http://www.rasmol.org/software/rasmol/TODO.html">Things To Do</A> |
-<A href="http://www.rasmol.org/software/rasmol/README.html#Introduction">Introduction</A> |
-<A href="http://www.rasmol.org/software/rasmol/README.html#CodeAndBinaries">Source Code and Binaries</A> |<br />
+| <a href="http://www.rasmol.net">RasMol</a> |
+<A href="http://www.rasmol.net/software/rasmol/readme.html#Copying">Copying and Distribution</A> |
+<A href="http://www.rasmol.net/software/rasmol/readme.html#Contents">Contents</A> |
+<A href="http://www.rasmol.net/software/rasmol/install.html">Installation Instructions</A> |<br />
+| <A href="http://www.rasmol.net/software/rasmol/changelog.html">Changes</A> |
+<A href="http://www.rasmol.net/software/rasmol/todo.html">Things To Do</A> |
+<A href="http://www.rasmol.net/software/rasmol/readme.html#Introduction">Introduction</A> |
+<A href="http://www.rasmol.net/software/rasmol/readme.html#CodeAndBinaries">Source Code and Binaries</A> |<br />
 | <A href="rasmol.html">RasMol Manual</A> |
-<a href="esrasmol27.html">Spanish Translation of RasMol Manual</a> |
+<a href="esrasmol2721.html">Spanish Translation of RasMol Manual</a> |
 <a href="itrasmol.hlp">Italian Translation of RasMol Help File</a> |<br />
-| <a href=http://www.rasmol.org/donate.shtml>Donate to Support RasMol</a> |
-<a href="http://www.rasmol.org/software/rasmol/README.html">Release README</A> |
-<a href=http://www.rasmol.org/register.shtml>Register your RasMol</a> |
+| <a href=http://www.rasmol.net/donate.shtml>Donate to Support RasMol</a> |
+<a href="http://www.rasmol.net/software/rasmol/readme.html">Release README</A> |
+<a href=http://www.rasmol.net/register.shtml>Register your RasMol</a> |
 <br />
 
 <HR>
@@ -7365,20 +7291,20 @@ Sciences, Vol. 31, 326-333, 1991.
 
         <footer>
              <nav aria-label="Footer Navigation">
-                | <a href="http://www.OpenrasMol.org">OpenRasMol</a> |
-                <a href="../README.html#Copying">Copying and Distribution</a> |
-                <a href="../README.html#Contents">Contents</a> |
-                <a href="../INSTALL.html">Installation Instructions</a> |<br>
-                | <a href="../ChangeLog.html">Changes</a> |
-                <a href="../TODO.html">Things To Do</a> |
-                <a href="../README.html#Introduction">Introduction</a> |
-                <a href="../README.html#CodeAndBinaries">Source Code and Binaries</a> |<br>
+                | <a href="http://www.rasmol.net">RasMol</a> |
+                <a href="readme.html#Copying">Copying and Distribution</a> |
+                <a href="readme.html#Contents">Contents</a> |
+                <a href="install.html">Installation Instructions</a> |<br>
+                | <a href="changelog.html">Changes</a> |
+                <a href="todo.html">Things To Do</a> |
+                <a href="readme.html#Introduction">Introduction</a> |
+                <a href="readme.html#CodeAndBinaries">Source Code and Binaries</a> |<br>
                 | <a href="rasmol.html">RasMol Manual</a> |
-                <a href="esrasmol27.html">Spanish Translation of RasMol Manual</a> |
+                <a href="esrasmol2721.html">Spanish Translation of RasMol Manual</a> |
                 <a href="itrasmol.hlp">Italian Translation of RasMol Help File</a> |<br>
-                | <a href="http://www.rasmol.org/donate.shtml">Donate to Support RasMol</a> |
-                <a href="../README.html">Release README</a> |
-                <a href="http://www.rasmol.org/register.shtml">Register your RasMol</a> |
+                | <a href="http://www.rasmol.net/donate.shtml">Donate to Support RasMol</a> |
+                <a href="readme.html">Release README</a> |
+                <a href="http://www.rasmol.net/register.shtml">Register your RasMol</a> |
             </nav>
             <p>Updated 21 July 2009.</p>
             <p>Herbert J. Bernstein<br>
