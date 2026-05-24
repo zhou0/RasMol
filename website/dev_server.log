@@ -1,0 +1,11 @@
+
+> website@0.0.0 start
+> docusaurus start
+
+[INFO] Starting the development server...
+[WARNING] The `siteConfig.onBrokenMarkdownLinks` config option is deprecated and will be removed in Docusaurus v4.
+Please migrate and move this option to `siteConfig.markdown.hooks.onBrokenMarkdownLinks` instead.
+[SUCCESS] Docusaurus website is running at: http://localhost:3000/
+[webpackbar] ℹ Compiling Client
+[webpackbar] ✔ Client: Compiled successfully in 2.77s
+client (webpack 5.107.1) compiled successfully
