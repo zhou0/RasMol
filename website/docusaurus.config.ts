@@ -72,6 +72,8 @@ const config: Config = {
           label: 'Tutorial',
         },
         {to: '/download', label: 'Download', position: 'left'},
+        {to: '/features', label: 'Features', position: 'left'},
+        {to: '/history', label: 'History', position: 'left'},
         {to: '/blog', label: 'Blog', position: 'left'},
         {href: 'pathname:///legacy/', label: 'Legacy Documentation', position: 'left'},
         {
