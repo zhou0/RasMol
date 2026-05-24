@@ -109,7 +109,7 @@ jobs:
       - name: Prepare AppDir
         run: |
           mkdir -p AppDir/usr/share/icons/hicolor/48x48/apps
-          cp rasmol.desktop AppDir/
+          cp warpings/tcl/metadata/rasmol.desktop AppDir/
           sudo apt-get install -y imagemagick
           convert src/rasmol_48x48.xpm AppDir/rasmol.png
           cp AppDir/rasmol.png AppDir/usr/share/icons/hicolor/48x48/apps/rasmol.png
