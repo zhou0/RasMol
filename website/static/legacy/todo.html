@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>RasMol Documentation</title>
+    <link rel="stylesheet" href="style.css">
+    <script type="module" src="script.js"></script>
+</head>
+<body><header><a href="http://www.iucr.org/iucr-top/welcome.html">
+<img alt="[IUCr Home Page]" src="html_graphics/iucrhome.jpg"></a>
+<a href="http://www.iucr.org/iucr-top/cif/home.html">
+<img alt="[CIF Home Page]" src="html_graphics/cifhome.jpg"></a>
+<a href="doc/rasmol.html"><img src="html_graphics/rasmolbutton.jpg"
+alt="[RasMol Manual]"></a>
+<hr>
+<nav aria-label="Main Navigation"><div class="center">
+| <a href="http://www.rasmol.net">RasMol</a> |
+<a href="readme.html#copying">Copying and Distribution</a> |
+<a href="readme.html#contents">Contents</a> |
+<a href="install.html">Installation Instructions</a> |<br>
+| <a href="changelog.html">Changes</a> |
+<a href="todo.html">Things To Do</a> |
+<a href="readme.html#introduction">Introduction</a> |
+<a href="readme.html#codeandbinaries">Source Code and Binaries</a> |<br>
+| <a href="doc/rasmol.html">RasMol Manual</a> |
+<a href="doc/esrasmol27.html">Spanish Translation of RasMol Manual</a> |
+<a href="doc/itrasmol.hlp">Italian Translation of RasMol Help File</a> |<br>
+| <a href=http://www.rasmol.net/donate.shtml>Donate to Support RasMol</a> |
+<a href="readme.html">Release README</a> |
+<a href=http://www.rasmol.net/register.shtml>Register your RasMol</a> |
+</div></nav></header><main>
+
+
+<h1 >To Do<br>
+RasMol 2.7.4.2</h1>
+<div class="center">
+<div class="two-col-list"><div class="term"><ul>
+<li><a href=http://www.rasmol.net/software/RasMol_Latest_Windows_Installer.exe>RasMol Latest Windows Installer</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />
+&nbsp;<br />
+<li><a href=http://www.rasmol.net/software/RasMol_Latest.tar.gz>RasMol Latest Source Tarball </a><br />
+&nbsp;<br />
+<li><a href=http://www.rasmol.net/software/RasMol_Latest_Manual.html>RasMol Latest Manual </a><br />
+&nbsp;<br />
+<li><a href=http://www.rasmol.net/donate.shtml>Donate to Support RasMol </a><br />
+<li><a href=http://www.rasmol.net/register.shtml>Register your RasMol</a><br />
+</ul></div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <img  src="html_graphics/rasmollogo.jpg" alt="RasMol"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <ul>
+<li><a href=http://www.rasmol.net/software/RasMol_2.7.4.2_Windows_Installer.exe>RasMol 2.7.4.2 Windows Installer</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />
+&nbsp;<br />
+<li><a href=http://www.rasmol.net/software/RasMol_2.7.4.2.tar.gz>RasMol 2.7.4.2 Source Tarball</a><br />
+&nbsp;<br />
+<li><a href=http://www.rasmol.net/software/RasMol_2.7.4.2_Manual.html>RasMol 2.7.4.2 Manual</a><br />
+&nbsp;<br />
+<li><a href=http://www.rasmol.net/donate.shtml>Donate to Support RasMol </a><br />
+<li><a href=http://www.rasmol.net/register.shtml>Register your RasMol</a><br />
+</ul></div></div>
+</div>
+<h2 >
+Molecular Graphics Visualisation Tool<br>
+19 November 2007 (rev. 19 January 2008)<br />
+</h2>
+
+<div class="center">
+Based on RasMol 2.6
+by
+Roger Sayle<br>
+Biomolecular Structures Group,
+Glaxo Wellcome Research & Development,
+Stevenage, Hertfordshire, UK<br>
+Version 2.6, August 1995, Version 2.6.4, December 1998<br>
+Copyright &#169; Roger Sayle 1992-1999
+</div>
+<p>
+<div class="center">
+and Based on Mods by
+<div class="data-grid data-3-col"><div class="header">Author</div><div class="header">Version, Date</div><div class="header">Copyright</div><div>Arne Mueller<</div><div>&#169 Arne Mueller 1998</div><div>Gary Grossman and<br>Marco Molinaro<</div><div>&#169 UC Regents/ModularCHEM<br>Consortium 1995, 1996</div><div>Philippe Valadon<</div><div>&#169 Philippe Valadon 2000</div><div>Herbert J. Bernstein<</div><div>&#169 Herbert J. Bernstein 1998-2008</div></div>
+</div>
+<p>
+ RasMol 2.7.3 incorporates changes by Clarice Chigbo, Ricky Chachra,
+ and Mamoru Yamanishi.  Work on RasMol 2.7.3 supported in part by
+ grants DBI-0203064, DBI-0315281 and EF-0312612 from the U.S. National
+ Science Foundation and grant DE-FG02-03ER63601 from the U.S. Department
+ of Energy.  RasMol 2.7.4 incorporates changes by G. Todorov, Nan Jia,
+ N. Darakev, P. Kamburov, G. McQuillan, J. Jemilawon.  Work on RasMol
+ 2.7.4 supported in part by grant 1R15GM078077-01 from the National
+ Institute of General Medical Sciences (NIGMS). The content is solely
+ the responsibility of the authors and does not necessarily represent
+ the official views of the funding organizations.
+<p>
+<div class="center">
+and Incorporating Translations by
+<div class="data-grid data-3-col"><div class="header">Author</div><div class="header">Item</div><div class="header">Language</div><div>Isabel Serv&aacute;n Mart&iacute;nez,<br>
+Jos&eacute; Miguel Fern&aacute;ndez Fern&aacute;ndez
+<</div><div>Spanish</div><div>Jos&eacute; Miguel Fern&aacute;ndez Fern&aacute;ndez<</div><div>Spanish</div><div>Fernando Gabriel Ranea<</div><div>Spanish</div><div>Jean-Pierre Demailly<</div><div>French</div><div>Giuseppe Martini, Giovanni Paolella,<br>A. Davassi, M. Masullo, C. Liotto
+<</div><div>Italian</div><div>G. Pozhvanov<</div><div>Russian</div><div>G. Todorov<</div><div>Bulgarian</div><div>Nan Jia, G. Todorov<</div><div>Chinese</div><div>Mamoru Yamanishi, Katajima Hajime<</div><div>Japanese</div></div>
+</div>
+<p>
+<div class="center">
+This Release by
+<br>Herbert J. Bernstein,
+Bernstein + Sons, 5 Brewster Lane, Bellport, NY, USA<br>
+<span class="email-placeholder"></span>
+<noscript>
+yaya&#64;bernstein-plus-sons&#46;com
+</noscript>
+<br>
+Copyright &#169; Herbert J. Bernstein 1998-2008<br>
+</div>
+<p>
+The original RasMol manual was created by Roger Sayle.  In July 1996,
+Dr. Margaret Wong of the Chemistry Department, Swinburne University
+of Technology, Australia, made extensive revisions to the RasMol 2.5
+manual to accurately reflect the operation of RasMol 2.6.  Eric Martz
+of the University of Massachusetts made further revisions.  In May
+1997, William McClure of Carnegie Mellon University reorganized the
+HTML version of the manual into multiple sections which could be
+downloaded quickly and added use of frames.   Portions of the 2.7.1
+version of the RasMol manual were derived with  permission from
+William McClure's version using Roger Sayle's rasmol.doc for
+version 2.6.4 as the primary source. Changes were made in
+August 2000 for RasMol version 2.7.2, January 2001 for RasMol
+version 2.7.1.1 and April 2001 for RasMol version 2.7.2.1 and
+February 2005 for RasMol version 2.7.3.
+
+<p>
+<div class="center">Documentation Last Updated 12 November 2007<br>
+Edited by Herbert J. Bernstein and Frances C. Bernstein
+</div>
+<p>
+<h3 >Translations</h3>
+<p>Thanks to the efforts of Jos&eacute; Miguel Fern&aacute;ndez
+Fern&aacute;ndez (Departamento
+de Bioqu&iacute;mica y Biolog&iacute;a Molecular. Universidad de Granada.
+Espa&ntilde;a (<a href="mailto:jmfernan@ugr.es">jmfernan@ugr.es</a>)) a
+<a href="doc/esrasmol27.html">translation of the
+Manual for Rasmol version 2.7.1 into Spanish</a> is now available.
+La traducci&oacute;n espa&ntilde;ola del manual de la
+versi&oacute;n de la Dra. Wong revisada por Eric Martz fue realizada por
+Isabel Serv&aacute;n Mart&iacute;nez y Jos&eacute; Miguel Fern&aacute;ndez
+Fern&aacute;ndez.  La actual traducci&oacute;n del Manual de RasMol 2.7.1
+ha sido realizada usando como base la anterior de RasMol 2.6 por
+&nbsp;Jos&eacute; Miguel Fern&aacute;ndez Fern&aacute;ndez.
+<p>
+Thanks to translations by Fernando Gabriel Ranea <davinci@dinamica.com.ar> in late 2000
+and early 2001, RasMol is now
+capable of rendering most menu items and messages in Spanish.
+Jean-Pierre Demailly <jean-pierre.demailly@ujf-grenoble.fr> provided French
+translations of menus and messages in January 2001.
+Giuseppe Martini <martini@iigb.na.cnr.it> and Giovanni Paolella <paolella@dbbm.unina.it>
+with contributions by A. Davassi, M. Masullo and C. Liotto provided Italian
+translations of menus and messages in March 2001.
+</p>
+<hr>
+
+<h3 >
+THIS IS A PRELIMINARY RELEASE INVOLVING EXTENSIVE MODIFICATIONS<br>
+*****  USE WITH CAUTION  ******<br>
+</h3>
+<hr>
+<h2 ><a name=Copying></a>IMPORTANT - Copying and Distribution</h2>
+<p>
+This version is based in directly on RasMol version 2.7.2.1.1,
+on RasMol version 2.7.2, on RasMol version 2.7.1, on RasMol
+version 2.6_CIF.2, on RasMol version 2.6x1, on RasMol version
+2.6.4, and RasMol 2.5-ucb and 2.6-ucb.
+<p>
+Please read the file <a href = "doc/NOTICE.html">NOTICE</a> for
+important notices which apply to this package and for
+license terms (<a href=GPL>GPL</a> or <a href=RASLIC>RASLIC</a>).
+<hr>
+<p>
+<h3>Combining RasMol Variants</h3>
+<p>
+The first steps in combining RasMol variants have been performed.
+Much of the work of upgrading the documentation has been done.  It
+remains to make the changes to prepdoc to generate the RasFrames
+version.
+
+Several source mod packages are being reviewed for inclusion.
+  Features
+from other variants of RasMol will be considered for inclusion in RasMol
+2.7.n if the features are particularly popular and if available resources
+(or helpful colleagues) make inclusion of those features feasible.  When we
+are done, probably in the early fall, the resulting best version should be
+a reasonably stable and reliable single version combining most of the
+features of the major current variants of RasMol.
+
+<p>
+<h3>Some other important things still to be done</h3>
+<ul>
+<li>Add code to read mmCIF templates
+
+<li>Add code for VRML ribbons
+
+<li>Add code for CBFlib map write/read
+
+<li>Add P. Zhivkov's blurring to simulate surfaces.
+
+<li>Add OpenGL management of images.
+
+<li>Make native Mac OS X version.
+
+<li>Add smooth double buffering to switch molecules for movies.
+
+<li>Fix problems with very large zoom scale.
+
+<li>Add GUI toolbar interface.
+
+<li>Resolve color management issues (including auto-sensing bit depth).
+
+<li>Fix printing under windows.
+
+<li>Allow for longer names.
+
+<li>CIF and mmCIF write logic.
+
+<li>The read logic for large NMR structures on a Mac needs to be made to work.
+
+<li>The field widths for alternate conformer ID's and chains need to be
+extended to allow for the more flexible naming in mmCIF.
+
+<li>Resolve problem with interaction of stereo and shadows.
+
+<li>Allow writing of GIFs from high colour-resolution mode.
+
+<li>Improve memory management on Macs to allow larger structures.
+
+<li>Upgrade to full UTF-8 support.
+
+<li>Integrate symmetry code into production release.
+
+</ul>
+</main><footer><hr>
+Updated 26 January 2008.<br>
+Herbert J. Bernstein<br>
+Bernstein + Sons, 5 Brewster Lane, Bellport, NY 11713-2803, USA<br>
+<a href="mailto:yaya@bernstein-plus-sons.com">
+yaya@bernstein-plus-sons.com</a><br>
++1-631-286-1339<br>
+
+</footer>
+</body>
+</html>

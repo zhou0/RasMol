@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>RasMol Documentation</title>
+    <link rel="stylesheet" href="style.css">
+    <script type="module" src="script.js"></script>
+</head>
+<body><header><a href="http://www.iucr.org/iucr-top/welcome.html">
+<img alt="[IUCr Home Page]" src="html_graphics/iucrhome.jpg"></a>
+<a href="http://www.iucr.org/iucr-top/cif/home.html">
+<img alt="[CIF Home Page]" src="html_graphics/cifhome.jpg"></a>
+<a href="readme.html"><img src="html_graphics/rasmolbutton.jpg"
+alt="[RasMol]"></a>
+<hr>
+<nav aria-label="Main Navigation"><div class="center">
+| <a href="http://www.rasmol.net">RasMol</a> |
+<a href="readme.html#copying">Copying and Distribution</a> |
+<a href="readme.html#contents">Contents</a> |
+<a href="install.html">Installation Instructions</a> |<br>
+| <a href="changelog.html">Changes</a> |
+<a href="todo.html">Things To Do</a> |
+<a href="readme.html#introduction">Introduction</a> |
+<a href="readme.html#codeandbinaries">Source Code and Binaries</a> |<br>
+| <a href="doc/rasmol.html">RasMol Manual</a> |
+<a href="doc/esrasmol27.html">Spanish Translation of RasMol Manual</a> |
+<a href="doc/itrasmol.hlp">Italian Translation of RasMol Help File</a> |<br>
+| <a href=http://www.rasmol.net/donate.shtml>Donate to Support RasMol</a> |
+<a href="readme.html">Release README</a> |
+<a href=http://www.rasmol.net/register.shtml>Register your RasMol</a> |
+</div></nav></header><main>
+
+
+<h1 >Installation Instructions<br>
+RasMol 2.7.5</h1>
+<div class="center">
+<div class="two-col-list"><div class="term"><ul>
+<li><a href=http://www.rasmol.net/software/RasMol_Latest_Windows_Installer.exe>RasMol Latest Windows Installer</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />
+&nbsp;<br />
+<li><a href=http://www.rasmol.net/software/RasMol_Latest.tar.gz>RasMol Latest Source Tarball </a><br />
+&nbsp;<br />
+<li><a href=http://www.rasmol.net/software/RasMol_Latest_Manual.html>RasMol Latest Manual </a><br />
+&nbsp;<br />
+<li><a href=http://www.rasmol.net/donate.shtml>Donate to Support RasMol </a><br />
+<li><a href=http://www.rasmol.net/register.shtml>Register your RasMol</a><br />
+</ul></div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <img  src="html_graphics/rasmollogo.jpg" alt="RasMol"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <ul>
+<li><a href=http://www.rasmol.net/software/RasMol_2.7.5_Windows_Installer.exe>RasMol
+2.7.5 Windows Installer</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />
+&nbsp;<br />
+<li><a href=http://www.rasmol.net/software/RasMol_2.7.5.tar.gz>RasMol 2.7.5 Source
+Tarball</a><br />
+&nbsp;<br />
+<li><a href=http://www.rasmol.net/software/RasMol_2.7.5_Manual.html>RasMol 2.7.5
+Manual</a><br />
+&nbsp;<br />
+<li><a href=http://www.rasmol.net/donate.shtml>Donate to Support RasMol </a><br />
+<li><a href=http://www.rasmol.net/register.shtml>Register your RasMol</a><br />
+</ul></div></div>
+</div>
+<h2 >
+Molecular Graphics Visualisation Tool<br>
+3 June 2009 (rev. 17 July 2009)<br />
+</h2>
+
+<div class="center">
+Based on RasMol 2.6 by
+Roger Sayle<br>
+Biomolecular Structures Group, Glaxo Wellcome Research & Development<br>
+Stevenage, Hertfordshire, UK<br>
+Version 2.6, August 1995, Version 2.6.4, December 1998<br>
+Copyright &#169; Roger Sayle 1992-1999<br>
+</div>
+<p>
+<div class="center">
+and Based on Mods by
+<div class="data-grid data-3-col"><div class="header">Author</div><div class="header">Version, Date</div><div class="header">Copyright</div><div>Arne Mueller<</div><div>&#169 Arne Mueller 1998</div><div>Gary Grossman and<br>Marco Molinaro<</div><div>&#169 UC Regents/ModularCHEM<br>Consortium 1995, 1996</div><div>Philippe Valadon<</div><div>&#169 Philippe Valadon 2000</div><div>Herbert J. Bernstein<</div><div>&#169 Herbert J. Bernstein 1998-2008</div></div>
+</div>
+<p>
+RasMol 2.7.5 incorporates changes by T. Ikonen, G. McQuillan, N. Darakev
+and L. Andrews (via the neartree package).  Work on RasMol 2.7.5
+supported in part by grant 1R15GM078077-01 from the National Institute
+of General Medical Sciences (NIGMS), U.S. National Institutes of Health
+and by grant ER63601-1021466-0009501 from the Office of Biological &amp;
+Environmental Research (BER), Office of Science, U. S. Department of
+Energy.  RasMol 2.7.4 incorporated  changes by G. Todorov, Nan Jia,
+N. Darakev, P. Kamburov, G. McQuillan, and J. Jemilawon. Work on RasMol
+2.7.4 supported in part by grant 1R15GM078077-01 from the NIGMS/NIH and
+grant ER63601-1021466-0009501 from BER/DOE.  RasMol 2.7.3 incorporates
+changes by Clarice Chigbo, Ricky Chachra, and Mamoru Yamanishi.  Work
+on RasMol 2.7.3 supported in part by grants DBI-0203064, DBI-0315281
+and EF-0312612 from the U.S. National Science Foundation and grant
+DE-FG02-03ER63601 from BER/DOE. The content is solely the responsibility
+of the authors and does not necessarily represent the official views of
+the funding organizations.
+<p>
+The code for use of RasMol under GTK in RasMol 2.7.4.2 was written by
+Teemu Ikonen.
+<p>
+<div class="center">
+and Incorporating Translations by
+<div class="data-grid data-3-col"><div class="header">Author</div><div class="header">Item</div><div class="header">Language</div><div>Isabel Serv&aacute;n Mart&iacute;nez,<br>
+Jos&eacute; Miguel Fern&aacute;ndez Fern&aacute;ndez
+<</div><div>Spanish</div><div>Jos&eacute; Miguel Fern&aacute;ndez Fern&aacute;ndez<</div><div>Spanish</div><div>Fernando Gabriel Ranea<</div><div>Spanish</div><div>Jean-Pierre Demailly<</div><div>French</div><div>Giuseppe Martini, Giovanni Paolella,<br>A. Davassi, M. Masullo, C. Liotto
+<</div><div>Italian</div><div>G. Pozhvanov<</div><div>Russian</div><div>G. Todorov<</div><div>Bulgarian</div><div>Nan Jia, G. Todorov<</div><div>Chinese</div><div>Mamoru Yamanishi, Katajima Hajime<</div><div>Japanese</div></div>
+</div>
+<p>
+<div class="center">
+This Release by
+<br>Herbert J. Bernstein,
+Bernstein + Sons, 5 Brewster Lane, Bellport, NY, USA<br>
+<span class="email-placeholder"></span>
+<noscript>
+yaya&#64;bernstein-plus-sons&#46;com
+</noscript>
+<br>
+Copyright &#169; Herbert J. Bernstein 1998-2009<br>
+</div>
+<p>
+ The original RasMol manual was created by Roger Sayle.  In July 1996,
+ Dr. Margaret Wong of the Chemistry Department, Swinburne University
+ of Technology, Australia, made extensive revisions to the RasMol 2.5
+ manual to accurately reflect the operation of RasMol 2.6.  Eric Martz
+ of the University of Massachusetts made further revisions.  In May
+ 1997, William McClure of Carnegie Mellon University reorganized the
+ HTML version of the manual into multiple sections which could be
+ downloaded quickly and added use of frames.   Portions of the 2.7.1
+ version of the RasMol manual were derived with  permission from
+ William McClure's version using Roger Sayle's rasmol.doc for
+version 2.6.4 as the primary source. Changes were made in
+August 2000 for RasMol version 2.7.2, January 2001 for RasMol
+version 2.7.1.1 and April 2001 for RasMol version 2.7.2.1 and
+February 2005 for RasMol version 2.7.3.
+<p>
+<div class="center">Documentation Last Updated 19 July 2009<br>
+Edited by Herbert J. Bernstein and Frances C. Bernstein
+</div>
+<p>
+<h3 >Translations</h3>
+<p>Thanks to the efforts of Jos&eacute; Miguel Fern&aacute;ndez
+Fern&aacute;ndez (Departamento
+de Bioqu&iacute;mica y Biolog&iacute;a Molecular. Universidad de Granada.
+Espa&ntilde;a (<a href="mailto:jmfernan@ugr.es">jmfernan@ugr.es</a>)) a
+<a href="doc/esrasmol27.html">translation of the
+Manual for Rasmol version 2.7.1 into Spanish</a> is now available.
+La traducci&oacute;n espa&ntilde;ola del manual de la
+versi&oacute;n de la Dra. Wong revisada por Eric Martz fue realizada por
+Isabel Serv&aacute;n Mart&iacute;nez y Jos&eacute; Miguel Fern&aacute;ndez
+Fern&aacute;ndez.  La actual traducci&oacute;n del Manual de RasMol 2.7.1
+ha sido realizada usando como base la anterior de RasMol 2.6 por
+&nbsp;Jos&eacute; Miguel Fern&aacute;ndez Fern&aacute;ndez.
+<p>
+Thanks to translations by Fernando Gabriel Ranea <davinci@dinamica.com.ar> in late 2000
+and early 2001, RasMol is now
+capable of rendering most menu items and messages in Spanish.
+Jean-Pierre Demailly <jean-pierre.demailly@ujf-grenoble.fr> provided French
+translations of menus and messages in January 2001.
+Giuseppe Martini <martini@iigb.na.cnr.it> and Giovanni Paolella <paolella@dbbm.unina.it>
+with contributions by A. Davassi, M. Masullo and C. Liotto provided Italian
+translation of menus and messages in March 2001.
+</p>
+<hr>
+<h3 >
+THIS IS A PRELIMINARY RELEASE INVOLVING EXTENSIVE MODIFICATIONS<br>
+*****  USE WITH CAUTION  ******<br>
+</h3>
+<hr>
+<h2 ><a name=Copying></a>IMPORTANT - Copying and Distribution</h2>
+<p>
+This version is based directly on RasMol version 2.7.4.2,
+on RasMol version 2.7.4.1,
+on RasMol version 2.7.4,
+on RasMol version 2.7.3.1,
+on RasMol vesion 2.7.3, on RasMol version 2.7.2.1.1,
+on RasMol version 2.7.2, on RasMol version 2.7.1, on RasMol
+version 2.6_CIF.2, on RasMol version 2.6x1, on RasMol version
+2.6.4, and RasMol 2.5-ucb and 2.6-ucb.
+<p>
+Please read the file <a href = "doc/NOTICE.html">NOTICE</a> for
+important notices which apply to this package and for
+license terms (<a href=GPL>GPL</a> or <a href=RASLIC>RASLIC</a>).
+<hr>
+<a name="CodeAndBinaries"></a>
+<h2>Obtaining RasMol v2.7.5</h2>
+<p>
+  In order to install RasMol, you may start with a compiled binary or work from
+ the source code.
+<p>
+ The complete source code
+and user documentation of RasMol 2.7.5 may be obtained
+from <a href=http://blondie.dowling.edu/projects/rasmol>http://blondie.dowling.edu/projects/rasmol</a>
+and
+<a href=http://www.sourceforge.net/projects/rasmol>http://blondie.dowling.edu/projects/rasmol</a>.
+and
+by
+anonymous FTP at:
+<p>
+    <a
+href="ftp://ftp.bernstein-plus-sons.com/software/RasMol_2.7.5.tar.gz">ftp://ftp.bernstein-plus-sons.com/software/RasMol_2.7.5.tar.gz</a>
+<p>
+or on the web at:
+<p>
+    <a
+href="http://www.bernstein-plus-sons.com/software/RasMol_2.7.5.tar.gz">http://www.bernstein-plus-sons.com/software/RasMol_2.7.5.tar.gz</a>
+<p>
+As compiled version become available, they will be posted at <a href=http://blondie.dowling.edu/projects/rasmol>http://blondie.dowling.edu/projects/rasmol</a>
+and
+<a href=http://www.sourceforge.net/projects/rasmol>http://blondie.dowling.edu/projects/rasmol</a>.
+
+
+
+<p>
+To transfer by anonymous ftp, type &quot;ftp
+ftp.bernstein-plus-sons.com&quot; on the command
+line. Several seconds later you'll be prompted for a username. Use the
+username &quot;anonymous&quot; and when asked for a password enter your e-mail
+address. Once logged in, type the command &quot;cd software/rasmol&quot; to change
+the directory to /software/rasmol and then type &quot;binary&quot; to avoid corrupting
+the files during the transfer. For each file you wish to transfer, type
+&quot;get &lt;filename&gt;&quot; and when you've finished type &quot;quit&quot;. If these files
+are subsequently transfered to other machines, please remember to
+transfer them in BINARY mode. The file sizes should be identical before
+and after the transfer.
+<p>
+<b>NOTE:</b>   The Mac uses the &quot;carriage return&quot; character to signify the
+end of a line, while UNIX machines use a &quot;linefeed&quot;. If a file is
+transfered between these two machines in &quot;ASCII&quot; mode all such
+characters are exchanged, thereby corrupting the archive. Please
+ensure that you type the FTP command &quot;binary&quot; before you transfer the
+file, indicating that the file should be transfered without
+translation.
+<p>
+If you wish to start from source code, you will need a RasMol source kit, and
+you may need one or more external packages that are not part of RasMol, but which
+are used by RasMol.
+<p>
+To build/rebuild RasMol 2.7.5 on any platform, you'll need to transfer
+the following file:
+<p>
+<div class="two-col-list"><div class="term"><a href="RasMol.tar.gz">RasMol.tar.gz</a></div><div>UNIX 'tar'ed 'gzip'ped archive containing the
+                        complete source code and documentation of the
+                        RasMol molecular graphics package.</div></div>
+<p>
+To unpack the file on a UNIX machine type the command &quot;gunzip
+RasMol.tar.gz&quot; and then the command &quot;tar -xvf
+RasMol.tar&quot; to extract the files in a subdirectory under the
+current directory.
+<p>
+<div class="center">
+<b>*** IMPORTANT CHANGE IN INSTALLATION INSTRUCTIONS FOR RELEASE 2.7.5 ***</b>
+</div>
+<p>
+You will either need to have the following packages installed in your system, or
+to ensure that the indicated defines are at the start Imakefile:
+<p>
+</p>
+<ul>
+<li><a href=http://downloads.sf.net/neartree/NearTree-2.1.3.tar.gz>
+http://downloads.sf.net/neartree/NearTree-2.1.3.tar.gz</a> or <br />
+#define NEARTREE_LOCAL
+<p>
+<li><a href=http://downloads.sf.net/cqrlib/CQRlib-1.0.3.tar.gz>
+http://downloads.sf.net/cqrlib/CQRlib-1.0.3.tar.gz</a> or <br />
+#define CQRLIB_LOCAL
+<p>
+
+<a href=http://http://downloads.sf.net/cvector/CVector-1.0.3.tar.gz>
+http://http://downloads.sf.net/cvector/CVector-1.0.3.tar.gz</a> or <br />
+#define CVECTOR_LOCAL
+<p>
+
+<li><a
+href=http://download.savannah.gnu.org/releases-noredirect/xforms/xforms-1.0.91.tar.gz>
+http://download.savannah.gnu.org/releases-noredirect/xforms/xforms-1.0.91.tar.gz</a>
+or <br />
+#define XFORMSLIB_LOCAL
+<p>
+
+<li><a href=http://downloads.sf.net/cbflib/CBFlib-0.8.1.tar.gz>
+http://downloads.sf.net/cbflib/CBFlib-0.8.1.tar.gz</a> or <br />
+#define CBFLIB_LOCAL
+<p>
+</ul>
+<p>
+
+In addition, depending on what has already been installed on your system,
+you may need one or more of certain font kits.  These packages are
+not part
+of RasMol and normally whould be obtained from their primary web sites, but,
+for convenience in installing RasMol, they have been gathered in the
+external_packages module in the CVS and as the External_Packages release on
+<a href=http://blondie.dowling.edu/projects/rasmol>http://blondie.dowling.edu/projects/rasmol</a>
+and
+<a
+href=http://www.sourceforge.net/projects/rasmol>http://www.sourceforge.net/projects/rasmol</a>.
+<p>
+
+These font kits  are snapshots of the versions in use at the time
+of the build of RasMol 2.7.5.  The primary developer web
+site for each package should be consulted for the latest
+versions.  Because these kits may not be the same as later,
+standard versions that are used by the system, as a whole,
+scripts in RasMol that use thses kits (especially font kits)
+assume that each kit has been unpacked to a directory _within_
+the RasMol build directory, at the same level as the src
+directory.  <p>
+For RasMol release 2.7.5 the package snapshots other than the font kits have been
+replaced by the table
+of downloads listed above.
+
+<p>
+For building for MS Windows, do not try to use Visual Studio.  Use MINGW instead.
+
+
+<p>
+You will need both an appropriate binary and a copy of rasmol.hlp for each
+system, and, under Windows, a copy of raswin.hlp for the WinHelp sub-system.
+<p>
+On an SGI, rename the appropriate binary as rasmol and copy it to
+/usr/local/bin/rasmol (or to some appropriate location specified
+by the environment variable PATH) and copy rasmol.hlp to
+/usr/local/lib/rasmol/rasmol.hlp (or to the location indicated by the
+environment variable RASMOLPATH)
+ <p>
+ <hr>
+
+<h2>Installing RasMol v2.7.5</h2>
+<p>
+
+<h3>UNIX X11:</h3>
+
+<p>
+If you are using a precompiled binary, see the instructions that are provided
+with the binary kit.  In general, the binary kits for unix provided directly
+by this project are tarballs of the $HOME/lib/RasMol_2_7_5 created by
+running the script in src/rasmol_install.sh.  The MS windows kit is
+a NSIS installer to be double-clicked after downloading.
+<ol>
+<li> Fonts:  Followling the instructions for your system, install whatever
+X11 font packages you need to the language variants of RasMol you intend to
+use.  Almost all Unix variants come with the appropriate fonts for English,
+French, Spanish and Italian.  There is an appropriate cyrillic font package,
+cyr-rfx-windows-1251-1.1, in external_packages.  The Chinese and Japanese
+fonts in intlfonts-1.2.1.tar.gz in external_pakages seem to be satisfactory.
+
+<li> In the RasMol src directory, either
+  <ul>
+  <li><p>
+<b>Note for 64 bit CPUs:</b>  If you are building RasMol for a 64-bit CPU
+with a compiler that has a 64-bit long data type, you must either use
+the build_all.sh script, or manually<p>
+#define _LONGLONG
+<p>
+in rasmol.h
+
+<li>Modify the #defines in the file rasmol.h (see below)
+        Note: IBMPC should not be defined.
+  <li> either
+      <ul>
+      <li> Use the script rasmol_build_options.sh to build a new Imakefile
+from Imakefile_base.  The valid options are:<br />
+    {--help|-h}<br />
+    {--cbflib_local}<br />
+    {--cqrlib_local}<br />
+    {--cvector_local}<br />
+    {--neartree_local}<br />
+    {--xformslib_local}<br />
+    {--use_xformslib}<br />
+    {--use_gtk}<br />
+    {--pixeldepth=32}<br />
+    {--pixeldepth=16}<br />
+    {--pixeldepth=8}<br />
+    {--macosx_fink}<br />
+<p>
+    or
+    <li> Edit Imakefile to change the desired options by hand.  Use of
+rasmol_build_options.sh is in general perferred
+      </ul>
+  <li>either
+  <ul>
+  <li> execute <br />
+    &nbsp;&npsp;xmkmf<br>
+    and
+  <li> execute <br />
+    &nbsp;&npsp;make rasmol
+  </ul>
+
+ or
+   <ul>
+   <li>edit the script build_all.sh
+   <li>execute build_all.sh
+   </ul>
+  to build as many variants of rasmol as possible.
+<li>A common problem is that SUN OpenWindows keeps its include files in the
+    directory /usr/openwin/include/X11, hence the compiler directive
+    -I/usr/openwin/include must be added to CFLAGS.
+<li>A common problem on IBM RS6000s running AIX is that the MIT shared
+    memory extensions to X windows are in the library -lXextSam, hence
+    this must be added to the LIBS lines in either the Makefile or Imakefile.
+
+</ol>
+<p>
+<h3>MS Windows:</h3>
+<p>
+If you are using a precompiled binary, follow the instructions that come
+with the binary, but in general, you either need to place raswin.exe,
+rasmol.hlp and raswin.hlp into the directory from which you will run,
+or you need to execute the installer program by double clicking it.
+<p>
+If you are building from source, you will need MINGW, not visual studio.
+CodeWarrior version 9 can also be used.
+</ol>
+<p>
+<h3>Macintosh under OSX:</h3>
+<p>
+Follow the instructions for unix and run under the X11 system.  A pre-edited
+version of the build_all.sh script called build_MACOSX.sh is provided.
+<p>
+
+<h2>COMPILATION DIRECTIVES</h2>
+<p>The file rasmol.h contains a number of #define directives that control
+the runtime behaviour of the program. The following directives may be
+defined or undefined to suite the local site.
+<p>
+<div class="two-col-list"><div class="term">THIRTYTWOBIT<br>
+SIXTEENBIT<br>
+EIGHTBIT</div><div>This determines whether RasMol will display and produce
+		8bit, 16bit or 32(24) bit output. By default the symbol
+                EIGHTBIT is defined producing images with up to 256
+                colours. This symbol must be defined if IBMPC is defined.</div><div class="term">DIALBOX</div><div>This enables the use of a dials box, that is connected
+		using the X Window System XInput extension. This option
+		requires that the program be compiled with the Xi and
+		Xext libraries. Note: libXi is called libXinput on some old
+		machines, so requires the compiler option -lXinput!</div><div class="term">MITSHM</div><div>This option enables the use of the X Window System MIT shared
+		memory extension. This enables images to be displayed faster
+		when RasMol and the X11 server are running on the same host.
+		This option requires the program be compiled with the Xext
+		library. On IBM RS6000s runnning AIX, MITSHM also requires
+                the XextSam library (which requires changing the Makefile or
+                Imakefile). This is now enabled by default. This should be
+                disabled on E&amp;S ESV workstations as MITSHM support is not
+                provided as standard.</div><div class="term">TERMIOS</div><div>This directive enables the command line processing on UNIXs
+		that support the termios terminal handling routines. By
+		leaving this symbol undefined, RasMol omits the interactive
+		command line interface. Undefining is not recommended!</div><div class="term">SOCKETS</div><div>This directive enables the TCP/IP server functionality of
+                RasMol to be enable.  This enables other software to connect
+                to a running RasMol.  This should be undefined on machines
+                not supporting BSD-style TCP/IP sockets (such as VMS).</div><div class="term">APPLEMAC</div><div>This determines whether the program is to run on an Apple
+                Macintosh or PowerMac. By default, this option is disabled.
+                The Macintosh code may be compiled to be either EIGHTTBIT
+                or THIRTYTWOBIT and will generate images effectively.</div><div class="term">IBMPC</div><div>This determines whether the program is intended to run on an IBM PC or compatible. By default, this
+                option is disabled.</div><div class="term">MSWIN</div><div>This determines whether the program is intended to run on an
+                IBM PC or compatible under MS Windows. By default, this
+                option is disabled.</div><div class="term">PROFILE</div><div>Defining PROFILE enables code to
+                profile RasMol execution.</div><div class="term">XPROCARCH</div><div>Defining XPROCARCH enables code
+                for raswin that gets detailed information about the operating system
+                and processor</div><div class="term">USE_UNAME</div><div>Defining USE_UNAME enables code
+                for rasmol under X11 that gets detailed information about the operating system
+                and processor.</div><div class="term">USE_CBFLIB</div><div>Defining USE_CBFLIB enables code t
+                that depends on CBFLIB for map reading and writing.</div></div>
+<p>
+To summarise;
+<p>
+<pre>
+    A typical UNIX build:
+         /* #define IBMPC        */
+         /* #define MSWIN        */
+         /* #define APPLEMAC     */
+         #define X11WIN
+         #define UNIX
+
+         /* #define DIALBOX      */
+         #define SOCKETS
+         #define TERMIOS
+         #define PROFILE
+         #define MITSHM
+         #define USE_UNAME
+         #define USE_CBFLIB
+
+    A typical Windows build:
+        #define IBMPC
+        #define MSWIN
+        /* #define APPLEMAC      */
+        /* #define X11WIN        */
+        /* #define UNIX          */
+
+        /* #define DIALBOX       */
+        /* #define SOCKETS       */
+        #define TERMIOS
+        #define PROFILE
+        #define MITSHM
+        #define USE_CBFLIB
+
+    A typical Macintosh classic build:
+        /* #define IBMPC         */
+        /* #define MSWIN         */
+        #define APPLEMAC
+        /* #define X11WIN        */
+        /* #define UNIX          */
+
+        /* #define DIALBOX       */
+        #define SOCKETS
+        #define TERMIOS
+        #define PROFILE
+        #define MITSHM
+        /* #define USE_CBFLIB    */
+
+</pre>
+<p>
+<p>
+Any comments, suggestions or questions about this
+modified version should be directed to Herbert J. Bernstein at
+<a href="mailto:rasmol@bernstein-plus-sons.com">rasmol@bernstein-plus-sons.com</a>.
+<p>
+<div class="center">
+| <a href="http://www.rasmol.net">RasMol</a> |
+<a href="readme.html#Copying">Copying and Distribution</a> |
+<a href="readme.html#Contents">Contents</a> |
+<a href="install.html">Installation Instructions</a> |<br>
+| <a href="changelog.html">Changes</a> |
+<a href="todo.html">Things To Do</a> |
+<a href="readme.html#Introduction">Introduction</a> |
+<a href="readme.html#CodeAndBinaries">Source Code and Binaries</a> |<br>
+| <a href="doc/rasmol.html">RasMol Manual</a> |
+<a href="doc/esrasmol27.html">Spanish Translation of RasMol Manual</a> |
+<a href="doc/itrasmol.hlp">Italian Translation of RasMol Help File</a> |<br>
+| <a href=http://www.rasmol.net/donate.shtml>Donate to Support RasMol</a> |
+<a href="readme.html">Release README</a> |
+<a href=http://www.rasmol.net/register.shtml>Register your RasMol</a> |
+</div>
+
+</main><footer><hr>
+Updated 19 July 2009.<br>
+Herbert J. Bernstein<br>
+Bernstein + Sons, 5 Brewster Lane, Bellport, NY 11713-2803, USA<br>
+<span class="email-placeholder"></span>
+<noscript>
+yaya&#64;bernstein-plus-sons&#46;com
+</noscript>
+
+</footer>
+</body>
+</html>
