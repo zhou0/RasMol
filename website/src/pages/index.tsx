@@ -3,7 +3,6 @@ import clsx from 'clsx';
 import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
-import HomepageFeatures from '@site/src/components/HomepageFeatures';
 import Heading from '@theme/Heading';
 
 import styles from './index.module.css';
@@ -19,10 +18,15 @@ function HomepageHeader() {
         <p className="hero__subtitle">{siteConfig.tagline}</p>
         <div className={styles.buttons}>
           <Link
-            className="button button--secondary button--lg"
-            to="/docs/intro">
-            Docusaurus Tutorial - 5min ⏱️
+            className="button button--secondary button--lg margin-horiz--sm"
+            to="/features">
+            View Features
           </Link>
+          <a
+            className="button button--secondary button--lg margin-horiz--sm"
+            href="pathname:///legacy/">
+            Legacy Docs
+          </a>
         </div>
       </div>
     </header>
@@ -33,11 +37,38 @@ export default function Home(): ReactNode {
   const {siteConfig} = useDocusaurusContext();
   return (
     <Layout
-      title={`Hello from ${siteConfig.title}`}
-      description="Description will go into a meta tag in <head />">
+      title={`Welcome to ${siteConfig.title}`}
+      description="RasMol is a molecular graphics program for the visualisation of proteins, nucleic acids and small molecules.">
       <HomepageHeader />
       <main>
-        <HomepageFeatures />
+        <section className={styles.features}>
+          <div className="container">
+            <div className="row">
+              <div className={clsx('col col--8 col--offset-2')}>
+                <div className="text--center padding-horiz--md">
+                  <Heading as="h2">Introduction to RasMol</Heading>
+                  <p>
+                    RasMol is a molecular graphics program intended for the visualisation of proteins,
+                    nucleic acids and small molecules. The program is aimed at display, teaching and
+                    generation of publication quality images. Originally developed by Roger Sayle,
+                    RasMol has become a standard tool in structural biology.
+                  </p>
+                  <p>
+                    The software interactively displays molecules in various representations such as
+                    wireframe, sticks, and spacefilling spheres. It handles a vast array of file
+                    formats, including PDB and CIF, and allows for precise control over coloring and
+                    viewing angles.
+                  </p>
+                  <p>
+                    Whether you are a researcher analyzing protein-ligand interactions or a student
+                    learning about molecular architecture, RasMol provides the speed and flexibility
+                    needed to explore the microscopic world.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
       </main>
     </Layout>
   );
