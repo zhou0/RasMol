@@ -3,7 +3,7 @@ const domain = "bernstein-plus-sons";
 const domext = ".com";
 const email = name + domain + domext;
 
-const updateEmails = () => {
+export function updateEmails() {
   const placeholders = document.querySelectorAll('.email-placeholder');
   placeholders.forEach(el => {
     if (el.childNodes.length === 0) {
@@ -13,7 +13,7 @@ const updateEmails = () => {
       el.appendChild(a);
     }
   });
-};
+}
 
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', updateEmails);
