@@ -69,6 +69,7 @@ const config: Config = {
         {to: '/download', label: 'Download', position: 'left'},
         {to: '/features', label: 'Features', position: 'left'},
         {to: '/history', label: 'History', position: 'left'},
+        {to: '/legacydocs', label: 'Legacy Docs', position: 'left'},
         {to: '/blog', label: 'Blog', position: 'left'},
         {
           href: 'https://github.com/zhou0/RasMol',
@@ -94,11 +95,11 @@ const config: Config = {
           ],
         },
         {
-          title: 'Community',
+          title: 'Legacy Project Site',
           items: [
             {
-              label: 'GitHub',
-              href: 'https://github.com/zhou0/RasMol',
+              label: 'OpenRasMol',
+              href: 'https://sourceforge.net/projects/openrasmol',
             },
           ],
         },
