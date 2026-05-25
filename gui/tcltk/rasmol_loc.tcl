@@ -56,7 +56,15 @@ array set ui_translations {
         "UserM" "Ръководство..."
         "Language" "Език"
         "MouseMode" "Режим на мишката"
-    }
+            "AboutTitle" "За RasMol"
+        "AppGraphics" "RasMol Молекулярна графика"
+        "Version" "Версия"
+        "Maintainer" "Текущ поддръжник:"
+        "OriginalAuthor" "Оригинален автор:"
+        "Contributors" "Основни сътрудници:"
+        "LicenseInfo" "Лицензиран под GNU General Public License (GPL)\n\nили лиценз RASMOL."
+        "CloseBtn" "Затвори"
+}
     "English" {
         "File" "File"
         "Open" "Open..."
@@ -112,7 +120,15 @@ array set ui_translations {
         "UserM" "User Manual..."
         "Language" "Language"
         "MouseMode" "Mouse Mode"
-    }
+            "AboutTitle" "About RasMol"
+        "AppGraphics" "RasMol Molecular Graphics"
+        "Version" "Version"
+        "Maintainer" "Current Maintainer:"
+        "OriginalAuthor" "Original Author:"
+        "Contributors" "Major Contributors:"
+        "LicenseInfo" "Licensed under the GNU General Public License (GPL)\n\nor the RASMOL License."
+        "CloseBtn" "Close"
+}
     "French" {
         "File" "Fichier"
         "Open" "Ouvrir..."
@@ -168,7 +184,15 @@ array set ui_translations {
         "UserM" "Manuel utilisateur..."
         "Language" "Langue"
         "MouseMode" "Mode souris"
-    }
+            "AboutTitle" "À propos de RasMol"
+        "AppGraphics" "RasMol Graphisme Moléculaire"
+        "Version" "Version"
+        "Maintainer" "Mainteneur actuel:"
+        "OriginalAuthor" "Auteur original:"
+        "Contributors" "Contributeurs majeurs:"
+        "LicenseInfo" "Sous licence GNU General Public License (GPL)\n\nou licence RASMOL."
+        "CloseBtn" "Fermer"
+}
     "German" {
         "File" "Datei"
         "Open" "Öffnen..."
@@ -224,7 +248,15 @@ array set ui_translations {
         "UserM" "Benutzerhandbuch..."
         "Language" "Sprache"
         "MouseMode" "Mausmodus"
-    }
+            "AboutTitle" "Über RasMol"
+        "AppGraphics" "RasMol Molekulare Grafik"
+        "Version" "Version"
+        "Maintainer" "Aktueller Betreuer:"
+        "OriginalAuthor" "Ursprünglicher Autor:"
+        "Contributors" "Hauptmitwirkende:"
+        "LicenseInfo" "Lizenziert unter der GNU General Public License (GPL)\n\noder der RASMOL-Lizenz."
+        "CloseBtn" "Schließen"
+}
     "Italian" {
         "File" "File"
         "Open" "Apri..."
@@ -280,7 +312,15 @@ array set ui_translations {
         "UserM" "Manuale Utente..."
         "Language" "Lingua"
         "MouseMode" "Modalità mouse"
-    }
+            "AboutTitle" "Informazioni su RasMol"
+        "AppGraphics" "RasMol Grafica Molecolare"
+        "Version" "Versione"
+        "Maintainer" "Manutentore attuale:"
+        "OriginalAuthor" "Autore originale:"
+        "Contributors" "Principali contributori:"
+        "LicenseInfo" "Rilasciato sotto GNU General Public License (GPL)\n\no Licenza RASMOL."
+        "CloseBtn" "Chiudi"
+}
     "Japanese" {
         "File" "ファイル"
         "Open" "開く..."
@@ -336,7 +376,15 @@ array set ui_translations {
         "UserM" "マニュアル..."
         "Language" "言語"
         "MouseMode" "マウスモード"
-    }
+            "AboutTitle" "RasMolについて"
+        "AppGraphics" "RasMol 分子グラフィックス"
+        "Version" "バージョン"
+        "Maintainer" "現在のメンテナ:"
+        "OriginalAuthor" "原著者:"
+        "Contributors" "主な貢献者:"
+        "LicenseInfo" "GNU General Public License (GPL)\n\nまたは RASMOL ライセンスの下でライセンスされています。"
+        "CloseBtn" "閉じる"
+}
     "Russian" {
         "File" "Файл"
         "Open" "Открыть..."
@@ -392,7 +440,15 @@ array set ui_translations {
         "UserM" "Руководство пользователя..."
         "Language" "Язык"
         "MouseMode" "Режим мыши"
-    }
+            "AboutTitle" "О программе RasMol"
+        "AppGraphics" "RasMol Молекулярная графика"
+        "Version" "Версия"
+        "Maintainer" "Текущий сопровождающий:"
+        "OriginalAuthor" "Первоначальный автор:"
+        "Contributors" "Основные участники:"
+        "LicenseInfo" "Лицензировано под GNU General Public License (GPL)\n\nили лицензией RASMOL."
+        "CloseBtn" "Закрыть"
+}
     "Simplified Chinese" {
         "File" "文件"
         "Open" "打开..."
@@ -448,7 +504,15 @@ array set ui_translations {
         "UserM" "用户手册..."
         "Language" "语言"
         "MouseMode" "鼠标模式"
-    }
+            "AboutTitle" "关于 RasMol"
+        "AppGraphics" "RasMol 分子图形"
+        "Version" "版本"
+        "Maintainer" "当前维护者："
+        "OriginalAuthor" "原作者："
+        "Contributors" "主要贡献者："
+        "LicenseInfo" "根据 GNU 通用公共许可证 (GPL)\n\n或 RASMOL 许可证授权。"
+        "CloseBtn" "关闭"
+}
     "Spanish" {
         "File" "Archivo"
         "Open" "Abrir..."
@@ -504,7 +568,15 @@ array set ui_translations {
         "UserM" "Manual del Usuario..."
         "Language" "Idioma"
         "MouseMode" "Modo ratón"
-    }
+            "AboutTitle" "Acerca de RasMol"
+        "AppGraphics" "RasMol Gráficos Moleculares"
+        "Version" "Versión"
+        "Maintainer" "Mantenedor actual:"
+        "OriginalAuthor" "Autor original:"
+        "Contributors" "Principales colaboradores:"
+        "LicenseInfo" "Bajo la Licencia Pública General GNU (GPL)\n\no la Licencia RASMOL."
+        "CloseBtn" "Cerrar"
+}
     "Traditional Chinese" {
         "File" "檔案"
         "Open" "開啟..."
@@ -560,7 +632,15 @@ array set ui_translations {
         "UserM" "使用者手冊..."
         "Language" "語言"
         "MouseMode" "滑鼠模式"
-    }
+            "AboutTitle" "關於 RasMol"
+        "AppGraphics" "RasMol 分子圖形"
+        "Version" "版本"
+        "Maintainer" "目前維護者："
+        "OriginalAuthor" "原作者："
+        "Contributors" "主要貢獻者："
+        "LicenseInfo" "根據 GNU 通用公共許可證 (GPL)\n\n或 RASMOL 許可證授權。"
+        "CloseBtn" "關閉"
+}
 }
 
 proc tr {key} {
