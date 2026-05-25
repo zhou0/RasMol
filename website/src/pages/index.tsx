@@ -14,7 +14,7 @@ function HomepageHeader() {
         <Heading as="h1" className="hero__title">
           {siteConfig.title}
         </Heading>
-        <p className="hero__subtitle">{siteConfig.tagline}</p>
+        <Heading as="h2" className="hero__subtitle">{siteConfig.tagline}</Heading>
       </div>
     </header>
   );
@@ -45,6 +45,12 @@ export default function Home(): ReactNode {
                     wireframe, sticks, and spacefilling spheres. It handles a vast array of file
                     formats, including PDB and CIF, and allows for precise control over coloring and
                     viewing angles.
+                  </p>
+                  <p>
+                    The OpenRasMol project, the long-standing official repository for RasMol development,
+                    has been largely inactive since 2012. This current project has been initiated to
+                    modernize the codebase and ensure that RasMol continues to serve the needs of the
+                    scientific community in the years to come.
                   </p>
                   <p>
                     Whether you are a researcher analyzing protein-ligand interactions or a student

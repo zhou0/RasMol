@@ -7,5 +7,5 @@
 Please migrate and move this option to `siteConfig.markdown.hooks.onBrokenMarkdownLinks` instead.
 [SUCCESS] Docusaurus website is running at: http://localhost:3000/
 [webpackbar] ℹ Compiling Client
-[webpackbar] ✔ Client: Compiled successfully in 10.17s
+[webpackbar] ✔ Client: Compiled successfully in 9.99s
 client (webpack 5.107.1) compiled successfully

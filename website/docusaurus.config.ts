@@ -95,7 +95,7 @@ const config: Config = {
           ],
         },
         {
-          title: 'Legacy Project Site',
+          title: 'Legacy Site',
           items: [
             {
               label: 'OpenRasMol',
