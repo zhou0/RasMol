@@ -372,7 +372,7 @@ proc show_about {} {
         return
     }
     toplevel $w
-    wm title $w "About RasMol"
+    wm title $w [tr "AboutTitle"]
     wm resizable $w 0 0
 
     # Main frame
@@ -392,85 +392,29 @@ proc show_about {} {
     }
     pack $w.f.logo -pady 10
 
+    # App Name / Graphics
+    label $w.f.appname -text [tr "AppGraphics"] -font {Helvetica 12 bold}
+    pack $w.f.appname -pady 2
+
     # Version
-    label $w.f.version -text "RasMol Version 2.8.0" -font {Helvetica 12 bold}
+    label $w.f.version -text "[tr "Version"] 2.8.0" -font {Helvetica 10 bold}
     pack $w.f.version -pady 2
 
     # Author Information
-    set current_author "Current Maintainer:\nLi ZHOU (zhouesq@hotmail.com)"
+    set current_author "[tr "Maintainer"]\nLi ZHOU (zhouesq@hotmail.com)"
     label $w.f.current -text $current_author -justify center -font {Helvetica 10 bold}
     pack $w.f.current -pady 5
 
-    set historical_authors "Original Author:\nRoger Sayle (1992-1999)\n\nMajor Contributors:\nHerbert J. Bernstein (1998-2011)\nArne Mueller (1998)\nGary Grossman & Marco Molinaro (1995-1996)\nPhilippe Valadon (2000)\nTeemu Ikonen (2009)"
+    set historical_authors "[tr "OriginalAuthor"]\nRoger Sayle (1992-1999)\n\n[tr "Contributors"]\nHerbert J. Bernstein (1998-2011)\nArne Mueller (1998)\nGary Grossman & Marco Molinaro (1995-1996)\nPhilippe Valadon (2000)\nTeemu Ikonen (2009)"
     label $w.f.hist -text $historical_authors -justify center -font {Helvetica 9}
     pack $w.f.hist -pady 5
 
     # License
-    set license_info "Licensed under the GNU General Public License (GPL)\nor the RASMOL License."
+    set license_info [tr "LicenseInfo"]
     label $w.f.license -text $license_info -justify center -font {Helvetica 9 italic}
     pack $w.f.license -pady 10
 
     # Close button
-    ttk::button $w.f.close -text "Close" -command [list destroy $w]
+    ttk::button $w.f.close -text [tr "CloseBtn"] -command [list destroy $w]
     pack $w.f.close -pady 5
-}
-
-# macOS specific menu handling
-if {[tk windowingsystem] eq "aqua"} {
-    proc tk::mac::ShowAbout {} {
-        show_about
-    }
-    proc tk::mac::ShowHelp {} {
-        send_rasmol_menu 6 2
-    }
-    proc tk::mac::Quit {} {
-        exit
-    }
-}
-
-
-
-# Localization
-package require msgcat
-
-proc detect_lang {} {
-    set locale [msgcat::mclocale]
-    set lang_part [string range $locale 0 1]
-    switch -glob -- [string tolower $locale] {
-        zh_cn* { return "Simplified Chinese" }
-        zh_tw* - zh_hk* { return "Traditional Chinese" }
-    }
-    switch -- $lang_part {
-        en { return "English" }
-        fr { return "French" }
-        de { return "German" }
-        it { return "Italian" }
-        es { return "Spanish" }
-        ru { return "Russian" }
-        ja { return "Japanese" }
-        bg { return "Bulgarian" }
-        default { return "English" }
-    }
-}
-
-set current_ui_lang [detect_lang]
-set script_dir [file dirname [info script]]
-if {[file exists [file join $script_dir rasmol_loc.tcl]]} {
-    source [file join $script_dir rasmol_loc.tcl]
-} elseif {[file exists "/usr/local/share/rasmol/rasmol_loc.tcl"]} {
-    source "/usr/local/share/rasmol/rasmol_loc.tcl"
-} elseif {[file exists "/usr/share/rasmol/rasmol_loc.tcl"]} {
-    source "/usr/share/rasmol/rasmol_loc.tcl"
-}
-
-if {[info procs localize_ui] ne ""} {
-    if {![winfo exists .menubar.settings.lang]} {
-        menu .menubar.settings.lang -tearoff 0
-        .menubar.settings add separator
-        .menubar.settings add cascade -label "Language" -menu .menubar.settings.lang
-        foreach lang [lsort [array names ui_translations]] {
-            .menubar.settings.lang add radiobutton -label $lang -variable current_ui_lang -value $lang  -command {localize_ui}
-        }
-    }
-    localize_ui
 }
