@@ -1,6 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import type { ReactNode } from 'react';
 import Layout from '@theme/Layout';
 import Heading from '@theme/Heading';
+import ReactMarkdown from 'react-markdown';
 
 interface Asset {
   id: number;
@@ -12,13 +14,13 @@ interface Release {
   id: number;
   name: string;
   tag_name: string;
+  body: string;
   published_at: string;
   html_url: string;
   assets: Asset[];
-  body: string;
 }
 
-export default function Download() {
+export default function Download(): ReactNode {
   const [releases, setReleases] = useState<Release[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -67,9 +69,9 @@ export default function Download() {
                 {release.body && (
                   <div className="margin-bottom--md">
                     <h3>Release Notes</h3>
-                    <pre style={{ whiteSpace: 'pre-wrap', backgroundColor: 'transparent', border: 'none', padding: 0, font: 'inherit' }}>
-                      {release.body}
-                    </pre>
+                    <div className="markdown-content">
+                      <ReactMarkdown>{release.body}</ReactMarkdown>
+                    </div>
                   </div>
                 )}
                 <h3>Assets</h3>
