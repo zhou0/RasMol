@@ -3,6 +3,7 @@ set -e
 
 # Detect OS
 OS_TYPE="$(uname -s)"
+RAW_ARCH="$(uname -m)"
 
 # Icon generation function
 generate_icons() {
@@ -39,10 +40,34 @@ generate_icons() {
 
 # Build function for Linux
 build_linux() {
-    echo "Building for Linux..."
-    if ! command -v rpmbuild >/dev/null 2>&1 || ! command -v cmake >/dev/null 2>&1; then
-        echo "Some dependencies might be missing. If the build fails, try running:"
-        echo "sudo apt update && sudo apt install -y rpm libx11-dev libxext-dev libxi-dev libhdf5-dev tcl-dev tk-dev bison libxpm-dev libdeflate-dev libjbig-dev liblerc-dev libwebp-dev libjpeg-dev icnsutils imagemagick inkscape"
+    echo "Building for Linux ($RAW_ARCH)..."
+
+    # Determine linuxdeploy architecture name
+    case "$RAW_ARCH" in
+        x86_64)  LD_ARCH="x86_64" ;;
+        aarch64) LD_ARCH="aarch64" ;;
+        arm64)   LD_ARCH="aarch64" ;;
+        *)       LD_ARCH="$RAW_ARCH" ;;
+    esac
+
+    # Determine Package format based on /etc/os-release
+    PKG_GEN="TGZ"
+    if [ -f /etc/os-release ]; then
+        . /etc/os-release
+        if [[ "$ID" == "ubuntu" || "$ID" == "debian" || "$ID_LIKE" == *"debian"* ]]; then
+            PKG_GEN="DEB"
+            echo "Detected Debian/Ubuntu system. Will generate DEB."
+        elif [[ "$ID" == "fedora" || "$ID" == "centos" || "$ID" == "rhel" || "$ID_LIKE" == *"fedora"* ]]; then
+            PKG_GEN="RPM"
+            echo "Detected Fedora/RHEL system. Will generate RPM."
+        elif [[ "$ID" == "arch" || "$ID_LIKE" == *"arch"* ]]; then
+            # CPack supports TXZ, and recent versions support ZST
+            PKG_GEN="TXZ"
+            if cpack --help | grep -q "ZST"; then
+                PKG_GEN="ZST"
+            fi
+            echo "Detected Arch Linux system. Will generate $PKG_GEN."
+        fi
     fi
 
     cmake -B build -S . -DCMAKE_BUILD_TYPE=Release -DPIXELDEPTH=32
@@ -60,41 +85,48 @@ build_linux() {
     fi
     cp warpings/tcl/metadata/rasmol.desktop AppDir/
 
-    # Download linuxdeploy if not present
-    if [ ! -f "linuxdeploy-x86_64.AppImage" ]; then
-        wget -q https://github.com/linuxdeploy/linuxdeploy/releases/download/1-alpha-20251107-1/linuxdeploy-x86_64.AppImage
-        chmod +x linuxdeploy-x86_64.AppImage
+    # Download linuxdeploy if not present, arch-aware
+    LD_FILENAME="linuxdeploy-${LD_ARCH}.AppImage"
+    if [ ! -f "$LD_FILENAME" ]; then
+        echo "Downloading $LD_FILENAME..."
+        wget -q "https://github.com/linuxdeploy/linuxdeploy/releases/download/1-alpha-20251107-1/$LD_FILENAME"
+        chmod +x "$LD_FILENAME"
     fi
+
+    # Ensure all library paths are in LD_LIBRARY_PATH for linuxdeploy
+    LIB_PATHS=$(find build/lib build/_deps -name "*.so*" -printf "%h:" | sort -u | tr -d "\n")
+    export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$LIB_PATHS
 
     LIBS_ARGS=""
     for lib in $(find build/lib build/_deps -name "*.so*" -not -path "*/CMakeFiles/*"); do
       LIBS_ARGS="$LIBS_ARGS --library $lib"
     done
 
-    export ARCH=$(uname -m)
+    export ARCH="$RAW_ARCH"
     mkdir -p build/AppImage
     # Run linuxdeploy
-    ./linuxdeploy-x86_64.AppImage --appimage-extract-and-run --appdir AppDir --output appimage $LIBS_ARGS || echo "AppImage generation failed"
+    ./"$LD_FILENAME" --appimage-extract-and-run --appdir AppDir --output appimage $LIBS_ARGS || echo "AppImage generation failed"
     mv *.AppImage build/AppImage/ 2>/dev/null || true
 
-    # DEB and RPM
+    # Native package (DEB/RPM/etc)
     cd build
-    cpack -G "DEB" || echo "DEB packaging failed"
-    cpack -G "RPM" || echo "RPM packaging failed"
-    mkdir -p DEB RPM
-    mv *.deb DEB/ 2>/dev/null || true
-    mv *.rpm RPM/ 2>/dev/null || true
+    echo "Generating $PKG_GEN package..."
+    cpack -G "$PKG_GEN" || echo "$PKG_GEN packaging failed"
+    mkdir -p "$PKG_GEN"
+
+    # Move artifacts to their respective folders
+    case "$PKG_GEN" in
+        DEB) mv *.deb DEB/ 2>/dev/null || true ;;
+        RPM) mv *.rpm RPM/ 2>/dev/null || true ;;
+        TXZ) mv *.tar.xz TXZ/ 2>/dev/null || true ;;
+        ZST) mv *.tar.zst ZST/ 2>/dev/null || true ;;
+    esac
     cd ..
 }
 
 # Build function for macOS
 build_macos() {
-    echo "Building for macOS..."
-    if ! command -v port >/dev/null 2>&1; then
-        echo "MacPorts not found. Please install it and dependencies if build fails:"
-        echo "sudo port install bison tcl tk libjpeg-turbo hdf5 zstd webp lerc libdeflate jbigkit xz zlib"
-    fi
-
+    echo "Building for macOS ($RAW_ARCH)..."
     cmake -B build -S . -DCMAKE_BUILD_TYPE=Release -DPIXELDEPTH=32
     cmake --build build --config Release
 
