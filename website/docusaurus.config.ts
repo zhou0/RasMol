@@ -57,12 +57,12 @@ const config: Config = {
 
   themeConfig: {
     // Replace with your project's social card
-    image: 'img/docusaurus-social-card.jpg',
+    image: 'img/rasmol-social-card.jpg',
     navbar: {
       title: 'RasMol',
       logo: {
         alt: 'RasMol Logo',
-        src: 'img/logo.svg',
+        src: 'img/rasmol-logo.svg',
       },
       items: [
         {to: '/bibliography', label: 'Bibliography', position: 'left'},
@@ -88,8 +88,8 @@ const config: Config = {
               to: '/bibliography',
             },
             {
-              label: 'Legacy Manual',
-              to: 'pathname:///legacy/rasmol.html',
+              label: 'Legacy Docs',
+              to: '/legacydocs',
             },
           ],
         },
