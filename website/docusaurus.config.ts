@@ -65,6 +65,7 @@ const config: Config = {
         src: 'img/logo.svg',
       },
       items: [
+        {to: '/bibliography', label: 'Bibliography', position: 'left'},
         {to: '/download', label: 'Download', position: 'left'},
         {to: '/features', label: 'Features', position: 'left'},
         {to: '/history', label: 'History', position: 'left'},
@@ -82,6 +83,14 @@ const config: Config = {
         {
           title: 'Docs',
           items: [
+            {
+              label: 'Bibliography',
+              to: '/bibliography',
+            },
+            {
+              label: 'Legacy Manual',
+              to: 'pathname:///legacy/rasmol.html',
+            },
           ],
         },
         {

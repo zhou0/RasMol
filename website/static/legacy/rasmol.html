@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RasMol V2.7.5 Manual</title>
+    <script type="module" src="script.js"></script>
 </head>
 <body>
     <div class="content-box">
@@ -40,34 +41,23 @@
 <H1 >Manual<BR>
 RasMol 2.7.5</H1>
 <center>
-<div class="legacy-table-wrapper" data-table="true" class="sidebar-table" >
+<div class="legacy-table-wrapper sidebar-table" data-table="true" >
 <div class="legacy-tr">
-<div class="legacy-td"  class="sidebar-td blue-bg">
-<ul class="sidebar-ul">
-<li><a href=http://www.rasmol.net/software/RasMol_Latest_Windows_Installer.exe>RasMol
-Latest Windows Installer</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />&nbsp;<br />
-<li><a href=http://www.rasmol.net/software/RasMol_Latest.tar.gz>RasMol
-Latest Source Tarball </a><br />&nbsp;<br />
-<li><a href=http://www.rasmol.net/software/RasMol_Latest_Manual.html>RasMol
-Latest Manual </a><br />&nbsp;<br />
-<li><a href=http://www.rasmol.net/donate.shtml>Donate to Support RasMol </a><br />
-<li><a href=http://www.rasmol.net/register.shtml>Register your RasMol</a><br />
-</ul>
+<div class="legacy-td sidebar-td blue-bg">
+<ul class="sidebar-ul"></li><li><a href=http://www.rasmol.net/software/RasMol_Latest_Windows_Installer.exe>RasMol
+Latest Windows Installer</a></li><li><a href=http://www.rasmol.net/software/RasMol_Latest.tar.gz>RasMol
+Latest Source Tarball </a></li><li><a href=http://www.rasmol.net/software/RasMol_Latest_Manual.html>RasMol
+Latest Manual </a></li><li><a href=http://www.rasmol.net/donate.shtml>Donate to Support RasMol </a></li><li><a href=http://www.rasmol.net/register.shtml>Register your RasMol</a></li></ul>
 
 <div class="legacy-td">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 <div class="legacy-td"><IMG  SRC="./html_graphics/rasmollogo.jpg" ALT="RasMol">
 <div class="legacy-td">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<div class="legacy-td"  class="sidebar-td yellow-bg">
+<div class="legacy-td sidebar-td yellow-bg">
 <ul class="sidebar-ul">
 <li><a href=http://www.rasmol.net/software/RasMol_2.7.5_Windows_Installer.exe>RasMol
-2.7.5 Windows Installer</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />&nbsp;<br />
-<li><a href=http://www.rasmol.net/software/RasMol_2.7.5.tar.gz>RasMol
-2.7.5 Source Tarball</a><br />&nbsp;<br />
-<li><a href=http://www.rasmol.net/software/RasMol_2.7.5_Manual.html>RasMol
-2.7.5 Manual</a><br />&nbsp;<br />
-<li><a href=http://www.rasmol.net/donate.shtml>Donate to Support RasMol </a><br />
-<li><a href=http://www.rasmol.net/register.shtml>Register your RasMol</a><br />
-</ul>
+2.7.5 Windows Installer</a></li><li><a href=http://www.rasmol.net/software/RasMol_2.7.5.tar.gz>RasMol
+2.7.5 Source Tarball</a></li><li><a href=http://www.rasmol.net/software/RasMol_2.7.5_Manual.html>RasMol
+2.7.5 Manual</a></li><li><a href=http://www.rasmol.net/donate.shtml>Donate to Support RasMol </a></li><li><a href=http://www.rasmol.net/register.shtml>Register your RasMol</a></li></ul>
 
 </div>
 </center>
@@ -89,7 +79,7 @@ Copyright &#169; Roger Sayle 1992-1999
 <P>
 
 and Based on Mods by
-<div class="legacy-table-wrapper" data-table="true" class="sidebar-table">
+<div class="legacy-table-wrapper sidebar-table" data-table="true">
 <div class="legacy-tr"><div class="legacy-th" >Author<div class="legacy-th" >Version, Date<div class="legacy-th" >Copyright
 <div class="legacy-tr"><div class="legacy-td">Arne Mueller<div class="legacy-td">RasMol 2.6x1 May 1998<div class="legacy-td">&#169 Arne Mueller 1998
 <div class="legacy-tr"><div class="legacy-td" v>Gary Grossman and<br>Marco Molinaro<div class="legacy-td">RasMol 2.5-ucb November 1995<br>RasMol 2.6-ucb November 1996
@@ -130,7 +120,7 @@ Teemu Ikonen.
 <P>
 
 and Incorporating Translations by
-<div class="legacy-table-wrapper" data-table="true" class="sidebar-table">
+<div class="legacy-table-wrapper sidebar-table" data-table="true">
 <div class="legacy-tr"><div class="legacy-th" >Author<div class="legacy-th" >Item<div class="legacy-th" >Language
 <div class="legacy-tr"><div class="legacy-td">Isabel Serv&aacute;n Mart&iacute;nez,<br>Jos&eacute; Miguel Fern&aacute;ndez Fern&aacute;ndez
 <div class="legacy-td" v>2.6 Manual<div class="legacy-td" v>Spanish
@@ -153,14 +143,7 @@ and Incorporating Translations by
 This Release by
 <BR>Herbert J. Bernstein,
 Bernstein + Sons, P.O. Box 177, Bellport, NY, USA<BR>
-<script language="javascript" type="text/javascript">
-<!--
-      var name = "yaya@";
-      var domain = "bernstein-plus-sons";
-      var domext = ".com";
-      document.write ("<a href=\"mailto:" + name + domain + domext + "\">" + name + domain + domext+"</a>");
-// -->
-</script>
+<span class="email-placeholder"></span>
 <noscript>
 yaya&#64;bernstein-plus-sons&#46;com
 </noscript>
@@ -235,27 +218,11 @@ license terms (GPL or RASLIC).
 <HR>
 <h2>Table of Contents</h2>
 <ol>
-<li><a href="#chnotice">Notices</a>
-<li><a href="#chcopying">Copying</a>
-<li><a href="#chintro">Introduction</a>
-<li><a href="#chgenop">General Operation</a>
-<UL>
-<LI><A HREF="#go_unix">Running RasMol Under UNIX or VMS</A>
-<LI><A HREF="#go_mswin">Running RasMol Under Microsoft Windows</A>
-<LI><A HREF="#go_mac">Running RasMol on the Apple Macintosh/PPC</A>
-<LI><A HREF="#go_canvas">RasMol's Window</A>
-<LI><A HREF="#go_mouse">Mouse Controls</A>
-<LI><A HREF="#go_scrollbars">Scroll Bars</A>
-<LI><A HREF="#go_picking">Picking</A>
-<LI><A HREF="#go_dials">Dials Box</A>
-<LI><A HREF="#go_cmdline">Command Line Interface</A>
-<LI><A HREF="#go_dimensions">Dimensions within RasMol</A>
-<LI><A HREF="#go_ini">Start-up Initialisation Files</A>
-<LI><A HREF="#go_interprocess">Inter-Process Communication (IPC)</A>
-</UL>
+<li><a href="#chnotice">Notices</a></li><li><a href="#chcopying">Copying</a></li><li><a href="#chintro">Introduction</a></li><li><a href="#chgenop">General Operation</a>
+<UL></li><li><A HREF="#go_unix">Running RasMol Under UNIX or VMS</A></li><li><A HREF="#go_mswin">Running RasMol Under Microsoft Windows</A></li><li><A HREF="#go_mac">Running RasMol on the Apple Macintosh/PPC</A></li><li><A HREF="#go_canvas">RasMol's Window</A></li><li><A HREF="#go_mouse">Mouse Controls</A></li><li><A HREF="#go_scrollbars">Scroll Bars</A></li><li><A HREF="#go_picking">Picking</A></li><li><A HREF="#go_dials">Dials Box</A></li><li><A HREF="#go_cmdline">Command Line Interface</A></li><li><A HREF="#go_dimensions">Dimensions within RasMol</A></li><li><A HREF="#go_ini">Start-up Initialisation Files</A></li><li><A HREF="#go_interprocess">Inter-Process Communication (IPC)</A></li></UL>
 <li><a href="#chcomref">Command Reference</a>
 <center>
-<div class="legacy-table-wrapper" data-table="true" class="sidebar-table"  BORDER>
+<div class="legacy-table-wrapper sidebar-table" data-table="true"  BORDER>
 <div class="legacy-tr"><div class="legacy-td"><a href="#backbone">Backbone</a>
 <div class="legacy-td"><a href="#background">Background</a>
 <div class="legacy-td"><a href="#bond">Bond</a>
@@ -323,9 +290,8 @@ license terms (GPL or RASLIC).
 <div class="legacy-tr"><div class="legacy-td"><a href="#zoom">Zoom</a>
 <div class="legacy-td">
 </div>
-</center>
-<li><a href="#chsetopt">Internal Parameters</a>
-<center><div class="legacy-table-wrapper" data-table="true" class="sidebar-table" BORDER>
+</center></li><li><a href="#chsetopt">Internal Parameters</a>
+<center><div class="legacy-table-wrapper sidebar-table" data-table="true" BORDER>
 <div class="legacy-tr"><div class="legacy-td"><a href="#setambient">Ambient</a>
 <div class="legacy-td"><a href="#setaxes">Axes</a>
 <div class="legacy-td"><a href="#setbackground">Background</a>
@@ -364,14 +330,7 @@ license terms (GPL or RASLIC).
 <div class="legacy-td"><a href="#setvectps">VectPS</a>
 <div class="legacy-td"><a href="#setwrite">Write</a>
 <div class="legacy-td" CELLSPAN=3>
-</div></center>
-<li><a href="#chexprs">Atom Expressions</a>
-<li><a href="#predefinedsets">Predefined Sets</a>
-<li><a href="#chcolours">Colour Schemes</a>
-<li><a href="#chfile">File Formats</a>
-<li><a href="#chmacspec">File Machine-Specific Support</a>
-<li><a href="#chbib">Bibliography</a>
-</ol>
+</div></center></li><li><a href="#chexprs">Atom Expressions</a></li><li><a href="#predefinedsets">Predefined Sets</a></li><li><a href="#chcolours">Colour Schemes</a></li><li><a href="#chfile">File Formats</a></li><li><a href="#chmacspec">File Machine-Specific Support</a></li><li><a href="#chbib">Bibliography</a></li></ol>
 <p><hr>
 <P><BR>RasMol Copyright &#169; Roger Sayle 1992-1999
 <BR>Version 2.6x1 Mods Copyright &#169; Arne Mueller 1998
@@ -390,7 +349,7 @@ of the others resulting from its use. Information in this document is subject
 to change without notice and does not represent a commitment on the part of
 the supplier.
 <p><hr>
-<a name="chnotice"><h2>Notices</h2></a>
+<h2 id="chnotice">Notices</h2>
 <p>
 This software has been created from several sources.  Much of the code is
 from RasMol 2.6, as created by Roger Sayle.
@@ -431,7 +390,7 @@ for copyright notices.  If you use RasMol V2.6
 or an earlier version, type the RasMol command
 '<tt><b>help oldnotice</b></tt>'.
 <p><hr>
-<a name="chcopying"><h2>Copying</h2></a>
+<h2 id="chcopying">Copying</h2>
 <p>
 This version is based directly on RasMol version 2.7.4.2,
 on RasMol verion 2.7.4.2, on RasMol version 2.7.4,
@@ -454,7 +413,7 @@ See the file NOTICE
 or type the command
 '<a href="#RASLIC"><tt><b>help RASLIC</b></tt></a>'
 <p><hr>
-<a name="gpl"><h3>GPL</h3></a><p>
+<h3 id="GPL">GPL</h3><p>
 <tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GNU&nbsp;GENERAL&nbsp;PUBLIC&nbsp;LICENSE</tt><br/>
 <tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Version&nbsp;2,&nbsp;June&nbsp;1991</tt><br/>
 <p>
@@ -795,7 +754,7 @@ or type the command
 <tt>library.&nbsp;&nbsp;If&nbsp;this&nbsp;is&nbsp;what&nbsp;you&nbsp;want&nbsp;to&nbsp;do,&nbsp;use&nbsp;the&nbsp;GNU&nbsp;Library&nbsp;General</tt><br/>
 <tt>Public&nbsp;License&nbsp;instead&nbsp;of&nbsp;this&nbsp;License.</tt><br/>
 <p><hr>
-<a name="raslic"><h3>RASLIC</h3></a><p>
+<h3 id="RASLIC">RASLIC</h3><p>
 If you do not use the GPL, the following license terms apply:
 <p>
 RasMol License
@@ -845,7 +804,7 @@ freely to the community in the hopes of advancing science.  If you make
 changes, please make them in a responsible manner, and please offer us
 the opportunity to include those changes in future versions of RasMol.
 <p><hr>
-<a name="generalnotice"><h3>General Notice</h3></a><p>
+<h3 id="generalnotice">General Notice</h3><p>
 The following notice applies to this work as a whole and to the works
 included within it:
 <p>
@@ -889,7 +848,7 @@ OR FILES AND NOT WITH AUTHORS OF THE PROGRAMS OR DOCUMENTS.
 See the files GPL and RASLIC for two alternate ways to license this
 package.
 <p><hr>
-<a name="rasmolv26notice"><h3>RasMol V2.6 Notice</h3></a><p>
+<h3 id="rasmolv26notice">RasMol V2.6 Notice</h3><p>
 The following notice applies to RasMol V 2.6 and older RasMol versions.
 <p>
 Information in this document is subject to change without notice and
@@ -911,7 +870,7 @@ equipment. The author shall not be liable, in whole or in part, for
 any claims or damages arising from such use, including death,
 bankruptcy or outbreak of war.
 <p><hr>
-<a name="iucrpolicy"><h3>IUCR Policy</h3></a><p>
+<h3 id="iucrpolicy">IUCR Policy</h3><p>
 <tt><b>The IUCr Policy for the Protection and the Promotion of the STAR File and</b></tt>
 <tt><b>CIF Standards for Exchanging and Archiving Electronic Data</b></tt>.
 <p>
@@ -994,7 +953,7 @@ Last modified: 30 September 2000
 <p>
 IUCr Policy Copyright (C) 2000 International Union of Crystallography
 <p><hr>
-<a name="cbflib"><h3>CBFLIB</h3></a><p>
+<h3 id="cbflib">CBFLIB</h3><p>
 The following Disclaimer Notice applies to CBFlib V0.1, from which this code
 in part is derived.
 <p>
@@ -1012,7 +971,7 @@ whatsoever.
 <p>
 Notice 91 02 01
 <p><hr>
-<a name="cifparse"><h3>CIFPARSE</h3></a><p>
+<h3 id="cifparse">CIFPARSE</h3><p>
 Portions of this software are loosely based on the CIFPARSE software package
 from the NDB at Rutgers University.  See
 <p>
@@ -1033,7 +992,7 @@ FOR A PARTICULAR PURPOSE OR ANY OTHER WARRANTY, EXPRESS OR IMPLIED. RUTGERS
 MAKE NO REPRESENTATION OR WARRANTY THAT THE SOFTWARE WILL NOT INFRINGE ANY
 PATENT, COPYRIGHT OR OTHER PROPRIETARY RIGHT.
 <p><hr>
-<a name="chintro"><h2>Introduction</h2></a>
+<h2 id="chintro">Introduction</h2>
 RasMol is a molecular graphics program intended for the visualisation of
 proteins, nucleic acids and small molecules.
 The program is aimed at display, teaching and generation of
@@ -1092,21 +1051,9 @@ may be displayed by typing &quot;help commands&quot;. A single question mark may
 be used to abbreviate the keyword &quot;help&quot;.  Please type &quot;help notices&quot; for
 important notices.
 <p><hr>
-<A name="chgenop"><H2>General Operation</H2></A>
+<H2 id="chgenop">General Operation</H2>
 <UL>
-<LI><A HREF="#go_unix">Running RasMol Under UNIX or VMS</A>
-<LI><A HREF="#go_mswin">Running RasMol Under Microsoft Windows</A>
-<LI><A HREF="#go_mac">Running RasMol on the Apple Macintosh/PPC</A>
-<LI><A HREF="#go_canvas">RasMol's Window</A>
-<LI><A HREF="#go_mouse">Mouse Controls</A>
-<LI><A HREF="#go_scrollbars">Scroll Bars</A>
-<LI><A HREF="#go_picking">Picking</A>
-<LI><A HREF="#go_dials">Dials Box</A>
-<LI><A HREF="#go_cmdline">Command Line Interface</A>
-<LI><A HREF="#go_dimensions">Dimensions within RasMol</A>
-<LI><A HREF="#go_ini">Start-up Initialisation Files</A>
-<LI><A HREF="#go_interprocess">Inter-Process Communication (IPC)</A>
-</UL>
+<li><A HREF="#go_unix">Running RasMol Under UNIX or VMS</A></li><li><A HREF="#go_mswin">Running RasMol Under Microsoft Windows</A></li><li><A HREF="#go_mac">Running RasMol on the Apple Macintosh/PPC</A></li><li><A HREF="#go_canvas">RasMol's Window</A></li><li><A HREF="#go_mouse">Mouse Controls</A></li><li><A HREF="#go_scrollbars">Scroll Bars</A></li><li><A HREF="#go_picking">Picking</A></li><li><A HREF="#go_dials">Dials Box</A></li><li><A HREF="#go_cmdline">Command Line Interface</A></li><li><A HREF="#go_dimensions">Dimensions within RasMol</A></li><li><A HREF="#go_ini">Start-up Initialisation Files</A></li><li><A HREF="#go_interprocess">Inter-Process Communication (IPC)</A></li></UL>
 <A NAME="go_unix"></A>
 <H3>Running RasMol Under UNIX or VMS</H3>
 To start RasMol from either the UNIX or VMS prompt, type the command
@@ -1636,7 +1583,7 @@ sending application need only place all the commands to be executed
 in a temporary file, set the type of the file to 'RSML' and then
 send RasMol an OpenDocument AppleEvent with the file as parameter. <BR>
 <p><hr>
-<a name="chcomref"><h2>Command Reference</h2></a>
+<h2 id="chcomref">Command Reference</h2>
 RasMol allows the execution of interactive commands typed at the
 '<tt><b>RasMol&gt;</b></tt>'
 prompt in the terminal window. Each command must be given on
@@ -1658,7 +1605,7 @@ and
 The commands/keywords currently recognised by RasMol are given below.
 <p>
 <center>
-<div class="legacy-table-wrapper" data-table="true" class="sidebar-table" BORDER>
+<div class="legacy-table-wrapper sidebar-table" data-table="true" BORDER>
 <div class="legacy-tr"><div class="legacy-td"><a href="#backbone">Backbone</a>
 <div class="legacy-td"><a href="#background">Background</a>
 <div class="legacy-td"><a href="#bond">Bond</a>
@@ -1727,7 +1674,7 @@ The commands/keywords currently recognised by RasMol are given below.
 <div class="legacy-td">
 </div>
 </center><hr>
-<a name="backbone"><h3>Backbone</h3></a><p>
+<h3 id="backbone">Backbone</h3><p>
 <pre>
 Syntax:  backbone {&lt;boolean&gt;}
          backbone &lt;value&gt;
@@ -1769,7 +1716,7 @@ The backbone may be displayed with dashed lines by use of the
 '<tt><b>backbone dash</b></tt>'
 command.
 <p><hr>
-<a name="background"><h3>Background</h3></a><p>
+<h3 id="background">Background</h3><p>
 <pre>
 Syntax:  background &lt;colour&gt;
 </pre><p>
@@ -1790,7 +1737,7 @@ command is synonymous with the RasMol
 '<a href="#setbackground"><tt><b>set background</b></tt></a>'
 command.
 <p><hr>
-<a name="bond"><h3>Bond</h3></a><p>
+<h3 id="bond">Bond</h3><p>
 <pre>
 Syntax:  bond &lt;number&gt;  &lt;number&gt; +
          bond &lt;number&gt;  &lt;number&gt; pick
@@ -1814,7 +1761,7 @@ or the equivalent
 '<a href="#rotate"><tt><b>rotate bond on/off</b></tt></a>'
 commands.
 <p><hr>
-<a name="bulgarian"><h3>Bulgarian</h3></a><p>
+<h3 id="bulgarian">Bulgarian</h3><p>
 <pre>
 Syntax:  Bulgarian
 </pre><p>
@@ -1836,7 +1783,7 @@ may be used to select Bulgarian, Chinese, English, French,
 Italian, Japanese, Russian and Spanish menus and messages if the
 appropriate fonts have been installed.
 <p><hr>
-<a name="cartoon"><h3>Cartoon</h3></a><p>
+<h3 id="cartoon">Cartoon</h3><p>
 <pre>
 Syntax:  cartoon {&lt;number&gt;}
 </pre><p>
@@ -1871,7 +1818,7 @@ command. The
 command without any parameters returns these two options
 to their default values.
 <p><hr>
-<a name="centre"><h3>Centre</h3></a><p>
+<h3 id="centre">Centre</h3><p>
 <pre>
 Syntax:  centre {&lt;expression&gt;} {translate|center}
          center {&lt;expression&gt;} {translate|center}
@@ -1905,7 +1852,7 @@ which is placed at the centre of the canvas.  Starting with
 RasMol 2.7.2, the default is
 to center the new axis on the canvas.
 <p><hr>
-<a name="chinese"><h3>Chinese</h3></a><p>
+<h3 id="chinese">Chinese</h3><p>
 <pre>
 Syntax:  Chinese
 </pre><p>
@@ -1927,7 +1874,7 @@ may be used to select Bulgarian, Chinese, English, French,
 Italian, Japanese, Russian and Spanish menus and messages if the
 appropriate fonts have been installed.
 <p><hr>
-<a name="clipboard"><h3>Clipboard</h3></a><p>
+<h3 id="clipboard">Clipboard</h3><p>
 <pre>
 Syntax:  clipboard
 </pre><p>
@@ -1945,7 +1892,7 @@ by the receiving program using the RasMol
 '<a href="#write"><tt><b>write</b></tt></a>'
 command.
 <p><hr>
-<a name="colour"><h3>Colour</h3></a><p>
+<h3 id="colour">Colour</h3><p>
 <pre>
 Syntax:  colour {&lt;object&gt;} &lt;colour&gt;
          color {&lt;object&gt;} &lt;colour&gt;
@@ -1998,7 +1945,7 @@ For more information type
 '<a href="#chcolours"><tt><b>help colour &lt;colour&gt;</b></tt></a>'.
 Map objects may be coloured by specific color of by nearest atom.
 <p><hr>
-<a name="colourmode"><h3>ColourMode</h3></a><p>
+<h3 id="colourmode">ColourMode</h3><p>
 <pre>
 Syntax:  colourmode {&lt;boolean&gt;}
          colormode {&lt;boolean&gt;}
@@ -2012,7 +1959,7 @@ script somewhere, if the script was designed for version 2.7.3
 of RasMol or earlier. The new color method, when completed,
 aims to fix a few bugs in the coloring routines.
 <p>
-<a name="connect"><h3>Connect</h3></a><p>
+<h3 id="connect">Connect</h3><p>
 <pre>
 Syntax:  connect {&lt;boolean&gt;}
 </pre><p>
@@ -2037,7 +1984,7 @@ if necessary, when a molecule is first read in using the
 '<a href="#load"><tt><b>load</b></tt></a>'
 command.
 <p><hr>
-<a name="defer"><h3>Defer</h3></a><p>
+<h3 id="defer">Defer</h3><p>
 <pre>
 Syntax:  defer &lt;name&gt; &lt;command to defer&gt;
 </pre><p>
@@ -2056,7 +2003,7 @@ using the
 '<a href="#execute"><tt><b>execute</b></tt></a>'
 command
 <p><hr>
-<a name="define"><h3>Define</h3></a><p>
+<h3 id="define">Define</h3><p>
 <pre>
 Syntax:  define &lt;identifier&gt; &lt;expression&gt;
 </pre><p>
@@ -2068,7 +2015,7 @@ sets are declared statically, <i>i.e.</i> once defined the contents of the set
 do not change, even if the expression defining them depends on the
 current transformation and representation of the molecule.
 <p><hr>
-<a name="depth"><h3>Depth</h3></a><p>
+<h3 id="depth">Depth</h3><p>
 <pre>
 Syntax:  depth {&lt;boolean&gt;}
          depth &lt;value&gt;
@@ -2086,7 +2033,7 @@ This command interacts with the
 '<a href="#slab"><tt><b>slab &lt;value&gt;</b></tt></a>'
 command, which clips to the front of a given z-clipping plane.
 <p><hr>
-<a name="dots"><h3>Dots</h3></a><p>
+<h3 id="dots">Dots</h3><p>
 <pre>
 Syntax:  dots {&lt;boolean&gt;}
          dots &lt;value&gt;
@@ -2115,7 +2062,7 @@ of the whole dot surface may be changed using the
 '<a href="#colour"><tt><b>colour dots</b></tt></a>'
 command.
 <p><hr>
-<a name="echo"><h3>Echo</h3></a><p>
+<h3 id="echo">Echo</h3><p>
 <pre>
 Syntax:  echo {&lt;string&gt;}
 </pre><p>
@@ -2130,7 +2077,7 @@ for displaying text from within a RasMol
 '<a href="#script"><tt><b>script</b></tt></a>'
 file.
 <p><hr>
-<a name="english"><h3>English</h3></a><p>
+<h3 id="english">English</h3><p>
 <pre>
 Syntax:  English
 </pre><p>
@@ -2152,7 +2099,7 @@ may be used to select Bulgarian, Chinese, English, French,
 Italian, Japanese, Russian and Spanish menus and messages if the
 appropriate fonts have been installed.
 <p><hr>
-<a name="execute"><h3>Execute</h3></a><p>
+<h3 id="execute">Execute</h3><p>
 <pre>
 Syntax:  execute &lt;name&gt;
 </pre><p>
@@ -2177,7 +2124,7 @@ The animation of the motion depends on the prior settings of the
 '<a href="#record"><tt><b>record</b></tt></a>'
 command.
 <p><hr>
-<a name="french"><h3>French</h3></a><p>
+<h3 id="french">French</h3><p>
 <pre>
 Syntax:  French
 </pre><p>
@@ -2199,7 +2146,7 @@ may be used to select Bulgarian, Chinese, English, French,
 Italian, Japanese, Russian and Spanish menus and messages if the
 appropriate fonts have been installed.
 <p><hr>
-<a name="hbonds"><h3>HBonds</h3></a><p>
+<h3 id="hbonds">HBonds</h3><p>
 <pre>
 Syntax:  hbonds {&lt;boolean&gt;}
          hbonds &lt;value&gt;
@@ -2231,7 +2178,7 @@ command the alpha carbon positions of the appropriate residues may be
 used instead. This is especially useful when examining proteins in
 backbone representation.
 <p><hr>
-<a name="help"><h3>Help</h3></a><p>
+<h3 id="help">Help</h3><p>
 <pre>
 Syntax:  help {&lt;topic&gt; {&lt;subtopic&gt;}}
          ? {&lt;topic&gt; {&lt;subtopic&gt;}}
@@ -2240,7 +2187,7 @@ The RasMol
 '<tt><b>help</b></tt>'
 command provides on-line help on the given topic.
 <p><hr>
-<a name="italian"><h3>Italian</h3></a><p>
+<h3 id="italian">Italian</h3><p>
 <pre>
 Syntax:  Italian
 </pre><p>
@@ -2262,7 +2209,7 @@ may be used to select Bulgarian, Chinese, English, French,
 Italian, Japanese, Russian and Spanish menus and messages if the
 appropriate fonts have been installed.
 <p><hr>
-<a name="japanese"><h3>Japanese</h3></a><p>
+<h3 id="japanese">Japanese</h3><p>
 <pre>
 Syntax:  Japanese
 </pre><p>
@@ -2284,7 +2231,7 @@ may be used to select Bulgarian, Chinese, English, French,
 Italian, Japanese, Russian and Spanish menus and messages if the
 appropriate fonts have been installed.
 <p><hr>
-<a name="label"><h3>Label</h3></a><p>
+<h3 id="label">Label</h3><p>
 <pre>
 Syntax:  label {&lt;string&gt;}
          label &lt;boolean&gt;
@@ -2334,7 +2281,7 @@ The following table lists the current expansion specifiers:
     %A      Alternate Conformation Identifier (with leading ";")
 </pre>
 <p><hr>
-<a name="load"><h3>Load</h3></a><p>
+<h3 id="load">Load</h3><p>
 <pre>
 Syntax:  load {&lt;format&gt;} &lt;filename&gt;
 </pre><p>
@@ -2408,7 +2355,7 @@ atomic coordinates in PDB, CIF or mmCIF file format.
 One possible use is a standard RasMol script prefix that may be
 concatenated with an appropriate PDB file on-the-fly.
 <p><hr>
-<a name="map"><h3>Map</h3></a><p>
+<h3 id="map">Map</h3><p>
 <pre>
 Syntax:  map {&lt;map_selector&gt;} {&lt;map_subcommand&gt; &lt;parameters&gt;}
 </pre><p>
@@ -2439,7 +2386,7 @@ to select one or more maps and to disable all others,
 '<a href="#mapsave"><tt><b>map save</b></tt></a>',
 to save map information to a file,
 '<a href="#mapscale"><tt><b>map scale</b></tt></a>',
-'<a href="#to"><tt><b>control the scaling of pseudo-Gaussians when generating maps</b></tt></a>',
+'<tt><b>control the scaling of pseudo-Gaussians when generating maps</b></tt>',
 '<a href="#mapselect"><tt><b>map select</b></tt></a>',
 to select one or more maps,
 '<a href="#mapshow"><tt><b>map show</b></tt></a>',
@@ -2462,7 +2409,7 @@ commands is modified by the
 command which limits the portion of the display space
 that can be considered for display of maps.
 <p><hr>
-<a name="mapcolour"><h3>Map colour</h3></a><p>
+<h3 id="mapcolour">Map colour</h3><p>
 <pre>
 Syntax:  map {&lt;map_selector&gt;} colour &lt;colour_scheme&gt;
 
@@ -2476,7 +2423,7 @@ and RBG triple in brackets, or the keyword
 to cause the map points to be coloured by the color of the
 nearest atom.
 <p><hr>
-<a name="mapgenerate"><h3>Map generate</h3></a><p>
+<h3 id="mapgenerate">Map generate</h3><p>
 <pre>
 Syntax:  map {&lt;map_selector&gt;} generate {LRsurf} dots
          map {&lt;map_selector&gt;} generate {LRsurf} mesh
@@ -2521,7 +2468,7 @@ case the new map becomes the currently selected map.
 The map is displayed as dots, mesh or a surface, depending on the last
 map rendering mode selected or the mode selected on the command itself.
 <p><hr>
-<a name="maplevel"><h3>Map level</h3></a><p>
+<h3 id="maplevel">Map level</h3><p>
 <pre>
 Syntax:  map {&lt;map_selector&gt;} level {MEAN} &lt;number&gt;
 
@@ -2537,7 +2484,7 @@ In general, a lower level results in a map containing more of the
 displayed volume, while a higher level results in a map containing
 less of the displayed volume.
 <p><hr>
-<a name="mapload"><h3>Map load</h3></a><p>
+<h3 id="mapload">Map load</h3><p>
 <pre>
 Syntax:  map {&lt;map_selector&gt;} load &lt;filename&gt;
 
@@ -2558,7 +2505,7 @@ case the new map becomes the currently selected map.
 The map is displayed as dots, mesh or a surface depending on the
 last map rendering mode selected.
 <p><hr>
-<a name="mapmask"><h3>Map mask</h3></a><p>
+<h3 id="mapmask">Map mask</h3><p>
 <pre>
 Syntax:  map {&lt;map_selector&gt;} mask selected
          map {&lt;map_selector&gt;} mask &lt;number&gt;
@@ -2589,7 +2536,7 @@ map lower than the average value of the mask map cause the values of
 the map being masked to be treated as if they were equal to the
 lowest data value of the map being masked.
 <p><hr>
-<a name="mapresolution"><h3>Map resolution</h3></a><p>
+<h3 id="mapresolution">Map resolution</h3><p>
 <pre>
 Syntax:  map {&lt;map_selector&gt;} resolution &lt;number&gt;
 
@@ -2611,7 +2558,7 @@ generated maps from selected atoms (see the
 command).  The map spread is set to two thirds of
 the specified resolution.
 <p><hr>
-<a name="maprestrict"><h3>Map restrict</h3></a><p>
+<h3 id="maprestrict">Map restrict</h3><p>
 <pre>
 Syntax:  map {&lt;map_selector&gt;} restrict
 
@@ -2624,7 +2571,7 @@ subsequent map commands.  This is similar to the
 command, but does disables the display of the
 maps that were not selected.
 <p><hr>
-<a name="mapsave"><h3>Map save</h3></a><p>
+<h3 id="mapsave">Map save</h3><p>
 <pre>
 Syntax:  map {&lt;map_selector&gt;} save &lt;filename&gt;
 
@@ -2637,7 +2584,7 @@ If no specific map was given by the map selector, the currently
 selected maps and their masks are written to the file, one
 map and mask pair per data block.
 <p><hr>
-<a name="mapscale"><h3>Map scale</h3></a><p>
+<h3 id="mapscale">Map scale</h3><p>
 <pre>
 Syntax:  map {&lt;map_selector&gt;} scale &lt;boolean&gt;
 
@@ -2654,7 +2601,7 @@ the Gaussian contour level 1 is at the van der Waals radius.
 In either case a standard deviation determined by the
 most recently specified spread or resolution is used.
 <p><hr>
-<a name="mapselect"><h3>Map select</h3></a><p>
+<h3 id="mapselect">Map select</h3><p>
 <pre>
 Syntax:  map {&lt;map_selector&gt;} select {atom {within} {add} {search_radius}}
 
@@ -2681,7 +2628,7 @@ selected atoms.  If the options
 parameter is given, the new selection is added to the currently selected atoms.
 The default is to search within all atoms.
 <p><hr>
-<a name="mapshow"><h3>Map show</h3></a><p>
+<h3 id="mapshow">Map show</h3><p>
 <pre>
 Syntax:  map {&lt;map_selector&gt;} show
 
@@ -2691,7 +2638,7 @@ The RasMol
 command causes information about the maps specified by
 the map selector to be written to the command window.
 <p><hr>
-<a name="mapspacing"><h3>Map spacing</h3></a><p>
+<h3 id="mapspacing">Map spacing</h3><p>
 <pre>
 Syntax:  map {&lt;map_selector&gt;} spacing &lt;number&gt;
 
@@ -2706,7 +2653,7 @@ integer.  For maps loaded in grid coordinates that spacing
 is parallel to the cell edges.  The default spacing is
 one half &Aring;ngstrom.
 <p><hr>
-<a name="mapspread"><h3>Map spread</h3></a><p>
+<h3 id="mapspread">Map spread</h3><p>
 <pre>
 Syntax:  map {&lt;map_selector&gt;} spread &lt;number&gt;
 
@@ -2723,7 +2670,7 @@ If the spread has been set to zero, the spread for each atom is determined
 from the van der Waals radius and the probe atom radius to simulate the
 effect of a Lee-Richards surface.
 <p><hr>
-<a name="mapzap"><h3>Map zap</h3></a><p>
+<h3 id="mapzap">Map zap</h3><p>
 <pre>
 Syntax:  map {&lt;map_selector&gt;} zap
 
@@ -2734,7 +2681,7 @@ command removes the data and representations of the
 maps specified by the map selector.  The map numbers
 of maps that have not been removed are not changed.
 <p><hr>
-<a name="molecule"><h3>Molecule</h3></a><p>
+<h3 id="molecule">Molecule</h3><p>
 <pre>
 Syntax:  molecule &lt;number&gt;
 </pre><p>
@@ -2748,7 +2695,7 @@ command), only one molecule at a time
 time is active for manipulation by the commands which
 control the details of rendering.
 <p><hr>
-<a name="monitor"><h3>Monitor</h3></a><p>
+<h3 id="monitor">Monitor</h3><p>
 <pre>
 Syntax:  monitor &lt;number&gt;  &lt;number&gt;
          monitor {&lt;boolean&gt;}
@@ -2790,7 +2737,7 @@ between a fixed atom and several consecutive positions. A distance
 monitor may also be removed (toggled) by selecting the appropriate
 pair of atom end points a second time.
 <p><hr>
-<a name="notoggle"><h3>Notoggle</h3></a><p>
+<h3 id="notoggle">Notoggle</h3><p>
 <pre>
 Syntax:  notoggle {&lt;boolean&gt;}
 </pre><p>
@@ -2808,7 +2755,7 @@ Some commands which use the toggle feature are:
 More functions that utilize this capability may be added
 at a later date.
 <p><hr>
-<a name="pause"><h3>Pause</h3></a><p>
+<h3 id="pause">Pause</h3><p>
 <pre>
 Syntax:  pause
          wait
@@ -2853,7 +2800,7 @@ The command
 disables picking, which avoids the display of spurious messages
 whilst a script is suspended at a pause.
 <p><hr>
-<a name="play"><h3>Play</h3></a><p>
+<h3 id="play">Play</h3><p>
 <pre>
 Syntax:  play {from &lt;time&gt;} {until &lt;time&gt;} {{on|off|eject} {&lt;type&gt;} &lt;medium&gt;}
 </pre><p>
@@ -2877,7 +2824,7 @@ those settings will be used.
 <p>
 As of release 2.7.5, RasMol support play from scripts and data files.
 <p><hr>
-<a name="print"><h3>Print</h3></a><p>
+<h3 id="print">Print</h3><p>
 <pre>
 Syntax:  print
 </pre><p>
@@ -2897,7 +2844,7 @@ or
 commands and printing that or generating a raster image file and using a
 utility to dump that to the local printer.
 <p><hr>
-<a name="quit"><h3>Quit</h3></a><p>
+<h3 id="quit">Quit</h3><p>
 <pre>
 Syntax:  quit
          exit
@@ -2912,7 +2859,7 @@ terminates only the current level, while
 '<tt><b>quit</b></tt>'
 terminates all nested levels of scripts.
 <p><hr>
-<a name="record"><h3>Record</h3></a><p>
+<h3 id="record">Record</h3><p>
 <pre>
 Syntax:  record {from &lt;time&gt;} {until &lt;time&gt;} {{on|off} {&lt;type&gt;} &lt;medium&gt;}
          record {mouse|motion|appearance} {on|off}
@@ -2958,7 +2905,7 @@ would result in a 20 minute movie segment intended to start 10
 minutes into a longer movie.
 These commands allow control over rewriting selected time segments.
 <p><hr>
-<a name="refresh"><h3>Refresh</h3></a><p>
+<h3 id="refresh">Refresh</h3><p>
 <pre>
 Syntax:  refresh
 </pre><p>
@@ -2967,7 +2914,7 @@ The RasMol
 command redraws the current image.  This is useful in scripts
 to ensure application of a complex list of parameter changes.
 <p><hr>
-<a name="renumber"><h3>Renumber</h3></a><p>
+<h3 id="renumber">Renumber</h3><p>
 <pre>
 Syntax:  renumber {{-} &lt;value&gt;}
 </pre><p>
@@ -2982,7 +2929,7 @@ to the 3' terminus. All chains in the current database are renumbered and gaps
 in the original sequence are ignored. The starting value for numbering may
 be negative.
 <p><hr>
-<a name="reset"><h3>Reset</h3></a><p>
+<h3 id="reset">Reset</h3><p>
 <pre>
 Syntax:  reset
 </pre><p>
@@ -3002,7 +2949,7 @@ This command should not be mistaken for the RasMol
 command which deletes the currently stored molecule, returning the
 program to its initial state.
 <p><hr>
-<a name="restrict"><h3>Restrict</h3></a><p>
+<h3 id="restrict">Restrict</h3><p>
 <pre>
 Syntax:  restrict {&lt;expression&gt;}
 </pre><p>
@@ -3030,7 +2977,7 @@ Type &quot;help expression&quot; for more information on RasMol atom expressions
 see section
 '<a href="#chexprs"><tt><b>Atom Expressions</b></tt></a>'.
 <p><hr>
-<a name="ribbons"><h3>Ribbons</h3></a><p>
+<h3 id="ribbons">Ribbons</h3><p>
 <pre>
 Syntax:  ribbons {&lt;boolean&gt;}
          ribbons &lt;value&gt;
@@ -3060,7 +3007,7 @@ command. This command is similar to the RasMol command
 '<a href="#strands"><tt><b>strands</b></tt></a>'
 which renders the biomolecular ribbon as parallel depth-cued curves.
 <p><hr>
-<a name="rotate"><h3>Rotate</h3></a><p>
+<h3 id="rotate">Rotate</h3><p>
 <pre>
 Syntax:  rotate &lt;axis&gt; {-} &lt;value&gt;
          rotate bond {&lt;boolean&gt;}
@@ -3090,7 +3037,7 @@ the rotation of the molecule selected by the
 '<a href="#molecule"><tt><b>molecule n</b></tt></a>'
 command.
 <p><hr>
-<a name="russian"><h3>Russian</h3></a><p>
+<h3 id="russian">Russian</h3><p>
 <pre>
 Syntax:  Russian
 </pre><p>
@@ -3112,7 +3059,7 @@ may be used to select Bulgarian, Chinese, English, French,
 Italian, Japanese, Russian and Spanish menus and messages if the
 appropriate fonts have been installed.
 <p><hr>
-<a name="save"><h3>Save</h3></a><p>
+<h3 id="save">Save</h3><p>
 <pre>
 Syntax:  save {pdb} &lt;filename&gt;
          save wpdb &lt;filename&gt;
@@ -3147,7 +3094,7 @@ command generates a
 '<tt><b>GIF</b></tt>'
 image.
 <p><hr>
-<a name="script"><h3>Script</h3></a><p>
+<h3 id="script">Script</h3><p>
 <pre>
 Syntax:  script &lt;filename&gt;
 </pre><p>
@@ -3180,7 +3127,7 @@ command.
 <p>
 Scripts may also be created with a text editor.
 <p><hr>
-<a name="select"><h3>Select</h3></a><p>
+<h3 id="select">Select</h3><p>
 <pre>
 Syntax:  select {&lt;expression&gt;}
 </pre><p>
@@ -3205,7 +3152,7 @@ Type &quot;help expression&quot; for more information on RasMol atom expressions
 see section
 '<a href="#chexprs"><tt><b>Atom Expressions</b></tt></a>'.
 <p><hr>
-<a name="set"><h3>Set</h3></a><p>
+<h3 id="set">Set</h3><p>
 <pre>
 Syntax:  set &lt;parameter&gt; {&lt;option&gt;}
 </pre><p>
@@ -3217,7 +3164,7 @@ own set or permissible parameter options. Typically, omitting the
 parameter option resets that parameter to its default value. A list of
 valid parameter names is given below.
 <p>
-<center><div class="legacy-table-wrapper" data-table="true" class="sidebar-table" BORDER>
+<center><div class="legacy-table-wrapper sidebar-table" data-table="true" BORDER>
 <div class="legacy-tr"><div class="legacy-td"><a href="#setambient">Ambient</a>
 <div class="legacy-td"><a href="#setaxes">Axes</a>
 <div class="legacy-td"><a href="#setbackground">Background</a>
@@ -3258,7 +3205,7 @@ valid parameter names is given below.
 <div class="legacy-td" CELLSPAN=3>
 </div></center>
 <p><hr>
-<a name="show"><h3>Show</h3></a><p>
+<h3 id="show">Show</h3><p>
 <pre>
 Syntax:  show information
          show centre
@@ -3313,7 +3260,7 @@ shows any non-zero zoom value selected by the
 '<a href="#zoom"><tt><b>zoom &lt;value&gt;</b></tt></a>'
 command.
 <p><hr>
-<a name="slab"><h3>Slab</h3></a><p>
+<h3 id="slab">Slab</h3><p>
 <pre>
 Syntax:  slab {&lt;boolean&gt;}
          slab &lt;value&gt;
@@ -3331,7 +3278,7 @@ This command interacts with the
 '<a href="#depth"><tt><b>depth &lt;value&gt;</b></tt></a>'
 command, which clips to the rear of a given z-clipping plane.
 <p><hr>
-<a name="spacefill"><h3>Spacefill</h3></a><p>
+<h3 id="spacefill">Spacefill</h3><p>
 <pre>
 Syntax:  spacefill {&lt;boolean&gt;}
          spacefill temperature
@@ -3373,7 +3320,7 @@ is synonymous with the
 '<tt><b>spacefill</b></tt>'
 command, except that a slightly different set of colours is used.
 <p><hr>
-<a name="spanish"><h3>Spanish</h3></a><p>
+<h3 id="spanish">Spanish</h3><p>
 <pre>
 Syntax:  Spanish
 </pre><p>
@@ -3395,7 +3342,7 @@ may be used to select Bulgarian, Chinese, English, French,
 Italian, Japanese, Russian and Spanish menus and messages if the
 appropriate fonts have been installed.
 <p><hr>
-<a name="ssbonds"><h3>SSBonds</h3></a><p>
+<h3 id="ssbonds">SSBonds</h3><p>
 <pre>
 Syntax:  ssbonds {&lt;boolean&gt;}
          ssbonds &lt;value&gt;
@@ -3426,7 +3373,7 @@ the cysteine groups. By using the
 '<a href="#setssbonds"><tt><b>set ssbonds</b></tt></a>'
 command the position of the cysteine's alpha carbons may be used instead.
 <p><hr>
-<a name="star"><h3>Star</h3></a><p>
+<h3 id="star">Star</h3><p>
 <pre>
 Syntax:  star {&lt;boolean&gt;}
          star temperature
@@ -3476,7 +3423,7 @@ The RasMol
 '<a href="#spacefill"><tt><b>spacefill</b></tt></a>'
 command can be used for more artistic rendering of atoms as spheres.
 <p><hr>
-<a name="stereo"><h3>Stereo</h3></a><p>
+<h3 id="stereo">Stereo</h3><p>
 <pre>
 Syntax:  stereo on
          stereo &lt;number&gt;
@@ -3536,7 +3483,7 @@ command, and in
 general is not yet properly interfaced with several other
 features of the program.
 <p><hr>
-<a name="strands"><h3>Strands</h3></a><p>
+<h3 id="strands">Strands</h3><p>
 <pre>
 Syntax:  strands {&lt;boolean&gt;}
          strands &lt;value&gt;
@@ -3576,7 +3523,7 @@ command. This command is similar to the RasMol command
 '<a href="#ribbons"><tt><b>ribbons</b></tt></a>'
 which renders the biomolecular ribbon as a smooth shaded surface.
 <p><hr>
-<a name="structure"><h3>Structure</h3></a><p>
+<h3 id="structure">Structure</h3><p>
 <pre>
 Syntax:  structure
 </pre><p>
@@ -3590,7 +3537,7 @@ hasn't been done already. The secondary structure is then determined using
 Kabsch and Sander's DSSP algorithm. Once finished the program reports the
 number of helices, strands and turns found.
 <p><hr>
-<a name="surface"><h3>Surface</h3></a><p>
+<h3 id="surface">Surface</h3><p>
 <pre>
 Syntax:  surface molecule &lt;value&gt;
          surface solvent  &lt;value&gt;
@@ -3606,7 +3553,7 @@ If given in the second form, the envelope of the
 positions of the center of the probe is shown
 (the solvent accessible surface).
 <p><hr>
-<a name="trace"><h3>Trace</h3></a><p>
+<h3 id="trace">Trace</h3><p>
 <pre>
 Syntax:  trace {&lt;boolean&gt;}
          trace &lt;value&gt;
@@ -3642,7 +3589,7 @@ displays the backbone as a wider cylinder
 at high temperature factors and thinner at lower.  This
 representation is useful to X-ray crystallographers and NMR spectroscopists.
 <p><hr>
-<a name="translate"><h3>Translate</h3></a><p>
+<h3 id="translate">Translate</h3><p>
 <pre>
 Syntax:  translate &lt;axis&gt; {-} &lt;value&gt;
 </pre><p>
@@ -3665,7 +3612,7 @@ and
 '<tt><b>translate y 0</b></tt>'
 centres the molecule on the screen.
 <p><hr>
-<a name="unbond"><h3>UnBond</h3></a><p>
+<h3 id="unbond">UnBond</h3><p>
 <pre>
 Syntax:  unbond &lt;number&gt;  &lt;number&gt;
          unbond
@@ -3680,7 +3627,7 @@ without arguments removes a bond previously picked by the
 '<a href="#bond"><tt><b>bond &lt;number&gt; &lt;number&gt; pick</b></tt></a>'
 command.
 <p><hr>
-<a name="wireframe"><h3>Wireframe</h3></a><p>
+<h3 id="wireframe">Wireframe</h3><p>
 <pre>
 Syntax:  wireframe {&lt;boolean&gt;}
          wireframe &lt;value&gt; {<value>}
@@ -3720,7 +3667,7 @@ atoms in subsequent
 '<tt><b>wireframe</b></tt>'
 command executions.
 <p><hr>
-<a name="write"><h3>Write</h3></a><p>
+<h3 id="write">Write</h3><p>
 <pre>
 Syntax:  write {&lt;format&gt;} &lt;filename&gt;
 </pre><p>
@@ -3793,14 +3740,14 @@ command generates a
 '<tt><b>GIF</b></tt>'
 image.
 <p><hr>
-<a name="zap"><h3>Zap</h3></a><p>
+<h3 id="zap">Zap</h3><p>
 <pre>
 Syntax:  zap
 </pre><p>
 Deletes the contents of the current database and resets parameter
 variables to their initial default state.
 <p><hr>
-<a name="zoom"><h3>Zoom</h3></a><p>
+<h3 id="zoom">Zoom</h3><p>
 <pre>
 Syntax:  zoom {&lt;boolean&gt;}
          zoom &lt;value&gt;
@@ -3812,7 +3759,7 @@ of the default scale. The minimum parameter value is 10; the maximum
 parameter value is dependent upon the size of the molecule being
 displayed. For medium sized proteins this is about 500.
 <p><hr>
-<a name="chsetopt"><h2>Internal Parameters</h2></a>
+<h2 id="chsetopt">Internal Parameters</h2>
 RasMol has a number of internal parameters that may be modified using the
 '<a href="#set"><tt><b>set</b></tt></a>'
 command. These parameters control a number of program options such as
@@ -3820,7 +3767,7 @@ rendering options and mouse button mappings.
 <p>
 A complete list of internal parameter names is given below.
 <p>
-<center><div class="legacy-table-wrapper" data-table="true" class="sidebar-table" BORDER>
+<center><div class="legacy-table-wrapper sidebar-table" data-table="true" BORDER>
 <div class="legacy-tr"><div class="legacy-td"><a href="#setambient">Ambient</a>
 <div class="legacy-td"><a href="#setaxes">Axes</a>
 <div class="legacy-td"><a href="#setbackground">Background</a>
@@ -3861,7 +3808,7 @@ A complete list of internal parameter names is given below.
 <div class="legacy-td" CELLSPAN=3>
 </div></center>
 <p><hr>
-<a name="setambient"><h3>Set Ambient</h3></a><p>
+<h3 id="setambient">Set Ambient</h3><p>
 <pre>
 Syntax:  set ambient {&lt;value&gt;}
 </pre><p>
@@ -3881,7 +3828,7 @@ This parameter is commonly used to correct for monitors with different
 image appears when printed or to alter the feeling of depth for
 wireframe or ribbon representations.
 <p><hr>
-<a name="setaxes"><h3>Set Axes</h3></a><p>
+<h3 id="setaxes">Set Axes</h3><p>
 <pre>
 Syntax:  set axes &lt;boolean&gt;
 </pre><p>
@@ -3899,7 +3846,7 @@ and
 that display the bounding box and the crystallographic unit cell,
 respectively.
 <p><hr>
-<a name="setbackfade"><h3>Set Backfade</h3></a><p>
+<h3 id="setbackfade">Set Backfade</h3><p>
 <pre>
 Syntax:  set backfade &lt;boolean&gt;
 </pre><p>
@@ -3913,7 +3860,7 @@ and
 For example, this may be used to generate depth-cued images that
 fade to white, rather than black.
 <p><hr>
-<a name="setbackground"><h3>Set Background</h3></a><p>
+<h3 id="setbackground">Set Background</h3><p>
 <pre>
 Syntax:  set background {&lt;colour&gt;}
 </pre><p>
@@ -3933,7 +3880,7 @@ The command
 is synonymous with the RasMol command
 '<a href="#background"><tt><b>background</b></tt></a>'.
 <p><hr>
-<a name="setbondmode"><h3>Set BondMode</h3></a><p>
+<h3 id="setbondmode">Set BondMode</h3><p>
 <pre>
 Syntax:  set bondmode and
          set bondmode or
@@ -3971,7 +3918,7 @@ markers for the designated atoms to
 '<a href="#wireframe"><tt><b>wireframe</b></tt></a>'
 displays.  Stars are used when the specified wireframe radius is zero.
 <p><hr>
-<a name="setbonds"><h3>Set Bonds</h3></a><p>
+<h3 id="setbonds">Set Bonds</h3><p>
 <pre>
 Syntax:  set bonds &lt;boolean&gt;
 </pre><p>
@@ -3988,7 +3935,7 @@ enables the display of bond orders, and  the command
 '<tt><b>set bonds off</b></tt>'
 disables them.
 <p><hr>
-<a name="setboundbox"><h3>Set BoundBox</h3></a><p>
+<h3 id="setboundbox">Set BoundBox</h3><p>
 <pre>
 Syntax:  set boundbox &lt;boolean&gt;
 </pre><p>
@@ -4005,7 +3952,7 @@ and
 that display orthogonal coordinate axes and the bounding box,
 respectively.
 <p><hr>
-<a name="setcartoon"><h3>Set Cartoon</h3></a><p>
+<h3 id="setcartoon">Set Cartoon</h3><p>
 <pre>
 Syntax:  set cartoon {&lt;boolean&gt;}
          set cartoon {&lt;number&gt;}
@@ -4024,7 +3971,7 @@ command. The
 command without any parameters returns these two options to
  their default values.
 <p><hr>
-<a name="setcisangle"><h3>Set CisAngle</h3></a><p>
+<h3 id="setcisangle">Set CisAngle</h3><p>
 <pre>
 Syntax:  set cisangle {&lt;value&gt;}
 </pre><p>
@@ -4033,7 +3980,7 @@ The RasMol
 parameter controls the cutoff angle for identifying cis peptide
  bonds.  If no value is given, the cutoff is set to 90 degrees.
 <p><hr>
-<a name="setdisplay"><h3>Set Display</h3></a><p>
+<h3 id="setdisplay">Set Display</h3><p>
 <pre>
 Syntax:  set display selected
          set display normal
@@ -4052,7 +3999,7 @@ is also changed to a dark grey to indicate the change of display mode.
 This command is typically only used by external Graphical User
 Interfaces (GUIs).
 <p><hr>
-<a name="setfontsize"><h3>Set FontSize</h3></a><p>
+<h3 id="setfontsize">Set FontSize</h3><p>
 <pre>
 Syntax:  set fontsize {&lt;value&gt;} { FS | PS }
 </pre><p>
@@ -4072,7 +4019,7 @@ the
 '<a href="#colour"><tt><b>colour labels</b></tt></a>'
 command.
 <p><hr>
-<a name="setfontstroke"><h3>Set FontStroke</h3></a><p>
+<h3 id="setfontstroke">Set FontStroke</h3><p>
 <pre>
 Syntax:  set fontstroke {&lt;value&gt;}
 </pre><p>
@@ -4107,7 +4054,7 @@ the
 '<a href="#colour"><tt><b>colour labels</b></tt></a>'
 command.
 <p><hr>
-<a name="sethbonds"><h3>Set HBonds</h3></a><p>
+<h3 id="sethbonds">Set HBonds</h3><p>
 <pre>
 Syntax:  set hbonds backbone
          set hbonds sidechain
@@ -4133,7 +4080,7 @@ This parameter is similar to the RasMol
 '<a href="#setssbonds"><tt><b>ssbonds</b></tt></a>'
 parameter.
 <p><hr>
-<a name="sethetero"><h3>Set Hetero</h3></a><p>
+<h3 id="sethetero">Set Hetero</h3><p>
 <pre>
 Syntax:  set hetero &lt;boolean&gt;
 </pre><p>
@@ -4168,7 +4115,7 @@ are
 without any parameters is equivalent to
 '<a href="#select"><tt><b>select all</b></tt></a>'.
 <p><hr>
-<a name="sethourglass"><h3>Set HourGlass</h3></a><p>
+<h3 id="sethourglass">Set HourGlass</h3><p>
 <pre>
 Syntax:  set hourglass &lt;boolean&gt;
 </pre><p>
@@ -4185,7 +4132,7 @@ the molecule, running a sequence of commands from a script file or
 using interprocess communication to execute complex sequences of
 commands. In these cases a 'flashing' cursor may be distracting.
 <p><hr>
-<a name="sethydrogen"><h3>Set Hydrogen</h3></a><p>
+<h3 id="sethydrogen">Set Hydrogen</h3><p>
 <pre>
 Syntax:  set hydrogen &lt;boolean&gt;
 </pre><p>
@@ -4220,7 +4167,7 @@ are
 without any parameters is equivalent to
 '<a href="#select"><tt><b>select all</b></tt></a>'.
 <p><hr>
-<a name="setkinemage"><h3>Set Kinemage</h3></a><p>
+<h3 id="setkinemage">Set Kinemage</h3><p>
 <pre>
 Syntax:  set kinemage &lt;boolean&gt;
 </pre><p>
@@ -4239,7 +4186,7 @@ generates a more complex Kinemage that contains both the wireframe
 and backbone representations as well as the coordinate axes,
 bounding box and crystal unit cell.
 <p><hr>
-<a name="setmenus"><h3>Set Menus</h3></a><p>
+<h3 id="setmenus">Set Menus</h3><p>
 <pre>
 Syntax:  set menus &lt;boolean&gt;
 </pre><p>
@@ -4249,7 +4196,7 @@ command enables the canvas window's menu buttons or menu bar. This
 command is typically only used by graphical user interfaces or to
 create as large an image as possible when using Microsoft Windows.
 <p><hr>
-<a name="setmonitor"><h3>Set Monitor</h3></a><p>
+<h3 id="setmonitor">Set Monitor</h3><p>
 <pre>
 Syntax:  set monitor &lt;boolean&gt;
 </pre><p>
@@ -4263,7 +4210,7 @@ and re-enabled with the command
 '<tt><b>set monitor on</b></tt>'.
 
 <p><hr>
-<a name="setmouse"><h3>Set Mouse</h3></a><p>
+<h3 id="setmouse">Set Mouse</h3><p>
 <pre>
 Syntax:  set mouse rasmol
          set mouse insight
@@ -4287,7 +4234,7 @@ and
 options provide the same mouse bindings as other packages for experienced
 users.
 <p><hr>
-<a name="setpicking"><h3>Set Picking</h3></a><p>
+<h3 id="setpicking">Set Picking</h3><p>
 <pre>
 Syntax:  set picking &lt;boolean&gt;
          set picking off
@@ -4405,7 +4352,7 @@ When the
 command is given, picking any atom will cause selection
 of all atoms which agree in chain identifier with the picked atom.
 <p><hr>
-<a name="setplay"><h3>Set Play</h3></a><p>
+<h3 id="setplay">Set Play</h3><p>
 <pre>
 Syntax:  set play.fps {&lt;value&gt;}
 </pre><p>
@@ -4418,7 +4365,7 @@ command (default 24 frames per second).
 In the current release of RasMol, the play timing is not controlled
 by this parameter.
 <p><hr>
-<a name="setradius"><h3>Set Radius</h3></a><p>
+<h3 id="setradius">Set Radius</h3><p>
 <pre>
 Syntax:  set radius {&lt;value&gt;}
 </pre><p>
@@ -4457,7 +4404,7 @@ resets
 '<tt><b>radius</b></tt>'
 to its new default value.
 <p><hr>
-<a name="setrecord"><h3>Set Record</h3></a><p>
+<h3 id="setrecord">Set Record</h3><p>
 <pre>
 Syntax:  set record.aps {&lt;value&gt;}
          set record.fps {&lt;value&gt;}
@@ -4479,7 +4426,7 @@ The RasMol
 command sets the time in seconds to dwell on a change in appearance
 (default .5 sec).
 <p><hr>
-<a name="setshadepower"><h3>Set ShadePower</h3></a><p>
+<h3 id="setshadepower">Set ShadePower</h3><p>
 <pre>
 Syntax:  set shadepower {&lt;value&gt;}
 </pre><p>
@@ -4500,7 +4447,7 @@ A value of 0 distributes the light on the entire object.
 This implementation of shadepower differs from the one in RasTop
 only in the choice of range (0 to 100 versus -20 to 20 in RasTop).
 <p><hr>
-<a name="setshadow"><h3>Set Shadow</h3></a><p>
+<h3 id="setshadow">Set Shadow</h3><p>
 <pre>
 Syntax:  set shadow &lt;boolean&gt;
 </pre><p>
@@ -4517,7 +4464,7 @@ molecule is being transformed or manipulated, and only enabled once
 an appropriate viewpoint is selected, to provide a greater impression
 of depth.
 <p><hr>
-<a name="setslabmode"><h3>Set SlabMode</h3></a><p>
+<h3 id="setslabmode">Set SlabMode</h3><p>
 <pre>
 Syntax:  set slabmode &lt;slabmode&gt;
 </pre><p>
@@ -4529,7 +4476,7 @@ slabbing (z-clipping) plane. Valid slabmode parameters are
 &quot;<tt><b>hollow</b></tt>&quot;, &quot;<tt><b>solid</b></tt>&quot; and
 &quot;<tt><b>section</b></tt>&quot;.
 <p><hr>
-<a name="setsolvent"><h3>Set Solvent</h3></a><p>
+<h3 id="setsolvent">Set Solvent</h3><p>
 <pre>
 Syntax:  set solvent &lt;boolean&gt;
 </pre><p>
@@ -4560,7 +4507,7 @@ accessible surface should be drawn and sets the
 parameter, the solvent radius, to 1.2 &Aring;ngstroms (or 300
 RasMol units).
 <p><hr>
-<a name="setspecular"><h3>Set Specular</h3></a><p>
+<h3 id="setspecular">Set Specular</h3><p>
 <pre>
 Syntax:  set specular &lt;boolean&gt;
 </pre><p>
@@ -4578,7 +4525,7 @@ altered using the RasMol
 '<a href="#setspecpower"><tt><b>set specpower</b></tt></a>'
 command.
 <p><hr>
-<a name="setspecpower"><h3>Set SpecPower</h3></a><p>
+<h3 id="setspecpower">Set SpecPower</h3><p>
 <pre>
 Syntax:  set specpower {&lt;value&gt;}
 </pre><p>
@@ -4593,7 +4540,7 @@ command. Values around 20 or 30 produce plastic looking surfaces.
 High values represent more shiny surfaces such as metals, while
 lower values produce more diffuse/dull surfaces.
 <p><hr>
-<a name="setssbonds"><h3>Set SSBonds</h3></a><p>
+<h3 id="setssbonds">Set SSBonds</h3><p>
 <pre>
 Syntax:  set ssbonds backbone
          set ssbonds sidechain
@@ -4616,7 +4563,7 @@ This parameter is similar to the RasMol
 '<a href="#sethbonds"><tt><b>hbonds</b></tt></a>'
 parameter.
 <p><hr>
-<a name="setstereo"><h3>Set Stereo</h3></a><p>
+<h3 id="setstereo">Set Stereo</h3><p>
 <PRE>
 Syntax:  set stereo &lt;boolean&gt;
          set stereo [-] &lt;number&gt
@@ -4645,7 +4592,7 @@ is not supported in
 '<a href="#setvectps"><tt><b>vector PostScript</b></tt></a>'
 output files.
 <p><hr>
-<a name="setstrands"><h3>Set Strands</h3></a><p>
+<h3 id="setstrands">Set Strands</h3><p>
 <pre>
 Syntax:  set strands {&lt;value&gt;}
 </pre><p>
@@ -4660,7 +4607,7 @@ controlled on a residue by residue basis using the RasMol
 '<a href="#ribbons"><tt><b>ribbons</b></tt></a>'
 command.
 <p><hr>
-<a name="settransparent"><h3>Set Transparent</h3></a><p>
+<h3 id="settransparent">Set Transparent</h3><p>
 <pre>
 Syntax:  set transparent &lt;boolean&gt;
 </pre><p>
@@ -4674,7 +4621,7 @@ and
 '<tt><b>set transparent off</b></tt>'
 commands.
 <p><hr>
-<a name="setunitcell"><h3>Set UnitCell</h3></a><p>
+<h3 id="setunitcell">Set UnitCell</h3><p>
 <pre>
 Syntax:  set unitcell &lt;boolean&gt;
 </pre><p>
@@ -4695,7 +4642,7 @@ and
 that display orthogonal coordinate axes and the bounding box,
 respectively.
 <p><hr>
-<a name="setvectps"><h3>Set VectPS</h3></a><p>
+<h3 id="setvectps">Set VectPS</h3><p>
 <pre>
 Syntax:  set vectps &lt;boolean&gt;
 </pre><p>
@@ -4713,7 +4660,7 @@ correctly but not large spacefilling spheres models. Cartoon outlines
 can be disabled, the default, by the command
 '<tt><b>set vectps off</b></tt>'.
 <p><hr>
-<a name="setwrite"><h3>Set Write</h3></a><p>
+<h3 id="setwrite">Set Write</h3><p>
 <pre>
 Syntax:  set write &lt;boolean&gt;
 </pre><p>
@@ -4733,7 +4680,7 @@ animators may start up RasMol interactively: type
 and then execute a script to generate each frame using the
 source command.
 <p><hr>
-<a name="chexprs"><h2>Atom Expressions</h2></a>
+<h2 id="chexprs">Atom Expressions</h2>
 RasMol atom expressions uniquely identify an arbitrary group of atoms
 within a molecule. Atom expressions are composed of either primitive
 expressions,
@@ -4770,14 +4717,9 @@ Examples:    <b>backbone and not helix</b>
 </pre>
 <p>
 <ul class="sidebar-ul">
-<li><a href="#primitiveexpressions">Primitive Expressions</a>
-<li><a href="#predefinedsets">Predefined Sets</a>
-<li><a href="#comparisonoperators">Comparison Operators</a>
-<li><a href="#withinexpressions">Within Expressions</a>
-<li><a href="#exampleexpressions">Examples</a>
-</ul>
+<li><a href="#primitiveexpressions">Primitive Expressions</a></li><li><a href="#predefinedsets">Predefined Sets</a></li><li><a href="#comparisonoperators">Comparison Operators</a></li><li><a href="#withinexpressions">Within Expressions</a></li><li><a href="#exampleexpressions">Examples</a></li></ul>
 <p><hr>
-<a name="exampleexpressions"><h3>Example Expressions</h3></a><p>
+<h3 id="exampleexpressions">Example Expressions</h3><p>
 The following table gives some useful examples of RasMol
 atom expressions.
 <p>
@@ -4798,7 +4740,7 @@ atom expressions.
     */4             All atoms in model 4
 </pre>
 <p><hr>
-<a name="primitiveexpressions"><h3>Primitive Expressions</h3></a><p>
+<h3 id="primitiveexpressions">Primitive Expressions</h3><p>
 RasMol primitive expressions are the fundamental building blocks
 of atom expressions. There are two types of primitive expression.
 The first type is used to identify a given residue number or range
@@ -4854,7 +4796,7 @@ An atom name may be up to four alphabetic or numeric characters.
 An asterisk may be used as a wild card for a whole field and a
 question mark as a single character wildcard.
 <p><hr>
-<a name="comparisonoperators"><h3>Comparison Operators</h3></a><p>
+<h3 id="comparisonoperators">Comparison Operators</h3><p>
 Parts of a molecule may also be distinguished using equality,
 inequality and ordering operators on their properties. The format
 of such comparison expression is a property name, followed by a
@@ -4894,7 +4836,7 @@ Examples:    resno &lt; 23
              atomno == 487
 </pre>
 <p><hr>
-<a name="withinexpressions"><h3>Within Expressions</h3></a><p>
+<h3 id="withinexpressions">Within Expressions</h3><p>
 A RasMol
 '<tt><b>within</b></tt>'
 expression allows atoms to be selected on their proximity to
@@ -4919,7 +4861,7 @@ protein or nucleic acid backbone.
 expressions are particularly useful for selecting the atoms
 around an active site.
 <p><hr>
-<a name="predefinedsets"><h3>Predefined Sets</h3></a><p>
+<h3 id="predefinedsets">Predefined Sets</h3><p>
 RasMol atom expressions may contain predefined sets. These sets
 are single keywords that represent portions of a molecule of interest.
 Predefined sets are often abbreviations of primitive atom expressions.
@@ -4950,7 +4892,7 @@ is equivalent to the command
     <a href="#waterset">Water</a>
 </pre>
 <p><hr>
-<a name="atset"><h3>AT Set</h3></a><p>
+<h3 id="atset">AT Set</h3><p>
 This set contains the atoms in the complementary nucleotides
 adenosine and thymidine (A and T, respectively). All nucleotides
 are classified as either the set
@@ -4962,7 +4904,7 @@ This set is equivalent to the RasMol atom expressions
 and
 &quot;<tt><b>nucleic and not cg</b></tt>&quot;.
 <p><hr>
-<a name="acidicset"><h3>Acidic Set</h3></a><p>
+<h3 id="acidicset">Acidic Set</h3><p>
 The set of acidic amino acids.
 These are the residue types Asp and Glu.
 All amino acids are classified as either
@@ -4975,7 +4917,7 @@ This set is equivalent to the RasMol atom expressions
 and
 &quot;<tt><b>amino and not (basic or neutral)</b></tt>&quot;.
 <p><hr>
-<a name="acyclicset"><h3>Acyclic Set</h3></a><p>
+<h3 id="acyclicset">Acyclic Set</h3><p>
 The set of atoms in amino acids not containing a cycle or
 ring. All amino acids are classified as either
 '<a href="#cyclicset"><tt><b>cyclic</b></tt></a>'
@@ -4984,13 +4926,13 @@ or
 This set is equivalent to the RasMol atom expression
 &quot;<tt><b>amino and not cyclic</b></tt>&quot;.
 <p><hr>
-<a name="aliphaticset"><h3>Aliphatic Set</h3></a><p>
+<h3 id="aliphaticset">Aliphatic Set</h3><p>
 This set contains the aliphatic amino acids.
 These are the amino acids Ala, Gly, Ile, Leu and Val.
 This set is equivalent to the RasMol atom expression
 &quot;<tt><b>ala, gly, ile, leu, val</b></tt>&quot;.
 <p><hr>
-<a name="alphaset"><h3>Alpha Set</h3></a><p>
+<h3 id="alphaset">Alpha Set</h3><p>
 The set of alpha carbons in the protein molecule. This set is
 approximately equivalent to the RasMol atom expression
 &quot;<tt><b>*.CA</b></tt>&quot;.
@@ -4999,12 +4941,12 @@ This command should not be confused with the predefined set
 which contains the atoms in the amino acids of the protein's
 alpha helices.
 <p><hr>
-<a name="aminoset"><h3>Amino Set</h3></a><p>
+<h3 id="aminoset">Amino Set</h3><p>
 This set contains all the atoms contained in amino acid residues.
 This is useful for distinguishing the protein from the nucleic
 acid and heterogeneous atoms in the current molecule database.
 <p><hr>
-<a name="aromaticset"><h3>Aromatic Set</h3></a><p>
+<h3 id="aromaticset">Aromatic Set</h3><p>
 The set of atoms in amino acids containing aromatic rings.
 These are the amino acids His, Phe, Trp and Tyr.
 Because they contain aromatic rings all members of this
@@ -5015,7 +4957,7 @@ This set is equivalent to the RasMol atom expressions
 and
 &quot;<tt><b>cyclic and not pro</b></tt>&quot;.
 <p><hr>
-<a name="backboneset"><h3>Backbone Set</h3></a><p>
+<h3 id="backboneset">Backbone Set</h3><p>
 This set contains the four atoms of each amino acid that form the
 polypeptide N-C-C-O backbone of proteins, and the atoms of the sugar
 phosphate backbone of nucleic acids.
@@ -5036,7 +4978,7 @@ The predefined set
 is synonymous with the set
 '<tt><b>backbone</b></tt>'.
 <p><hr>
-<a name="basicset"><h3>Basic Set</h3></a><p>
+<h3 id="basicset">Basic Set</h3><p>
 The set of basic amino acids.
 These are the residue types Arg, His and Lys.
 All amino acids are classified as either
@@ -5049,11 +4991,11 @@ This set is equivalent to the RasMol atom expressions
 and
 &quot;<tt><b>amino and not (acidic or neutral)</b></tt>&quot;.
 <p><hr>
-<a name="bondedset"><h3>Bonded Set</h3></a><p>
+<h3 id="bondedset">Bonded Set</h3><p>
 This set contain all the atoms in the current molecule database that
 are bonded to at least one other atom.
 <p><hr>
-<a name="buriedset"><h3>Buried Set</h3></a><p>
+<h3 id="buriedset">Buried Set</h3><p>
 This set contains the atoms in those amino acids that tend
 (prefer) to be buried inside protein, away from contact with
 solvent molecules. This set refers to the amino acids
@@ -5066,7 +5008,7 @@ or
 This set is equivalent to the RasMol atom expression
 &quot;<tt><b>amino and not surface</b></tt>&quot;.
 <p><hr>
-<a name="cgset"><h3>CG Set</h3></a><p>
+<h3 id="cgset">CG Set</h3><p>
 This set contains the atoms in the complementary nucleotides
 cytidine and guanosine (C and G, respectively). All nucleotides
 are classified as either the set
@@ -5078,7 +5020,7 @@ This set is equivalent to the RasMol atom expressions
 and
 &quot;<tt><b>nucleic and not at</b></tt>&quot;.
 <p><hr>
-<a name="chargedset"><h3>Charged Set</h3></a><p>
+<h3 id="chargedset">Charged Set</h3><p>
 This set contains the charged amino acids. These are the amino
 acids that are either
 '<a href="#acidicset"><tt><b>acidic</b></tt></a>'
@@ -5093,7 +5035,7 @@ This set is equivalent to the RasMol atom expressions
 and
 &quot;<tt><b>amino and not neutral</b></tt>&quot;.
 <p><hr>
-<a name="cyclicset"><h3>Cyclic Set</h3></a><p>
+<h3 id="cyclicset">Cyclic Set</h3><p>
 The set of atoms in amino acids containing a cycle or rings.
 All amino acids are classified as either
 '<tt><b>cyclic</b></tt>'
@@ -5111,7 +5053,7 @@ and
 and
 &quot;<tt><b>amino and not acyclic</b></tt>&quot;.
 <p><hr>
-<a name="cystineset"><h3>Cystine Set</h3></a><p>
+<h3 id="cystineset">Cystine Set</h3><p>
 This set contains the atoms of cysteine residues that form part
 of a disulphide bridge, <i>i.e.</i> half cystines. RasMol automatically
 determines disulphide bridges, if neither the predefined set
@@ -5122,7 +5064,7 @@ command have been used since the molecule was loaded. The set of
 free cysteines may be determined using the RasMol atom expression
 &quot;<tt><b>cys and not cystine</b></tt>&quot;.
 <p><hr>
-<a name="helixset"><h3>Helix Set</h3></a><p>
+<h3 id="helixset">Helix Set</h3><p>
 This set contains all atoms that form part of a protein alpha
 helix as determined by either the PDB file author or Kabsch and
 Sander's DSSP algorithm. By default, RasMol uses the secondary
@@ -5135,7 +5077,7 @@ This predefined set should not be confused with the predefined set
 '<a href="#alphaset"><tt><b>alpha</b></tt></a>'
 which contains the alpha carbon atoms of a protein.
 <p><hr>
-<a name="heteroset"><h3>Hetero Set</h3></a><p>
+<h3 id="heteroset">Hetero Set</h3><p>
 This set contains all the heterogeneous atoms in the molecule. These
 are the atoms described by HETATM entries in the PDB file. These
 typically contain water, cofactors and other solvents and ligands. All
@@ -5151,13 +5093,13 @@ atoms are further classified as either
 or
 '<a href="#ionsset"><tt><b>ions</b></tt></a>'.
 <p><hr>
-<a name="hydrogenset"><h3>Hydrogen Set</h3></a><p>
+<h3 id="hydrogenset">Hydrogen Set</h3><p>
 This predefined set contains all the hydrogen, deuterium and tritium atoms
 of the current molecule. This predefined set is equivalent to the
 RasMol atom expression
 &quot;<tt><b>elemno=1</b></tt>&quot;.
 <p><hr>
-<a name="hydrophobicset"><h3>Hydrophobic Set</h3></a><p>
+<h3 id="hydrophobicset">Hydrophobic Set</h3><p>
 This set contains all the hydrophobic amino acids.
 These are the amino acids Ala, Leu, Val, Ile, Pro, Phe, Met and Trp.
 All amino acids are classified as either
@@ -5169,7 +5111,7 @@ This set is equivalent to the RasMol atom expressions
 and
 &quot;<tt><b>amino and not polar</b></tt>&quot;.
 <p><hr>
-<a name="ionsset"><h3>Ions Set</h3></a><p>
+<h3 id="ionsset">Ions Set</h3><p>
 This set contains all the heterogeneous phosphate and sulphate ions in
 the current molecule data file. A large number of these ions are
 sometimes associated with protein and nucleic acid structures determined
@@ -5186,7 +5128,7 @@ atoms are classified as either
 or
 '<tt><b>ions</b></tt>'.
 <p><hr>
-<a name="largeset"><h3>Large Set</h3></a><p>
+<h3 id="largeset">Large Set</h3><p>
 All amino acids are classified as either
 '<a href="#smallset"><tt><b>small</b></tt></a>',
 '<a href="#mediumset"><tt><b>medium</b></tt></a>'
@@ -5195,7 +5137,7 @@ or
 This set is equivalent to the RasMol atom expression
 &quot;<tt><b>amino and not (small or medium)</b></tt>&quot;.
 <p><hr>
-<a name="ligandset"><h3>Ligand Set</h3></a><p>
+<h3 id="ligandset">Ligand Set</h3><p>
 This set contains all the heterogeneous cofactor and ligand moieties that
 are contained in the current molecule data file.  This set is defined
 to be all
@@ -5205,7 +5147,7 @@ atoms that are not
 atoms. Hence this set is equivalent to the RasMol atom expression
 &quot;<tt><b>hetero and not solvent</b></tt>&quot;.
 <p><hr>
-<a name="mediumset"><h3>Medium Set</h3></a><p>
+<h3 id="mediumset">Medium Set</h3><p>
 All amino acids are classified as either
 '<a href="#smallset"><tt><b>small</b></tt></a>',
 '<tt><b>medium</b></tt>'
@@ -5214,7 +5156,7 @@ or
 This set is equivalent to the RasMol atom expression
 &quot;<tt><b>amino and not (large or small)</b></tt>&quot;.
 <p><hr>
-<a name="neutralset"><h3>Neutral Set</h3></a><p>
+<h3 id="neutralset">Neutral Set</h3><p>
 The set of neutral amino acids.
 All amino acids are classified as either
 '<a href="#acidicset"><tt><b>acidic</b></tt></a>',
@@ -5224,7 +5166,7 @@ or
 This set is equivalent to the RasMol atom expression
 &quot;<tt><b>amino and not (acidic or basic)</b></tt>&quot;.
 <p><hr>
-<a name="nucleicset"><h3>Nucleic Set</h3></a><p>
+<h3 id="nucleicset">Nucleic Set</h3><p>
 The set of all atoms in nucleic acids, which consists of the four
 nucleotide bases adenosine, cytidine, guanosine and thymidine (A,
 C, G and T, respectively). All neucleotides are classified as either
@@ -5239,7 +5181,7 @@ The symbols for RNA nucleotides (U, +U, I, 1MA, 5MC, OMC,
 1MG, 2MG, M2G, 7MG, OMG, YG, H2U, 5MU, and PSU) are also
 recognized as members of this set.
 <p><hr>
-<a name="polarset"><h3>Polar Set</h3></a><p>
+<h3 id="polarset">Polar Set</h3><p>
 This set contains the polar amino acids.
 All amino acids are classified as either
 '<a href="#hydrophobicset"><tt><b>hydrophobic</b></tt></a>'
@@ -5248,13 +5190,13 @@ or
 This set is equivalent to the RasMol atom expression
 &quot;<tt><b>amino and not hydrophobic</b></tt>&quot;.
 <p><hr>
-<a name="proteinset"><h3>Protein Set</h3></a><p>
+<h3 id="proteinset">Protein Set</h3><p>
 The set of all atoms in proteins. This consists of the RasMol
 predefined set
 '<a href="#aminoset"><tt><b>amino</b></tt></a>'
 and common post-translation modifications.
 <p><hr>
-<a name="purineset"><h3>Purine Set</h3></a><p>
+<h3 id="purineset">Purine Set</h3><p>
 The set of purine nucleotides.
 These are the bases adenosine and guanosine (A and G, respectively).
 All nucleotides are either
@@ -5266,7 +5208,7 @@ This set is equivalent to the RasMol atom expressions
 and
 &quot;<tt><b>nucleic and not pyrimidine</b></tt>&quot;.
 <p><hr>
-<a name="pyrimidineset"><h3>Pyrimidine Set</h3></a><p>
+<h3 id="pyrimidineset">Pyrimidine Set</h3><p>
 The set of pyrimidine nucleotides.
 These are the bases cytidine and thymidine (C and T, respectively).
 All nucleotides are either
@@ -5278,7 +5220,7 @@ This set is equivalent to the RasMol atom expressions
 and
 &quot;<tt><b>nucleic and not purine</b></tt>&quot;.
 <p><hr>
-<a name="selectedset"><h3>Selected Set</h3></a><p>
+<h3 id="selectedset">Selected Set</h3><p>
 This set contains the set of atoms in the currently selected
 region. The currently selected region is defined by the preceding
 '<a href="#select"><tt><b>select</b></tt></a>'
@@ -5288,7 +5230,7 @@ command and not the atom expression containing the
 '<tt><b>selected</b></tt>'
 keyword.
 <p><hr>
-<a name="sheetset"><h3>Sheet Set</h3></a><p>
+<h3 id="sheetset">Sheet Set</h3><p>
 This set contains all atoms that form part of a protein beta
 sheet as determined by either the PDB file author or Kabsch and
 Sander's DSSP algorithm. By default, RasMol uses the secondary
@@ -5297,7 +5239,7 @@ Otherwise, it uses the DSSP algorithm as used by the RasMol
 '<a href="#structure"><tt><b>structure</b></tt></a>'
 command.
 <p><hr>
-<a name="sidechainset"><h3>Sidechain Set</h3></a><p>
+<h3 id="sidechainset">Sidechain Set</h3><p>
 This set contains the functional sidechains of any amino acids
 and the base of each nucleotide. These are the atoms not part of
 the polypeptide N-C-C-O backbone of proteins or the sugar
@@ -5314,7 +5256,7 @@ or
 This set is equivalent to the RasMol expression
 &quot;<tt><b>(protein or nucleic) and not backbone</b></tt>&quot;.
 <p><hr>
-<a name="smallset"><h3>Small Set</h3></a><p>
+<h3 id="smallset">Small Set</h3><p>
 All amino acids are classified as either
 '<tt><b>small</b></tt>',
 '<a href="#mediumset"><tt><b>medium</b></tt></a>'
@@ -5323,7 +5265,7 @@ or
 This set is equivalent to the RasMol atom expression
 &quot;<tt><b>amino and not (medium or large)</b></tt>&quot;.
 <p><hr>
-<a name="solventset"><h3>Solvent Set</h3></a><p>
+<h3 id="solventset">Solvent Set</h3><p>
 This set contains the solvent atoms in the molecule coordinate file.
 These are the heterogeneous water molecules, phosphate and sulphate
 ions. All
@@ -5343,7 +5285,7 @@ This set is equivalent to the RasMol atom expressions
 and
 &quot;<tt><b>water or ions</b></tt>&quot;.
 <p><hr>
-<a name="surfaceset"><h3>Surface Set</h3></a><p>
+<h3 id="surfaceset">Surface Set</h3><p>
 This set contains the atoms in those amino acids that tend
 (prefer) to be on the surface of proteins, in contact with
 solvent molecules. This set refers to the amino acids
@@ -5356,7 +5298,7 @@ or
 This set is equivalent to the RasMol atom expression
 &quot;<tt><b>amino and not buried</b></tt>&quot;.
 <p><hr>
-<a name="turnset"><h3>Turn Set</h3></a><p>
+<h3 id="turnset">Turn Set</h3><p>
 This set contains all atoms that form part of a protein turns
 as determined by either the PDB file author or Kabsch and
 Sander's DSSP algorithm. By default, RasMol uses the secondary
@@ -5365,7 +5307,7 @@ Otherwise, it uses the DSSP algorithm as used by the RasMol
 '<a href="#structure"><tt><b>structure</b></tt></a>'
 command.
 <p><hr>
-<a name="waterset"><h3>Water Set</h3></a><p>
+<h3 id="waterset">Water Set</h3><p>
 This set contains all the heterogeneous water molecules in the current
 database. A large number of water molecules are sometimes associated
 with protein and nucleic acid structures determined by X-ray
@@ -5383,7 +5325,7 @@ atoms are further classified as either
 or
 '<a href="#ionsset"><tt><b>ions</b></tt></a>'.
 <p><hr>
-<a name="setsummary"><h3>Set Summary</h3></a><p>
+<h3 id="setsummary">Set Summary</h3><p>
 The table below summarises RasMol's classification of the common amino acids.
 <p>
 
@@ -5496,7 +5438,7 @@ The table below summarises RasMol's classification of the common amino acids.
 <div class="legacy-td" >
 </div>
 <p><hr>
-<a name="chcolours"><h2>Colour Schemes</h2></a>
+<h2 id="chcolours">Colour Schemes</h2>
 The RasMol
 '<a href="#colour"><tt><b>colour</b></tt></a>'
 command allows different objects (such as atoms, bonds and ribbon segments)
@@ -5690,7 +5632,7 @@ then the command
 '<a href="#script"><tt><b>script grey.col</b></tt></a>'
 colours the currently selected atom set grey.
 <p><hr>
-<a name="altcolours"><h3>Alt Colours</h3></a><p>
+<h3 id="altcolours">Alt Colours</h3><p>
 The RasMol
 '<tt><b>alt</b></tt>'
 (Alternate Conformer)
@@ -5699,7 +5641,7 @@ structure with one colour and applies a limited number of colours to each
 alternate conformer.  In a RasMol built for 8-bit colour systems, 4 colours
 are allowed for alternate conformers. Otherwise, 8 colours are available.
 <p><hr>
-<a name="aminocolours"><h3>Amino Colours</h3></a><p>
+<h3 id="aminocolours">Amino Colours</h3><p>
 The RasMol
 '<tt><b>amino</b></tt>'
 colour scheme colours amino acids according to traditional amino acid
@@ -5814,7 +5756,7 @@ scheme.
 
 <P>
 <p><hr>
-<a name="chaincolours"><h3>Chain Colours</h3></a><p>
+<h3 id="chaincolours">Chain Colours</h3><p>
 The RasMol
 '<tt><b>chain</b></tt>'
 colour scheme assigns each macromolecular chain a unique colour. This
@@ -5825,7 +5767,7 @@ can be selected from the RasMol
 '<tt><b>Colours</b></tt>'
 menu.
 <p><hr>
-<a name="chargecolours"><h3>Charge Colours</h3></a><p>
+<h3 id="chargecolours">Charge Colours</h3><p>
 The RasMol
 '<tt><b>charge</b></tt>'
 colour scheme colour codes each atom according to the charge value
@@ -5850,7 +5792,7 @@ command to colour code a dot surface (generated by the
 '<a href="#dots"><tt><b>dots</b></tt></a>'
 command) by electrostatic potential.
 <p><hr>
-<a name="cpkcolours"><h3>CPK Colours</h3></a><p>
+<h3 id="cpkcolours">CPK Colours</h3><p>
 The RasMol
 '<tt><b>cpk</b></tt>'
 colour scheme is based upon the colours of the popular plastic
@@ -6113,7 +6055,7 @@ not used by RasMol):
 </div>
 
 <P>
-In the CPKnew colouring scheme, RasMol uses brighter colours:
+<span id="cpknew"></span>In the CPKnew colouring scheme, RasMol uses brighter colours:
 <P>
 
 
@@ -6432,7 +6374,7 @@ commands to try it:
 Extension of this idea to other atoms and colour schemes is straightforward.
 <P>
 <p><hr>
-<a name="groupcolours"><h3>Group Colours</h3></a><p>
+<h3 id="groupcolours">Group Colours</h3><p>
 The RasMol
 '<tt><b>group</b></tt>'
 colour scheme colour codes residues by their position in a macromolecular
@@ -6471,7 +6413,7 @@ on the
 menu. This command
 instructs RasMol to only use non-hetero residues in the group colour scaling.
 <p><hr>
-<a name="nmrmodelcolours"><h3>NMR Model Colours</h3></a><p>
+<h3 id="nmrmodelcolours">NMR Model Colours</h3><p>
 The RasMol
 '<tt><b>model</b></tt>'
 colour scheme codes each NMR model with a distinct
@@ -6480,7 +6422,7 @@ are coloured in blue and lower values coloured in red. Rather than use a
 fixed scale this scheme determines the maximum value of the
 NMR model number and interpolates from red to blue appropriately.
 <p><hr>
-<a name="shapelycolours"><h3>Shapely Colours</h3></a><p>
+<h3 id="shapelycolours">Shapely Colours</h3><p>
 The RasMol
 '<tt><b>shapely</b></tt>'
 colour scheme colour codes residues by amino acid property. This scheme
@@ -6756,7 +6698,7 @@ colour scheme.
 <P>
 
 <p><hr>
-<a name="structurecolours"><h3>Structure Colours</h3></a><p>
+<h3 id="structurecolours">Structure Colours</h3><p>
 The RasMol
 '<tt><b>structure</b></tt>'
 colour scheme colours the molecule by protein secondary structure.
@@ -6768,7 +6710,7 @@ or determined using Kabsch and Sander's DSSP algorithm. The RasMol
 '<a href="#structure"><tt><b>structure</b></tt></a>'
 command may be used to force DSSP's structure assignment to be used.
 <p><hr>
-<a name="temperaturecolours"><h3>Temperature Colours</h3></a><p>
+<h3 id="temperaturecolours">Temperature Colours</h3><p>
 The RasMol
 '<tt><b>temperature</b></tt>'
 colour scheme colour codes each atom according to the anisotropic
@@ -6786,7 +6728,7 @@ and
 colour schemes is that increasing temperature values proceed from blue
 to red, whereas increasing charge values go from red to blue.
 <p><hr>
-<a name="usercolours"><h3>User Colours</h3></a><p>
+<h3 id="usercolours">User Colours</h3><p>
 The RasMol
 '<tt><b>user</b></tt>'
 colour scheme allows RasMol to use the colour scheme stored in the
@@ -6794,7 +6736,7 @@ PDB file. The colours for each atom are stored in COLO records placed
 in the PDB data file. This convention was introduced by David Bacon's
 Raster3D program.
 <p><hr>
-<a name="hbondtypecolours"><h3>HBond Type Colours</h3></a><p>
+<h3 id="hbondtypecolours">HBond Type Colours</h3><p>
 The RasMol
 '<tt><b>type</b></tt>'
 colour scheme applies only to hydrogen bonds, hence is used in the command
@@ -6817,7 +6759,7 @@ forming sheets appear yellow and those forming turns appear magenta).
       default   yellow    [255,255,0]
 </pre>
 <p><hr>
-<a name="potentialcolours"><h3>Potential Colours</h3></a><p>
+<h3 id="potentialcolours">Potential Colours</h3><p>
 The RasMol
 '<tt><b>potential</b></tt>'
 colour scheme applies only to dot surfaces, hence is used in the command
@@ -6845,11 +6787,11 @@ dielectric constant value of 10.
           V < -25    white     [255,255,255]
 </pre>
 <p><hr>
-<a name="aminoacidcodes"><h3>Amino Acid Codes</h3></a><p>
+<h3 id="aminoacidcodes">Amino Acid Codes</h3><p>
 The following table lists the names, single letter and three letter
 codes of each of the amino acids.
 <p>
-<center><div class="legacy-table-wrapper" data-table="true" class="sidebar-table" BORDER>
+<center><div class="legacy-table-wrapper sidebar-table" data-table="true" BORDER>
 <div class="legacy-tr"><div class="legacy-td">Alanine         <div class="legacy-td">A  <div class="legacy-td">ALA         <div class="legacy-td">Arginine        <div class="legacy-td">R  <div class="legacy-td">ARG
 <div class="legacy-tr"><div class="legacy-td">Asparagine      <div class="legacy-td">N  <div class="legacy-td">ASN         <div class="legacy-td">Aspartic acid   <div class="legacy-td">D  <div class="legacy-td">ASP
 <div class="legacy-tr"><div class="legacy-td">Cysteine        <div class="legacy-td">C  <div class="legacy-td">CYS         <div class="legacy-td">Glutamic acid   <div class="legacy-td">E  <div class="legacy-td">GLU
@@ -6862,12 +6804,12 @@ codes of each of the amino acids.
 <div class="legacy-tr"><div class="legacy-td">Tyrosine        <div class="legacy-td">Y  <div class="legacy-td">TYR         <div class="legacy-td">Valine          <div class="legacy-td">V  <div class="legacy-td">VAL
 </div></center>
 <p><hr>
-<a name="booleans"><h3>Booleans</h3></a><p>
+<h3 id="booleans">Booleans</h3><p>
 A boolean parameter is a truth value. Valid boolean values are 'true' and
 'false', and their synonyms 'on' and 'off'. Boolean parameters are commonly
 used by RasMol to either enable or disable a representation or option.
 <p><hr>
-<a name="chfile"><h2>File Formats</h2></a>
+<h2 id="chfile">File Formats</h2>
 <p>
 <tt><b>Protein Data Bank Files</b></tt>
 <p>
@@ -6945,7 +6887,7 @@ are extracted from HEADER and COMPND records, initial secondary
 structure assignments are taken from HELIX, SHEET and TURN records, and
 the end of the file may be indicated by an END record.
 <p><hr>
-<a name="rasmolinterpretationofpdbfields"><h3>RasMol Interpretation of PDB fields</h3></a><p>
+<h3 id="rasmolinterpretationofpdbfields">RasMol Interpretation of PDB fields</h3><p>
 Atoms located at 9999.000, 9999.000, 9999.000 are assumed to be Insight
 pseudo atoms and are ignored by RasMol. Atom names beginning ' Q' are
 also assumed to be pseudo atoms or position markers.
@@ -6974,7 +6916,7 @@ more than once are interpreted as specifying the bond order of that
 bond, <i>i.e.</i> a bond specified twice is a double bond and a bond specified
 three (or more) times is a triple bond.  This is not a standard PDB feature.
 <p><hr>
-<a name="pdbcolourschemespecification"><h3>PDB Colour Scheme Specification</h3></a><p>
+<h3 id="pdbcolourschemespecification">PDB Colour Scheme Specification</h3><p>
 RasMol also accepts the supplementary COLO record type in the PDB
 files. This record format was introduced by David Bacon's Raster3D
 program for specifying the colour scheme to be used when rendering the
@@ -7017,7 +6959,7 @@ ATOM/HETATM record. All other characters must match identically to count
 as a match. As an extension to the specification, any atom that fails
 to match a COLO record is displayed in white.
 <p><hr>
-<a name="multiplenmrmodels"><h3>Multiple NMR Models</h3></a><p>
+<h3 id="multiplenmrmodels">Multiple NMR Models</h3><p>
 RasMol loads all of the NMR models from a PDB file no matter which
 command is used:
 '<a href="#load"><tt><b>load pdb &lt;filename&gt;</b></tt></a>'
@@ -7031,7 +6973,7 @@ In particular, the command
 '<a href="#restrict"><tt><b>restrict */1</b></tt></a>'
 will restrict the display to the first model only.
 <p><hr>
-<a name="cifandmmcifformatfiles"><h3>CIF and mmCIF Format Files</h3></a><p>
+<h3 id="cifandmmcifformatfiles">CIF and mmCIF Format Files</h3><p>
 CIF is the IUCr standard for presentation of small molecules and mmCIF
 is intended as the replacement for the fixed-field PDB format for
 presentation of macromolecular structures. RasMol can accept data sets
@@ -7105,7 +7047,7 @@ A search is made through multiple data blocks for the desired tags, so
 a single dataset may be composed from multiple data blocks, but
 multiple data sets may not be stacked in the same file.
 <p><hr>
-<a name="chmacspec"><h2>Machine-Specific Support</h2></a>
+<h2 id="chmacspec">Machine-Specific Support</h2>
 <p>
 In the following sections, support for
 '<a href="#monochromexwindowssupport"><tt><b>Monochrome X-Windows</b></tt></a>',
@@ -7114,7 +7056,7 @@ In the following sections, support for
 '<a href="#compilingraswinwithborlandandmetrowerks"><tt><b>Compiling RasWin with Borland and MetroWerks</b></tt></a>'
 are described.
 <p><hr>
-<a name="monochromexwindowssupport"><h3>Monochrome X-Windows Support</h3></a><p>
+<h3 id="monochromexwindowssupport">Monochrome X-Windows Support</h3><p>
 RasMol supports the many
 monochrome UNIX workstations typically found in academia, such as low-end
 SUN workstations and NCD X-terminals. The X11 version of RasMol (when
@@ -7124,7 +7066,7 @@ means that all display modes of RasMol are available when in monochrome
 mode. For best results, users should experiment with the set ambient
 command to ensure the maximum contrast in resulting images.
 <p><hr>
-<a name="tcltkipcsupport"><h3>Tcl/Tk IPC support</h3></a><p>
+<h3 id="tcltkipcsupport">Tcl/Tk IPC support</h3><p>
 Version 4 of Tk
 graphics library changed the protocol used to communicate between Tk
 applications. RasMol version 2.6 was modified such that it could
@@ -7134,7 +7076,7 @@ communicate with other 3.x applications and Tcl/Tk 4.x applications with other
 4.x applications, these changes allow RasMol to communicate between
 processes with both protocols (potentially concurrently).
 <p><hr>
-<a name="unixsocketsbasedipc"><h3>UNIX sockets based IPC</h3></a><p>
+<h3 id="unixsocketsbasedipc">UNIX sockets based IPC</h3><p>
 The UNIX implementation of RasMol
 supports BSD-style socket communication. An identical socket mechanism is
 also being developed for VMS, Apple Macintosh and Microsoft Windows
@@ -7154,7 +7096,7 @@ session and terminates RasMol. This functionality may be tested using the
 UNIX command
 '<tt><b>telnet &lt;hostname&gt; 21069</b></tt>'.
 <p><hr>
-<a name="compilingraswinwithborlandandmetrowerks"><h3>Compiling RasWin with Borland and MetroWerks</h3></a><p>
+<h3 id="compilingraswinwithborlandandmetrowerks">Compiling RasWin with Borland and MetroWerks</h3><p>
 A number of changes were made to the
 source code in the transition from version 2.5 to 2.6 to allow
 the Microsoft Windows version of RasMol to compile
@@ -7163,7 +7105,7 @@ standard library and special code to avoid a bug in _fmemset.
 Additional changes were made in the transition from 2.6 to 2.7 to
 allow compilation with the MetroWerks compilers.
 <p><hr>
-<a name="chbib"><h2>Bibliography</h2></a>
+<h2 id="chbib">Bibliography</h2>
 <p>
 <tt><b>Molecular Graphics</b></tt>
 <p>

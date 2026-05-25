@@ -64,6 +64,14 @@ export default function Download() {
                 <small>{new Date(release.published_at).toLocaleDateString()}</small>
               </div>
               <div className="card__body">
+                {release.body && (
+                  <div className="margin-bottom--md">
+                    <h3>Release Notes</h3>
+                    <pre style={{ whiteSpace: 'pre-wrap', backgroundColor: 'transparent', border: 'none', padding: 0, font: 'inherit' }}>
+                      {release.body}
+                    </pre>
+                  </div>
+                )}
                 <h3>Assets</h3>
                 <ul>
                   {release.assets.map(asset => (
@@ -77,9 +85,18 @@ export default function Download() {
                 {release.assets.length === 0 && <p>No direct download assets available for this release.</p>}
               </div>
               <div className="card__footer">
-                <a className="button button--primary" href={release.html_url} target="_blank" rel="noopener noreferrer">
-                  View Release on GitHub
-                </a>
+                <div className="button-group">
+                   {release.assets.map(asset => (
+                     <a key={asset.id} className="button button--secondary margin-right--sm margin-bottom--sm" href={asset.browser_download_url} target="_blank" rel="noopener noreferrer">
+                       Download {asset.name}
+                     </a>
+                   ))}
+                   {release.assets.length === 0 && (
+                     <a className="button button--primary" href={release.html_url} target="_blank" rel="noopener noreferrer">
+                       View Release on GitHub
+                     </a>
+                   )}
+                </div>
               </div>
             </div>
           </section>
