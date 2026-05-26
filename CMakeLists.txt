@@ -637,8 +637,8 @@ if(WIN32)
     set(CPACK_WIX_UPGRADE_GUID "AE33A535-6C64-4286-9C64-4A633F2356B2") # Placeholder UUID
 
     # Ensure compatibility with Windows 8.1 (Standard MSI features)
-    if(EXISTS "${CMAKE_SOURCE_DIR}/assets/rasmol.ico")
-        set(CPACK_WIX_PRODUCT_ICON "${CMAKE_SOURCE_DIR}/assets/rasmol.ico")
+    if(EXISTS "${CMAKE_BINARY_DIR}/assets/rasmol.ico")
+        set(CPACK_WIX_PRODUCT_ICON "${CMAKE_BINARY_DIR}/assets/rasmol.ico")
     endif()
 
     # Optional: Add desktop shortcuts if supported by CPack WiX
@@ -653,8 +653,8 @@ elseif(APPLE)
     set(CPACK_GENERATOR "DragNDrop")
     set(CPACK_DMG_VOLUME_NAME "RasMol")
     set(CPACK_PACKAGE_FILE_NAME "RasMol-${CPACK_PACKAGE_VERSION}-${CMAKE_SYSTEM_PROCESSOR}")
-    if(EXISTS "${CMAKE_SOURCE_DIR}/assets/rasmol.icns")
-        set(CPACK_PACKAGE_ICON "${CMAKE_SOURCE_DIR}/assets/rasmol.icns")
+    if(EXISTS "${CMAKE_BINARY_DIR}/assets/rasmol.icns")
+        set(CPACK_PACKAGE_ICON "${CMAKE_BINARY_DIR}/assets/rasmol.icns")
     endif()
 endif()
 

@@ -17,23 +17,23 @@ generate_icons() {
         echo "Error: SVG icon not found at $SVG_PATH"
         return 1
     fi
-    mkdir -p assets
+    mkdir -p build/assets
 
     if [ "$OS_TYPE" = "Linux" ]; then
         echo "Generating icons for Linux..."
         if command -v inkscape >/dev/null 2>&1; then
-            inkscape -w 512 -h 512 "$SVG_PATH" -o assets/rasmol.png
+            inkscape -w 512 -h 512 "$SVG_PATH" -o build/assets/rasmol.png
         elif command -v convert >/dev/null 2>&1; then
-            convert -background none "$SVG_PATH" -resize 512x512 assets/rasmol.png
+            convert -background none "$SVG_PATH" -resize 512x512 build/assets/rasmol.png
         else
             echo "Warning: inkscape or imagemagick not found. Skipping high-res icon generation."
             if [ -f "src/rasmol_48x48.xpm" ] && command -v convert >/dev/null 2>&1; then
-                convert src/rasmol_48x48.xpm assets/rasmol.png
+                convert src/rasmol_48x48.xpm build/assets/rasmol.png
             fi
         fi
     elif [ "$OS_TYPE" = "Darwin" ]; then
         echo "Generating icons for macOS..."
-        ICONSET="assets/rasmol.iconset"
+        ICONSET="build/assets/rasmol.iconset"
         mkdir -p "$ICONSET"
 
         # Render SVG to various PNG sizes for iconset
@@ -57,7 +57,7 @@ generate_icons() {
         done
 
         if command -v iconutil >/dev/null 2>&1; then
-            iconutil -c icns "$ICONSET" -o assets/rasmol.icns
+            iconutil -c icns "$ICONSET" -o build/assets/rasmol.icns
             rm -rf "$ICONSET"
         else
             echo "Error: iconutil not found. Cannot generate .icns file."
@@ -106,13 +106,12 @@ build_linux() {
     cmake --install build --config Release --prefix build/AppDir/usr
 
     mkdir -p build/AppDir/usr/share/icons/hicolor/512x512/apps
-    if [ -f "assets/rasmol.png" ]; then
-        cp assets/rasmol.png build/AppDir/usr/share/icons/hicolor/512x512/apps/rasmol.png
-        cp assets/rasmol.png build/AppDir/rasmol.png
+    if [ -f "build/assets/rasmol.png" ]; then
+        cp build/assets/rasmol.png build/AppDir/usr/share/icons/hicolor/512x512/apps/rasmol.png
+        cp build/assets/rasmol.png build/AppDir/rasmol.png
     fi
     cp warpings/tcl/metadata/rasmol.desktop build/AppDir/
 
-    # Download linuxdeploy if not present, arch-aware
     LD_FILENAME="linuxdeploy-${LD_ARCH}.AppImage"
     if [ ! -f "$LD_FILENAME" ]; then
         echo "Downloading $LD_FILENAME..."
