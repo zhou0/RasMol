@@ -69,6 +69,7 @@ generate_icons() {
 build_linux() {
     echo "Building for Linux ($RAW_ARCH)..."
 
+    # Determine linuxdeploy architecture name
     case "$RAW_ARCH" in
         x86_64)  LD_ARCH="x86_64" ;;
         aarch64) LD_ARCH="aarch64" ;;
@@ -76,6 +77,7 @@ build_linux() {
         *)       LD_ARCH="$RAW_ARCH" ;;
     esac
 
+    # Determine Package format based on /etc/os-release
     PKG_GEN="TGZ"
     if [ -f /etc/os-release ]; then
         . /etc/os-release
@@ -86,6 +88,7 @@ build_linux() {
             PKG_GEN="RPM"
             echo "Detected Fedora/RHEL system. Will generate RPM."
         elif [[ "$ID" == "arch" || "$ID_LIKE" == *"arch"* ]]; then
+            # CPack supports TXZ, and recent versions support ZST
             PKG_GEN="TXZ"
             if cpack --help | grep -q "ZST"; then
                 PKG_GEN="ZST"
@@ -97,6 +100,7 @@ build_linux() {
     cmake -B build -S . -DCMAKE_BUILD_TYPE=Release -DPIXELDEPTH=32
     cmake --build build --config Release
 
+    # Prepare AppDir for AppImage inside build directory
     rm -rf build/AppDir
     mkdir -p build/AppDir/usr
     cmake --install build --config Release --prefix build/AppDir/usr
@@ -115,6 +119,7 @@ build_linux() {
         chmod +x "$LD_FILENAME"
     fi
 
+    # Ensure all library paths are in LD_LIBRARY_PATH for linuxdeploy
     LIB_PATHS=$(find build/lib build/_deps -name "*.so*" -printf "%h:" | sort -u | tr -d "\n")
     export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$LIB_PATHS
 
@@ -125,14 +130,17 @@ build_linux() {
 
     export ARCH="$RAW_ARCH"
     mkdir -p build/AppImage
+    # Run linuxdeploy pointing to the AppDir in build/
     ./"$LD_FILENAME" --appimage-extract-and-run --appdir build/AppDir --output appimage $LIBS_ARGS || echo "AppImage generation failed"
     mv *.AppImage build/AppImage/ 2>/dev/null || true
 
+    # Native package (DEB/RPM/etc)
     cd build
     echo "Generating $PKG_GEN package..."
     cpack -G "$PKG_GEN" || echo "$PKG_GEN packaging failed"
     mkdir -p "$PKG_GEN"
 
+    # Move artifacts to their respective folders
     case "$PKG_GEN" in
         DEB) mv *.deb DEB/ 2>/dev/null || true ;;
         RPM) mv *.rpm RPM/ 2>/dev/null || true ;;
