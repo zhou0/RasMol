@@ -73,17 +73,17 @@ build_linux() {
     cmake -B build -S . -DCMAKE_BUILD_TYPE=Release -DPIXELDEPTH=32
     cmake --build build --config Release
 
-    # Prepare AppDir for AppImage
-    rm -rf AppDir
-    mkdir -p AppDir/usr
-    cmake --install build --config Release --prefix AppDir/usr
+    # Prepare AppDir for AppImage inside build directory
+    rm -rf build/AppDir
+    mkdir -p build/AppDir/usr
+    cmake --install build --config Release --prefix build/AppDir/usr
 
-    mkdir -p AppDir/usr/share/icons/hicolor/512x512/apps
+    mkdir -p build/AppDir/usr/share/icons/hicolor/512x512/apps
     if [ -f "assets/rasmol.png" ]; then
-        cp assets/rasmol.png AppDir/usr/share/icons/hicolor/512x512/apps/rasmol.png
-        cp assets/rasmol.png AppDir/rasmol.png
+        cp assets/rasmol.png build/AppDir/usr/share/icons/hicolor/512x512/apps/rasmol.png
+        cp assets/rasmol.png build/AppDir/rasmol.png
     fi
-    cp warpings/tcl/metadata/rasmol.desktop AppDir/
+    cp warpings/tcl/metadata/rasmol.desktop build/AppDir/
 
     # Download linuxdeploy if not present, arch-aware
     LD_FILENAME="linuxdeploy-${LD_ARCH}.AppImage"
@@ -104,8 +104,8 @@ build_linux() {
 
     export ARCH="$RAW_ARCH"
     mkdir -p build/AppImage
-    # Run linuxdeploy
-    ./"$LD_FILENAME" --appimage-extract-and-run --appdir AppDir --output appimage $LIBS_ARGS || echo "AppImage generation failed"
+    # Run linuxdeploy pointing to the AppDir in build/
+    ./"$LD_FILENAME" --appimage-extract-and-run --appdir build/AppDir --output appimage $LIBS_ARGS || echo "AppImage generation failed"
     mv *.AppImage build/AppImage/ 2>/dev/null || true
 
     # Native package (DEB/RPM/etc)
