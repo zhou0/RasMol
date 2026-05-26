@@ -1,13 +1,22 @@
 #!/bin/bash
 set -e
 
+# Determine script directory and project root
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PROJECT_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
+cd "$PROJECT_ROOT"
+
 # Detect OS
 OS_TYPE="$(uname -s)"
 RAW_ARCH="$(uname -m)"
 
 # Icon generation function
 generate_icons() {
-    SVG_PATH="./website/static/img/rasmol-logo.svg"
+    SVG_PATH="website/static/img/rasmol-logo.svg"
+    if [ ! -f "$SVG_PATH" ]; then
+        echo "Error: SVG icon not found at $SVG_PATH"
+        return 1
+    fi
     mkdir -p assets
 
     if [ "$OS_TYPE" = "Linux" ]; then
@@ -30,7 +39,12 @@ generate_icons() {
         # Render SVG to various PNG sizes for iconset
         for size in 16 32 128 256 512; do
             s2=$((size * 2))
-            if command -v inkscape >/dev/null 2>&1; then
+            if command -v qlmanage >/dev/null 2>&1; then
+                qlmanage -t -s $size -o "$ICONSET" "$SVG_PATH" >/dev/null 2>&1
+                mv "$ICONSET/$(basename "$SVG_PATH").png" "$ICONSET/icon_${size}x${size}.png" 2>/dev/null || true
+                qlmanage -t -s $s2 -o "$ICONSET" "$SVG_PATH" >/dev/null 2>&1
+                mv "$ICONSET/$(basename "$SVG_PATH").png" "$ICONSET/icon_${size}x${size}@2x.png" 2>/dev/null || true
+            elif command -v inkscape >/dev/null 2>&1; then
                 inkscape -w $size -h $size "$SVG_PATH" -o "$ICONSET/icon_${size}x${size}.png"
                 inkscape -w $s2 -h $s2 "$SVG_PATH" -o "$ICONSET/icon_${size}x${size}@2x.png"
             elif command -v magick >/dev/null 2>&1; then
@@ -39,14 +53,6 @@ generate_icons() {
             elif command -v convert >/dev/null 2>&1; then
                 convert -background none "$SVG_PATH" -resize ${size}x${size} "$ICONSET/icon_${size}x${size}.png"
                 convert -background none "$SVG_PATH" -resize ${s2}x${s2} "$ICONSET/icon_${size}x${size}@2x.png"
-            else
-                # Fallback to qlmanage if available
-                if command -v qlmanage >/dev/null 2>&1; then
-                    qlmanage -t -s $size -o "$ICONSET" "$SVG_PATH" >/dev/null 2>&1
-                    mv "$ICONSET/$(basename "$SVG_PATH").png" "$ICONSET/icon_${size}x${size}.png" 2>/dev/null || true
-                    qlmanage -t -s $s2 -o "$ICONSET" "$SVG_PATH" >/dev/null 2>&1
-                    mv "$ICONSET/$(basename "$SVG_PATH").png" "$ICONSET/icon_${size}x${size}@2x.png" 2>/dev/null || true
-                fi
             fi
         done
 
@@ -63,7 +69,6 @@ generate_icons() {
 build_linux() {
     echo "Building for Linux ($RAW_ARCH)..."
 
-    # Determine linuxdeploy architecture name
     case "$RAW_ARCH" in
         x86_64)  LD_ARCH="x86_64" ;;
         aarch64) LD_ARCH="aarch64" ;;
@@ -71,7 +76,6 @@ build_linux() {
         *)       LD_ARCH="$RAW_ARCH" ;;
     esac
 
-    # Determine Package format based on /etc/os-release
     PKG_GEN="TGZ"
     if [ -f /etc/os-release ]; then
         . /etc/os-release
@@ -93,7 +97,6 @@ build_linux() {
     cmake -B build -S . -DCMAKE_BUILD_TYPE=Release -DPIXELDEPTH=32
     cmake --build build --config Release
 
-    # Prepare AppDir for AppImage inside build directory
     rm -rf build/AppDir
     mkdir -p build/AppDir/usr
     cmake --install build --config Release --prefix build/AppDir/usr
@@ -105,7 +108,6 @@ build_linux() {
     fi
     cp warpings/tcl/metadata/rasmol.desktop build/AppDir/
 
-    # Download linuxdeploy if not present, arch-aware
     LD_FILENAME="linuxdeploy-${LD_ARCH}.AppImage"
     if [ ! -f "$LD_FILENAME" ]; then
         echo "Downloading $LD_FILENAME..."
@@ -113,7 +115,6 @@ build_linux() {
         chmod +x "$LD_FILENAME"
     fi
 
-    # Ensure all library paths are in LD_LIBRARY_PATH for linuxdeploy
     LIB_PATHS=$(find build/lib build/_deps -name "*.so*" -printf "%h:" | sort -u | tr -d "\n")
     export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$LIB_PATHS
 
@@ -127,7 +128,6 @@ build_linux() {
     ./"$LD_FILENAME" --appimage-extract-and-run --appdir build/AppDir --output appimage $LIBS_ARGS || echo "AppImage generation failed"
     mv *.AppImage build/AppImage/ 2>/dev/null || true
 
-    # Native package (DEB/RPM/etc)
     cd build
     echo "Generating $PKG_GEN package..."
     cpack -G "$PKG_GEN" || echo "$PKG_GEN packaging failed"
