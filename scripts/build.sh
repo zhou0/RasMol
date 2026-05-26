@@ -1,13 +1,22 @@
 #!/bin/bash
 set -e
 
+# Determine script directory and project root
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PROJECT_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
+cd "$PROJECT_ROOT"
+
 # Detect OS
 OS_TYPE="$(uname -s)"
 RAW_ARCH="$(uname -m)"
 
 # Icon generation function
 generate_icons() {
-    SVG_PATH="./website/static/img/rasmol-logo.svg"
+    SVG_PATH="website/static/img/rasmol-logo.svg"
+    if [ ! -f "$SVG_PATH" ]; then
+        echo "Error: SVG icon not found at $SVG_PATH"
+        return 1
+    fi
     mkdir -p assets
 
     if [ "$OS_TYPE" = "Linux" ]; then
@@ -24,16 +33,34 @@ generate_icons() {
         fi
     elif [ "$OS_TYPE" = "Darwin" ]; then
         echo "Generating icons for macOS..."
-        if [ ! -f "scripts/svg2icns.sh" ]; then
-            curl -Lo scripts/svg2icns.sh https://raw.githubusercontent.com/magnusviri/svg2icns/master/svg2icns.sh
-            chmod +x scripts/svg2icns.sh
-        fi
-        ./scripts/svg2icns.sh "$SVG_PATH"
-        ICON_NAME="$(basename "${SVG_PATH%.svg}.icns")"
-        if [ -f "$ICON_NAME" ]; then
-            mv "$ICON_NAME" assets/rasmol.icns
-        elif [ -f "${SVG_PATH%.svg}.icns" ]; then
-            mv "${SVG_PATH%.svg}.icns" assets/rasmol.icns
+        ICONSET="assets/rasmol.iconset"
+        mkdir -p "$ICONSET"
+
+        # Render SVG to various PNG sizes for iconset
+        for size in 16 32 128 256 512; do
+            s2=$((size * 2))
+            if command -v qlmanage >/dev/null 2>&1; then
+                qlmanage -t -s $size -o "$ICONSET" "$SVG_PATH" >/dev/null 2>&1
+                mv "$ICONSET/$(basename "$SVG_PATH").png" "$ICONSET/icon_${size}x${size}.png" 2>/dev/null || true
+                qlmanage -t -s $s2 -o "$ICONSET" "$SVG_PATH" >/dev/null 2>&1
+                mv "$ICONSET/$(basename "$SVG_PATH").png" "$ICONSET/icon_${size}x${size}@2x.png" 2>/dev/null || true
+            elif command -v inkscape >/dev/null 2>&1; then
+                inkscape -w $size -h $size "$SVG_PATH" -o "$ICONSET/icon_${size}x${size}.png"
+                inkscape -w $s2 -h $s2 "$SVG_PATH" -o "$ICONSET/icon_${size}x${size}@2x.png"
+            elif command -v magick >/dev/null 2>&1; then
+                magick -background none "$SVG_PATH" -resize ${size}x${size} "$ICONSET/icon_${size}x${size}.png"
+                magick -background none "$SVG_PATH" -resize ${s2}x${s2} "$ICONSET/icon_${size}x${size}@2x.png"
+            elif command -v convert >/dev/null 2>&1; then
+                convert -background none "$SVG_PATH" -resize ${size}x${size} "$ICONSET/icon_${size}x${size}.png"
+                convert -background none "$SVG_PATH" -resize ${s2}x${s2} "$ICONSET/icon_${size}x${size}@2x.png"
+            fi
+        done
+
+        if command -v iconutil >/dev/null 2>&1; then
+            iconutil -c icns "$ICONSET" -o assets/rasmol.icns
+            rm -rf "$ICONSET"
+        else
+            echo "Error: iconutil not found. Cannot generate .icns file."
         fi
     fi
 }

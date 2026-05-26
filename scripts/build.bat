@@ -1,9 +1,16 @@
 @echo off
 setlocal
 
+:: Determine project root
+set SCRIPT_DIR=%~dp0
+cd /d %SCRIPT_DIR%..
+
 echo Checking dependencies...
-choco install imagemagick -y
-choco install magicsplat-tcl-tk --version=1.16.0 -y
+where choco >nul 2>&1
+if %errorlevel% == 0 (
+    choco install imagemagick -y
+    choco install magicsplat-tcl-tk --version=1.16.0 -y
+)
 
 echo Generating icons for Windows...
 set SVG_PATH=website\static\img\rasmol-logo.svg
