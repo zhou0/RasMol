@@ -1,0 +1,100 @@
+import sys
+
+with open("CMakeLists.txt", "r") as f:
+    content = f.read()
+
+# Fix the TIFF_PATCH variable name (it was incorrectly referenced as CBF_APPLE_PATCH in definition but TIFF_PATCH in replacement)
+# And fix the logic to correctly add the subdirectory
+old_block = """            if(APPLE)
+                # Enable all optional TIFF codecs and ensure they are linked
+                set(CBF_APPLE_PATCH [=[
+set(ZSTD ON CACHE BOOL "" FORCE)
+set(WEBP ON CACHE BOOL "" FORCE)
+set(LERC ON CACHE BOOL "" FORCE)
+set(DEFLATE ON CACHE BOOL "" FORCE)
+set(JBIG ON CACHE BOOL "" FORCE)
+set(LZMA ON CACHE BOOL "" FORCE)
+set(JPEG ON CACHE BOOL "" FORCE)
+
+find_package(JPEG REQUIRED)
+find_package(ZLIB REQUIRED)
+find_library(ZSTD_LIB NAMES zstd HINTS /opt/local/lib)
+find_library(WEBP_LIB NAMES webp HINTS /opt/local/lib)
+find_library(LERC_LIB NAMES Lerc lerc HINTS /opt/local/lib)
+find_library(DEFLATE_LIB NAMES deflate HINTS /opt/local/lib)
+find_library(JBIG_LIB NAMES jbig HINTS /opt/local/lib)
+find_library(LZMA_LIB NAMES lzma HINTS /opt/local/lib)
+
+link_libraries(${JPEG_LIBRARIES} ${ZLIB_LIBRARIES})
+if(ZSTD_LIB)
+    link_libraries(${ZSTD_LIB})
+endif()
+if(WEBP_LIB)
+    link_libraries(${WEBP_LIB})
+endif()
+if(LERC_LIB)
+    link_libraries(${LERC_LIB})
+endif()
+if(DEFLATE_LIB)
+    link_libraries(${DEFLATE_LIB})
+endif()
+if(JBIG_LIB)
+    link_libraries(${JBIG_LIB})
+endif()
+if(LZMA_LIB)
+    link_libraries(${LZMA_LIB})
+endif()
+endif()]=])
+                string(REPLACE "add_subdirectory(libtiff)" "${TIFF_PATCH}" CBF_CMAKE "${CBF_CMAKE}")
+            endif()
+    file(WRITE ${cbflib_SOURCE_DIR}/CMakeLists.txt "${CBF_CMAKE}")
+            add_subdirectory(${cbflib_SOURCE_DIR} ${cbflib_BINARY_DIR})"""
+
+new_block = """            if(APPLE)
+                # Enable all optional TIFF codecs and ensure they are linked
+                set(TIFF_PATCH [=[
+set(ZSTD ON CACHE BOOL "" FORCE)
+set(WEBP ON CACHE BOOL "" FORCE)
+set(LERC ON CACHE BOOL "" FORCE)
+set(DEFLATE ON CACHE BOOL "" FORCE)
+set(JBIG ON CACHE BOOL "" FORCE)
+set(LZMA ON CACHE BOOL "" FORCE)
+set(JPEG ON CACHE BOOL "" FORCE)
+
+find_package(JPEG REQUIRED)
+find_package(ZLIB REQUIRED)
+find_library(ZSTD_LIB NAMES zstd HINTS /opt/local/lib)
+find_library(WEBP_LIB NAMES webp HINTS /opt/local/lib)
+find_library(LERC_LIB NAMES Lerc lerc HINTS /opt/local/lib)
+find_library(DEFLATE_LIB NAMES deflate HINTS /opt/local/lib)
+find_library(JBIG_LIB NAMES jbig HINTS /opt/local/lib)
+find_library(LZMA_LIB NAMES lzma HINTS /opt/local/lib)
+
+link_libraries(${JPEG_LIBRARIES} ${ZLIB_LIBRARIES})
+if(ZSTD_LIB)
+    link_libraries(${ZSTD_LIB})
+endif()
+if(WEBP_LIB)
+    link_libraries(${WEBP_LIB})
+endif()
+if(LERC_LIB)
+    link_libraries(${LERC_LIB})
+endif()
+if(DEFLATE_LIB)
+    link_libraries(${DEFLATE_LIB})
+endif()
+if(JBIG_LIB)
+    link_libraries(${JBIG_LIB})
+endif()
+if(LZMA_LIB)
+    link_libraries(${LZMA_LIB})
+endif()]=])
+                string(REPLACE "add_subdirectory(libtiff)" "${TIFF_PATCH}" CBF_CMAKE "${CBF_CMAKE}")
+            endif()
+            file(WRITE ${cbflib_SOURCE_DIR}/CMakeLists.txt "${CBF_CMAKE}")
+            add_subdirectory(${cbflib_SOURCE_DIR} ${cbflib_BINARY_DIR})"""
+
+content = content.replace(old_block, new_block)
+
+with open("CMakeLists.txt", "w") as f:
+    f.write(content)
