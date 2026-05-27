@@ -599,7 +599,18 @@ if(TCL_LIBRARY AND TK_LIBRARY)
     if(VTK_FOUND)
         list(APPEND RASMOL_TCL_SOURCES warpings/tcl/rasmol_vtk.cpp)
     endif()
-    add_executable(rasmol_tcl ${RASMOL_TCL_SOURCES})
+    if(APPLE)
+        add_executable(rasmol_tcl MACOSX_BUNDLE ${RASMOL_TCL_SOURCES})
+        set_target_properties(rasmol_tcl PROPERTIES
+            MACOSX_BUNDLE_BUNDLE_NAME "RasMol"
+            MACOSX_BUNDLE_GUI_IDENTIFIER "org.openrasmol.rasmol"
+            MACOSX_BUNDLE_BUNDLE_VERSION "${CPACK_PACKAGE_VERSION}"
+            MACOSX_BUNDLE_SHORT_VERSION_STRING "${CPACK_PACKAGE_VERSION}"
+            MACOSX_BUNDLE_ICON_FILE "rasmol.icns"
+        )
+    else()
+        add_executable(rasmol_tcl ${RASMOL_TCL_SOURCES})
+    endif()
     target_include_directories(rasmol_tcl PRIVATE src ${TCL_INCLUDE_PATH} ${TK_INCLUDE_PATH})
     target_link_libraries(rasmol_tcl ${TCL_LIBRARY} ${TK_LIBRARY} ${EXTERNAL_LIBRARIES})
     if(VTK_FOUND)
@@ -612,8 +623,27 @@ if(TCL_LIBRARY AND TK_LIBRARY)
     if(APPLE)
         target_link_libraries(rasmol_tcl "-framework Cocoa" "-framework IOKit" "-framework CoreFoundation" "-framework CoreGraphics")
         target_compile_definitions(rasmol_tcl PRIVATE MAC_OSX_TK)
+
+        # Add icons and resources to the bundle
+        if(EXISTS "${CMAKE_BINARY_DIR}/assets/rasmol.icns")
+            set_source_files_properties("${CMAKE_BINARY_DIR}/assets/rasmol.icns" PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
+            target_sources(rasmol_tcl PRIVATE "${CMAKE_BINARY_DIR}/assets/rasmol.icns")
+        endif()
+
+        set(BUNDLE_RESOURCES
+            gui/tcltk/rasmol_ui.tcl
+            gui/tcltk/rasmol_loc.tcl
+            gui/tcltk/logo.tcl
+            doc/rasmol.hlp
+        )
+        set_source_files_properties(${BUNDLE_RESOURCES} PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
+        target_sources(rasmol_tcl PRIVATE ${BUNDLE_RESOURCES})
     endif()
-    install(TARGETS rasmol_tcl DESTINATION bin)
+    if(APPLE)
+        install(TARGETS rasmol_tcl BUNDLE DESTINATION .)
+    else()
+        install(TARGETS rasmol_tcl DESTINATION bin)
+    endif()
     install(FILES gui/tcltk/rasmol_ui.tcl gui/tcltk/rasmol_loc.tcl gui/tcltk/logo.tcl DESTINATION share/rasmol)
 else()
     message(WARNING "Tcl/Tk dependencies not fully found. rasmol_tcl target will not be created.")
@@ -652,6 +682,9 @@ elseif(APPLE)
     set(CPACK_GENERATOR "DragNDrop")
     set(CPACK_DMG_VOLUME_NAME "RasMol")
     set(CPACK_PACKAGE_FILE_NAME "RasMol-${CPACK_PACKAGE_VERSION}-${CMAKE_SYSTEM_PROCESSOR}")
+    # Point CPack to the .app bundle
+    set(CPACK_BUNDLE_NAME "RasMol")
+    set(CPACK_BUNDLE_PLIST "${CMAKE_BINARY_DIR}/Info.plist")
     if(EXISTS "${CMAKE_BINARY_DIR}/assets/rasmol.icns")
         set(CPACK_PACKAGE_ICON "${CMAKE_BINARY_DIR}/assets/rasmol.icns")
     endif()
