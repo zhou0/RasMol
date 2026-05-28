@@ -65,11 +65,9 @@ const config: Config = {
         src: 'img/rasmol-logo.svg',
       },
       items: [
-        {to: '/bibliography', label: 'Bibliography', position: 'left'},
         {to: '/download', label: 'Download', position: 'left'},
         {to: '/features', label: 'Features', position: 'left'},
         {to: '/history', label: 'History', position: 'left'},
-        {to: '/legacydocs', label: 'Legacy Docs', position: 'left'},
         {to: '/blog', label: 'Blog', position: 'left'},
         {
           href: 'https://github.com/zhou0/RasMol',
