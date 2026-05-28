@@ -6,34 +6,19 @@ import Heading from '@theme/Heading';
 
 import styles from './index.module.css';
 
-function HomepageHeader() {
-  const {siteConfig} = useDocusaurusContext();
-  return (
-    <header className={clsx('hero hero--primary', styles.heroBanner)}>
-      <div className="container">
-        <Heading as="h1" className="hero__title">
-          {siteConfig.title}
-        </Heading>
-        <Heading as="h2" className="hero__subtitle">{siteConfig.tagline}</Heading>
-      </div>
-    </header>
-  );
-}
-
 export default function Home(): ReactNode {
   const {siteConfig} = useDocusaurusContext();
   return (
     <Layout
       title={`Welcome to ${siteConfig.title}`}
       description="RasMol is a molecular graphics program for the visualisation of proteins, nucleic acids and small molecules.">
-      <HomepageHeader />
       <main>
         <section className={styles.features}>
           <div className="container">
             <div className="row">
               <div className={clsx('col col--8 col--offset-2')}>
-                <div className="text--center padding-horiz--md">
-                  <Heading as="h2">Introduction to RasMol</Heading>
+                <div className="text--left padding-horiz--md">
+                  <Heading as="h2" className="text--center">Introduction to RasMol</Heading>
                   <p>
                     RasMol is a molecular graphics program intended for the visualisation of proteins,
                     nucleic acids and small molecules. The program is aimed at display, teaching and
