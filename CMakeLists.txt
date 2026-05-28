@@ -282,8 +282,7 @@ find_library(CVECTOR_LIBRARY NAMES CVector cvector)
 
 include(FetchContent)
 
-if(NOT CQRLIB_LIBRARY)
-    message(STATUS "CQRlib not found. Fetching from GitHub...")
+if(NOT CQRLIB_LIBRARY OR CQRLIB_LIBRARY STREQUAL "CQRlib")
     fetchcontent_declare(cqrlib
         GIT_REPOSITORY https://github.com/zhou0/cqrlib.git
         GIT_TAG master
@@ -294,8 +293,7 @@ if(NOT CQRLIB_LIBRARY)
 endif()
 
 
-if(NOT CVECTOR_LIBRARY)
-    message(STATUS "CVector not found. Fetching from GitHub...")
+if(NOT CVECTOR_LIBRARY OR CVECTOR_LIBRARY STREQUAL "CV_shared")
     fetchcontent_declare(cvector
         GIT_REPOSITORY https://github.com/zhou0/CVector.git
         GIT_TAG master
@@ -314,15 +312,14 @@ if(NOT CVECTOR_LIBRARY)
         # Disable installation in subproject to avoid more conflicts
         string(APPEND CV_CMAKE "\nset(CV_INSTALL OFF CACHE BOOL \"\" FORCE)\n")
         file(WRITE ${cvector_SOURCE_DIR}/CMakeLists.txt "${CV_CMAKE}")
-        add_subdirectory(${cvector_SOURCE_DIR} ${cvector_BINARY_DIR})
     endif()
+    add_subdirectory(${cvector_SOURCE_DIR} ${cvector_BINARY_DIR})
     set(CVECTOR_LIBRARY CV_shared CACHE STRING "" FORCE)
     set(CVECTOR_INCLUDE_DIR ${cvector_SOURCE_DIR} CACHE PATH "" FORCE)
 endif()
 
 
-if(NOT NEARTREE_LIBRARY)
-    message(STATUS "NearTree not found. Fetching from GitHub...")
+if(NOT NEARTREE_LIBRARY OR NEARTREE_LIBRARY STREQUAL "CNearTree")
     fetchcontent_declare(neartree
         GIT_REPOSITORY https://github.com/zhou0/NearTree.git
         GIT_TAG main
@@ -332,8 +329,7 @@ if(NOT NEARTREE_LIBRARY)
     set(NEARTREE_INCLUDE_DIR ${neartree_SOURCE_DIR} CACHE PATH "" FORCE)
 endif()
 
-if(NOT CBF_LIBRARY)
-    message(STATUS "CBFlib not found. Fetching from GitHub...")
+if(NOT CBF_LIBRARY OR CBF_LIBRARY STREQUAL "cbf")
     fetchcontent_declare(cbflib
         GIT_REPOSITORY https://github.com/zhou0/cbflib.git
         GIT_TAG 207a0992a43d5bd7387ff6561fc5cfbf37f52c3f
@@ -399,13 +395,11 @@ endif()]=])
             file(WRITE ${cbflib_SOURCE_DIR}/CMakeLists.txt "${CBF_CMAKE}")
         endif()
         add_subdirectory(${cbflib_SOURCE_DIR} ${cbflib_BINARY_DIR})
-        set(CBF_LIBRARY cbf CACHE STRING "" FORCE)
-        set(CBF_INCLUDE_DIR ${cbflib_SOURCE_DIR}/include CACHE PATH "" FORCE)
-    else()
-        message(WARNING "Bison 2.7+ not found. CBFlib will not be built.")
-        set(CBF_LIBRARY "" CACHE STRING "" FORCE)
-        set(CBF_INCLUDE_DIR "" CACHE PATH "" FORCE)
     endif()
+endif()
+if(NOT CBF_LIBRARY AND cbflib_SOURCE_DIR)
+    set(CBF_LIBRARY cbf CACHE STRING "" FORCE)
+    set(CBF_INCLUDE_DIR ${cbflib_SOURCE_DIR}/include CACHE PATH "" FORCE)
 endif()
 # VTK Support
 set(VTK_COMPONENTS
