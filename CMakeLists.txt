@@ -282,8 +282,7 @@ find_library(CVECTOR_LIBRARY NAMES CVector cvector)
 
 include(FetchContent)
 
-if(NOT CQRLIB_LIBRARY)
-    message(STATUS "CQRlib not found. Fetching from GitHub...")
+if(NOT CQRLIB_LIBRARY OR CQRLIB_LIBRARY STREQUAL "CQRlib")
     fetchcontent_declare(cqrlib
         GIT_REPOSITORY https://github.com/zhou0/cqrlib.git
         GIT_TAG master
@@ -294,8 +293,7 @@ if(NOT CQRLIB_LIBRARY)
 endif()
 
 
-if(NOT CVECTOR_LIBRARY)
-    message(STATUS "CVector not found. Fetching from GitHub...")
+if(NOT CVECTOR_LIBRARY OR CVECTOR_LIBRARY STREQUAL "CV_shared")
     fetchcontent_declare(cvector
         GIT_REPOSITORY https://github.com/zhou0/CVector.git
         GIT_TAG master
@@ -314,15 +312,14 @@ if(NOT CVECTOR_LIBRARY)
         # Disable installation in subproject to avoid more conflicts
         string(APPEND CV_CMAKE "\nset(CV_INSTALL OFF CACHE BOOL \"\" FORCE)\n")
         file(WRITE ${cvector_SOURCE_DIR}/CMakeLists.txt "${CV_CMAKE}")
-        add_subdirectory(${cvector_SOURCE_DIR} ${cvector_BINARY_DIR})
     endif()
+    add_subdirectory(${cvector_SOURCE_DIR} ${cvector_BINARY_DIR})
     set(CVECTOR_LIBRARY CV_shared CACHE STRING "" FORCE)
     set(CVECTOR_INCLUDE_DIR ${cvector_SOURCE_DIR} CACHE PATH "" FORCE)
 endif()
 
 
-if(NOT NEARTREE_LIBRARY)
-    message(STATUS "NearTree not found. Fetching from GitHub...")
+if(NOT NEARTREE_LIBRARY OR NEARTREE_LIBRARY STREQUAL "CNearTree")
     fetchcontent_declare(neartree
         GIT_REPOSITORY https://github.com/zhou0/NearTree.git
         GIT_TAG main
@@ -332,8 +329,7 @@ if(NOT NEARTREE_LIBRARY)
     set(NEARTREE_INCLUDE_DIR ${neartree_SOURCE_DIR} CACHE PATH "" FORCE)
 endif()
 
-if(NOT CBF_LIBRARY)
-    message(STATUS "CBFlib not found. Fetching from GitHub...")
+if(NOT CBF_LIBRARY OR CBF_LIBRARY STREQUAL "cbf")
     fetchcontent_declare(cbflib
         GIT_REPOSITORY https://github.com/zhou0/cbflib.git
         GIT_TAG 207a0992a43d5bd7387ff6561fc5cfbf37f52c3f
@@ -357,7 +353,7 @@ if(NOT CBF_LIBRARY)
             string(PREPEND CBF_CMAKE "include_directories(\"${CQRLIB_INCLUDE_DIR}\")\n")
             if(APPLE)
                 # Enable all optional TIFF codecs and ensure they are linked
-                set(CBF_APPLE_PATCH [=[
+                set(TIFF_PATCH [=[
 set(ZSTD ON CACHE BOOL "" FORCE)
 set(WEBP ON CACHE BOOL "" FORCE)
 set(LERC ON CACHE BOOL "" FORCE)
@@ -393,20 +389,17 @@ if(JBIG_LIB)
 endif()
 if(LZMA_LIB)
     link_libraries(${LZMA_LIB})
-endif()
 endif()]=])
                 string(REPLACE "add_subdirectory(libtiff)" "${TIFF_PATCH}" CBF_CMAKE "${CBF_CMAKE}")
             endif()
-    file(WRITE ${cbflib_SOURCE_DIR}/CMakeLists.txt "${CBF_CMAKE}")
-            add_subdirectory(${cbflib_SOURCE_DIR} ${cbflib_BINARY_DIR})
+            file(WRITE ${cbflib_SOURCE_DIR}/CMakeLists.txt "${CBF_CMAKE}")
         endif()
-        set(CBF_LIBRARY cbf CACHE STRING "" FORCE)
-        set(CBF_INCLUDE_DIR ${cbflib_SOURCE_DIR}/include CACHE PATH "" FORCE)
-    else()
-        message(WARNING "Bison 2.7+ not found. CBFlib will not be built.")
-        set(CBF_LIBRARY "" CACHE STRING "" FORCE)
-        set(CBF_INCLUDE_DIR "" CACHE PATH "" FORCE)
+        add_subdirectory(${cbflib_SOURCE_DIR} ${cbflib_BINARY_DIR})
     endif()
+endif()
+if(NOT CBF_LIBRARY AND cbflib_SOURCE_DIR)
+    set(CBF_LIBRARY cbf CACHE STRING "" FORCE)
+    set(CBF_INCLUDE_DIR ${cbflib_SOURCE_DIR}/include CACHE PATH "" FORCE)
 endif()
 # VTK Support
 set(VTK_COMPONENTS
@@ -559,8 +552,8 @@ if(TARGET rasmol)
     install(TARGETS rasmol DESTINATION bin)
 endif()
 
-install(DIRECTORY data/ DESTINATION share/rasmol/data)
-install(DIRECTORY doc/ DESTINATION share/rasmol/doc)
+install(DIRECTORY ${CMAKE_SOURCE_DIR}/data/ DESTINATION share/rasmol/data)
+install(DIRECTORY ${CMAKE_SOURCE_DIR}/doc/ DESTINATION share/rasmol/doc)
 if(EXISTS "${CMAKE_SOURCE_DIR}/doc/rasmol.hlp")
     install(FILES doc/rasmol.hlp DESTINATION share/rasmol)
 endif()
@@ -600,7 +593,18 @@ if(TCL_LIBRARY AND TK_LIBRARY)
     if(VTK_FOUND)
         list(APPEND RASMOL_TCL_SOURCES warpings/tcl/rasmol_vtk.cpp)
     endif()
-    add_executable(rasmol_tcl ${RASMOL_TCL_SOURCES})
+    if(APPLE)
+        add_executable(rasmol_tcl MACOSX_BUNDLE ${RASMOL_TCL_SOURCES})
+        set_target_properties(rasmol_tcl PROPERTIES
+            MACOSX_BUNDLE_BUNDLE_NAME "RasMol"
+            MACOSX_BUNDLE_GUI_IDENTIFIER "org.openrasmol.rasmol"
+            MACOSX_BUNDLE_BUNDLE_VERSION "${CPACK_PACKAGE_VERSION}"
+            MACOSX_BUNDLE_SHORT_VERSION_STRING "${CPACK_PACKAGE_VERSION}"
+            MACOSX_BUNDLE_ICON_FILE "rasmol.icns"
+        )
+    else()
+        add_executable(rasmol_tcl ${RASMOL_TCL_SOURCES})
+    endif()
     target_include_directories(rasmol_tcl PRIVATE src ${TCL_INCLUDE_PATH} ${TK_INCLUDE_PATH})
     target_link_libraries(rasmol_tcl ${TCL_LIBRARY} ${TK_LIBRARY} ${EXTERNAL_LIBRARIES})
     if(VTK_FOUND)
@@ -613,8 +617,27 @@ if(TCL_LIBRARY AND TK_LIBRARY)
     if(APPLE)
         target_link_libraries(rasmol_tcl "-framework Cocoa" "-framework IOKit" "-framework CoreFoundation" "-framework CoreGraphics")
         target_compile_definitions(rasmol_tcl PRIVATE MAC_OSX_TK)
+
+        # Add icons and resources to the bundle
+        if(EXISTS "${CMAKE_BINARY_DIR}/assets/rasmol.icns")
+            set_source_files_properties("${CMAKE_BINARY_DIR}/assets/rasmol.icns" PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
+            target_sources(rasmol_tcl PRIVATE "${CMAKE_BINARY_DIR}/assets/rasmol.icns")
+        endif()
+
+        set(BUNDLE_RESOURCES
+            gui/tcltk/rasmol_ui.tcl
+            gui/tcltk/rasmol_loc.tcl
+            gui/tcltk/logo.tcl
+            doc/rasmol.hlp
+        )
+        set_source_files_properties(${BUNDLE_RESOURCES} PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
+        target_sources(rasmol_tcl PRIVATE ${BUNDLE_RESOURCES})
     endif()
-    install(TARGETS rasmol_tcl DESTINATION bin)
+    if(APPLE)
+        install(TARGETS rasmol_tcl BUNDLE DESTINATION .)
+    else()
+        install(TARGETS rasmol_tcl DESTINATION bin)
+    endif()
     install(FILES gui/tcltk/rasmol_ui.tcl gui/tcltk/rasmol_loc.tcl gui/tcltk/logo.tcl DESTINATION share/rasmol)
 else()
     message(WARNING "Tcl/Tk dependencies not fully found. rasmol_tcl target will not be created.")
@@ -637,7 +660,9 @@ if(WIN32)
     set(CPACK_WIX_UPGRADE_GUID "AE33A535-6C64-4286-9C64-4A633F2356B2") # Placeholder UUID
 
     # Ensure compatibility with Windows 8.1 (Standard MSI features)
-    #set(CPACK_WIX_PRODUCT_ICON "${CMAKE_SOURCE_DIR}/assets/rasmol.ico")
+    if(EXISTS "${CMAKE_BINARY_DIR}/assets/rasmol.ico")
+        set(CPACK_WIX_PRODUCT_ICON "${CMAKE_BINARY_DIR}/assets/rasmol.ico")
+    endif()
 
     # Optional: Add desktop shortcuts if supported by CPack WiX
     set(CPACK_WIX_PROGRAM_MENU_FOLDER "RasMol")
@@ -651,6 +676,12 @@ elseif(APPLE)
     set(CPACK_GENERATOR "DragNDrop")
     set(CPACK_DMG_VOLUME_NAME "RasMol")
     set(CPACK_PACKAGE_FILE_NAME "RasMol-${CPACK_PACKAGE_VERSION}-${CMAKE_SYSTEM_PROCESSOR}")
+    # Point CPack to the .app bundle
+    set(CPACK_BUNDLE_NAME "RasMol")
+    set(CPACK_BUNDLE_PLIST "${CMAKE_BINARY_DIR}/Info.plist")
+    if(EXISTS "${CMAKE_BINARY_DIR}/assets/rasmol.icns")
+        set(CPACK_PACKAGE_ICON "${CMAKE_BINARY_DIR}/assets/rasmol.icns")
+    endif()
 endif()
 
 include(CPack)
