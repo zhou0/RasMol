@@ -643,7 +643,7 @@ if(TCL_LIBRARY AND TK_LIBRARY)
     if(APPLE)
         install(TARGETS rasmol_tcl BUNDLE DESTINATION .)
         # Install internal shared libraries into the bundle
-        install(TARGETS cbf CQRlib CV_shared CNearTree
+        install(FILES $<TARGET_FILE:cbf> $<TARGET_FILE:CQRlib> $<TARGET_FILE:CV_shared> $<TARGET_FILE:CNearTree>
                 DESTINATION RasMol.app/Contents/Frameworks)
     else()
         install(TARGETS rasmol_tcl DESTINATION bin)
