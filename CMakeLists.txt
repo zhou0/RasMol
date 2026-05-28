@@ -269,6 +269,7 @@ endif()
 
 # We need PIC for shared libraries on some platforms (like macOS)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+set(CMAKE_MACOSX_RPATH ON)
 
 find_path(CBF_INCLUDE_DIR NAMES cbf.h PATH_SUFFIXES cbf cbflib)
 find_path(NEARTREE_INCLUDE_DIR NAMES CNearTree.h PATH_SUFFIXES NearTree neartree)
@@ -306,6 +307,9 @@ if(NOT CVECTOR_LIBRARY OR CVECTOR_LIBRARY STREQUAL "CV_shared")
         string(REPLACE "set(CMAKE_RUNTIME_OUTPUT_DIRECTORY" "#set(CMAKE_RUNTIME_OUTPUT_DIRECTORY" CV_CMAKE "${CV_CMAKE}")
         string(REPLACE "set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY" "#set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY" CV_CMAKE "${CV_CMAKE}")
         string(REPLACE "set(CMAKE_LIBRARY_OUTPUT_DIRECTORY" "#set(CMAKE_LIBRARY_OUTPUT_DIRECTORY" CV_CMAKE "${CV_CMAKE}")
+        # Resolve MSVC duplicate .lib name conflict between CV_static and CV_shared
+        string(REPLACE "set_target_properties(CV_static PROPERTIES OUTPUT_NAME CVector)" "set_target_properties(CV_static PROPERTIES OUTPUT_NAME CVectorStatic)" CV_CMAKE "${CV_CMAKE}")
+        string(REPLACE "set_target_properties(CV_static PROPERTIES OUTPUT_NAME \"CVector\")" "set_target_properties(CV_static PROPERTIES OUTPUT_NAME \"CVectorStatic\")" CV_CMAKE "${CV_CMAKE}")
         # Ensure static and shared targets have unique output names on Windows to avoid rule conflicts
         string(REPLACE "set_target_properties(CV_static PROPERTIES OUTPUT_NAME CVector)" "set_target_properties(CV_static PROPERTIES OUTPUT_NAME CVectorStatic)" CV_CMAKE "${CV_CMAKE}")
         string(REPLACE "set_target_properties(CV_static PROPERTIES OUTPUT_NAME \"CVector\")" "set_target_properties(CV_static PROPERTIES OUTPUT_NAME \"CVectorStatic\")" CV_CMAKE "${CV_CMAKE}")
@@ -596,6 +600,9 @@ if(TCL_LIBRARY AND TK_LIBRARY)
     if(APPLE)
         add_executable(rasmol_tcl MACOSX_BUNDLE ${RASMOL_TCL_SOURCES})
         set_target_properties(rasmol_tcl PROPERTIES
+            INSTALL_RPATH "@executable_path/../Frameworks"
+        )
+        set_target_properties(rasmol_tcl PROPERTIES
             MACOSX_BUNDLE_BUNDLE_NAME "RasMol"
             MACOSX_BUNDLE_GUI_IDENTIFIER "org.openrasmol.rasmol"
             MACOSX_BUNDLE_BUNDLE_VERSION "${CPACK_PACKAGE_VERSION}"
@@ -635,6 +642,9 @@ if(TCL_LIBRARY AND TK_LIBRARY)
     endif()
     if(APPLE)
         install(TARGETS rasmol_tcl BUNDLE DESTINATION .)
+        # Install internal shared libraries into the bundle
+        install(TARGETS cbf CQRlib CV_shared CNearTree
+                DESTINATION RasMol.app/Contents/Frameworks)
     else()
         install(TARGETS rasmol_tcl DESTINATION bin)
     endif()
