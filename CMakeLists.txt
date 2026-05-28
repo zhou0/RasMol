@@ -269,6 +269,8 @@ endif()
 
 # We need PIC for shared libraries on some platforms (like macOS)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+set(CMAKE_MACOSX_RPATH ON)
+set(CMAKE_MACOSX_RPATH ON)
 
 find_path(CBF_INCLUDE_DIR NAMES cbf.h PATH_SUFFIXES cbf cbflib)
 find_path(NEARTREE_INCLUDE_DIR NAMES CNearTree.h PATH_SUFFIXES NearTree neartree)
@@ -287,7 +289,15 @@ if(NOT CQRLIB_LIBRARY OR CQRLIB_LIBRARY STREQUAL "CQRlib")
         GIT_REPOSITORY https://github.com/zhou0/cqrlib.git
         GIT_TAG master
     )
-    fetchcontent_makeavailable(cqrlib)
+    fetchcontent_getproperties(cqrlib)
+    if(NOT cqrlib_POPULATED)
+        fetchcontent_populate(cqrlib)
+        # Patch CQRlib/CMakeLists.txt to remove SHARED to allow static building
+        file(READ ${cqrlib_SOURCE_DIR}/CMakeLists.txt CQR_CMAKE)
+        string(REPLACE "add_library(CQRlib SHARED cqrlib.c)" "add_library(CQRlib cqrlib.c)" CQR_CMAKE "${CQR_CMAKE}")
+        file(WRITE ${cqrlib_SOURCE_DIR}/CMakeLists.txt "${CQR_CMAKE}")
+    endif()
+    add_subdirectory(${cqrlib_SOURCE_DIR} ${cqrlib_BINARY_DIR})
     set(CQRLIB_LIBRARY CQRlib CACHE STRING "" FORCE)
     set(CQRLIB_INCLUDE_DIR ${cqrlib_SOURCE_DIR} CACHE PATH "" FORCE)
 endif()
@@ -301,14 +311,21 @@ if(NOT CVECTOR_LIBRARY OR CVECTOR_LIBRARY STREQUAL "CV_shared")
     fetchcontent_getproperties(cvector)
     if(NOT cvector_POPULATED)
         fetchcontent_populate(cvector)
-        # Patch CVector/CMakeLists.txt to remove its own output directory overrides
+        # Patch CVector/CMakeLists.txt to force static library and remove overrides
         file(READ ${cvector_SOURCE_DIR}/CMakeLists.txt CV_CMAKE)
         string(REPLACE "set(CMAKE_RUNTIME_OUTPUT_DIRECTORY" "#set(CMAKE_RUNTIME_OUTPUT_DIRECTORY" CV_CMAKE "${CV_CMAKE}")
         string(REPLACE "set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY" "#set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY" CV_CMAKE "${CV_CMAKE}")
         string(REPLACE "set(CMAKE_LIBRARY_OUTPUT_DIRECTORY" "#set(CMAKE_LIBRARY_OUTPUT_DIRECTORY" CV_CMAKE "${CV_CMAKE}")
-        # Ensure static and shared targets have unique output names on Windows to avoid rule conflicts
-        string(REPLACE "set_target_properties(CV_static PROPERTIES OUTPUT_NAME CVector)" "set_target_properties(CV_static PROPERTIES OUTPUT_NAME CVectorStatic)" CV_CMAKE "${CV_CMAKE}")
-        string(REPLACE "set_target_properties(CV_static PROPERTIES OUTPUT_NAME \"CVector\")" "set_target_properties(CV_static PROPERTIES OUTPUT_NAME \"CVectorStatic\")" CV_CMAKE "${CV_CMAKE}")
+        # Force CV_static to be built always by replacing the whole conditional block
+        set(STATIC_BLOCK "option(BUILD_STATIC_LIBS \"Build static libraries\" OFF)\n\nif(BUILD_STATIC_LIBS)\n  add_library(CV_static STATIC \${CV__SRC}/CVector.c)\n  set_target_properties(CV_static PROPERTIES OUTPUT_NAME \"CVector\")\n  set_target_properties(CV_static PROPERTIES CLEAN_DIRECT_OUTPUT 1)\n  set_target_properties(CV_static PROPERTIES LINKER_LANGUAGE C)\n  set_target_properties(CV_static PROPERTIES SOVERSION \"\\${CV_APIVERSION}\" )\n  set(CV_STATIC_LIBRARY_PATH \\${CV__LIB}/libCVector\\${CMAKE_STATIC_LIBRARY_SUFFIX})\nendif(BUILD_STATIC_LIBS)")
+        set(STATIC_REPLACE "add_library(CV_static STATIC \${CV__SRC}/CVector.c)\nset_target_properties(CV_static PROPERTIES OUTPUT_NAME \"CVectorStatic\")")
+        string(REPLACE "option(BUILD_STATIC_LIBS \"Build static libraries\" OFF)" "" CV_CMAKE "${CV_CMAKE}")
+        # We'll just replace the if(BUILD_STATIC_LIBS) block directly if we can match it,
+        # but matching across lines in CMake string(REPLACE) is hard.
+        # Let's try to just replace the lines we know.
+        string(REPLACE "if(BUILD_STATIC_LIBS)" "if(TRUE) # forced" CV_CMAKE "${CV_CMAKE}")
+        string(REPLACE "endif(BUILD_STATIC_LIBS)" "endif() # forced" CV_CMAKE "${CV_CMAKE}")
+
         # Disable installation in subproject to avoid more conflicts
         string(APPEND CV_CMAKE "\nset(CV_INSTALL OFF CACHE BOOL \"\" FORCE)\n")
         file(WRITE ${cvector_SOURCE_DIR}/CMakeLists.txt "${CV_CMAKE}")
@@ -317,7 +334,6 @@ if(NOT CVECTOR_LIBRARY OR CVECTOR_LIBRARY STREQUAL "CV_shared")
     set(CVECTOR_LIBRARY CV_shared CACHE STRING "" FORCE)
     set(CVECTOR_INCLUDE_DIR ${cvector_SOURCE_DIR} CACHE PATH "" FORCE)
 endif()
-
 
 if(NOT NEARTREE_LIBRARY OR NEARTREE_LIBRARY STREQUAL "CNearTree")
     fetchcontent_declare(neartree
@@ -351,6 +367,7 @@ if(NOT CBF_LIBRARY OR CBF_LIBRARY STREQUAL "cbf")
             string(REGEX REPLACE "([^a-zA-Z0-9_])CQR([^a-zA-Z0-9_])" "\\1${CQRLIB_LIBRARY}\\2" CBF_CMAKE "${CBF_CMAKE}")
             string(REPLACE "-lCQR" "${CQRLIB_LIBRARY}" CBF_CMAKE "${CBF_CMAKE}")
             string(PREPEND CBF_CMAKE "include_directories(\"${CQRLIB_INCLUDE_DIR}\")\n")
+            string(REPLACE "set(BUILD_SHARED_LIBS ON CACHE BOOL \"Build using shared libraries\" FORCE)" "set(BUILD_SHARED_LIBS ON CACHE BOOL \"Build using shared libraries\" FORCE)" CBF_CMAKE "${CBF_CMAKE}")
             if(APPLE)
                 # Enable all optional TIFF codecs and ensure they are linked
                 set(TIFF_PATCH [=[
@@ -395,7 +412,7 @@ endif()]=])
             file(WRITE ${cbflib_SOURCE_DIR}/CMakeLists.txt "${CBF_CMAKE}")
         endif()
         add_subdirectory(${cbflib_SOURCE_DIR} ${cbflib_BINARY_DIR})
-    endif()
+        endif()
 endif()
 if(NOT CBF_LIBRARY AND cbflib_SOURCE_DIR)
     set(CBF_LIBRARY cbf CACHE STRING "" FORCE)
@@ -596,6 +613,12 @@ if(TCL_LIBRARY AND TK_LIBRARY)
     if(APPLE)
         add_executable(rasmol_tcl MACOSX_BUNDLE ${RASMOL_TCL_SOURCES})
         set_target_properties(rasmol_tcl PROPERTIES
+            INSTALL_RPATH "@executable_path/../Frameworks"
+        )
+        set_target_properties(rasmol_tcl PROPERTIES
+            INSTALL_RPATH "@executable_path/../Frameworks"
+        )
+        set_target_properties(rasmol_tcl PROPERTIES
             MACOSX_BUNDLE_BUNDLE_NAME "RasMol"
             MACOSX_BUNDLE_GUI_IDENTIFIER "org.openrasmol.rasmol"
             MACOSX_BUNDLE_BUNDLE_VERSION "${CPACK_PACKAGE_VERSION}"
@@ -635,6 +658,12 @@ if(TCL_LIBRARY AND TK_LIBRARY)
     endif()
     if(APPLE)
         install(TARGETS rasmol_tcl BUNDLE DESTINATION .)
+        # Install internal shared libraries into the bundle
+        install(TARGETS cbf CQRlib CV_shared CNearTree
+                DESTINATION RasMol.app/Contents/Frameworks)
+        # Install internal shared libraries into the bundle
+        install(TARGETS cbf CQRlib CV_shared CNearTree
+                DESTINATION RasMol.app/Contents/Frameworks)
     else()
         install(TARGETS rasmol_tcl DESTINATION bin)
     endif()
