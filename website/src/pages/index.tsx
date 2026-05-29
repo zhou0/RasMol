@@ -18,7 +18,7 @@ export default function Home(): ReactNode {
             <div className="row">
               <div className={clsx('col col--8 col--offset-2')}>
                 <div className="text--left padding-horiz--md">
-                  <Heading as="h2">Introduction to RasMol</Heading>
+                  <Heading as="h2" className="text--center">Introduction to RasMol</Heading>
                   <p>
                     RasMol is a molecular graphics program intended for the visualisation of proteins,
                     nucleic acids and small molecules. The program is aimed at display, teaching and
