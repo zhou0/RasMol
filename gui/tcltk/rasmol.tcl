@@ -3,24 +3,6 @@
 
 set script_dir [file dirname [info script]]
 
-# Globals initialization
-set g_Gui(rotX) 0.0
-set g_Gui(rotY) 0.0
-set g_Gui(rotZ) 0.0
-set g_Gui(rotCenX) 0.0
-set g_Gui(rotCenY) 0.0
-set g_Gui(rotCenZ) 0.0
-set g_Gui(zoom) 20.0
-set g_Gui(distX) 0.0
-set g_Gui(distY) 0.0
-set g_Gui(distZ) 0.0
-set g_Gui(camDist) 5.0
-
-set display_mode 4
-set current_ui_lang "English"
-set rasmol_canvas_width 400
-set rasmol_canvas_height 400
-
 # Stub/Redefine C bridge functions
 proc rasmol_register_photo {name} {}
 
@@ -112,9 +94,6 @@ proc rasmol_mouse_move {x y mask} {
 proc rasmol_mouse_up {x y mask} {}
 proc rasmol_key_press {key} {}
 proc rasmol_resize {w h} {
-    global rasmol_canvas_width rasmol_canvas_height
-    set rasmol_canvas_width $w
-    set rasmol_canvas_height $h
     rasmol_redraw
 }
 
@@ -134,6 +113,22 @@ source [file join $script_dir rasmol_render.tcl]
 
 # Source UI
 source [file join $script_dir rasmol_ui.tcl]
+
+# Override/Initialize Globals after UI setup
+set g_Gui(rotX) 0.0
+set g_Gui(rotY) 0.0
+set g_Gui(rotZ) 0.0
+set g_Gui(rotCenX) 0.0
+set g_Gui(rotCenY) 0.0
+set g_Gui(rotCenZ) 0.0
+set g_Gui(zoom) 20.0
+set g_Gui(distX) 0.0
+set g_Gui(distY) 0.0
+set g_Gui(distZ) 0.0
+set g_Gui(camDist) 5.0
+
+set display_mode 4
+set current_ui_lang "English"
 
 # Override UI's load_molecule to use rasmol_redraw
 proc load_molecule {} {

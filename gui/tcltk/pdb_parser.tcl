@@ -129,7 +129,7 @@ set g_Name2RadiusList {
 
 proc MapName2Color { name } {
     global g_Name2ColorList
-
+    set name [string toupper [string trim $name]]
     set ind [lsearch -exact $g_Name2ColorList $name]
     if { $ind < 0 } {
         set ind [lsearch -exact $g_Name2ColorList [string range $name 0 1]]
@@ -148,7 +148,7 @@ proc MapName2Color { name } {
 
 proc MapName2Radius { name } {
     global g_Name2RadiusList
-
+    set name [string toupper [string trim $name]]
     set ind [lsearch -exact $g_Name2RadiusList $name]
     if { $ind < 0 } {
         set ind [lsearch -exact $g_Name2RadiusList [string range $name 0 1]]
@@ -168,6 +168,9 @@ proc ReadPDB { fileName } {
 
     set inFp [open $fileName "r"]
 
+    # Reset data
+    array unset g_Atoms
+    array unset g_Cons
     set g_Atoms(numAtoms) 0
     set g_Cons(numCons)   0
 
@@ -189,14 +192,14 @@ proc ReadPDB { fileName } {
             incr g_Atoms(numAtoms)
         } elseif { [string first "CONECT" $line] == 0 } {
             set serial  [string trim [string range $line 6 10]]
-            set con1    [string trim [string range $line 11 15]]
-            set con2    [string trim [string range $line 16 20]]
-            set con3    [string trim [string range $line 21 25]]
-            set con4    [string trim [string range $line 26 30]]
-            if {$con1 ne "" && $con1 != 0} { lappend g_Cons($serial) $con1 }
-            if {$con2 ne "" && $con2 != 0} { lappend g_Cons($serial) $con2 }
-            if {$con3 ne "" && $con3 != 0} { lappend g_Cons($serial) $con3 }
-            if {$con4 ne "" && $con4 != 0} { lappend g_Cons($serial) $con4 }
+            set con_indices {11 15 16 20 21 25 26 30}
+            foreach {start end} $con_indices {
+                if {[string length $line] < $end} break
+                set con [string trim [string range $line $start $end]]
+                if {$con ne "" && $con != 0} {
+                    lappend g_Cons($serial) $con
+                }
+            }
             incr g_Cons(numCons)
         }
     }
@@ -236,10 +239,12 @@ proc SetViewPoint {} {
     set maxSize $xsize
     if {$ysize > $maxSize} {set maxSize $ysize}
     if {$zsize > $maxSize} {set maxSize $zsize}
+    if {$maxSize < 1.0} { set maxSize 1.0 }
 
     set g_Gui(rotCenX) [expr {($g_Atoms(bbox,xmin) + $g_Atoms(bbox,xmax)) / 2.0}]
     set g_Gui(rotCenY) [expr {($g_Atoms(bbox,ymin) + $g_Atoms(bbox,ymax)) / 2.0}]
     set g_Gui(rotCenZ) [expr {($g_Atoms(bbox,zmin) + $g_Atoms(bbox,zmax)) / 2.0}]
 
-    set g_Gui(zoom) [expr {200.0 / ($maxSize + 1.0)}]
+    # Target about 300 pixels for the largest dimension
+    set g_Gui(zoom) [expr {300.0 / $maxSize}]
 }

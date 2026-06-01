@@ -1,14 +1,16 @@
 # 3D Math for Pure Tcl RasMol
 
 proc mat_mult {m1 m2} {
-    set res {0 0 0 0 0 0 0 0 0}
+    set res {0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0}
     for {set i 0} {$i < 3} {incr i} {
         for {set j 0} {$j < 3} {incr j} {
-            set sum 0
+            set sum 0.0
             for {set k 0} {$k < 3} {incr k} {
-                set sum [expr {$sum + [lindex $m1 [expr {$i*3+$k}]] * [lindex $m2 [expr {$k*3+$j}]]}]
+                set v1 [lindex $m1 [expr {$i*3+$k}]]
+                set v2 [lindex $m2 [expr {$k*3+$j}]]
+                set sum [expr {$sum + $v1 * $v2}]
             }
-            lset res [expr {$i*3+$j}] $sum
+            set res [lreplace $res [expr {$i*3+$j}] [expr {$i*3+$j}] $sum]
         }
     }
     return $res
@@ -28,11 +30,11 @@ proc get_rot_matrix {ax ay az} {
     set sz [expr {sin($az)}]
 
     # Rotation around X
-    set rx [list 1 0 0 0 $cx [expr {-$sx}] 0 $sx $cx]
+    set rx [list 1.0 0.0 0.0 0.0 $cx [expr {-$sx}] 0.0 $sx $cx]
     # Rotation around Y
-    set ry [list $cy 0 $sy 0 1 0 [expr {-$sy}] 0 $cy]
+    set ry [list $cy 0.0 $sy 0.0 1.0 0.0 [expr {-$sy}] 0.0 $cy]
     # Rotation around Z
-    set rz [list $cz [expr {-$sz}] 0 $sz $cz 0 0 0 1]
+    set rz [list $cz [expr {-$sz}] 0.0 $sz $cz 0.0 0.0 0.0 1.0]
 
     return [mat_mult $rz [mat_mult $ry $rx]]
 }
