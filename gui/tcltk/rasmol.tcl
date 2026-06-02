@@ -170,11 +170,13 @@ catch {
 # Source UI
 source [file join $script_dir rasmol_ui.tcl]
 
-# Add Rendering menu to UI
-menu .menubar.render -tearoff 0
-.menubar insert 6 cascade -label "Rendering" -menu .menubar.render
-.menubar.render add radiobutton -label "CPU Mode" -variable rendering_mode -value "CPU" -command {set_rendering_mode "CPU"}
-.menubar.render add radiobutton -label "GPU Mode" -variable rendering_mode -value "GPU" -command {set_rendering_mode "GPU"}
+# Add "Display Mode" submenu under "Settings"
+# Ensure the menu is inserted at a logical position (e.g., after Mouse Mode)
+.menubar.settings add separator
+menu .menubar.settings.display -tearoff 0
+.menubar.settings add cascade -label "Display Mode" -menu .menubar.settings.display
+.menubar.settings.display add radiobutton -label "CPU Mode" -variable rendering_mode -value "CPU" -command {set_rendering_mode "CPU"}
+.menubar.settings.display add radiobutton -label "GPU Mode" -variable rendering_mode -value "GPU" -command {set_rendering_mode "GPU"}
 
 # Override/Initialize Globals after UI setup
 set g_Gui(rotX) 0.0
