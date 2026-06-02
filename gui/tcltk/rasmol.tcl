@@ -160,7 +160,12 @@ source [file join $script_dir logo.tcl]
 source [file join $script_dir rasmol_loc.tcl]
 source [file join $script_dir rasmol_math.tcl]
 source [file join $script_dir pdb_parser.tcl]
+
+# Source CPU Renderer and rename its redraw function
 source [file join $script_dir rasmol_render.tcl]
+if {[info commands rasmol_cpu_redraw] eq ""} {
+    rename rasmol_redraw rasmol_cpu_redraw
+}
 
 # Source GPU module
 catch {
@@ -171,12 +176,18 @@ catch {
 source [file join $script_dir rasmol_ui.tcl]
 
 # Add "Display Mode" submenu under "Settings"
-# Ensure the menu is inserted at a logical position (e.g., after Mouse Mode)
 .menubar.settings add separator
 menu .menubar.settings.display -tearoff 0
 .menubar.settings add cascade -label "Display Mode" -menu .menubar.settings.display
 .menubar.settings.display add radiobutton -label "CPU Mode" -variable rendering_mode -value "CPU" -command {set_rendering_mode "CPU"}
 .menubar.settings.display add radiobutton -label "GPU Mode" -variable rendering_mode -value "GPU" -command {set_rendering_mode "GPU"}
+
+# Add Language menu under Settings
+menu .menubar.settings.lang -tearoff 0
+.menubar.settings add cascade -label "Language" -menu .menubar.settings.lang
+.menubar.settings.lang add radiobutton -label "English" -variable current_ui_lang -value "English" -command {set_language "English"}
+.menubar.settings.lang add radiobutton -label "French" -variable current_ui_lang -value "French" -command {set_language "French"}
+.menubar.settings.lang add radiobutton -label "Simplified Chinese" -variable current_ui_lang -value "Simplified Chinese" -command {set_language "Simplified Chinese"}
 
 # Override/Initialize Globals after UI setup
 set g_Gui(rotX) 0.0
@@ -192,7 +203,7 @@ set g_Gui(distZ) 0.0
 set g_Gui(camDist) 5.0
 
 set display_mode 4
-set current_ui_lang "English"
+set current_ui_lang "Simplified Chinese"
 set g_WinWidth 400
 set g_WinHeight 400
 set GL_COLOR_BUFFER_BIT 0x00004000
