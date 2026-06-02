@@ -1,7 +1,10 @@
 #!/usr/bin/wish
-# RasMol Pure Tcl Implementation
+# RasMol Pure Tcl & Tcl3D Implementation
 
 set script_dir [file dirname [info script]]
+
+# Globals initialization
+set rendering_mode "CPU"
 
 # Stub/Redefine C bridge functions
 proc rasmol_register_photo {name} {}
@@ -77,13 +80,19 @@ proc rasmol_mouse_down {x y mask} {
 }
 
 proc rasmol_mouse_move {x y mask} {
-    global mouse_last_x mouse_last_y g_Gui
+    global mouse_last_x mouse_last_y g_Gui rendering_mode
     set dx [expr {$x - $mouse_last_x}]
     set dy [expr {$y - $mouse_last_y}]
 
     if {$mask & 0x01} {
-        set g_Gui(rotY) [expr {$g_Gui(rotY) + $dx}]
-        set g_Gui(rotX) [expr {$g_Gui(rotX) + $dy}]
+        if {$rendering_mode eq "GPU"} {
+             # Different rotation scale for GPU
+             set g_Gui(rotY) [expr {$g_Gui(rotY) + $dx}]
+             set g_Gui(rotX) [expr {$g_Gui(rotX) + $dy}]
+        } else {
+             set g_Gui(rotY) [expr {$g_Gui(rotY) + $dx}]
+             set g_Gui(rotX) [expr {$g_Gui(rotX) + $dy}]
+        }
         rasmol_redraw
     }
 
@@ -104,15 +113,74 @@ proc rasmol_info {type} {
     return 0
 }
 
+# Redraw dispatcher
+proc rasmol_redraw {} {
+    global rendering_mode
+    if {$rendering_mode eq "GPU"} {
+        if {[winfo exists .pw.right.f.togl]} {
+            .pw.right.f.togl postredisplay
+        }
+    } else {
+        rasmol_cpu_redraw
+    }
+}
+
+proc set_rendering_mode {mode} {
+    global rendering_mode
+
+    set f .pw.right.f
+    if {$mode eq "GPU"} {
+        if {[catch {package require tcl3d}]} {
+            tk_messageBox -message "Tcl3D not found. GPU mode unavailable."
+            set rendering_mode "CPU"
+            return
+        }
+        set rendering_mode "GPU"
+        # Hide canvas, show Togl
+        grid forget $f.c
+        if {![winfo exists $f.togl]} {
+            togl $f.togl -width 400 -height 400 \
+                -double true -depth true \
+                -displayproc rasmol_gpu_draw \
+                -reshapeproc rasmol_gpu_reshape \
+                -createproc  rasmol_gpu_init
+
+            # Bind mouse events to Togl too
+            bind $f.togl <ButtonPress> {rasmol_mouse_down %x %y [get_rasmol_mask %s %b]}
+            bind $f.togl <B1-Motion> {rasmol_mouse_move %x %y [get_rasmol_mask %s 1]}
+        }
+        grid $f.togl -row 0 -column 0 -sticky nsew
+    } else {
+        set rendering_mode "CPU"
+        # Hide Togl, show canvas
+        if {[winfo exists $f.togl]} { grid forget $f.togl }
+        grid $f.c -row 0 -column 0 -sticky nsew
+    }
+    rasmol_redraw
+}
+
 # Source modules
 source [file join $script_dir logo.tcl]
 source [file join $script_dir rasmol_loc.tcl]
 source [file join $script_dir rasmol_math.tcl]
 source [file join $script_dir pdb_parser.tcl]
 source [file join $script_dir rasmol_render.tcl]
+# Rename CPU redraw
+rename rasmol_redraw rasmol_cpu_redraw
+
+# Try to load GPU module
+catch {
+    source [file join $script_dir rasmol_gpu.tcl]
+}
 
 # Source UI
 source [file join $script_dir rasmol_ui.tcl]
+
+# Add Rendering menu to UI
+menu .menubar.render -tearoff 0
+.menubar insert 6 cascade -label "Rendering" -menu .menubar.render
+.menubar.render add radiobutton -label "CPU Mode" -variable rendering_mode -value "CPU" -command {set_rendering_mode "CPU"}
+.menubar.render add radiobutton -label "GPU Mode" -variable rendering_mode -value "GPU" -command {set_rendering_mode "GPU"}
 
 # Override/Initialize Globals after UI setup
 set g_Gui(rotX) 0.0
@@ -129,6 +197,10 @@ set g_Gui(camDist) 5.0
 
 set display_mode 4
 set current_ui_lang "English"
+set g_WinWidth 400
+set g_WinHeight 400
+set GL_COLOR_BUFFER_BIT 0x00004000
+set GL_DEPTH_BUFFER_BIT 0x00000100
 
 # Override UI's load_molecule to use rasmol_redraw
 proc load_molecule {} {
@@ -149,9 +221,4 @@ proc load_molecule {} {
 localize_ui
 
 # Show window
-wm title . "RasMol Pure Tcl"
-
-# Additional RasMol commands
-proc background {color} {
-    .pw.right.f.c configure -bg $color
-}
+wm title . "RasMol"
