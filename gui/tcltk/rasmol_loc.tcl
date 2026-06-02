@@ -58,7 +58,7 @@ array set ui_translations {
         "UserM" "User Manual..."
         "Language" "Language"
         "MouseMode" "Mouse Mode"
-        "DisplayMode" "Display Mode"
+        "RenderingMode" "Rendering Mode"
         "AboutTitle" "About RasMol"
         "AppGraphics" "RasMol Molecular Graphics"
         "Version" "Version"
@@ -123,7 +123,7 @@ array set ui_translations {
         "UserM" "Manuel utilisateur..."
         "Language" "Langue"
         "MouseMode" "Mode souris"
-        "DisplayMode" "Mode d'affichage"
+        "RenderingMode" "Mode de rendu"
         "AboutTitle" "À propos de RasMol"
         "AppGraphics" "Graphismes Moléculaires RasMol"
         "Version" "Version"
@@ -188,7 +188,7 @@ array set ui_translations {
         "UserM" "用户手册..."
         "Language" "语言"
         "MouseMode" "鼠标模式"
-        "DisplayMode" "显示模式"
+        "RenderingMode" "渲染模式"
         "AboutTitle" "关于 RasMol"
         "AppGraphics" "RasMol 分子图形"
         "Version" "版本"
@@ -219,7 +219,6 @@ proc tr {key} {
 
 proc localize_ui {} {
     # 1. Localize Main Menubar entries by their -menu property
-    # This is the most robust way as indices shift on different platforms.
     set menu_map {
         .menubar.file "File"
         .menubar.display "Display"
@@ -246,7 +245,7 @@ proc localize_ui {} {
         }
     }
 
-    # 2. Localize submenus using label-based matching or command-based matching
+    # 2. Localize submenus
     # File Menu
     foreach {old new} { "Open..." "Open" "Save As..." "SaveAs" "Close" "Close" "Exit" "Exit" } {
         catch { .menubar.file entryconfigure $old -label [tr $new] }
@@ -284,7 +283,7 @@ proc localize_ui {} {
         "Pick Monitor" "PMon" "Pick Angle" "PAng" "Pick Torsion" "PTrsn"
         "Pick Label" "PLabl" "Pick Centre" "PCent" "Pick Coord" "PCoord"
         "Pick Bond" "PBond" "Rotate Bond" "RBond" "Rotate Molecule" "RMol"
-        "Rotate All" "RAll" "Mouse Mode" "MouseMode" "Display Mode" "DisplayMode"
+        "Rotate All" "RAll" "Mouse Mode" "MouseMode" "Rendering Mode" "RenderingMode"
         "Language" "Language"
     }
     foreach {old new} $settings_items {

@@ -29,8 +29,9 @@ proc rasmol_cpu_redraw {} {
         set p [list $g_Atoms($s,x) $g_Atoms($s,y) $g_Atoms($s,z)]
         set tp [transform_point $p $m $offset $scale]
 
+        # In Tk Canvas, Y increases downwards, so we flip tp[1]
         set sx [expr {[lindex $tp 0] + $w/2.0}]
-        set sy [expr {[lindex $tp 1] + $h/2.0}]
+        set sy [expr {-$lindex $tp 1 + $h/2.0}]
         set sz [lindex $tp 2]
 
         set t_coords($s) [list $sx $sy $sz]
@@ -38,12 +39,8 @@ proc rasmol_cpu_redraw {} {
     }
 
     # Painter's algorithm: draw from back to front.
-    # We assume camera is at some positive Z looking towards origin.
-    # So atoms with SMALLER Z are closer?
-    # Or larger Z is further?
-    # Let's check rotation matrix.
-    # Anyway, we sort by Z.
-    set sorted_list [lsort -real -index 0 $transformed_list]
+    # Smaller Z is further away.
+    set sorted_list [lsort -real -increasing -index 0 $transformed_list]
 
     # Draw bonds first if not spacefill
     if {$display_mode != 4} {
@@ -84,4 +81,5 @@ proc rasmol_cpu_redraw {} {
                 -fill $color -outline $color
         }
     }
+    puts "CPU Redraw complete. Mode: $display_mode, Atoms: [llength $sorted_list]"
 }

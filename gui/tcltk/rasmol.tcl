@@ -5,7 +5,6 @@ set script_dir [file dirname [info script]]
 
 # Define UTF-8 sourcing for cross-platform consistency (especially Windows)
 proc source_utf8 {file} {
-    # Use uplevel to ensure that sourcing happens in the caller's scope
     if {[catch {uplevel 1 [list source -encoding utf-8 $file]} err]} {
         set f [open $file r]
         fconfigure $f -encoding utf-8
@@ -73,11 +72,11 @@ proc rasmol_command {cmd} {
 
 proc rasmol_handle_menu {menu item {state ""}} {
     switch -exact -- "$menu $item" {
-        "1 0" { rasmol_command "wireframe" }
-        "1 1" { rasmol_command "backbone" }
-        "1 2" { rasmol_command "sticks" }
-        "1 3" { rasmol_command "spacefill" }
-        "1 4" { rasmol_command "ball" }
+        "1 1" { rasmol_command "wireframe" }
+        "1 2" { rasmol_command "backbone" }
+        "1 3" { rasmol_command "sticks" }
+        "1 4" { rasmol_command "spacefill" }
+        "1 5" { rasmol_command "ball" }
         "6 2" { puts "Manual not available in pure Tcl version." }
     }
 }
@@ -191,10 +190,10 @@ catch {
 # Source UI
 source_utf8 [file join $script_dir rasmol_ui.tcl]
 
-# Add "Display Mode" submenu under "Settings"
+# Add "Rendering Mode" submenu under "Settings"
 .menubar.settings add separator
 menu .menubar.settings.display -tearoff 0
-.menubar.settings add cascade -label "Display Mode" -menu .menubar.settings.display
+.menubar.settings add cascade -label "Rendering Mode" -menu .menubar.settings.display
 .menubar.settings.display add radiobutton -label "CPU Mode" -variable rendering_mode -value "CPU" -command {set_rendering_mode "CPU"}
 .menubar.settings.display add radiobutton -label "GPU Mode" -variable rendering_mode -value "GPU" -command {set_rendering_mode "GPU"}
 
@@ -219,7 +218,7 @@ set g_Gui(distZ) 0.0
 set g_Gui(camDist) 5.0
 
 set display_mode 4
-set current_ui_lang "Simplified Chinese"
+set current_ui_lang "English"
 set g_WinWidth 400
 set g_WinHeight 400
 set GL_COLOR_BUFFER_BIT 0x00004000
@@ -233,8 +232,7 @@ proc load_molecule {} {
     }
     set file [tk_getOpenFile -filetypes $types]
     if {$file ne ""} {
-        .status.lbl configure -text "Loading $file..."
-        update
+        puts "Opening file: $file"
         rasmol_command "load pdb \"$file\""
         update_status
     }
@@ -245,3 +243,8 @@ localize_ui
 
 # Show window
 wm title . "RasMol"
+
+# Initial layout adjustment
+update
+grid rowconfigure .pw.right.f 0 -weight 1
+grid columnconfigure .pw.right.f 0 -weight 1
