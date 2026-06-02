@@ -1,6 +1,6 @@
 # Pure Tcl Canvas Renderer for RasMol
 
-proc rasmol_redraw {} {
+proc rasmol_cpu_redraw {} {
     global g_Atoms g_Cons g_Gui display_mode
 
     set c .pw.right.f.c

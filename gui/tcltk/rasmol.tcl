@@ -85,14 +85,8 @@ proc rasmol_mouse_move {x y mask} {
     set dy [expr {$y - $mouse_last_y}]
 
     if {$mask & 0x01} {
-        if {$rendering_mode eq "GPU"} {
-             # Different rotation scale for GPU
-             set g_Gui(rotY) [expr {$g_Gui(rotY) + $dx}]
-             set g_Gui(rotX) [expr {$g_Gui(rotX) + $dy}]
-        } else {
-             set g_Gui(rotY) [expr {$g_Gui(rotY) + $dx}]
-             set g_Gui(rotX) [expr {$g_Gui(rotX) + $dy}]
-        }
+        set g_Gui(rotY) [expr {$g_Gui(rotY) + $dx}]
+        set g_Gui(rotX) [expr {$g_Gui(rotX) + $dy}]
         rasmol_redraw
     }
 
@@ -121,7 +115,9 @@ proc rasmol_redraw {} {
             .pw.right.f.togl postredisplay
         }
     } else {
-        rasmol_cpu_redraw
+        if {[info commands rasmol_cpu_redraw] ne ""} {
+            rasmol_cpu_redraw
+        }
     }
 }
 
@@ -165,10 +161,8 @@ source [file join $script_dir rasmol_loc.tcl]
 source [file join $script_dir rasmol_math.tcl]
 source [file join $script_dir pdb_parser.tcl]
 source [file join $script_dir rasmol_render.tcl]
-# Rename CPU redraw
-rename rasmol_redraw rasmol_cpu_redraw
 
-# Try to load GPU module
+# Source GPU module
 catch {
     source [file join $script_dir rasmol_gpu.tcl]
 }
