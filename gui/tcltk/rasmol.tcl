@@ -3,6 +3,19 @@
 
 set script_dir [file dirname [info script]]
 
+# Define UTF-8 sourcing for cross-platform consistency (especially Windows)
+proc source_utf8 {file} {
+    if {[catch {source -encoding utf-8 $file} err]} {
+        # Fallback for very old Tcl versions if necessary,
+        # though source -encoding is standard in 8.5+
+        set f [open $file r]
+        fconfigure $f -encoding utf-8
+        set data [read $f]
+        close $f
+        uplevel 1 $data
+    }
+}
+
 # Globals initialization
 set rendering_mode "CPU"
 
@@ -155,25 +168,25 @@ proc set_rendering_mode {mode} {
     rasmol_redraw
 }
 
-# Source modules
-source [file join $script_dir logo.tcl]
-source [file join $script_dir rasmol_loc.tcl]
-source [file join $script_dir rasmol_math.tcl]
-source [file join $script_dir pdb_parser.tcl]
+# Source modules with UTF-8 encoding
+source_utf8 [file join $script_dir logo.tcl]
+source_utf8 [file join $script_dir rasmol_loc.tcl]
+source_utf8 [file join $script_dir rasmol_math.tcl]
+source_utf8 [file join $script_dir pdb_parser.tcl]
 
 # Source CPU Renderer and rename its redraw function
-source [file join $script_dir rasmol_render.tcl]
+source_utf8 [file join $script_dir rasmol_render.tcl]
 if {[info commands rasmol_cpu_redraw] eq ""} {
     rename rasmol_redraw rasmol_cpu_redraw
 }
 
 # Source GPU module
 catch {
-    source [file join $script_dir rasmol_gpu.tcl]
+    source_utf8 [file join $script_dir rasmol_gpu.tcl]
 }
 
 # Source UI
-source [file join $script_dir rasmol_ui.tcl]
+source_utf8 [file join $script_dir rasmol_ui.tcl]
 
 # Add "Display Mode" submenu under "Settings"
 .menubar.settings add separator
