@@ -233,6 +233,8 @@ proc load_molecule {} {
     set file [tk_getOpenFile -filetypes $types]
     if {$file ne ""} {
         puts "Opening file: $file"
+        .status.lbl configure -text "Loading $file..."
+        update
         rasmol_command "load pdb \"$file\""
         update_status
     }
