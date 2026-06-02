@@ -1,74 +1,12 @@
-# RasMol Tcl/Tk Localization Data and Logic
+# Localization for RasMol Tcl UI
+
+set current_ui_lang "English"
 
 array set ui_translations {
-    "Bulgarian" {
-        "File" "Файл"
-        "Open" "Отвори..."
-        "Info" "Информация"
-        "Close" "Затвори"
-        "Exit" "Изход"
-        "Display" "Визуализация"
-        "Wireframe" "Мрежест модел"
-        "Backbone" "Гръбнак"
-        "Sticks" "Пръчки"
-        "Spacefill" "Запълване на пространството"
-        "BallStick" "Топки и пръчки"
-        "Ribbons" "Ленти"
-        "Strands" "Нишки"
-        "Cartoons" "Схематичен модел"
-        "MolSurf" "Молекулна повърхност"
-        "Colours" "Цветове"
-        "Monochrome" "Едноцветен"
-        "CPK" "CPK"
-        "Shapely" "По форма"
-        "Group" "Група"
-        "Chain" "Верига"
-        "Temp" "Температура"
-        "Struct" "Структура"
-        "User" "Потребител"
-        "Model" "Модел"
-        "Alt" "Алтернативен"
-        "Options" "Опции"
-        "Slab" "Срез"
-        "Hydr" "Водородни атоми"
-        "Het" "Хетероатоми"
-        "Spec" "Огледален"
-        "Shad" "Сенки"
-        "Stereo" "Стерео"
-        "Label" "Етикети"
-        "Settings" "Настройки"
-        "POff" "Изключи маркирането"
-        "PIdent" "Идентифициране"
-        "PDist" "Разстояние"
-        "PMon" "Монитор"
-        "PAng" "Ъгъл"
-        "PTrsn" "Торзионен ъгъл"
-        "PLabl" "Етикет"
-        "PCent" "Център"
-        "PCoord" "Координати"
-        "PBond" "Връзка"
-        "RBond" "Ротация на връзка"
-        "RMol" "Ротация на молекула"
-        "RAll" "Ротация на всичко"
-        "Export" "Експорт"
-        "Help" "Помощ"
-        "About" "Относно RasMol..."
-        "UserM" "Ръководство..."
-        "Language" "Език"
-        "MouseMode" "Режим на мишката"
-            "AboutTitle" "За RasMol"
-        "AppGraphics" "RasMol Молекулярна графика"
-        "Version" "Версия"
-        "Maintainer" "Текущ поддръжник:"
-        "OriginalAuthor" "Оригинален автор:"
-        "Contributors" "Основни сътрудници:"
-        "LicenseInfo" "Лицензиран под GNU General Public License (GPL)\n\nили лиценз RASMOL."
-        "CloseBtn" "Затвори"
-}
     "English" {
         "File" "File"
         "Open" "Open..."
-        "Info" "Information"
+        "SaveAs" "Save As..."
         "Close" "Close"
         "Exit" "Exit"
         "Display" "Display"
@@ -120,19 +58,20 @@ array set ui_translations {
         "UserM" "User Manual..."
         "Language" "Language"
         "MouseMode" "Mouse Mode"
-            "AboutTitle" "About RasMol"
+        "DisplayMode" "Display Mode"
+        "AboutTitle" "About RasMol"
         "AppGraphics" "RasMol Molecular Graphics"
         "Version" "Version"
         "Maintainer" "Current Maintainer:"
         "OriginalAuthor" "Original Author:"
-        "Contributors" "Major Contributors:"
-        "LicenseInfo" "Licensed under the GNU General Public License (GPL)\n\nor the RASMOL License."
+        "Contributors" "Main Contributors:"
+        "LicenseInfo" "Licensed under the GNU General Public License (GPL)\n\nor the RASMOL license."
         "CloseBtn" "Close"
-}
+    }
     "French" {
         "File" "Fichier"
         "Open" "Ouvrir..."
-        "Info" "Information"
+        "SaveAs" "Enregistrer sous..."
         "Close" "Fermer"
         "Exit" "Quitter"
         "Display" "Affichage"
@@ -143,7 +82,7 @@ array set ui_translations {
         "BallStick" "Boules & Bâtonnets"
         "Ribbons" "Rubans"
         "Strands" "Brins"
-        "Cartoons" "Schématique"
+        "Cartoons" "Dessins"
         "MolSurf" "Surface moléculaire"
         "Colours" "Couleurs"
         "Monochrome" "Monochrome"
@@ -157,13 +96,13 @@ array set ui_translations {
         "Model" "Modèle"
         "Alt" "Alt"
         "Options" "Options"
-        "Slab" "Mode coupe"
+        "Slab" "Mode Tranche"
         "Hydr" "Hydrogènes"
         "Het" "Hétéroatomes"
         "Spec" "Spéculaire"
         "Shad" "Ombres"
         "Stereo" "Stéréo"
-        "Label" "Etiquettes"
+        "Label" "Étiquettes"
         "Settings" "Réglages"
         "POff" "Désactiver sélection"
         "PIdent" "Identifier"
@@ -171,288 +110,33 @@ array set ui_translations {
         "PMon" "Moniteur"
         "PAng" "Angle"
         "PTrsn" "Torsion"
-        "PLabl" "Etiquette"
-        "PCent" "Centrer"
+        "PLabl" "Étiquette"
+        "PCent" "Centre"
         "PCoord" "Coordonnées"
         "PBond" "Liaison"
         "RBond" "Rotation liaison"
         "RMol" "Rotation molécule"
-        "RAll" "Rotation globale"
+        "RAll" "Tout tourner"
         "Export" "Exporter"
         "Help" "Aide"
-        "About" "A propos de RasMol..."
+        "About" "À propos de RasMol..."
         "UserM" "Manuel utilisateur..."
         "Language" "Langue"
         "MouseMode" "Mode souris"
-            "AboutTitle" "À propos de RasMol"
-        "AppGraphics" "RasMol Graphisme Moléculaire"
+        "DisplayMode" "Mode d'affichage"
+        "AboutTitle" "À propos de RasMol"
+        "AppGraphics" "Graphismes Moléculaires RasMol"
         "Version" "Version"
-        "Maintainer" "Mainteneur actuel:"
-        "OriginalAuthor" "Auteur original:"
-        "Contributors" "Contributeurs majeurs:"
+        "Maintainer" "Mainteneur actuel :"
+        "OriginalAuthor" "Auteur original :"
+        "Contributors" "Contributeurs principaux :"
         "LicenseInfo" "Sous licence GNU General Public License (GPL)\n\nou licence RASMOL."
         "CloseBtn" "Fermer"
-}
-    "German" {
-        "File" "Datei"
-        "Open" "Öffnen..."
-        "Info" "Information"
-        "Close" "Schließen"
-        "Exit" "Beenden"
-        "Display" "Anzeige"
-        "Wireframe" "Drahtmodell"
-        "Backbone" "Rückgrat"
-        "Sticks" "Stäbchen"
-        "Spacefill" "Kalottenmodell"
-        "BallStick" "Kugel-Stab-Modell"
-        "Ribbons" "Bänder"
-        "Strands" "Stränge"
-        "Cartoons" "Cartoons"
-        "MolSurf" "Moleküloberfläche"
-        "Colours" "Farben"
-        "Monochrome" "Monochrom"
-        "CPK" "CPK"
-        "Shapely" "Shapely"
-        "Group" "Gruppe"
-        "Chain" "Kette"
-        "Temp" "Temperatur"
-        "Struct" "Struktur"
-        "User" "Benutzer"
-        "Model" "Modell"
-        "Alt" "Alt"
-        "Options" "Optionen"
-        "Slab" "Slab-Modus"
-        "Hydr" "Wasserstoffe"
-        "Het" "Heteroatome"
-        "Spec" "Spiegelnd"
-        "Shad" "Schatten"
-        "Stereo" "Stereo"
-        "Label" "Beschriftungen"
-        "Settings" "Einstellungen"
-        "POff" "Auswahl aus"
-        "PIdent" "Identifizieren"
-        "PDist" "Distanz messen"
-        "PMon" "Monitor"
-        "PAng" "Winkel messen"
-        "PTrsn" "Torsionswinkel messen"
-        "PLabl" "Beschriftung"
-        "PCent" "Zentrum wählen"
-        "PCoord" "Koordinaten"
-        "PBond" "Bindung wählen"
-        "RBond" "Bindung drehen"
-        "RMol" "Molekül drehen"
-        "RAll" "Alles drehen"
-        "Export" "Exportieren"
-        "Help" "Hilfe"
-        "About" "Über RasMol..."
-        "UserM" "Benutzerhandbuch..."
-        "Language" "Sprache"
-        "MouseMode" "Mausmodus"
-            "AboutTitle" "Über RasMol"
-        "AppGraphics" "RasMol Molekulare Grafik"
-        "Version" "Version"
-        "Maintainer" "Aktueller Betreuer:"
-        "OriginalAuthor" "Ursprünglicher Autor:"
-        "Contributors" "Hauptmitwirkende:"
-        "LicenseInfo" "Lizenziert unter der GNU General Public License (GPL)\n\noder der RASMOL-Lizenz."
-        "CloseBtn" "Schließen"
-}
-    "Italian" {
-        "File" "File"
-        "Open" "Apri..."
-        "Info" "Informazioni"
-        "Close" "Chiudi"
-        "Exit" "Esci"
-        "Display" "Visualizza"
-        "Wireframe" "Filo di ferro"
-        "Backbone" "Scheletro"
-        "Sticks" "Bastoncini"
-        "Spacefill" "Sfere"
-        "BallStick" "Palle & Bastoncini"
-        "Ribbons" "Nastri"
-        "Strands" "Fibre"
-        "Cartoons" "Fumetti"
-        "MolSurf" "Superficie molecolare"
-        "Colours" "Colori"
-        "Monochrome" "Monocromo"
-        "CPK" "CPK"
-        "Shapely" "Forma"
-        "Group" "Gruppo"
-        "Chain" "Catena"
-        "Temp" "Temperatura"
-        "Struct" "Struttura"
-        "User" "Utente"
-        "Model" "Modello"
-        "Alt" "Alt"
-        "Options" "Opzioni"
-        "Slab" "Modo sezione"
-        "Hydr" "Idrogeni"
-        "Het" "Eteroatomi"
-        "Spec" "Speculare"
-        "Shad" "Ombre"
-        "Stereo" "Stereo"
-        "Label" "Etichette"
-        "Settings" "Impostazioni"
-        "POff" "Disattiva selezione"
-        "PIdent" "Identifica"
-        "PDist" "Distanza"
-        "PMon" "Monitor"
-        "PAng" "Angolo"
-        "PTrsn" "Torsione"
-        "PLabl" "Etichetta"
-        "PCent" "Centra"
-        "PCoord" "Coordinate"
-        "PBond" "Legame"
-        "RBond" "Ruota legame"
-        "RMol" "Ruota molecola"
-        "RAll" "Ruota tutto"
-        "Export" "Esporta"
-        "Help" "Aiuto"
-        "About" "Informazioni su RasMol..."
-        "UserM" "Manuale Utente..."
-        "Language" "Lingua"
-        "MouseMode" "Modalità mouse"
-            "AboutTitle" "Informazioni su RasMol"
-        "AppGraphics" "RasMol Grafica Molecolare"
-        "Version" "Versione"
-        "Maintainer" "Manutentore attuale:"
-        "OriginalAuthor" "Autore originale:"
-        "Contributors" "Principali contributori:"
-        "LicenseInfo" "Rilasciato sotto GNU General Public License (GPL)\n\no Licenza RASMOL."
-        "CloseBtn" "Chiudi"
-}
-    "Japanese" {
-        "File" "ファイル"
-        "Open" "開く..."
-        "Info" "情報"
-        "Close" "閉じる"
-        "Exit" "終了"
-        "Display" "表示方法"
-        "Wireframe" "ワイヤーフレーム"
-        "Backbone" "主鎖"
-        "Sticks" "スティック"
-        "Spacefill" "空間充填モデル"
-        "BallStick" "球棒"
-        "Ribbons" "リボン"
-        "Strands" "ストランド"
-        "Cartoons" "カートゥーン"
-        "MolSurf" "分子表面"
-        "Colours" "色"
-        "Monochrome" "白黒"
-        "CPK" "CPKカラー"
-        "Shapely" "型"
-        "Group" "グループ"
-        "Chain" "鎖"
-        "Temp" "温度"
-        "Struct" "構造"
-        "User" "ユーザー"
-        "Model" "モデル"
-        "Alt" "換構造"
-        "Options" "オプション"
-        "Slab" "スラブモード"
-        "Hydr" "水素原子"
-        "Het" "ヘテロ原子"
-        "Spec" "輝き"
-        "Shad" "影"
-        "Stereo" "ステレオ"
-        "Label" "ラベル"
-        "Settings" "設定"
-        "POff" "オフ"
-        "PIdent" "選択されたものを表示"
-        "PDist" "距離を計る"
-        "PMon" "距離を表示"
-        "PAng" "角度を計る"
-        "PTrsn" "二面角をはかる"
-        "PLabl" "ラベルを付ける"
-        "PCent" "中心を設定"
-        "PCoord" "座標を表示"
-        "PBond" "結合を指定"
-        "RBond" "結合を回転"
-        "RMol" "分子を回転"
-        "RAll" "すべてを回転"
-        "Export" "画像出力"
-        "Help" "ヘルプ"
-        "About" "RasMolについて..."
-        "UserM" "マニュアル..."
-        "Language" "言語"
-        "MouseMode" "マウスモード"
-            "AboutTitle" "RasMolについて"
-        "AppGraphics" "RasMol 分子グラフィックス"
-        "Version" "バージョン"
-        "Maintainer" "現在のメンテナ:"
-        "OriginalAuthor" "原著者:"
-        "Contributors" "主な貢献者:"
-        "LicenseInfo" "GNU General Public License (GPL)\n\nまたは RASMOL ライセンスの下でライセンスされています。"
-        "CloseBtn" "閉じる"
-}
-    "Russian" {
-        "File" "Файл"
-        "Open" "Открыть..."
-        "Info" "Информация"
-        "Close" "Закрыть"
-        "Exit" "Выход"
-        "Display" "Отображение"
-        "Wireframe" "Проволочный"
-        "Backbone" "Остов"
-        "Sticks" "Палочки"
-        "Spacefill" "Сферы"
-        "BallStick" "Шаростержневой"
-        "Ribbons" "Ленты"
-        "Strands" "Нити"
-        "Cartoons" "Схематичный"
-        "MolSurf" "Молекулярная поверхность"
-        "Colours" "Цвета"
-        "Monochrome" "Одноцветный"
-        "CPK" "CPK"
-        "Shapely" "Фигурный"
-        "Group" "Группа"
-        "Chain" "Цепь"
-        "Temp" "Температура"
-        "Struct" "Структура"
-        "User" "Пользователь"
-        "Model" "Модель"
-        "Alt" "Alt"
-        "Options" "Опции"
-        "Slab" "Плоскость сечения"
-        "Hydr" "Водороды"
-        "Het" "Гетероатомы"
-        "Spec" "Зеркальный"
-        "Shad" "Тени"
-        "Stereo" "Стерео"
-        "Label" "Подписи"
-        "Settings" "Настройки"
-        "POff" "Отключить выбор"
-        "PIdent" "Идентифицировать"
-        "PDist" "Расстояние"
-        "PMon" "Монитор"
-        "PAng" "Угол"
-        "PTrsn" "Торсионный угол"
-        "PLabl" "Подпись"
-        "PCent" "Центр"
-        "PCoord" "Координаты"
-        "PBond" "Связь"
-        "RBond" "Вращать связь"
-        "RMol" "Вращать молекулу"
-        "RAll" "Вращать все"
-        "Export" "Экспорт"
-        "Help" "Помощь"
-        "About" "О программе RasMol..."
-        "UserM" "Руководство пользователя..."
-        "Language" "Язык"
-        "MouseMode" "Режим мыши"
-            "AboutTitle" "О программе RasMol"
-        "AppGraphics" "RasMol Молекулярная графика"
-        "Version" "Версия"
-        "Maintainer" "Текущий сопровождающий:"
-        "OriginalAuthor" "Первоначальный автор:"
-        "Contributors" "Основные участники:"
-        "LicenseInfo" "Лицензировано под GNU General Public License (GPL)\n\nили лицензией RASMOL."
-        "CloseBtn" "Закрыть"
-}
+    }
     "Simplified Chinese" {
         "File" "文件"
         "Open" "打开..."
-        "Info" "信息"
+        "SaveAs" "另存为..."
         "Close" "关闭"
         "Exit" "退出"
         "Display" "展示"
@@ -504,7 +188,8 @@ array set ui_translations {
         "UserM" "用户手册..."
         "Language" "语言"
         "MouseMode" "鼠标模式"
-            "AboutTitle" "关于 RasMol"
+        "DisplayMode" "显示模式"
+        "AboutTitle" "关于 RasMol"
         "AppGraphics" "RasMol 分子图形"
         "Version" "版本"
         "Maintainer" "当前维护者："
@@ -512,146 +197,20 @@ array set ui_translations {
         "Contributors" "主要贡献者："
         "LicenseInfo" "根据 GNU 通用公共许可证 (GPL)\n\n或 RASMOL 许可证授权。"
         "CloseBtn" "关闭"
-}
-    "Spanish" {
-        "File" "Archivo"
-        "Open" "Abrir..."
-        "Info" "Información"
-        "Close" "Cerrar"
-        "Exit" "Quitar"
-        "Display" "Mostrar"
-        "Wireframe" "Alambre"
-        "Backbone" "Esqueleto"
-        "Sticks" "Bastones"
-        "Spacefill" "Espacio Completo"
-        "BallStick" "Bolas  Bastones"
-        "Ribbons" "Cintas"
-        "Strands" "Hebras"
-        "Cartoons" "Dibujo"
-        "MolSurf" "Superficie Molecular"
-        "Colours" "Colores"
-        "Monochrome" "Monocromo"
-        "CPK" "CPK"
-        "Shapely" "Forma"
-        "Group" "Grupo"
-        "Chain" "Cadena"
-        "Temp" "Temperatura"
-        "Struct" "Estructura"
-        "User" "Usuario"
-        "Model" "Modelo"
-        "Alt" "Alt"
-        "Options" "Opciones"
-        "Slab" "Modo Aserrado"
-        "Hydr" "Hidrógenos"
-        "Het" "Heteroátomos"
-        "Spec" "Especular"
-        "Shad" "Sombras"
-        "Stereo" "Estereo"
-        "Label" "Etiquetas"
-        "Settings" "Configuraciones"
-        "POff" "Desactivar elección"
-        "PIdent" "Elegir identificación"
-        "PDist" "Elegir distanza"
-        "PMon" "Elegir monitor"
-        "PAng" "Elegir ángulo"
-        "PTrsn" "Elegir torsiones"
-        "PLabl" "Elegir etiqueta"
-        "PCent" "Elegir centro"
-        "PCoord" "Elegir coordenadas"
-        "PBond" "Elegir enlace"
-        "RBond" "Girar enlace"
-        "RMol" "Girar molécula"
-        "RAll" "Girar todo"
-        "Export" "Exportar"
-        "Help" "Ayuda"
-        "About" "Acerca del RasMol..."
-        "UserM" "Manual del Usuario..."
-        "Language" "Idioma"
-        "MouseMode" "Modo ratón"
-            "AboutTitle" "Acerca de RasMol"
-        "AppGraphics" "RasMol Gráficos Moleculares"
-        "Version" "Versión"
-        "Maintainer" "Mantenedor actual:"
-        "OriginalAuthor" "Autor original:"
-        "Contributors" "Principales colaboradores:"
-        "LicenseInfo" "Bajo la Licencia Pública General GNU (GPL)\n\no la Licencia RASMOL."
-        "CloseBtn" "Cerrar"
-}
-    "Traditional Chinese" {
-        "File" "檔案"
-        "Open" "開啟..."
-        "Info" "資訊"
-        "Close" "關閉"
-        "Exit" "離開"
-        "Display" "展示"
-        "Wireframe" "線框"
-        "Backbone" "主鏈"
-        "Sticks" "棒狀"
-        "Spacefill" "空間填充"
-        "BallStick" "球棍模型"
-        "Ribbons" "絲帶"
-        "Strands" "纖維"
-        "Cartoons" "卡通"
-        "MolSurf" "分子表面"
-        "Colours" "顏色"
-        "Monochrome" "單色"
-        "CPK" "CPK"
-        "Shapely" "外型"
-        "Group" "群組"
-        "Chain" "鏈"
-        "Temp" "溫度"
-        "Struct" "結構"
-        "User" "使用者"
-        "Model" "模型"
-        "Alt" "選取"
-        "Options" "選項"
-        "Slab" "切片模式"
-        "Hydr" "氫"
-        "Het" "雜原子"
-        "Spec" "鏡面"
-        "Shad" "陰影"
-        "Stereo" "立體"
-        "Label" "標籤"
-        "Settings" "設定"
-        "POff" "關閉選取"
-        "PIdent" "識別"
-        "PDist" "選取距離"
-        "PMon" "監測"
-        "PAng" "選取角度"
-        "PTrsn" "選取扭角"
-        "PLabl" "選取標籤"
-        "PCent" "選取中心"
-        "PCoord" "選取座標"
-        "PBond" "選取化學鍵"
-        "RBond" "化學鍵旋轉"
-        "RMol" "分子旋轉"
-        "RAll" "全部旋轉"
-        "Export" "輸出"
-        "Help" "說明"
-        "About" "關於 RasMol..."
-        "UserM" "使用者手冊..."
-        "Language" "語言"
-        "MouseMode" "滑鼠模式"
-            "AboutTitle" "關於 RasMol"
-        "AppGraphics" "RasMol 分子圖形"
-        "Version" "版本"
-        "Maintainer" "目前維護者："
-        "OriginalAuthor" "原作者："
-        "Contributors" "主要貢獻者："
-        "LicenseInfo" "根據 GNU 通用公共許可證 (GPL)\n\n或 RASMOL 許可證授權。"
-        "CloseBtn" "關閉"
-}
+    }
 }
 
 proc tr {key} {
     global ui_translations current_ui_lang
     if {[info exists ui_translations($current_ui_lang)]} {
-        foreach {k v} $ui_translations($current_ui_lang) {
+        set lang_data $ui_translations($current_ui_lang)
+        foreach {k v} $lang_data {
             if {$k eq $key} { return $v }
         }
     }
     if {[info exists ui_translations(English)]} {
-        foreach {k v} $ui_translations(English) {
+        set lang_data $ui_translations(English)
+        foreach {k v} $lang_data {
             if {$k eq $key} { return $v }
         }
     }
@@ -659,64 +218,86 @@ proc tr {key} {
 }
 
 proc localize_ui {} {
-    # Original menus indices: File(0), Display(1), Colours(2), Export(3), Options(4), Settings(5), Help(6)
-    # The "Language" menu is now a submenu under "Settings".
-
-    set labels {
-        0 "File" 1 "Display" 2 "Colours" 3 "Export" 4 "Options" 5 "Settings" 6 "Help"
+    # 1. Localize Main Menubar entries by their -menu property
+    # This is the most robust way as indices shift on different platforms.
+    set menu_map {
+        .menubar.file "File"
+        .menubar.display "Display"
+        .menubar.colours "Colours"
+        .menubar.export "Export"
+        .menubar.options "Options"
+        .menubar.settings "Settings"
+        .menubar.help "Help"
     }
-    foreach {idx key} $labels {
-        catch { .menubar entryconfigure $idx -label [tr $key] }
+
+    set end_idx [.menubar index end]
+    if {$end_idx ne "none"} {
+        for {set i 0} {$i <= $end_idx} {incr i} {
+            set type [.menubar type $i]
+            if {$type eq "cascade"} {
+                set m [.menubar entrycget $i -menu]
+                foreach {path key} $menu_map {
+                    if {$m eq $path} {
+                        .menubar entryconfigure $i -label [tr $key]
+                        break
+                    }
+                }
+            }
+        }
     }
 
+    # 2. Localize submenus using label-based matching or command-based matching
     # File Menu
-    catch { .menubar.file entryconfigure 0 -label [tr "Open"] }
-    catch { .menubar.file entryconfigure 1 -label [tr "Info"] }
-    catch { .menubar.file entryconfigure 3 -label [tr "Close"] }
-    catch { .menubar.file entryconfigure 5 -label [tr "Exit"] }
+    foreach {old new} { "Open..." "Open" "Save As..." "SaveAs" "Close" "Close" "Exit" "Exit" } {
+        catch { .menubar.file entryconfigure $old -label [tr $new] }
+    }
 
     # Display Menu
-    set i 0
-    foreach key {Wireframe Backbone Sticks Spacefill BallStick Ribbons Strands Cartoons MolSurf} {
-        catch { .menubar.display entryconfigure $i -label [tr $key] }
-        incr i
+    set display_items {
+        "Wireframe" "Wireframe" "Backbone" "Backbone" "Sticks" "Sticks"
+        "Spacefill" "Spacefill" "Ball & Stick" "BallStick" "Ribbons" "Ribbons"
+        "Strands" "Strands" "Cartoons" "Cartoons" "Molecular Surface" "MolSurf"
+    }
+    foreach {old new} $display_items {
+        catch { .menubar.display entryconfigure $old -label [tr $new] }
     }
 
     # Colours Menu
-    set i 0
-    foreach key {Monochrome CPK Shapely Group Chain Temp Struct User Model Alt} {
-        catch { .menubar.colours entryconfigure $i -label [tr $key] }
-        incr i
+    set colours_items {
+        "Monochrome" "Monochrome" "CPK" "CPK" "Shapely" "Shapely"
+        "Group" "Group" "Chain" "Chain" "Temperature" "Temp"
+        "Structure" "Struct" "User" "User" "Model" "Model" "Alt" "Alt"
+    }
+    foreach {old new} $colours_items {
+        catch { .menubar.colours entryconfigure $old -label [tr $new] }
     }
 
     # Options Menu
-    catch { .menubar.options entryconfigure 0 -label [tr "Slab"] }
-    catch { .menubar.options entryconfigure 1 -label [tr "Hydr"] }
-    catch { .menubar.options entryconfigure 2 -label [tr "Het"] }
-    catch { .menubar.options entryconfigure 4 -label [tr "Spec"] }
-    catch { .menubar.options entryconfigure 5 -label [tr "Shad"] }
-    catch { .menubar.options entryconfigure 6 -label [tr "Stereo"] }
-    catch { .menubar.options entryconfigure 7 -label [tr "Label"] }
+    foreach {old new} { "Slab Mode" "Slab" "Hydrogens" "Hydr" "Hetero Atoms" "Het"
+                       "Specular" "Spec" "Shadows" "Shad" "Stereo" "Stereo" "Labels" "Label" } {
+        catch { .menubar.options entryconfigure $old -label [tr $new] }
+    }
 
     # Settings Menu
-    set i 0
-    foreach key {POff PIdent PDist PMon PAng PTrsn PLabl PCent PCoord PBond} {
-        catch { .menubar.settings entryconfigure $i -label [tr $key] }
-        incr i
+    set settings_items {
+        "Pick Off" "POff" "Pick Ident" "PIdent" "Pick Distance" "PDist"
+        "Pick Monitor" "PMon" "Pick Angle" "PAng" "Pick Torsion" "PTrsn"
+        "Pick Label" "PLabl" "Pick Centre" "PCent" "Pick Coord" "PCoord"
+        "Pick Bond" "PBond" "Rotate Bond" "RBond" "Rotate Molecule" "RMol"
+        "Rotate All" "RAll" "Mouse Mode" "MouseMode" "Display Mode" "DisplayMode"
+        "Language" "Language"
     }
-    set i 11
-    foreach key {RBond RMol RAll} {
-        catch { .menubar.settings entryconfigure $i -label [tr $key] }
-        incr i
+    foreach {old new} $settings_items {
+        catch { .menubar.settings entryconfigure $old -label [tr $new] }
     }
-
-    # Settings -> Mouse Mode
-    catch { .menubar.settings entryconfigure 15 -label [tr "MouseMode"] }
-
-    # Settings -> Language (Inside Settings menu)
-    catch { .menubar.settings entryconfigure 17 -label [tr "Language"] }
 
     # Help Menu
-    catch { .menubar.help entryconfigure 0 -label [tr "About"] }
-    catch { .menubar.help entryconfigure 1 -label [tr "UserM"] }
+    catch { .menubar.help entryconfigure "About RasMol" -label [tr "About"] }
+    catch { .menubar.help entryconfigure "User Manual" -label [tr "UserM"] }
+}
+
+proc set_language {lang} {
+    global current_ui_lang
+    set current_ui_lang $lang
+    localize_ui
 }
