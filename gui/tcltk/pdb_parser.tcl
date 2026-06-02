@@ -204,6 +204,7 @@ proc ReadPDB { fileName } {
         }
     }
     close $inFp
+    puts "Loaded $g_Atoms(numAtoms) atoms and $g_Cons(numCons) connections."
 }
 
 proc CalcBBox {} {
@@ -227,6 +228,7 @@ proc CalcBBox {} {
         if { $z > $g_Atoms(bbox,zmax) } { set g_Atoms(bbox,zmax) $z }
         if { $z < $g_Atoms(bbox,zmin) } { set g_Atoms(bbox,zmin) $z }
     }
+    puts "Bounding Box: ($g_Atoms(bbox,xmin), $g_Atoms(bbox,ymin), $g_Atoms(bbox,zmin)) to ($g_Atoms(bbox,xmax), $g_Atoms(bbox,ymax), $g_Atoms(bbox,zmax))"
 }
 
 proc SetViewPoint {} {
@@ -247,4 +249,5 @@ proc SetViewPoint {} {
 
     # Target about 300 pixels for the largest dimension
     set g_Gui(zoom) [expr {300.0 / $maxSize}]
+    puts "Viewpoint set: center ($g_Gui(rotCenX), $g_Gui(rotCenY), $g_Gui(rotCenZ)), zoom $g_Gui(zoom)"
 }

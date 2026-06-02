@@ -6,7 +6,7 @@ proc rasmol_gpu_init {w} {
     glEnable GL_LIGHTING
     glEnable GL_COLOR_MATERIAL
 
-    set light_pos {1.0 1.0 1.0 0.0}
+    set light_pos {100.0 100.0 100.0 1.0}
     glLightfv GL_LIGHT0 GL_POSITION $light_pos
 
     glClearColor 0.0 0.0 0.0 1.0
@@ -25,7 +25,7 @@ proc rasmol_gpu_reshape {toglwin {w ""} {h ""}} {
     glViewport 0 0 $w $h
     glMatrixMode GL_PROJECTION
     glLoadIdentity
-    gluPerspective 45.0 [expr {double($w)/$h}] 0.1 1000.0
+    gluPerspective 45.0 [expr {double($w)/$h}] 1.0 2000.0
     glMatrixMode GL_MODELVIEW
 }
 
@@ -35,25 +35,30 @@ proc rasmol_gpu_draw {w} {
     glClear [expr {$::GL_COLOR_BUFFER_BIT | $::GL_DEPTH_BUFFER_BIT}]
     glLoadIdentity
 
-    # Simple camera positioning
-    set zoom $g_Gui(zoom)
-    if {$zoom <= 0} {set zoom 10.0}
-    set dist [expr {400.0 / $zoom}]
+    # Camera positioning
+    # zoom in CPU mode is pixels per Angstrom.
+    # In GPU mode, we move the camera.
+    # A zoom of 20 means maxSize 15 is 300px.
+    # Let's use a simpler heuristic for GPU distance.
+    set dist [expr {800.0 / ($g_Gui(zoom) + 1.0)}]
+    if {$dist < 10.0} {set dist 10.0}
+
     gluLookAt 0.0 0.0 $dist 0.0 0.0 0.0 0.0 1.0 0.0
 
     glPushMatrix
-    # Apply transformations
+    # Rotation (consistent with CPU mode)
     glRotatef $g_Gui(rotX) 1.0 0.0 0.0
     glRotatef $g_Gui(rotY) 0.0 1.0 0.0
     glRotatef $g_Gui(rotZ) 0.0 0.0 1.0
 
-    # Center the molecule (translate back by rotCen)
+    # Translate to origin using calculated center
     glTranslatef [expr {-$g_Gui(rotCenX)}] [expr {-$g_Gui(rotCenY)}] [expr {-$g_Gui(rotCenZ)}]
 
     # Draw Bonds
     if {$display_mode != 4} {
         glDisable GL_LIGHTING
         glColor3f 1.0 1.0 1.0
+        glLineWidth [expr {$display_mode == 3 || $display_mode == 5 ? 2.0 : 1.0}]
         glBegin GL_LINES
         foreach s1 [array names g_Cons] {
             if {![info exists g_Atoms($s1,x)]} continue
@@ -84,7 +89,7 @@ proc rasmol_gpu_draw {w} {
         }
         gluDeleteQuadric $quadObj
     } else {
-        glPointSize 3.0
+        glPointSize 4.0
         glBegin GL_POINTS
         foreach key [array names g_Atoms "*,name"] {
             set s [lindex [split $key ","] 0]
