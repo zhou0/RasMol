@@ -12,7 +12,14 @@ proc rasmol_gpu_init {w} {
     glClearColor 0.0 0.0 0.0 1.0
 }
 
-proc rasmol_gpu_reshape {toglwin w h} {
+proc rasmol_gpu_reshape {toglwin {w ""} {h ""}} {
+    if {$w eq "" || $h eq ""} {
+        set w [winfo width $toglwin]
+        set h [winfo height $toglwin]
+    }
+    if {$w <= 1} { set w 400 }
+    if {$h <= 1} { set h 400 }
+
     set ::g_WinWidth $w
     set ::g_WinHeight $h
     glViewport 0 0 $w $h
@@ -29,7 +36,9 @@ proc rasmol_gpu_draw {w} {
     glLoadIdentity
 
     # Simple camera positioning
-    set dist [expr {$g_Gui(zoom) > 0 ? 400.0 / $g_Gui(zoom) : 50.0}]
+    set zoom $g_Gui(zoom)
+    if {$zoom <= 0} {set zoom 10.0}
+    set dist [expr {400.0 / $zoom}]
     gluLookAt 0.0 0.0 $dist 0.0 0.0 0.0 0.0 1.0 0.0
 
     glPushMatrix
