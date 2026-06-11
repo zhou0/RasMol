@@ -524,7 +524,13 @@ proc tclCreateFunc { w } {
     set ::g_LastTime $startTime
 }
 
-proc tclReshapeFunc { toglwin w h } {
+proc tclReshapeFunc { toglwin {w ""} {h ""} } {
+    if {$w eq "" || $h eq ""} {
+        set w [winfo width $toglwin]
+        set h [winfo height $toglwin]
+    }
+    if {$w <= 1} { set w 400 }
+    if {$h <= 1} { set h 400 }
     global g_Gui
 
     set ::g_WinWidth  $w

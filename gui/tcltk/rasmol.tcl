@@ -110,7 +110,7 @@ if {!$togl_success} {
         error "Fatal Togl Error: $togl_error (Minimal attempt: $final_msg)"
     }
 }
-bind $f.togl <ButtonPress> {rasmol_mouse_down %x %y [get_rasmol_mask %s %b]}
+            bind $f.togl <ButtonPress> {rasmol_mouse_down %x %y [get_rasmol_mask %s %b]}
             bind $f.togl <B1-Motion> {rasmol_mouse_move %x %y [get_rasmol_mask %s 1]}
         }
         grid $f.togl -row 0 -column 0 -sticky nsew
