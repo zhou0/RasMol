@@ -17,6 +17,13 @@ jobs:
           git config --system --unset-all credential.helper || true
 
       - uses: actions/checkout@v4
+      - name: Free Disk Space (Windows)
+        run: |
+          rm -rf "C:/Program Files/Android"
+          rm -rf "C:/android"
+          # Be careful with dotnet if WiX needs it, but we reinstall tools usually
+        shell: bash
+
 
       - name: Set up MSVC
         uses: ilammy/msvc-dev-cmd@v1
@@ -55,7 +62,7 @@ jobs:
       - name: Configure CMake
         run: |
           cmake -B build -S . -G Ninja `
-            -DCMAKE_BUILD_TYPE=Release `
+            -DCMAKE_BUILD_TYPE=Release -DRASMOL_SKIP_HEAVY_SOURCE_BUILD=ON `
             -DPIXELDEPTH=32 `
             -DTCL_INCLUDE_PATH="$env:TCL_INCLUDE" `
             -DTK_INCLUDE_PATH="$env:TCL_INCLUDE" `
