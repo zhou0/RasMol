@@ -45,14 +45,16 @@ jobs:
         rm -rf "C:/Program Files/Android"
         rm -rf "C:/android"
         rm -rf "C:/Program Files/LLVM"
-        rm -rf "C:/vcpkg/downloads"
-        rm -rf "C:/vcpkg/buildtrees"
         rm -rf "C:/msys64"
         rm -rf "C:/Program Files/Docker"
         rm -rf "C:/Program Files/PostgreSQL"
         rm -rf "C:/Program Files/MongoDB"
         rm -rf "C:/Program Files/MySQL"
         rm -rf "C:/Program Files/dotnet"
+        rm -rf "C:/Program Files/Google"
+        rm -rf "C:/Program Files/Microsoft SDKs"
+        rm -rf "C:/vcpkg/downloads"
+        rm -rf "C:/vcpkg/buildtrees"
       shell: bash
 
 

@@ -6,6 +6,8 @@ set(BUILD_SHARED_LIBS ON CACHE BOOL "" FORCE)
 
 option(RASMOL_AUTO_INSTALL "Automatically install missing dependencies" ON)
 option(RASMOL_SKIP_HEAVY_SOURCE_BUILD "Skip heavy source builds like VTK if missing" OFF)
+message(STATUS "RASMOL_AUTO_INSTALL: ${RASMOL_AUTO_INSTALL}")
+message(STATUS "RASMOL_SKIP_HEAVY_SOURCE_BUILD: ${RASMOL_SKIP_HEAVY_SOURCE_BUILD}")
 set(VTK_COMPONENTS
     CommonCore
     CommonDataModel
@@ -175,9 +177,9 @@ if(RASMOL_AUTO_INSTALL)
                 if(NOT RASMOL_SKIP_HEAVY_SOURCE_BUILD)
                     list(APPEND VCPKG_INSTALL_COMPONENTS vtk:x64-windows)
                 endif()
-                set(env_VCPKG_BINARY_SOURCES "clear")
                 set(ENV{VCPKG_BINARY_SOURCES} "clear")
-                execute_process(COMMAND ${VCPKG_EXE} install ${VCPKG_INSTALL_COMPONENTS} --no-telemetry)
+                message(STATUS "vcpkg install: ${VCPKG_INSTALL_COMPONENTS}")
+                execute_process(COMMAND ${VCPKG_EXE} install ${VCPKG_INSTALL_COMPONENTS} --no-telemetry --clean-after-build)
                 get_filename_component(VCPKG_ROOT_DIR "${VCPKG_EXE}" DIRECTORY)
                 if(EXISTS "${VCPKG_ROOT_DIR}/installed/x64-windows")
                     list(APPEND CMAKE_PREFIX_PATH "${VCPKG_ROOT_DIR}/installed/x64-windows")
