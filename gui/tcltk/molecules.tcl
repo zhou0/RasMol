@@ -24,6 +24,21 @@
 package require Tk
 package require tcl3d 0.4.0
 
+set g_ToglVersion 1
+if {![catch {package require Togl}]} {
+    set g_ToglVersion [lindex [split [package require Togl] "."] 0]
+}
+
+if {$g_ToglVersion >= 2} {
+    set g_ToglOpts [list -displaycommand tclDisplayFunc \
+                         -reshapecommand tclReshapeFunc \
+                         -createcommand  tclCreateFunc]
+} else {
+    set g_ToglOpts [list -displayproc tclDisplayFunc \
+                         -reshapeproc tclReshapeFunc \
+                         -createproc  tclCreateFunc]
+}
+
 # Define virtual events for OS independent mouse handling.
 tcl3dAddEvents
 
@@ -715,10 +730,7 @@ grid rowconfigure .fr 0 -weight 1
 grid columnconfigure .fr 0 -weight 1
 
 togl $frTogl.toglwin -width 400 -height 400 \
-        -double true -depth true \
-        -displayproc tclDisplayFunc \
-        -reshapeproc tclReshapeFunc \
-        -createproc  tclCreateFunc
+        -double 1 -depth 1 {*}$g_ToglOpts
 pack $frTogl.toglwin -side top -expand 1 -fill both
 
 set frSett [frame $frCmds.sett]

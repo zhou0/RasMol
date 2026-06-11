@@ -78,8 +78,16 @@ proc set_rendering_mode {mode} {
         if {[catch {package require tcl3d}]} { tk_messageBox -message "Tcl3D not found."; return }
         set ::rendering_mode "GPU"; grid forget $f.c
         if {![winfo exists $f.togl]} {
-            togl $f.togl -width 400 -height 400 -double true -depth true \
-                -displayproc rasmol_gpu_draw -reshapeproc rasmol_gpu_reshape -createproc rasmol_gpu_init
+            set togl_ver 1
+            if {![catch {package require Togl}]} {
+                set togl_ver [lindex [split [package require Togl] "."] 0]
+            }
+            if {$togl_ver >= 2} {
+                set togl_opts [list -displaycommand rasmol_gpu_draw -reshapecommand rasmol_gpu_reshape -createcommand rasmol_gpu_init]
+            } else {
+                set togl_opts [list -displayproc rasmol_gpu_draw -reshapeproc rasmol_gpu_reshape -createproc rasmol_gpu_init]
+            }
+            togl $f.togl -width 400 -height 400 -double 1 -depth 1 {*}$togl_opts
             bind $f.togl <ButtonPress> {rasmol_mouse_down %x %y [get_rasmol_mask %s %b]}
             bind $f.togl <B1-Motion> {rasmol_mouse_move %x %y [get_rasmol_mask %s 1]}
         }
