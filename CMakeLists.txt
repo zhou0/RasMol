@@ -1,131 +1,3 @@
-option(RASMOL_AUTO_INSTALL "Automatically install missing dependencies" OFF)
-
-if(RASMOL_AUTO_INSTALL)
-    set(NEEDS_INSTALL FALSE)
-
-    # Check for Bison 2.7+
-    find_package(BISON 2.7 QUIET)
-    if(NOT BISON_FOUND)
-        set(NEEDS_INSTALL TRUE)
-        message(STATUS "Bison 2.7+ not found.")
-    endif()
-
-    # Check for Tcl/Tk
-    if(NOT NEEDS_INSTALL)
-        find_package(TCL QUIET)
-        find_package(TK QUIET)
-        if(NOT TCL_FOUND OR NOT TK_FOUND)
-            if(NOT WIN32)
-                set(NEEDS_INSTALL TRUE)
-                message(STATUS "Tcl/Tk not found.")
-            endif()
-        endif()
-    endif()
-
-    # Check for HDF5
-    if(NOT NEEDS_INSTALL)
-        if(APPLE)
-            find_path(HDF5_INCLUDE_DIR hdf5.h PATHS /opt/local/include /opt/homebrew/opt/hdf5/include /usr/local/opt/hdf5/include QUIET)
-            if(NOT HDF5_INCLUDE_DIR)
-                set(NEEDS_INSTALL TRUE)
-                message(STATUS "HDF5 not found.")
-            endif()
-        else()
-            find_package(HDF5 QUIET COMPONENTS C)
-            if(NOT HDF5_FOUND)
-                find_path(HDF5_INCLUDE_DIR hdf5.h PATH_SUFFIXES hdf5/serial QUIET)
-                if(NOT HDF5_INCLUDE_DIR)
-                    set(NEEDS_INSTALL TRUE)
-                    message(STATUS "HDF5 not found.")
-                endif()
-            endif()
-        endif()
-    endif()
-
-    # Check for VTK 9.1.0+
-    if(NOT NEEDS_INSTALL)
-        find_package(VTK 9.1.0 QUIET)
-        if(NOT VTK_FOUND)
-            set(NEEDS_INSTALL TRUE)
-            message(STATUS "VTK 9.1.0+ not found.")
-        endif()
-    endif()
-
-    if(NEEDS_INSTALL)
-        message(STATUS "Dependencies missing, attempting auto-installation...")
-        if(APPLE)
-            message(STATUS "Installing dependencies via MacPorts...")
-            execute_process(COMMAND sudo port selfupdate)
-            set(PORT_ARGS "")
-            if(CMAKE_OSX_ARCHITECTURES)
-                list(GET CMAKE_OSX_ARCHITECTURES 0 ARCH)
-                set(PORT_ARGS "configure.build_arch=${ARCH}" "configure.universal_archs=${ARCH}")
-            endif()
-            execute_process(COMMAND sudo port install bison)
-            execute_process(COMMAND sudo port install tcl tk libjpeg-turbo hdf5 zstd webp lerc libdeflate jbigkit xz zlib libaec vtk ${PORT_ARGS})
-        elseif(UNIX AND NOT APPLE)
-            find_program(APT_GET apt-get)
-            find_program(DNF dnf)
-            find_program(PACMAN pacman)
-            if(APT_GET)
-                message(STATUS "Installing dependencies via apt...")
-                execute_process(COMMAND sudo apt-get update)
-                execute_process(COMMAND sudo apt-get install -y rpm libx11-dev libxext-dev libxi-dev libhdf5-dev tcl-dev tk-dev bison libxpm-dev libdeflate-dev libjbig-dev liblerc-dev libwebp-dev libjpeg-dev imagemagick libvtk9-dev libaec-dev zlib1g-dev)
-            elseif(DNF)
-                message(STATUS "Installing dependencies via dnf...")
-                execute_process(COMMAND sudo dnf install -y rpm-build libX11-devel libXext-devel libXi-devel hdf5-devel tcl-devel tk-devel bison libXpm-devel libdeflate-devel jbigkit-devel lerc-devel libwebp-devel libjpeg-turbo-devel ImageMagick vtk-devel libaec-devel zlib-devel)
-            elseif(PACMAN)
-                message(STATUS "Installing dependencies via pacman...")
-                execute_process(COMMAND sudo pacman -Sy --noconfirm rpm-tools libx11 libxext libxi hdf5 tcl tk bison libxpm libdeflate jbigkit lerc libwebp libjpeg-turbo imagemagick vtk libaec zlib)
-            else()
-                message(WARNING "No supported package manager (apt, dnf, pacman) found.")
-            endif()
-        elseif(WIN32)
-            message(STATUS "Installing dependencies on Windows...")
-
-            # Bison download for Windows
-            if(NOT BISON_FOUND)
-                message(STATUS "Downloading win_flex_bison...")
-                set(BISON_ZIP_URL "https://github.com/lexxmark/winflexbison/releases/download/v2.4/win_flex_bison-2.4.zip")
-                set(BISON_ZIP_DIR "${CMAKE_BINARY_DIR}/win_flex_bison")
-                file(MAKE_DIRECTORY "${BISON_ZIP_DIR}")
-                file(DOWNLOAD "${BISON_ZIP_URL}" "${BISON_ZIP_DIR}/win_flex_bison.zip" SHOW_PROGRESS)
-                execute_process(COMMAND ${CMAKE_COMMAND} -E tar xf "${BISON_ZIP_DIR}/win_flex_bison.zip" WORKING_DIRECTORY "${BISON_ZIP_DIR}")
-                set(BISON_EXECUTABLE "${BISON_ZIP_DIR}/win_bison.exe" CACHE FILEPATH "Path to bison executable" FORCE)
-                set(FLEX_EXECUTABLE "${BISON_ZIP_DIR}/win_flex.exe" CACHE FILEPATH "Path to flex executable" FORCE)
-                message(STATUS "Bison set to ${BISON_EXECUTABLE}")
-            endif()
-
-            execute_process(COMMAND choco --version RESULT_VARIABLE CHOCO_CHECK OUTPUT_QUIET ERROR_QUIET)
-            if(CHOCO_CHECK EQUAL 0)
-                execute_process(COMMAND choco install magicsplat-tcl-tk --version=1.16.0 -y)
-            else()
-                message(WARNING "Chocolatey not found. Cannot install Tcl/Tk automatically.")
-            endif()
-
-            # Install VTK via vcpkg on Windows
-            execute_process(COMMAND vcpkg --version RESULT_VARIABLE VCPKG_CHECK OUTPUT_QUIET ERROR_QUIET)
-            if(VCPKG_CHECK EQUAL 0)
-                execute_process(COMMAND vcpkg install vtk:x64-windows libaec:x64-windows zlib:x64-windows)
-            else()
-                message(WARNING "vcpkg not found. Cannot install VTK automatically.")
-            endif()
-
-            execute_process(COMMAND dotnet --version RESULT_VARIABLE DOTNET_CHECK OUTPUT_QUIET ERROR_QUIET)
-            if(DOTNET_CHECK EQUAL 0)
-                execute_process(COMMAND wix --version RESULT_VARIABLE WIX_CHECK OUTPUT_QUIET ERROR_QUIET)
-                if(NOT WIX_CHECK EQUAL 0)
-                    execute_process(COMMAND dotnet tool install --global WiX)
-                endif()
-            else()
-                message(WARNING "dotnet not found. Cannot install WiX automatically.")
-            endif()
-        endif()
-    else()
-        message(STATUS "All basic dependencies found. Skipping auto-installation.")
-    endif()
-endif()
-
 cmake_minimum_required(VERSION 3.11)
 project(RasMol C CXX)
 
@@ -133,6 +5,17 @@ project(RasMol C CXX)
 set(BUILD_SHARED_LIBS ON CACHE BOOL "" FORCE)
 
 option(RASMOL_AUTO_INSTALL "Automatically install missing dependencies" ON)
+set(VTK_COMPONENTS
+    CommonCore
+    CommonDataModel
+    FiltersCore
+    IOGeometry
+    IOLegacy
+    IOPDB
+    RenderingCore
+    RenderingOpenGL2
+    RenderingFreeType
+)
 
 if(RASMOL_AUTO_INSTALL)
     set(NEEDS_INSTALL FALSE)
@@ -173,7 +56,7 @@ if(RASMOL_AUTO_INSTALL)
     endif()
 
     # Check for VTK 9.1.0+
-    find_package(VTK 9.1.0 QUIET)
+    find_package(VTK 9.1.0 QUIET COMPONENTS ${VTK_COMPONENTS})
     if(NOT VTK_FOUND)
         set(NEEDS_INSTALL TRUE)
         message(STATUS "VTK 9.1.0+ not found.")
@@ -472,18 +355,6 @@ foreach(lib ${CBF_LIBRARY} ${CQRLIB_LIBRARY} ${CVECTOR_LIBRARY} ${NEARTREE_LIBRA
     endif()
 endforeach()
 
-# VTK Support
-set(VTK_COMPONENTS
-    CommonCore
-    CommonDataModel
-    FiltersCore
-    IOGeometry
-    IOLegacy
-    IOPDB
-    RenderingCore
-    RenderingOpenGL2
-    RenderingFreeType
-)
 find_package(VTK 9.1.0 QUIET COMPONENTS ${VTK_COMPONENTS})
 if(NOT VTK_FOUND)
     if(MSVC)
