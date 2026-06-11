@@ -42,12 +42,16 @@ proc tr {key} {
 }
 
 proc localize_ui {} {
+    set last [.menubar index last]
+    if {$last eq "none"} return
     set menu_map { .menubar.file "File" .menubar.display "Display" .menubar.colours "Colours"
                    .menubar.export "Export" .menubar.options "Options" .menubar.settings "Settings"
                    .menubar.help "Help" }
-    foreach {path key} $menu_map {
-        set idx [.menubar index $path]
-        if {$idx ne "none"} { .menubar entryconfigure $idx -label [tr $key] }
+    for {set i 0} {$i <= $last} {incr i} {
+        if {[catch {.menubar entrycget $i -menu} m]} continue
+        if {[dict exists $menu_map $m]} {
+            .menubar entryconfigure $i -label [tr [dict get $menu_map $m]]
+        }
     }
     foreach {old new} { "Open..." "Open" "Save As..." "SaveAs" "Close" "Close" "Exit" "Exit" } {
         catch { .menubar.file entryconfigure $old -label [tr $new] }
