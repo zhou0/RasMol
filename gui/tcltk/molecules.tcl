@@ -24,21 +24,6 @@
 package require Tk
 package require tcl3d 0.4.0
 
-set g_ToglVersion 1
-if {![catch {package require Togl}]} {
-    set g_ToglVersion [lindex [split [package require Togl] "."] 0]
-}
-
-if {$g_ToglVersion >= 2} {
-    set g_ToglOpts [list -displaycommand tclDisplayFunc \
-                         -reshapecommand tclReshapeFunc \
-                         -createcommand  tclCreateFunc]
-} else {
-    set g_ToglOpts [list -displayproc tclDisplayFunc \
-                         -reshapeproc tclReshapeFunc \
-                         -createproc  tclCreateFunc]
-}
-
 # Define virtual events for OS independent mouse handling.
 tcl3dAddEvents
 
@@ -729,17 +714,37 @@ grid $frInfo -row 2 -column 0 -columnspan 2 -sticky news
 grid rowconfigure .fr 0 -weight 1
 grid columnconfigure .fr 0 -weight 1
 
-# Attempt to create Togl widget with different configurations if it fails
+# Exhaustive Togl initialization probe
 set togl_success 0
-foreach {dbl dep} {1 1 0 1 1 0 0 0} {
-    if {![catch {togl $frTogl.toglwin -width 400 -height 400 \
-                      -double $dbl -depth $dep {*}$g_ToglOpts} msg]} {
-        set togl_success 1
-        break
+set togl_error "Unknown error"
+foreach cb_set {
+    {-displaycommand tclDisplayFunc -reshapecommand tclReshapeFunc -createcommand tclCreateFunc}
+    {-displayproc tclDisplayFunc -reshapeproc tclReshapeFunc -createproc tclCreateFunc}
+} {
+    foreach vis_set {
+        {-double 1 -depth 1 -rgba 1}
+        {-double 1 -depth 1}
+        {-double 0 -depth 1}
+        {-double 1 -depth 0}
+        {-double 0 -depth 0}
+        {-rgba 1}
+        {}
+    } {
+        if {![catch {togl $frTogl.toglwin -width 400 -height 400 {*}$cb_set {*}$vis_set} togl_msg]} {
+            set togl_success 1
+            break
+        } else {
+            set togl_error $togl_msg
+        }
     }
+    if {$togl_success} break
 }
+
 if {!$togl_success} {
-    error "Couldn't configure togl widget: $msg"
+    # Final attempt with absolutely minimal options
+    if {[catch {togl $frTogl.toglwin -width 400 -height 400} final_msg]} {
+        error "Fatal Togl Error: $togl_error (Minimal attempt: $final_msg)"
+    }
 }
 pack $frTogl.toglwin -side top -expand 1 -fill both
 

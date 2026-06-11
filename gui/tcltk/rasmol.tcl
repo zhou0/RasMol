@@ -78,27 +78,39 @@ proc set_rendering_mode {mode} {
         if {[catch {package require tcl3d}]} { tk_messageBox -message "Tcl3D not found."; return }
         set ::rendering_mode "GPU"; grid forget $f.c
         if {![winfo exists $f.togl]} {
-            set togl_ver 1
-            if {![catch {package require Togl}]} {
-                set togl_ver [lindex [split [package require Togl] "."] 0]
-            }
-            if {$togl_ver >= 2} {
-                set togl_opts [list -displaycommand rasmol_gpu_draw -reshapecommand rasmol_gpu_reshape -createcommand rasmol_gpu_init]
-            } else {
-                set togl_opts [list -displayproc rasmol_gpu_draw -reshapeproc rasmol_gpu_reshape -createproc rasmol_gpu_init]
-            }
-            set togl_success 0
-            foreach {dbl dep} {1 1 0 1 1 0 0 0} {
-                if {![catch {togl $f.togl -width 400 -height 400 \
-                                  -double $dbl -depth $dep {*}$togl_opts} msg]} {
-                    set togl_success 1
-                    break
-                }
-            }
-            if {!$togl_success} {
-                error "Couldn't configure togl widget: $msg"
-            }
-            bind $f.togl <ButtonPress> {rasmol_mouse_down %x %y [get_rasmol_mask %s %b]}
+            # Exhaustive Togl initialization probe
+set togl_success 0
+set togl_error "Unknown error"
+foreach cb_set {
+    {-displaycommand rasmol_gpu_draw -reshapecommand rasmol_gpu_reshape -createcommand rasmol_gpu_init}
+    {-displayproc rasmol_gpu_draw -reshapeproc rasmol_gpu_reshape -createproc rasmol_gpu_init}
+} {
+    foreach vis_set {
+        {-double 1 -depth 1 -rgba 1}
+        {-double 1 -depth 1}
+        {-double 0 -depth 1}
+        {-double 1 -depth 0}
+        {-double 0 -depth 0}
+        {-rgba 1}
+        {}
+    } {
+        if {![catch {togl $f.togl -width 400 -height 400 {*}$cb_set {*}$vis_set} togl_msg]} {
+            set togl_success 1
+            break
+        } else {
+            set togl_error $togl_msg
+        }
+    }
+    if {$togl_success} break
+}
+
+if {!$togl_success} {
+    # Final attempt with absolutely minimal options
+    if {[catch {togl $f.togl -width 400 -height 400} final_msg]} {
+        error "Fatal Togl Error: $togl_error (Minimal attempt: $final_msg)"
+    }
+}
+bind $f.togl <ButtonPress> {rasmol_mouse_down %x %y [get_rasmol_mask %s %b]}
             bind $f.togl <B1-Motion> {rasmol_mouse_move %x %y [get_rasmol_mask %s 1]}
         }
         grid $f.togl -row 0 -column 0 -sticky nsew
