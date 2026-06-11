@@ -10,7 +10,7 @@ proc mat_mult {m1 m2} {
                 set v2 [lindex $m2 [expr {$k*3+$j}]]
                 set sum [expr {$sum + $v1 * $v2}]
             }
-            set res [lreplace $res [expr {$i*3+$j}] [expr {$i*3+$j}] $sum]
+            lset res [expr {$i*3+$j}] $sum
         }
     }
     return $res
@@ -48,13 +48,16 @@ proc transform_point {p m offset scale} {
     set oy [lindex $offset 1]
     set oz [lindex $offset 2]
 
+    # Translate point by negative offset to center it at origin
     set tx [expr {$x - $ox}]
     set ty [expr {$y - $oy}]
     set tz [expr {$z - $oz}]
 
+    # Apply rotation matrix
     set nx [expr {[lindex $m 0]*$tx + [lindex $m 1]*$ty + [lindex $m 2]*$tz}]
     set ny [expr {[lindex $m 3]*$tx + [lindex $m 4]*$ty + [lindex $m 5]*$tz}]
     set nz [expr {[lindex $m 6]*$tx + [lindex $m 7]*$ty + [lindex $m 8]*$tz}]
 
+    # Scale for final projection
     return [list [expr {$nx * $scale}] [expr {$ny * $scale}] [expr {$nz * $scale}]]
 }
