@@ -87,7 +87,17 @@ proc set_rendering_mode {mode} {
             } else {
                 set togl_opts [list -displayproc rasmol_gpu_draw -reshapeproc rasmol_gpu_reshape -createproc rasmol_gpu_init]
             }
-            togl $f.togl -width 400 -height 400 -double 1 -depth 1 {*}$togl_opts
+            set togl_success 0
+            foreach {dbl dep} {1 1 0 1 1 0 0 0} {
+                if {![catch {togl $f.togl -width 400 -height 400 \
+                                  -double $dbl -depth $dep {*}$togl_opts} msg]} {
+                    set togl_success 1
+                    break
+                }
+            }
+            if {!$togl_success} {
+                error "Couldn't configure togl widget: $msg"
+            }
             bind $f.togl <ButtonPress> {rasmol_mouse_down %x %y [get_rasmol_mask %s %b]}
             bind $f.togl <B1-Motion> {rasmol_mouse_move %x %y [get_rasmol_mask %s 1]}
         }

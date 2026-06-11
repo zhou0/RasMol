@@ -729,8 +729,18 @@ grid $frInfo -row 2 -column 0 -columnspan 2 -sticky news
 grid rowconfigure .fr 0 -weight 1
 grid columnconfigure .fr 0 -weight 1
 
-togl $frTogl.toglwin -width 400 -height 400 \
-        -double 1 -depth 1 {*}$g_ToglOpts
+# Attempt to create Togl widget with different configurations if it fails
+set togl_success 0
+foreach {dbl dep} {1 1 0 1 1 0 0 0} {
+    if {![catch {togl $frTogl.toglwin -width 400 -height 400 \
+                      -double $dbl -depth $dep {*}$g_ToglOpts} msg]} {
+        set togl_success 1
+        break
+    }
+}
+if {!$togl_success} {
+    error "Couldn't configure togl widget: $msg"
+}
 pack $frTogl.toglwin -side top -expand 1 -fill both
 
 set frSett [frame $frCmds.sett]
