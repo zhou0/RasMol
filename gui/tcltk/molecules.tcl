@@ -524,7 +524,13 @@ proc tclCreateFunc { w } {
     set ::g_LastTime $startTime
 }
 
-proc tclReshapeFunc { toglwin w h } {
+proc tclReshapeFunc { toglwin {w ""} {h ""} } {
+    if {$w eq "" || $h eq ""} {
+        set w [winfo width $toglwin]
+        set h [winfo height $toglwin]
+    }
+    if {$w <= 1} { set w 400 }
+    if {$h <= 1} { set h 400 }
     global g_Gui
 
     set ::g_WinWidth  $w
@@ -714,11 +720,38 @@ grid $frInfo -row 2 -column 0 -columnspan 2 -sticky news
 grid rowconfigure .fr 0 -weight 1
 grid columnconfigure .fr 0 -weight 1
 
-togl $frTogl.toglwin -width 400 -height 400 \
-        -double true -depth true \
-        -displayproc tclDisplayFunc \
-        -reshapeproc tclReshapeFunc \
-        -createproc  tclCreateFunc
+# Exhaustive Togl initialization probe
+set togl_success 0
+set togl_error "Unknown error"
+foreach cb_set {
+    {-displaycommand tclDisplayFunc -reshapecommand tclReshapeFunc -createcommand tclCreateFunc}
+    {-displayproc tclDisplayFunc -reshapeproc tclReshapeFunc -createproc tclCreateFunc}
+} {
+    foreach vis_set {
+        {-double 1 -depth 1 -rgba 1}
+        {-double 1 -depth 1}
+        {-double 0 -depth 1}
+        {-double 1 -depth 0}
+        {-double 0 -depth 0}
+        {-rgba 1}
+        {}
+    } {
+        if {![catch {togl $frTogl.toglwin -width 400 -height 400 {*}$cb_set {*}$vis_set} togl_msg]} {
+            set togl_success 1
+            break
+        } else {
+            set togl_error $togl_msg
+        }
+    }
+    if {$togl_success} break
+}
+
+if {!$togl_success} {
+    # Final attempt with absolutely minimal options
+    if {[catch {togl $frTogl.toglwin -width 400 -height 400} final_msg]} {
+        error "Fatal Togl Error: $togl_error (Minimal attempt: $final_msg)"
+    }
+}
 pack $frTogl.toglwin -side top -expand 1 -fill both
 
 set frSett [frame $frCmds.sett]
