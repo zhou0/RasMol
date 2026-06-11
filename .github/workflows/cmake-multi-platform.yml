@@ -39,6 +39,16 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+    - name: Free Disk Space (Windows)
+      if: runner.os == 'Windows'
+      run: |
+        rm -rf "C:/Program Files/Android"
+        rm -rf "C:/android"
+        rm -rf "C:/Program Files/LLVM"
+        rm -rf "C:/vcpkg/downloads"
+        rm -rf "C:/vcpkg/buildtrees"
+      shell: bash
+
 
     - name: Install Dependencies (Linux)
       if: runner.os == 'Linux'
@@ -58,6 +68,7 @@ jobs:
         -DCMAKE_CXX_COMPILER=${{ matrix.cpp_compiler }}
         -DCMAKE_C_COMPILER=${{ matrix.c_compiler }}
         -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
+        -DRASMOL_SKIP_HEAVY_SOURCE_BUILD=ON
         -S ${{ github.workspace }}
 
     - name: Build

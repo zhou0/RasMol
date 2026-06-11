@@ -21,6 +21,12 @@ jobs:
         run: |
           rm -rf "C:/Program Files/Android"
           rm -rf "C:/android"
+          rm -rf "C:/Program Files/LLVM"
+          rm -rf "C:/SMS"
+          rm -rf "C:/Selenium"
+          rm -rf "C:/aliyun-cli"
+          rm -rf "C:/vcpkg/downloads"
+          rm -rf "C:/vcpkg/buildtrees"
           # Be careful with dotnet if WiX needs it, but we reinstall tools usually
         shell: bash
 
