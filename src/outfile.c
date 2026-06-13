@@ -1598,7 +1598,7 @@ static void WriteVectSphere( PSItemPtr __far *data, char __far *type,
         dz = atm->z - ptr->z;
 
         dist2 = (Long)dx*dx + (Long)dy*dy;
-        dist3 = dist2 + dz*dz;
+        dist3 = dist2 + (Long)dz*dz;
 
         radb = ((Real)atm->radius)*Scale;  
         temp = radf + radb;
