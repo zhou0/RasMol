@@ -1817,7 +1817,7 @@ static void WriteVectWire( RAtom __far *src, RAtom __far *dst,
 
     if( src->flag & SphereFlag )
     {   dz = dst->z - src->z;
-        dist = sqrt( (double)(dist2 + dz*dz) );
+        dist = sqrt((double)dist2 + (double)dz * (double)dz);
         endx = src->x + (radius*dx)/dist;
         endy = src->y + (radius*dy)/dist;
         fprintf(OutFile,"%g %g ",endx,endy);
