@@ -1871,8 +1871,8 @@ static void WriteVectStick( RAtom __far *src, RAtom __far *dst,
     dx = dst->x - src->x;  
     dy = dst->y - src->y;
     dz = dst->z - src->z;
-    dist2 = dx*dx + dy*dy;
-    dist3 = sqrt( (double)(dist2 + dz*dz) );
+    dist2 = (int)(((double)dx * (double)dx) + ((double)dy * (double)dy));
+    dist3 = sqrt( ((double)dist2) + ((double)dz * (double)dz) );
     dist = sqrt( (double)dist2 );
 
     if( dst->flag & SphereFlag )
