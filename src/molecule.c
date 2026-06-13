@@ -1851,7 +1851,7 @@ static int TestBuriedSurface( RAtom __far *aptr, RAtom __far *dptr, RAtom __far 
 	
 	decun = (Long)(rint(sqrt((double)(ECxUn[0]*ECxUn[0] + ECxUn[1]*ECxUn[1] + ECxUn[2]*ECxUn[2]))));
 	dist += ((Long)crad)*crad + 2*(((Long)crad)*decun)/4096;
-	if (dist < erad*erad) return 0;
+	if (dist < ((Long)erad)*erad) return 0;
     
     return 1;
 } 
