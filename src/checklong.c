@@ -84,5 +84,5 @@ main ()
 
 {
 	long num = 3;
-	printf("%d\n", sizeof (num));
+	printf("%zu\n", sizeof (num));
 }
