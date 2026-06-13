@@ -1821,7 +1821,7 @@ static int TestBuriedSurface( RAtom __far *aptr, RAtom __far *dptr, RAtom __far 
     erad = eptr->radius;
     if (erad < 10 ) erad = Element[eptr->elemno].vdwrad;
     
-    maxS = erad*erad;  
+    maxS = ((Long)erad) * erad;  
     
     dx = eptr->xorg-C[0] 
          + eptr->fxorg;   if( (dist=dx*dx)>=maxS ) return -1;
