@@ -401,6 +401,7 @@ if(NOT WIN32)
 endif()
 if(MSVC)
     add_definitions(-D_CRT_SECURE_NO_WARNINGS)
+    add_definitions(-DNOMKSTEMP)
 endif()
 
 if(PIXELDEPTH EQUAL 8)
