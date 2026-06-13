@@ -20,7 +20,7 @@ else()
     set(RASMOL_DATA_DIR "${RASMOL_SHARE_DIR}/data")
 endif()
 
-option(RASMOL_AUTO_INSTALL "Automatically install missing dependencies" ON)
+option(RASMOL_AUTO_INSTALL "Automatically install missing dependencies" OFF)
 
 if(RASMOL_AUTO_INSTALL)
     set(NEEDS_INSTALL FALSE)
