@@ -590,6 +590,7 @@ if(TCL_LIBRARY AND TK_LIBRARY)
     if(UNIX AND NOT APPLE AND WITH_X11)
         target_link_libraries(rasmol_tcl ${X11_LIBRARIES})
     endif()
+    file(GLOB TCL_SCRIPTS "gui/tcltk/*.tcl")
     if(APPLE)
         target_link_libraries(rasmol_tcl "-framework Cocoa" "-framework IOKit" "-framework CoreFoundation" "-framework CoreGraphics")
         target_compile_definitions(rasmol_tcl PRIVATE MAC_OSX_TK)
@@ -599,11 +600,8 @@ if(TCL_LIBRARY AND TK_LIBRARY)
             set_source_files_properties("${CMAKE_BINARY_DIR}/assets/rasmol.icns" PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
             target_sources(rasmol_tcl PRIVATE "${CMAKE_BINARY_DIR}/assets/rasmol.icns")
         endif()
-
         set(BUNDLE_RESOURCES
-            gui/tcltk/rasmol_ui.tcl
-            gui/tcltk/rasmol_loc.tcl
-            gui/tcltk/logo.tcl
+            ${TCL_SCRIPTS}
             doc/rasmol.hlp
         )
         set_source_files_properties(${BUNDLE_RESOURCES} PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
@@ -644,7 +642,7 @@ if(TCL_LIBRARY AND TK_LIBRARY)
         install(TARGETS rasmol_tcl DESTINATION ${RASMOL_BIN_DIR})
     endif()
     if(NOT APPLE)
-        install(FILES gui/tcltk/rasmol_ui.tcl gui/tcltk/rasmol_loc.tcl gui/tcltk/logo.tcl DESTINATION ${RASMOL_SHARE_DIR})
+        install(FILES ${TCL_SCRIPTS} DESTINATION ${RASMOL_SHARE_DIR})
     endif()
 else()
     message(WARNING "Tcl/Tk dependencies not fully found. rasmol_tcl target will not be created.")

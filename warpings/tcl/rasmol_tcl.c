@@ -1,4 +1,7 @@
 #ifdef __APPLE__
+#include <CoreFoundation/CoreFoundation.h>
+#endif
+#ifdef __APPLE__
 #ifndef MAC_OSX_TK
 #define MAC_OSX_TK
 #endif
@@ -212,6 +215,19 @@ int Tcl_AppInit(Tcl_Interp *interp) {
     if (Tcl_Init(interp) == TCL_ERROR) return TCL_ERROR;
     if (Tk_Init(interp) == TCL_ERROR) return TCL_ERROR;
     /* Initialize Display state FIRST so XRange/YRange are set */
+#ifdef __APPLE__
+    CFBundleRef mainBundle = CFBundleGetMainBundle();
+    if (mainBundle) {
+        CFURLRef resourcesURL = CFBundleCopyResourcesDirectoryURL(mainBundle);
+        if (resourcesURL) {
+            char resourcesPath[1024];
+            if (CFURLGetFileSystemRepresentation(resourcesURL, TRUE, (UInt8 *)resourcesPath, sizeof(resourcesPath))) {
+                setenv("RASMOLPATH", resourcesPath, 1);
+            }
+            CFRelease(resourcesURL);
+        }
+    }
+#endif
     OpenDisplay();
     /* Initialize RasMol core */
     InitialiseCmndLine();
@@ -239,6 +255,7 @@ int Tcl_AppInit(Tcl_Interp *interp) {
     /* Search for the UI script in multiple locations */
     const char *script_name = "rasmol_ui.tcl";
     const char *search_dirs[] = {
+        "../Resources",
         "gui/tcltk",
         "../gui/tcltk",
         "../../gui/tcltk",
@@ -341,8 +358,8 @@ void UpdateLanguage( void ) {}
 void ReDrawWindow( void ) {}
 void UpdateScrollBars( void ) {}
 int LookUpColour( char *name, int *r, int *g, int *b ) { (void)name; (void)r; (void)g; (void)b; return False; }
-void SetMouseUpdateStatus( int bool ) { MouseUpdateStatus = bool; }
-void SetMouseCaptureStatus( int bool ) { MouseCaptureStatus = bool; }
+void SetMouseUpdateStatus( int flag ) { MouseUpdateStatus = flag; }
+void SetMouseCaptureStatus( int flag ) { MouseCaptureStatus = flag; }
 void SetCanvasTitle( char *ptr ) { (void)ptr; }
 void EnableMenus( int flag ) { (void)flag; }
 void CloseDisplay( void ) {}
