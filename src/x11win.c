@@ -3519,7 +3519,7 @@ void SetMouseUpdateStatus( int flag )
         if( flag ) attr.event_mask |= PointerMotionMask;
         XChangeWindowAttributes( dpy, CanvWin, CWEventMask, &attr );
     }
-    MouseUpdateStatus = bool;
+    MouseUpdateStatus = flag;
 }
 
 

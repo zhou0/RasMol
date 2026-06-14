@@ -602,7 +602,7 @@ void SetMouseCaptureStatus( int flag )
     } else
         if( MouseCaptureStatus )
             ReleaseCapture();
-    MouseCaptureStatus = bool;
+    MouseCaptureStatus = flag;
 }
 
 

@@ -358,8 +358,8 @@ void UpdateLanguage( void ) {}
 void ReDrawWindow( void ) {}
 void UpdateScrollBars( void ) {}
 int LookUpColour( char *name, int *r, int *g, int *b ) { (void)name; (void)r; (void)g; (void)b; return False; }
-void void SetMouseUpdateStatus( int flag ) { MouseUpdateStatus = flag; }
-void void SetMouseCaptureStatus( int flag ) { MouseCaptureStatus = flag; }
+void SetMouseUpdateStatus( int flag ) { MouseUpdateStatus = flag; }
+void SetMouseCaptureStatus( int flag ) { MouseCaptureStatus = flag; }
 void SetCanvasTitle( char *ptr ) { (void)ptr; }
 void EnableMenus( int flag ) { (void)flag; }
 void CloseDisplay( void ) {}
