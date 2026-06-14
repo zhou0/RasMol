@@ -1349,9 +1349,9 @@ void TransferImage( void )
 			   XRange * 4);	
 }
 
-void SetMouseCaptureStatus( int bool )
+void SetMouseCaptureStatus( int flag )
 {
-    MouseCaptureStatus = bool;
+    MouseCaptureStatus = flag;
 }
                          
 
@@ -1722,9 +1722,9 @@ void SetCanvasTitle( char *ptr )
 }
 
 
-void SetMouseUpdateStatus( int bool )
+void SetMouseUpdateStatus( int flag )
 {
-    MouseUpdateStatus = bool;
+    MouseUpdateStatus = flag;
 }
 
 

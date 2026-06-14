@@ -588,15 +588,15 @@ void ReDrawWindow( void )
 
 }
   
-void SetMouseUpdateStatus( int bool )
+void SetMouseUpdateStatus( int flag )
 {
-    MouseUpdateStatus = bool;
+    MouseUpdateStatus = flag;
 }
                          
                          
-void SetMouseCaptureStatus( int bool )
+void SetMouseCaptureStatus( int flag )
 {
-    if( bool )
+    if( flag )
     {   if( !MouseCaptureStatus )
             SetCapture(CanvWin);
     } else

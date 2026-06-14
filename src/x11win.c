@@ -3510,22 +3510,22 @@ static void HandleIPCCommand( void )
 }
 
 
-void SetMouseUpdateStatus( int bool )
+void SetMouseUpdateStatus( int flag )
 {
-    if( MouseUpdateStatus != bool )
+    if( MouseUpdateStatus != flag )
     {   /* Enable/Disable Pointer Motion Events! */
         attr.event_mask = ExposureMask | ButtonPressMask | ButtonMotionMask 
                         | ButtonReleaseMask;
-        if( bool ) attr.event_mask |= PointerMotionMask;
+        if( flag ) attr.event_mask |= PointerMotionMask;
         XChangeWindowAttributes( dpy, CanvWin, CWEventMask, &attr );
     }
     MouseUpdateStatus = bool;
 }
 
 
-void SetMouseCaptureStatus( int bool )
+void SetMouseCaptureStatus( int flag )
 {
-    MouseCaptureStatus = bool;
+    MouseCaptureStatus = flag;
 }
                          
 
