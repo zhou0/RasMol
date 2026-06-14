@@ -1,2 +1,0 @@
-    file(GLOB TCL_SCRIPTS "gui/tcltk/*.tcl")
-    if(APPLE)
